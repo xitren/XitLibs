@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="SourceFiles"
+                   displayName="Исходные файлы"
+                   projectFiles="true">
+      <itemPath>ImageVisualise.c</itemPath>
+      <itemPath>p300v5.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles"
+                   displayName="Файлы заголовков"
+                   projectFiles="true">
+      <itemPath>ImageVisualise.h</itemPath>
+      <itemPath>p300v5.h</itemPath>
+      <itemPath>p300v5_types.h</itemPath>
+      <itemPath>rtwtypes.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Файлы ресурсов"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Файлы тестов"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f1" displayName="P300Test" projectFiles="true" kind="TEST">
+        <itemPath>tests/P300test.c</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="3" platformSpecific="true">
+      <toolsSet>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>../ControllerNew/Periph</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Include</pElem>
+            <pElem>../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+            <pElem>../ControllerNew</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>P300</Elem>
+          </preprocessorList>
+        </cTool>
+        <archiverTool>
+        </archiverTool>
+      </compileType>
+      <item path="ImageVisualise.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ImageVisualise.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>P300</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <item path="p300v5.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="p300v5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p300v5_types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/P300test.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="3">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../ControllerNew/Periph</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Include</pElem>
+            <pElem>../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+            <pElem>../ControllerNew</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>P300</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="ImageVisualise.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ImageVisualise.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <item path="p300v5.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="p300v5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p300v5_types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/P300test.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Debug_MC" type="3" platformSpecific="true">
+      <toolsSet>
+        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <platform>3</platform>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>../ControllerNew/Periph</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Include</pElem>
+            <pElem>../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+            <pElem>../ControllerNew</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+          </incDir>
+          <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>P300</Elem>
+          </preprocessorList>
+        </cTool>
+        <archiverTool>
+        </archiverTool>
+      </compileType>
+      <item path="ImageVisualise.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ImageVisualise.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <item path="p300v5.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="p300v5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p300v5_types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/P300test.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release_MC" type="3">
+      <toolsSet>
+        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../ControllerNew/Periph</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Include</pElem>
+            <pElem>../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+            <pElem>../ControllerNew</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+          </incDir>
+          <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+        </archiverTool>
+      </compileType>
+      <item path="ImageVisualise.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ImageVisualise.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <item path="p300v5.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="p300v5.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="p300v5_types.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="rtwtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/P300test.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

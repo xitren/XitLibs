@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
+        <activeConfTypeElem>3</activeConfTypeElem>
+        <activeConfIndexElem>1</activeConfIndexElem>
+    </data>
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group name="Group 20161212-06:43:29"/>
+        <group name="Echo">
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/DMAretransmitter.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/coap.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/StreamDataRecorder.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/LibConfig.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/PWMModule.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/ConfigMem.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/Handler.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/CommandModule.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/jSONparser.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/VideoModule.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/PWMModule.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/FunctionsDiscovery.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/InOutBuffer.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/Packet.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/Handler.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/ExtMemModule.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/ExtMemModule.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/CommandModule.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/UpdateModule.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/ConfigMem.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/tests/discovery_func_test.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/coap.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/InOutBuffer.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/DMAretransmitter.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/tests/pocket_test.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/xitlibtypes.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/tests/file_cvep_test.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/UpdateModule.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/FunctionsDiscovery.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/jSONparser.h</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/tests/ext_mem_test.c</file>
+            <file>file:/C:/Users/xitre_000/Documents/NetBeansProjects/IoT_MC_LIB.git/trunk/XitLib/CRC16ANSI.c</file>
+        </group>
+        <group>
+            <file>file:/C:/git/IoT/XitLib/CommandModule.c</file>
+            <file>file:/C:/git/IoT/XitLib/FunctionsDiscovery.c</file>
+            <file>file:/C:/git/IoT/XitLib/ConfigMem.c</file>
+            <file>file:/C:/git/IoT/XitLib/UpdateModule.c</file>
+        </group>
+        <group name="iot">
+            <file>file:/C:/git/IoT/XitLib/CommandModule.c</file>
+            <file>file:/C:/git/IoT/XitLib/FunctionsDiscovery.c</file>
+            <file>file:/C:/git/IoT/XitLib/ConfigMem.c</file>
+            <file>file:/C:/git/IoT/XitLib/UpdateModule.c</file>
+        </group>
+        <group name="Azuras tests">
+            <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/StreamDataRecorder.c</file>
+        </group>
+        <group name="IoT">
+            <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/CommandModule.c</file>
+            <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/VideoModule.c</file>
+            <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/FunctionsDiscovery.c</file>
+        </group>
+        <group name="Lib">
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/generatorModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/UpdateModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/CRC16ANSI.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/UpdateModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/VideoModule.c</file>
+        </group>
+    </open-files>
+</project-private>

@@ -1,0 +1,1794 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="100">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="SourceFiles"
+                   displayName="Исходные файлы"
+                   projectFiles="true">
+      <itemPath>CRC16ANSI.c</itemPath>
+      <itemPath>CommandModule.c</itemPath>
+      <itemPath>ConfigMem.c</itemPath>
+      <itemPath>DMAretransmitter.c</itemPath>
+      <itemPath>ExtMemModule.c</itemPath>
+      <itemPath>FunctionsDiscovery.c</itemPath>
+      <itemPath>Handler.c</itemPath>
+      <itemPath>InOutBuffer.c</itemPath>
+      <itemPath>PWMModule.c</itemPath>
+      <itemPath>Packet.c</itemPath>
+      <itemPath>StreamDataRecorder.c</itemPath>
+      <itemPath>SymbolBuffer.c</itemPath>
+      <itemPath>UpdateModule.c</itemPath>
+      <itemPath>VideoModule.c</itemPath>
+      <itemPath>generatorModule.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles"
+                   displayName="Файлы заголовков"
+                   projectFiles="true">
+      <itemPath>CRC16ANSI.h</itemPath>
+      <itemPath>CommandModule.h</itemPath>
+      <itemPath>ConfigMem.h</itemPath>
+      <itemPath>DMAretransmitter.h</itemPath>
+      <itemPath>ExtMemModule.h</itemPath>
+      <itemPath>FunctionsDiscovery.h</itemPath>
+      <itemPath>Handler.h</itemPath>
+      <itemPath>InOutBuffer.h</itemPath>
+      <itemPath>LibConfig.h</itemPath>
+      <itemPath>PWMModule.h</itemPath>
+      <itemPath>Packet.h</itemPath>
+      <itemPath>StreamDataRecorder.h</itemPath>
+      <itemPath>SymbolBuffer.h</itemPath>
+      <itemPath>UpdateModule.h</itemPath>
+      <itemPath>generatorModule.h</itemPath>
+      <itemPath>xitlibtypes.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Файлы ресурсов"
+                   projectFiles="true">
+      <itemPath>220data.txt</itemPath>
+      <itemPath>222data.txt</itemPath>
+      <itemPath>257data.txt</itemPath>
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Файлы тестов"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f6"
+                     displayName="Discovery test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/discovery_func_test.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1"
+                     displayName="DMA module test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/dma_test.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2"
+                     displayName="External memory test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/ext_mem_test.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3"
+                     displayName="File cVEP test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/file_cvep_test.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f7"
+                     displayName="Operation handler test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/operation_test.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f5"
+                     displayName="Parser JSON"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/json_parser.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4"
+                     displayName="Pocket test"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/pocket_test.c</itemPath>
+      </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug_Windows" type="3" platformSpecific="true">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <platform>3</platform>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>PLATFORM_WINDOWS</Elem>
+          </preprocessorList>
+          <useLinkerLibraries>false</useLinkerLibraries>
+          <warningLevel>3</warningLevel>
+        </cTool>
+        <ccTool>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+        </archiverTool>
+        <requiredProjects>
+          <makeArtifact PL="../CoAP"
+                        CT="3"
+                        CN="Debug"
+                        AC="true"
+                        BL="true"
+                        WD="../CoAP"
+                        BC="${MAKE}  -f Makefile CONF=Debug"
+                        CC="${MAKE}  -f Makefile CONF=Debug clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
+          </makeArtifact>
+        </requiredProjects>
+      </compileType>
+      <item path="220data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="222data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="257data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CommandModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConfigMem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Handler.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InOutBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PWMModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Packet.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerAddLib>
+            <pElem>../cVEP/dist/Debug/MinGW-Windows</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>cvep</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release_Windows" type="3">
+      <toolsSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>PLATFORM_WINDOWS</Elem>
+            <Elem>__USE_W32_SOCKETS</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+        </archiverTool>
+        <requiredProjects>
+          <makeArtifact PL="../CoAP"
+                        CT="3"
+                        CN="Release"
+                        AC="false"
+                        BL="true"
+                        WD="../CoAP"
+                        BC="${MAKE}  -f Makefile CONF=Release"
+                        CC="${MAKE}  -f Makefile CONF=Release clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
+          </makeArtifact>
+        </requiredProjects>
+      </compileType>
+      <item path="220data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="222data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="257data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CommandModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConfigMem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Handler.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InOutBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PWMModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Packet.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
+      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Debug_Linux" type="3" platformSpecific="true">
+      <toolsSet>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>PI</Elem>
+            <Elem>PLATFORM_LINUX</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+          <additionalDep>Ws2_32</additionalDep>
+        </archiverTool>
+        <requiredProjects>
+          <makeArtifact PL="../CoAP"
+                        CT="3"
+                        CN="Debug"
+                        AC="true"
+                        BL="true"
+                        WD="../CoAP"
+                        BC="${MAKE}  -f Makefile CONF=Debug"
+                        CC="${MAKE}  -f Makefile CONF=Debug clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
+          </makeArtifact>
+        </requiredProjects>
+      </compileType>
+      <item path="220data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="222data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="257data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConfigMem.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Handler.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InOutBuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Packet.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerAddLib>
+            <pElem>../cVEP/dist/Debug/MinGW-Windows</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>cvep</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release_Linux" type="3">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>PLATFORM_LINUX</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="220data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="222data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="257data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConfigMem.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Handler.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InOutBuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Packet.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
+      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Debug_MC" type="3" platformSpecific="true">
+      <toolsSet>
+        <compilerSet>GNU|GNU</compilerSet>
+        <platform>2</platform>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>true</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <incDir>
+            <pElem>../ControllerNew/Periph</pElem>
+            <pElem>../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+            <pElem>../ControllerNew</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Include</pElem>
+          </incDir>
+          <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+            <Elem>MC</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </ccTool>
+        <archiverTool>
+          <additionalDep>Ws2_32</additionalDep>
+        </archiverTool>
+        <requiredProjects>
+          <makeArtifact PL="../CoAP"
+                        CT="3"
+                        CN="Debug"
+                        AC="true"
+                        BL="true"
+                        WD="../CoAP"
+                        BC="${MAKE}  -f Makefile CONF=Debug"
+                        CC="${MAKE}  -f Makefile CONF=Debug clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
+          </makeArtifact>
+        </requiredProjects>
+      </compileType>
+      <item path="220data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="222data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="257data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConfigMem.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Handler.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InOutBuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Packet.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerAddLib>
+            <pElem>../cVEP/dist/Debug/MinGW-Windows</pElem>
+          </linkerAddLib>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+            <linkerLibLibItem>cvep</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
+      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release_MC" type="3">
+      <toolsSet>
+        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../ControllerNew/Periph</pElem>
+            <pElem>../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+            <pElem>../ControllerNew</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+            <pElem>../ControllerNew/libraries/CMSIS/Include</pElem>
+          </incDir>
+          <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
+          <preprocessorList>
+            <Elem>MC</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+        </archiverTool>
+        <requiredProjects>
+          <makeArtifact PL="../CoAP"
+                        CT="3"
+                        CN="Release"
+                        AC="false"
+                        BL="true"
+                        WD="../CoAP"
+                        BC="${MAKE}  -f Makefile CONF=Release"
+                        CC="${MAKE}  -f Makefile CONF=Release clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
+          </makeArtifact>
+        </requiredProjects>
+      </compileType>
+      <item path="220data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="222data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="257data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConfigMem.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Handler.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InOutBuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Packet.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
+      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release_Linux_EV3" type="3">
+      <toolsSet>
+        <compilerSet>GNU|GNU</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>EV3</Elem>
+            <Elem>PI</Elem>
+            <Elem>PLATFORM_LINUX</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
+        </archiverTool>
+      </compileType>
+      <item path="220data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="222data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="257data.txt" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CRC16ANSI.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ConfigMem.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Handler.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="InOutBuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Packet.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
+      <item path="generatorModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
