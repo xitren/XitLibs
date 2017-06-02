@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -12,10 +12,10 @@
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
+      <itemPath>LogModule.c</itemPath>
       <itemPath>PWMModule.c</itemPath>
       <itemPath>Packet.c</itemPath>
       <itemPath>StreamDataRecorder.c</itemPath>
-      <itemPath>SymbolBuffer.c</itemPath>
       <itemPath>UpdateModule.c</itemPath>
       <itemPath>VideoModule.c</itemPath>
       <itemPath>generatorModule.c</itemPath>
@@ -35,10 +35,10 @@
       <itemPath>Handler.h</itemPath>
       <itemPath>InOutBuffer.h</itemPath>
       <itemPath>LibConfig.h</itemPath>
+      <itemPath>LogModule.h</itemPath>
       <itemPath>PWMModule.h</itemPath>
       <itemPath>Packet.h</itemPath>
       <itemPath>StreamDataRecorder.h</itemPath>
-      <itemPath>SymbolBuffer.h</itemPath>
       <itemPath>UpdateModule.h</itemPath>
       <itemPath>generatorModule.h</itemPath>
       <itemPath>version.h</itemPath>
@@ -62,6 +62,9 @@
         <itemPath>External/ExtFunctions.c</itemPath>
         <itemPath>External/ExtFunctions.h</itemPath>
         <itemPath>tests/dma_test.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="LogTest" projectFiles="true" kind="TEST">
+        <itemPath>tests/LogTest.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -156,6 +159,10 @@
       </item>
       <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LogModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PWMModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
@@ -167,10 +174,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -202,9 +205,26 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -303,6 +323,10 @@
       </item>
       <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LogModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PWMModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
@@ -314,10 +338,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -344,9 +364,29 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerLibFileItem>../CoAP/dist/Release/MinGW-Windows/libcoap.a</linkerLibFileItem>
+          </linkerLibItems>
+        </linkerTool>
+      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -438,6 +478,10 @@
       </item>
       <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LogModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
@@ -449,10 +493,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -484,9 +524,26 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -568,6 +625,10 @@
       </item>
       <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LogModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
@@ -579,10 +640,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -605,9 +662,26 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -705,6 +779,10 @@
       </item>
       <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LogModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
@@ -716,10 +794,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -751,9 +825,26 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -853,6 +944,10 @@
       </item>
       <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LogModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
@@ -864,10 +959,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -890,9 +981,26 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -976,6 +1084,10 @@
       </item>
       <item path="LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="LogModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
@@ -987,10 +1099,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="SymbolBuffer.c" ex="false" tool="0" flavor2="9">
-      </item>
-      <item path="SymbolBuffer.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1013,9 +1121,26 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
       </item>

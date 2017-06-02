@@ -6,9 +6,12 @@
 /*============================================================================*/
 
 /* Public defines ------------------------------------------------------------*/
-#define CFG_SIZE 0x40
+#define CFG_SIZE 0x60
 #define MEMORY_CONFIG 4*CFG_SIZE
 /*============================================================================*/
+
+#ifndef __MEMORY_CONFIG_H__
+#define __MEMORY_CONFIG_H__  
 
 #ifdef __cplusplus
 extern "C" {
@@ -93,7 +96,8 @@ typedef enum
           
   REG_EEG_File           =       0x0000003C,
   REG_UPD_File           =       0x0000003D,
-  REG_STREAM_REC         =       0x0000003E
+  REG_STREAM_REC         =       0x0000003E,
+  REG_LOG_LVL            =       0x0000003F
 } RegDef;
 /*============================================================================*/
 
@@ -105,4 +109,6 @@ uint32_t ReadMem(uint32_t _adr);
 
 #ifdef __cplusplus
 }
+#endif
+
 #endif

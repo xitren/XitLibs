@@ -8,6 +8,7 @@ extern "C" {
 
 /* Public defines ------------------------------------------------------------*/
 #ifdef MC
+    #define LOGGER_SIZE 8
     #define BUFFER_SIZE 10
     #define STRING_SIZE 40
     #define MAX_NUM_OF_PARAMETERS                      (25)  /* Denotes the max   */
@@ -23,7 +24,8 @@ extern "C" {
     #define EEG_HISTORY_SIZE 32 //power of 2
     #define EXT_EEG_MAX_COUNT 1
 #else
-    #define BUFFER_SIZE 60
+    #define LOGGER_SIZE 100
+    #define BUFFER_SIZE 120
     #define STRING_SIZE 80
     #define MAX_NUM_OF_PARAMETERS                      (25)  /* Denotes the max   */
                                                              /* number of         */

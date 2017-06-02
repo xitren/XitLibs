@@ -12,6 +12,7 @@
 #include "UpdateModule.h"
 #include "generatorModule.h"
 #include "VideoModule.h"
+#include "LogModule.h"
 /*============================================================================*/                           
 
 /* Private structures --------------------------------------------------------*/
@@ -69,6 +70,7 @@ void Interface_Memory(void)
     AddCommand("/RESET", "</reset>", Reset);
     AddCommand("/GET/MEMORY", "</memory>", MEMRead);
     AddCommand("/PUT/MEMORY", "</memory>", MEMWrite);
+    AddCommand("/GET/LOG", "</log>", LOGRead);
     AddCommand("/GET/.WELL-KNOWN/CORE", "</.well-known/core>", WELLKnown);
     AddCommand("/CALLBACK/.WELL-KNOWN/CORE", "</.well-known/core>", 
                                                         CallbackWELLKnown);
@@ -118,217 +120,175 @@ void Interface_Memory(void)
     #endif
    
 }
-void Interface_Callback(void)
-{
-//    ClearCommands();
-//    AddCommand("/CALLBACK/.WELL-KNOWN/CORE", CallbackWELLKnown);
-//    #ifdef DEBUG
-//        printf("\t/CALLBACK/.WELL-KNOWN/CORE\r\n\r");
-//    #endif
-//    #ifdef EXTMEMSERVER
-//    #else
-////        AddCommand("/CALLBACK/EXTMEMORY/CREATE", CallbackExtMemCreateReq);
-////        AddCommand("/CALLBACK/EXTMEMORY/RETURN", CallbackExtMemGetReq);
-//        #ifdef DEBUG
-//            printf("\t/CALLBACK/EXTMEMORY/CREATE\r\n\r");
-//            printf("\t/CALLBACK/EXTMEMORY/RETURN\r\n\r");
-//        #endif
-//    #endif
-   
-}
 int Reset(ParameterList_t *TempParam)
 {
    int  ret_val = 0;
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into Reset.\r\n\r");
-   #endif
-   AddToTransmit("<RESET>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
+    AddToLog("Into Reset.\n", 1);
+    AddToTransmit("<RESET>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
         #ifdef CPU
             exit(0);
         #else
             HAL_NVIC_SystemReset();
         #endif
-   }
-   else
-   {
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</RESET>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</RESET>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 int CLOCKSet(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   int  Clock = -1;
-   int i;
-   char buffer[STRING_SIZE];
+    int  ret_val = 0;
+    int  Clock = -1;
+    int i;
+    char buffer[STRING_SIZE];
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into CLOCKSet.\r\n\r");
-   #endif
-   AddToTransmit("<CLOCKSET>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam) && (TempParam->NumberofParameters > 1))
-   {
-      for (i=1;i<TempParam->NumberofParameters;i+=2)
-      {
-        sprintf((char*)buffer,"%s - %d\r\n\r",TempParam->Params[i-1].strParam,(unsigned int)(TempParam->Params[i].intParam));
-        AddToTransmit((char*)buffer);
-         if (!strcmp(TempParam->Params[i-1].strParam,"clock"))
-         {
-            Clock = (unsigned int)(TempParam->Params[i].intParam);
-         }
-      }
-      if (Clock >= 0)
-      {
-         SetClock(Clock);
-         AddToTransmit(" <SET/>\r\n\r");
-         #ifdef DEBUG
-            printf("--//internal//-- Clock setted to %d.\r\n\r",Clock);
-         #endif
-      }
-   }
-   else
-   {
+    AddToLog("Into CLOCKSet.\n", 1);
+    AddToTransmit("<CLOCKSET>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam) && (TempParam->NumberofParameters > 1))
+    {
+        for (i=1;i<TempParam->NumberofParameters;i+=2)
+        {
+            sprintf((char*)buffer,"%s - %d\r\n\r",
+                    TempParam->Params[i-1].strParam,
+                    (unsigned int)(TempParam->Params[i].intParam));
+            AddToTransmit((char*)buffer);
+            if (!strcmp(TempParam->Params[i-1].strParam,"clock"))
+            {
+                 Clock = (unsigned int)(TempParam->Params[i].intParam);
+            }
+        }
+        if (Clock >= 0)
+        {
+            SetClock(Clock);
+            AddToTransmit(" <SET/>\r\n\r");
+            AddToLog("Invalid clock parameter.\n", 1);
+        }
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</CLOCKSET>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</CLOCKSET>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 int CLOCKGet(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   char buffer[STRING_SIZE];
+    int  ret_val = 0;
+    char buffer[STRING_SIZE];
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into CLOCKGet.\r\n\r");
-   #endif
-   AddToTransmit("<CLOCK>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
-      snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetClock());
-      AddToTransmit((char*)buffer);
-   }
-   else
-   {
+    AddToLog("Into CLOCKGet.\n", 1);
+    AddToTransmit("<CLOCK>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
+        snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetClock());
+        AddToTransmit((char*)buffer);
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</CLOCK>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</CLOCK>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 
 int CALCFREECYCLESGet(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   char buffer[STRING_SIZE];
+    int  ret_val = 0;
+    char buffer[STRING_SIZE];
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into CALCFREECYCLESGet.\r\n\r");
-   #endif
-   AddToTransmit("<CALCFREECYCLES>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
-      snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetCycle());
-      AddToTransmit((char*)buffer);
-   }
-   else
-   {
+    AddToLog("Into CALCFREECYCLESGet.\n", 1);
+    AddToTransmit("<CALCFREECYCLES>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
+        snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetCycle());
+        AddToTransmit((char*)buffer);
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</CALCFREECYCLES>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</CALCFREECYCLES>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 int CALCMAXCYCLESGet(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   char buffer[STRING_SIZE];
+    int  ret_val = 0;
+    char buffer[STRING_SIZE];
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into CALCMAXCYCLESGet.\r\n\r");
-   #endif
-   AddToTransmit("<CALCMAXCYCLES>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
-      snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetMaxCycle());
-      AddToTransmit((char*)buffer);
-   }
-   else
-   {
+    AddToLog("Into CALCFREECYCLESGet.\n", 1);
+    AddToTransmit("<CALCMAXCYCLES>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
+        snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetMaxCycle());
+        AddToTransmit((char*)buffer);
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</CALCMAXCYCLES>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</CALCMAXCYCLES>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 int CALCPERCENTCYCLESGet(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   char buffer[STRING_SIZE];
+    int  ret_val = 0;
+    char buffer[STRING_SIZE];
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into CALCPERCENTCYCLESGet.\r\n\r");
-   #endif
-   AddToTransmit("<CALCPERCENTCYCLES>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
-      snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetPercent());
-      AddToTransmit((char*)buffer);
-   }
-   else
-   {
+    AddToLog("Into CALCFREECYCLESGet.\n", 1);
+    AddToTransmit("<CALCPERCENTCYCLES>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
+        snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)GetPercent());
+        AddToTransmit((char*)buffer);
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</CALCPERCENTCYCLES>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</CALCPERCENTCYCLES>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 
    /* The following function is responsible for reading data that was   */
@@ -337,101 +297,94 @@ int CALCPERCENTCYCLESGet(ParameterList_t *TempParam)
    /* and a negative value if an error occurred.                        */
 int MEMRead(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   int  Adress = -1;
-   char buffer[STRING_SIZE];
-   int i;
+    int  ret_val = 0;
+    int  Adress = -1;
+    char buffer[STRING_SIZE];
+    int i;
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into MEMRead.\r\n\r");
-   #endif
-   AddToTransmit("<MEMORY>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam) && (TempParam->NumberofParameters > 1))
-   {
-      for (i=1;i<TempParam->NumberofParameters;i+=2)
-      {
-         if (!strcmp(TempParam->Params[i-1].strParam,"address"))
-         {
-            Adress = (unsigned int)(TempParam->Params[i].intParam);
-         }
-      }
-      if (Adress >= 0)
-      {
-         AddToTransmit(" <ADDRESS>\r\n\r");
-         snprintf((char*)buffer,sizeof(buffer),"  %d\r\n\r",(int)Adress);
-         AddToTransmit((char*)buffer);
-         AddToTransmit(" </ADDRESS>\r\n\r");
-         AddToTransmit(" <VALUE>\r\n\r");
-         snprintf((char*)buffer,sizeof(buffer),"  %d\r\n\r",(int)ReadMem(Adress));
-         AddToTransmit((char*)buffer);
-         AddToTransmit(" <VALUE>\r\n\r");
-      }
-   }
-   else
-   {
+    AddToLog("Into MEMRead.\n", 1);
+    AddToTransmit("<MEMORY>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam) && (TempParam->NumberofParameters > 1))
+    {
+        for (i=1;i<TempParam->NumberofParameters;i+=2)
+        {
+            if (!strcmp(TempParam->Params[i-1].strParam,"address"))
+            {
+                Adress = (unsigned int)(TempParam->Params[i].intParam);
+            }
+        }
+        if (Adress >= 0)
+        {
+            AddToTransmit(" <ADDRESS>\r\n\r");
+            snprintf((char*)buffer,sizeof(buffer),"  %d\r\n\r",(int)Adress);
+            AddToTransmit((char*)buffer);
+            AddToTransmit(" </ADDRESS>\r\n\r");
+            AddToTransmit(" <VALUE>\r\n\r");
+            snprintf((char*)buffer,sizeof(buffer),"  %d\r\n\r",(int)ReadMem(Adress));
+            AddToTransmit((char*)buffer);
+            AddToTransmit(" <VALUE>\r\n\r");
+        }
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</MEMORY>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</MEMORY>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 
-   /* The following function is responsible for Writing Data to an memory.  This function returns zero is successful or a negative  */
-   /* return value if there was an error.                               */
+   /* The following function is responsible for Writing Data to an memory.  */
+   /* This function returns zero is successful or a negative                */
+   /* return value if there was an error.                                   */
 int MEMWrite(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   int  Adress;
-   int  Value;
-   int  i;
+    int  ret_val = 0;
+    int  Adress;
+    int  Value;
+    int  i;
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into MEMWrite.\r\n\r");
-   #endif
-   AddToTransmit("<MEMORY>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam) && (TempParam->NumberofParameters > 3))
-   {
-      for (i=1;i<TempParam->NumberofParameters;i+=2)
-      {
-         if (!strcmp(TempParam->Params[i-1].strParam,"address"))
-         {
-            Adress = (unsigned int)(TempParam->Params[i].intParam);
-         }
-         if (!strcmp(TempParam->Params[i-1].strParam,"value"))
-         {
-            Value = (unsigned int)(TempParam->Params[i].intParam);
-         }
-      }
-      if (Adress >= 0)
-      {
-         WriteMem(Adress,Value);
-         AddToTransmit("<WR/>\r\n\r");
-         #ifdef DEBUG
-            printf("--//internal//-- Mem[%d] setted to %d.\r\n\r",Adress,Value);
-         #endif
-      }
-   }
-   else
-   {
-        /* One or more of the necessary parameters are invalid.           */
-        ret_val = INVALID_PARAMETERS_ERROR;
-        AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</MEMORY>\r\n\r");
+    AddToLog("Into MEMWrite.\n", 1);
+    AddToTransmit("<MEMORY>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam) && (TempParam->NumberofParameters > 3))
+    {
+       for (i=1;i<TempParam->NumberofParameters;i+=2)
+       {
+          if (!strcmp(TempParam->Params[i-1].strParam,"address"))
+          {
+             Adress = (unsigned int)(TempParam->Params[i].intParam);
+          }
+          if (!strcmp(TempParam->Params[i-1].strParam,"value"))
+          {
+             Value = (unsigned int)(TempParam->Params[i].intParam);
+          }
+       }
+       if (Adress >= 0)
+       {
+          WriteMem(Adress,Value);
+          AddToTransmit("<WR/>\r\n\r");
+          #ifdef DEBUG
+             printf("--//internal//-- Mem[%d] setted to %d.\r\n\r",Adress,Value);
+          #endif
+       }
+    }
+    else
+    {
+         /* One or more of the necessary parameters are invalid.           */
+         ret_val = INVALID_PARAMETERS_ERROR;
+         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
+         AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</MEMORY>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
    /* The following function is responsible for reading data that was   */
    /* stored in memory.  The function reads a fixed number of bytes.    */
@@ -439,32 +392,28 @@ int MEMWrite(ParameterList_t *TempParam)
    /* and a negative value if an error occurred.                        */
 int DISTRead(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   char buffer[STRING_SIZE];
+    int  ret_val = 0;
+    char buffer[STRING_SIZE];
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into DISTRead.\r\n\r");
-   #endif
-   AddToTransmit("<DISTANCE>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
-       sprintf((char*)buffer," %d\r\n\r",(int)ReadMem(REG_Distance));
-       AddToTransmit((char*)buffer);
-   }
-   else
-   {
+    AddToLog("Into DISTRead.\n", 1);
+    AddToTransmit("<DISTANCE>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
+        sprintf((char*)buffer," %d\r\n\r",(int)ReadMem(REG_Distance));
+        AddToTransmit((char*)buffer);
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
-   }
-   AddToTransmit("</DISTANCE>\r\n\r");
+        AddToLog("Invalid parameters.\n", 1);
+    }
+    AddToTransmit("</DISTANCE>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 
 
@@ -476,10 +425,8 @@ int CommandLineInterpreter(char *Command)
     uint8_t      	ret_val = 0;
     UserCommand_t 	TempCommand;
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into CommandLineInterpreter.\r\n\r");
-    #endif
-        printf(">>>>>>>>>>>>>>>> %s\r\n\r",Command);
+    AddToLog("Into CommandLineInterpreter.\n", 1);
+    printf(">>>>>>>>>>>>>>>> %s\r\n\r",Command);
     /* The string input by the user contains a value, now run the string */
     /* through the Command Parser.                                       */
     if(CommandParser(&TempCommand, Command) >= 0)
@@ -489,37 +436,26 @@ int CommandLineInterpreter(char *Command)
         switch(Result)
         {
             case INVALID_COMMAND_ERROR:
-               #ifdef DEBUG
-                  printf("--//internal//--  Invalid command.\r\n\r");
-               #endif
-               //AddToTransmit("<INVALID_COMMAND_ERROR>\r\n\r");
-               ret_val = 0;
-               break;
+                AddToLog("Invalid command.\n", 1);
+                ret_val = 0;
+                break;
             case FUNCTION_ERROR:
-               #ifdef DEBUG
-                  printf("--//internal//--  Invalid function.\r\n\r");
-               #endif
-               //AddToTransmit("<FUNCTION_ERROR>\r\n\r");
-               ret_val = 0;
-               break;
+                AddToLog("Invalid function.\n", 1);
+                ret_val = 0;
+                break;
             case EXIT_CODE:
-               break;
-             default:
-               ret_val = 1;
-               break;
+                break;
+            default:
+                ret_val = 1;
+                break;
         }
     }
     else
     {
-       //AddToTransmit("<INVALID_COMMAND_ERROR>\r\n\r");
-         #ifdef DEBUG
-            printf("--//internal//--  Invalid command.\r\n\r");
-         #endif
+        AddToLog("INVALID_COMMAND_ERROR.\n", 1);
     }
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of CommandLineInterpreter.\r\n\r");
-    #endif
+    AddToLog("Into END of CommandLineInterpreter.\n", 1);
     return(ret_val);
 }
 

@@ -89,7 +89,6 @@ extern int size_parts_cur;
 
 /* Public function prototypes ------------------------------------------------*/
 void Interface_Memory(void);
-void Interface_Callback(void);
 int CommandLineInterpreter(char *Command);
 int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction);
 char* GetCommandLink(int N);

@@ -88,6 +88,7 @@ void InitCfgMem(void)
   config_reg[REG_UPD_File] = 0;
   
   config_reg[REG_STREAM_REC] = 0;
+  config_reg[REG_LOG_LVL] = 2;
   return;
 }
 void WriteMem(uint32_t _adr, uint32_t _val)

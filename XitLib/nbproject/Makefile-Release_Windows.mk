@@ -43,10 +43,10 @@ OBJECTFILES= \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
+	${OBJECTDIR}/LogModule.o \
 	${OBJECTDIR}/PWMModule.o \
 	${OBJECTDIR}/Packet.o \
 	${OBJECTDIR}/StreamDataRecorder.o \
-	${OBJECTDIR}/SymbolBuffer.o \
 	${OBJECTDIR}/UpdateModule.o \
 	${OBJECTDIR}/VideoModule.o \
 	${OBJECTDIR}/generatorModule.o
@@ -56,11 +56,13 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f2
 
 # Test Object Files
 TESTOBJECTFILES= \
 	${TESTDIR}/External/ExtFunctions.o \
+	${TESTDIR}/tests/LogTest.o \
 	${TESTDIR}/tests/dma_test.o
 
 # C Compiler Flags
@@ -89,77 +91,77 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
-${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c 
+${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 
-${OBJECTDIR}/CommandModule.o: CommandModule.c 
+${OBJECTDIR}/CommandModule.o: CommandModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule.o CommandModule.c
 
-${OBJECTDIR}/ConfigMem.o: ConfigMem.c 
+${OBJECTDIR}/ConfigMem.o: ConfigMem.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem.o ConfigMem.c
 
-${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c 
+${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
-${OBJECTDIR}/DistCalc.o: DistCalc.c 
+${OBJECTDIR}/DistCalc.o: DistCalc.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
-${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c 
+${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c
 
-${OBJECTDIR}/Handler.o: Handler.c 
+${OBJECTDIR}/Handler.o: Handler.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
 
-${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c 
+${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 
-${OBJECTDIR}/PWMModule.o: PWMModule.c 
+${OBJECTDIR}/LogModule.o: LogModule.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule.o LogModule.c
+
+${OBJECTDIR}/PWMModule.o: PWMModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
 
-${OBJECTDIR}/Packet.o: Packet.c 
+${OBJECTDIR}/Packet.o: Packet.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
 
-${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c 
+${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
 
-${OBJECTDIR}/SymbolBuffer.o: SymbolBuffer.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SymbolBuffer.o SymbolBuffer.c
-
-${OBJECTDIR}/UpdateModule.o: UpdateModule.c 
+${OBJECTDIR}/UpdateModule.o: UpdateModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
-${OBJECTDIR}/VideoModule.o: VideoModule.c 
+${OBJECTDIR}/VideoModule.o: VideoModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule.o VideoModule.c
 
-${OBJECTDIR}/generatorModule.o: generatorModule.c 
+${OBJECTDIR}/generatorModule.o: generatorModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
@@ -174,7 +176,11 @@ ${OBJECTDIR}/generatorModule.o: generatorModule.c
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/External/ExtFunctions.o ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} ../CoAP/dist/Release/MinGW-Windows/libcoap.a -lws2_32 
+	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   ../CoAP/dist/Release/MinGW-Windows/libcoap.a -lws2_32 
+
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   ../CoAP/dist/Release/MinGW-Windows/libcoap.a 
 
 
 ${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
@@ -187,6 +193,12 @@ ${TESTDIR}/tests/dma_test.o: tests/dma_test.c
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/dma_test.o tests/dma_test.c
+
+
+${TESTDIR}/tests/LogTest.o: tests/LogTest.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LogTest.o tests/LogTest.c
 
 
 ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c 
@@ -293,6 +305,19 @@ ${OBJECTDIR}/InOutBuffer_nomain.o: ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 	    ${CP} ${OBJECTDIR}/InOutBuffer.o ${OBJECTDIR}/InOutBuffer_nomain.o;\
 	fi
 
+${OBJECTDIR}/LogModule_nomain.o: ${OBJECTDIR}/LogModule.o LogModule.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/LogModule.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule_nomain.o LogModule.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/LogModule.o ${OBJECTDIR}/LogModule_nomain.o;\
+	fi
+
 ${OBJECTDIR}/PWMModule_nomain.o: ${OBJECTDIR}/PWMModule.o PWMModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/PWMModule.o`; \
@@ -330,19 +355,6 @@ ${OBJECTDIR}/StreamDataRecorder_nomain.o: ${OBJECTDIR}/StreamDataRecorder.o Stre
 	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder_nomain.o StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/StreamDataRecorder.o ${OBJECTDIR}/StreamDataRecorder_nomain.o;\
-	fi
-
-${OBJECTDIR}/SymbolBuffer_nomain.o: ${OBJECTDIR}/SymbolBuffer.o SymbolBuffer.c 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/SymbolBuffer.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../CoAP -I../EEG_Evoker -I. -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SymbolBuffer_nomain.o SymbolBuffer.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/SymbolBuffer.o ${OBJECTDIR}/SymbolBuffer_nomain.o;\
 	fi
 
 ${OBJECTDIR}/UpdateModule_nomain.o: ${OBJECTDIR}/UpdateModule.o UpdateModule.c 
@@ -389,6 +401,7 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi
@@ -396,7 +409,6 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
 # Subprojects
 .clean-subprojects:

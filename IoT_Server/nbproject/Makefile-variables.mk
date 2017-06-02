@@ -7,13 +7,13 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=MinGW-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW-Windows
+CND_PLATFORM_Debug=Cygwin-Windows
+CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
 CND_ARTIFACT_NAME_Debug=iot_server
-CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW-Windows/iot_server
-CND_PACKAGE_DIR_Debug=dist/Debug/MinGW-Windows/package
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/iot_server
+CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
 CND_PACKAGE_NAME_Debug=iotserver.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW-Windows/package/iotserver.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/iotserver.tar
 # Release configuration
 CND_PLATFORM_Release=MinGW-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/MinGW-Windows

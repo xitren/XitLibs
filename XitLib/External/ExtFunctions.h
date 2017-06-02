@@ -21,8 +21,8 @@
 #endif
 /*============================================================================*/
 
-#ifndef __HANDLER_H__
-#define __HANDLER_H__  
+#ifndef __EXT_FUNCTIONS_H__
+#define __EXT_FUNCTIONS_H__  
 
 #ifdef __cplusplus
 extern "C" {

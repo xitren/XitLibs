@@ -1,7 +1,7 @@
 
 /* Local headers -------------------------------------------------------------*/
 #include "FunctionsDiscovery.h"
-#include "SymbolBuffer.h"
+#include "LogModule.h"
 #include "Handler.h"
 #include <stdio.h>
 #include <string.h>
@@ -53,48 +53,45 @@ int EEGGetFile(ParameterList_t *TempParam)
     
     int EEGWriteInFile(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
-   int  Adress= 60;
-   int  Value=1;
-   int  i;
-   uint32_t res;
-
-   #ifdef DEBUG
-      printf("--//internal//-- Into EEGWriteInFile.\r\n\r");
-      Log("--//internal//-- Into EEGWriteInFile.\r\n\r");
-   #endif
-   AddToTransmit("<EEGWRITE>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
-         res=ReadMem(60);
-         #ifdef DEBUG
-         printf("Value REG WriteInFile %d",res);
-         #endif
-         WriteMem(60,Value);
-         res=ReadMem(60);
-         #ifdef DEBUG
-         printf("New value REG WriteInFile %d",res);
-         #endif
-         AddToTransmit("<WR/>\r\n\r");
-         #ifdef DEBUG
-            printf("--//internal//-- Mem[%d] setted to %d.\r\n\r",60,Value);
-         #endif
+    int  ret_val = 0;
+    int  Adress= 60;
+    int  Value=1;
+    int  i;
+    uint32_t res;
+   
+    AddToLog("Into EEGWriteInFile.\n", 1);
+    AddToTransmit("<EEGWRITE>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
+        res=ReadMem(60);
+        #ifdef DEBUG
+        printf("Value REG WriteInFile %d",res);
+        #endif
+        WriteMem(60,Value);
+        res=ReadMem(60);
+        #ifdef DEBUG
+        printf("New value REG WriteInFile %d",res);
+        #endif
+        AddToTransmit("<WR/>\r\n\r");
+        #ifdef DEBUG
+           printf("--//internal//-- Mem[%d] setted to %d.\r\n\r",60,Value);
+        #endif
         content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-   }
-   else
-   {
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
         #ifdef DEBUG
            printf("--//internal//--  Invalid parameters.\r\n\r");
         #endif
-   }
-   AddToTransmit("</EEGWRITE>\r\n\r");
+    }
+    AddToTransmit("</EEGWRITE>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
     
 int QueryNodes(ParameterList_t *TempParam) 
