@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
+CND_PLATFORM=MinGW-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug_Windows
 CND_DISTDIR=dist
@@ -39,7 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/CommandModule.o \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
-	${OBJECTDIR}/ExtMemModule.o \
+	${OBJECTDIR}/DistCalc.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -56,23 +56,12 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f6 \
-	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f2 \
-	${TESTDIR}/TestFiles/f3 \
-	${TESTDIR}/TestFiles/f7 \
-	${TESTDIR}/TestFiles/f5 \
-	${TESTDIR}/TestFiles/f4
+	${TESTDIR}/TestFiles/f1
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/discovery_func_test.o \
-	${TESTDIR}/tests/dma_test.o \
-	${TESTDIR}/tests/ext_mem_test.o \
-	${TESTDIR}/tests/file_cvep_test.o \
-	${TESTDIR}/tests/json_parser.o \
-	${TESTDIR}/tests/operation_test.o \
-	${TESTDIR}/tests/pocket_test.o
+	${TESTDIR}/External/ExtFunctions.o \
+	${TESTDIR}/tests/dma_test.o
 
 # C Compiler Flags
 CFLAGS=
@@ -100,77 +89,77 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
-${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/CRC16ANSI.o: nbproject/Makefile-${CND_CONF}.mk CRC16ANSI.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 
-${OBJECTDIR}/CommandModule.o: CommandModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/CommandModule.o: nbproject/Makefile-${CND_CONF}.mk CommandModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule.o CommandModule.c
 
-${OBJECTDIR}/ConfigMem.o: ConfigMem.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/ConfigMem.o: nbproject/Makefile-${CND_CONF}.mk ConfigMem.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem.o ConfigMem.c
 
-${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/DMAretransmitter.o: nbproject/Makefile-${CND_CONF}.mk DMAretransmitter.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
-${OBJECTDIR}/ExtMemModule.o: ExtMemModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/DistCalc.o: nbproject/Makefile-${CND_CONF}.mk DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtMemModule.o ExtMemModule.c
+	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
-${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/FunctionsDiscovery.o: nbproject/Makefile-${CND_CONF}.mk FunctionsDiscovery.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c
 
-${OBJECTDIR}/Handler.o: Handler.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Handler.o: nbproject/Makefile-${CND_CONF}.mk Handler.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
 
-${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/InOutBuffer.o: nbproject/Makefile-${CND_CONF}.mk InOutBuffer.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 
-${OBJECTDIR}/PWMModule.o: PWMModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/PWMModule.o: nbproject/Makefile-${CND_CONF}.mk PWMModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
 
-${OBJECTDIR}/Packet.o: Packet.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Packet.o: nbproject/Makefile-${CND_CONF}.mk Packet.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
 
-${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/StreamDataRecorder.o: nbproject/Makefile-${CND_CONF}.mk StreamDataRecorder.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
 
-${OBJECTDIR}/SymbolBuffer.o: SymbolBuffer.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/SymbolBuffer.o: nbproject/Makefile-${CND_CONF}.mk SymbolBuffer.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/SymbolBuffer.o SymbolBuffer.c
 
-${OBJECTDIR}/UpdateModule.o: UpdateModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/UpdateModule.o: nbproject/Makefile-${CND_CONF}.mk UpdateModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
-${OBJECTDIR}/VideoModule.o: VideoModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/VideoModule.o: nbproject/Makefile-${CND_CONF}.mk VideoModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule.o VideoModule.c
 
-${OBJECTDIR}/generatorModule.o: generatorModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/generatorModule.o: nbproject/Makefile-${CND_CONF}.mk generatorModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
@@ -183,75 +172,21 @@ ${OBJECTDIR}/generatorModule.o: generatorModule.c nbproject/Makefile-${CND_CONF}
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/discovery_func_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/External/ExtFunctions.o ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS}   -lWs2_32 
-
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   -lWs2_32 
-
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/ext_mem_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   -lWs2_32 
-
-${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/file_cvep_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}   -L../cVEP/dist/Debug/MinGW-Windows -lWs2_32 -lcvep 
-
-${TESTDIR}/TestFiles/f7: ${TESTDIR}/tests/operation_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS}   -lWs2_32 
-
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/json_parser.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}   -lWs2_32 
-
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/pocket_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   -lWs2_32 
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lWs2_32 
 
 
-${TESTDIR}/tests/discovery_func_test.o: tests/discovery_func_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
+${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
+	${MKDIR} -p ${TESTDIR}/External
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -DCPU -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/discovery_func_test.o tests/discovery_func_test.c
+	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -DCPU -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/External/ExtFunctions.o External/ExtFunctions.c
 
 
 ${TESTDIR}/tests/dma_test.o: tests/dma_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -DCPU -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/dma_test.o tests/dma_test.c
-
-
-${TESTDIR}/tests/ext_mem_test.o: tests/ext_mem_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -DCPU -DDEBUG -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ext_mem_test.o tests/ext_mem_test.c
-
-
-${TESTDIR}/tests/file_cvep_test.o: tests/file_cvep_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/file_cvep_test.o tests/file_cvep_test.c
-
-
-${TESTDIR}/tests/operation_test.o: tests/operation_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/operation_test.o tests/operation_test.c
-
-
-${TESTDIR}/tests/json_parser.o: tests/json_parser.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_parser.o tests/json_parser.c
-
-
-${TESTDIR}/tests/pocket_test.o: tests/pocket_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/pocket_test.o tests/pocket_test.c
 
 
 ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c 
@@ -306,17 +241,17 @@ ${OBJECTDIR}/DMAretransmitter_nomain.o: ${OBJECTDIR}/DMAretransmitter.o DMAretra
 	    ${CP} ${OBJECTDIR}/DMAretransmitter.o ${OBJECTDIR}/DMAretransmitter_nomain.o;\
 	fi
 
-${OBJECTDIR}/ExtMemModule_nomain.o: ${OBJECTDIR}/ExtMemModule.o ExtMemModule.c 
+${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExtMemModule.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/DistCalc.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtMemModule_nomain.o ExtMemModule.c;\
+	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
 	else  \
-	    ${CP} ${OBJECTDIR}/ExtMemModule.o ${OBJECTDIR}/ExtMemModule_nomain.o;\
+	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
 	fi
 
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 
@@ -453,13 +388,7 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
-	    ${TESTDIR}/TestFiles/f2 || true; \
-	    ${TESTDIR}/TestFiles/f3 || true; \
-	    ${TESTDIR}/TestFiles/f7 || true; \
-	    ${TESTDIR}/TestFiles/f5 || true; \
-	    ${TESTDIR}/TestFiles/f4 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi
@@ -467,6 +396,7 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
 # Subprojects
 .clean-subprojects:

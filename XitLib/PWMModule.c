@@ -2,9 +2,6 @@
 /* Local headers -------------------------------------------------------------*/
 #include "PWMModule.h"
 #include "ConfigMem.h"
-#ifndef CPU
-    #include "stm32f4xx_hal.h"
-#endif
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -76,55 +73,9 @@ void SetServo2UnderPWM(uint8_t c)
 }
 void SetLedsUnderPWM(void)
 {
-    #ifndef CPU
-//        if (pwm_step < pwm_led_c_green)
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_12, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_12, GPIO_PIN_RESET);
-//        if (pwm_step < pwm_led_c_red)
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_13, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_13, GPIO_PIN_RESET);
-//        if (pwm_step < pwm_led_c_blue)
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_14, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_14, GPIO_PIN_RESET);
-//
-        if (pwm_step < pwm_led_q_green)
-          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_SET);
-        else
-          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_14, GPIO_PIN_RESET);
-        if (pwm_step < pwm_led_q_red)
-          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
-        else
-          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
-        if (pwm_step < pwm_led_q_blue)
-          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_SET);
-        else
-          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_15, GPIO_PIN_RESET);
-//
-//        if (pwm_step < pwm_led_green)
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-//        if (pwm_step < pwm_led_red)
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_RESET);
-//        if (pwm_step < pwm_led_blue)
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_6, GPIO_PIN_RESET);
-//
-//        if (pwm_step < pwm_servo_1)
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_0, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOJ, GPIO_PIN_0, GPIO_PIN_RESET);
-//        if (pwm_step < pwm_servo_2)
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_SET);
-//        else
-//          HAL_GPIO_WritePin(GPIOC, GPIO_PIN_4, GPIO_PIN_RESET);
-    #endif
+    SetLeds(pwm_step < pwm_led_q_green,
+            pwm_step < pwm_led_q_red,
+            pwm_step < pwm_led_q_blue);
     return;
 }
 /*============================================================================*/

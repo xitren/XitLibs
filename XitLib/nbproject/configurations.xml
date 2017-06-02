@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -8,7 +8,7 @@
       <itemPath>CommandModule.c</itemPath>
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DMAretransmitter.c</itemPath>
-      <itemPath>ExtMemModule.c</itemPath>
+      <itemPath>DistCalc.c</itemPath>
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
@@ -23,11 +23,14 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
+      <logicalFolder name="f1" displayName="CoAP" projectFiles="true">
+        <itemPath>../CoAP/coap.h</itemPath>
+      </logicalFolder>
       <itemPath>CRC16ANSI.h</itemPath>
       <itemPath>CommandModule.h</itemPath>
       <itemPath>ConfigMem.h</itemPath>
       <itemPath>DMAretransmitter.h</itemPath>
-      <itemPath>ExtMemModule.h</itemPath>
+      <itemPath>DistCalc.h</itemPath>
       <itemPath>FunctionsDiscovery.h</itemPath>
       <itemPath>Handler.h</itemPath>
       <itemPath>InOutBuffer.h</itemPath>
@@ -51,47 +54,13 @@
                    displayName="Файлы тестов"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
-      <logicalFolder name="f6"
-                     displayName="Discovery test"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>tests/discovery_func_test.c</itemPath>
-      </logicalFolder>
       <logicalFolder name="f1"
                      displayName="DMA module test"
                      projectFiles="true"
                      kind="TEST">
+        <itemPath>External/ExtFunctions.c</itemPath>
+        <itemPath>External/ExtFunctions.h</itemPath>
         <itemPath>tests/dma_test.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f2"
-                     displayName="External memory test"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>tests/ext_mem_test.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f3"
-                     displayName="File cVEP test"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>tests/file_cvep_test.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f7"
-                     displayName="Operation handler test"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>tests/operation_test.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f5"
-                     displayName="Parser JSON"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>tests/json_parser.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f4"
-                     displayName="Pocket test"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>tests/pocket_test.c</itemPath>
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
@@ -140,6 +109,8 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -162,9 +133,13 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -226,142 +201,11 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>CPU</Elem>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f3">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
-          <linkerAddLib>
-            <pElem>../cVEP/dist/Debug/MinGW-Windows</pElem>
-          </linkerAddLib>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-            <linkerLibLibItem>cvep</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f4">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f6">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>CPU</Elem>
-          </preprocessorList>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -375,6 +219,11 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
+          <incDir>
+            <pElem>../CoAP</pElem>
+            <pElem>../EEG_Evoker</pElem>
+            <pElem>.</pElem>
+          </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
@@ -405,6 +254,8 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -427,9 +278,13 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -480,115 +335,17 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f1</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f3">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f4">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f6">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
+          <linkerLibItems>
+            <linkerLibFileItem>../CoAP/dist/Release/MinGW-Windows/libcoap.a</linkerLibFileItem>
+            <linkerLibLibItem>ws2_32</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -630,6 +387,8 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -652,9 +411,13 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -716,142 +479,11 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>CPU</Elem>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f3">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
-          <linkerAddLib>
-            <pElem>../cVEP/dist/Debug/MinGW-Windows</pElem>
-          </linkerAddLib>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-            <linkerLibLibItem>cvep</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f4">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f6">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>CPU</Elem>
-          </preprocessorList>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -883,6 +515,8 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -905,9 +539,13 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -960,113 +598,11 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f3">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f4">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f6">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
-        </linkerTool>
-      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1114,6 +650,8 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1136,9 +674,13 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1200,142 +742,11 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>CPU</Elem>
-            <Elem>DEBUG</Elem>
-          </preprocessorList>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f3">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
-          <linkerAddLib>
-            <pElem>../cVEP/dist/Debug/MinGW-Windows</pElem>
-          </linkerAddLib>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-            <linkerLibLibItem>cvep</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f4">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f6">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-          <preprocessorList>
-            <Elem>CPU</Elem>
-          </preprocessorList>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
-          <linkerLibItems>
-            <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1385,6 +796,8 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1407,9 +820,13 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="0">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1462,113 +879,11 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f3">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f4">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f6">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
-        </linkerTool>
-      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1602,6 +917,8 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1624,9 +941,13 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtMemModule.c" ex="false" tool="0" flavor2="9">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="9">
       </item>
-      <item path="ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1679,113 +1000,11 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f3">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f3</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f4">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f4</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f5">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f6">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f6</output>
-        </linkerTool>
-      </folder>
-      <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f7</output>
-        </linkerTool>
-      </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/discovery_func_test.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ext_mem_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/file_cvep_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/json_parser.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/operation_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/pocket_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>

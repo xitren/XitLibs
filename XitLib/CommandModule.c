@@ -6,15 +6,11 @@
 #include "CommandModule.h"
 #include "InOutBuffer.h"
 #include "ConfigMem.h"
-#include "ExtMemModule.h"
+#include "DistCalc.h"
 #include "StreamDataRecorder.h"
 #include "FunctionsDiscovery.h"
 #include "UpdateModule.h"
 #include "generatorModule.h"
-//#include "ConfigMem.h"
-#ifndef CPU
-    //#include "stm32f4xx_hal_cortex.h"
-#endif
 #include "VideoModule.h"
 /*============================================================================*/                           
 

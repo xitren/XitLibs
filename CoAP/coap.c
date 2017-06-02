@@ -164,7 +164,8 @@ int coap_parseToken(char* tok_p, size_t *tok_len, const coap_header_t *hdr, cons
 }
 
 // advances p
-int coap_parseOption(coap_option_t *option, uint16_t *running_delta, const uint8_t **buf, size_t buflen)
+int coap_parseOption(coap_option_t *option, uint16_t *running_delta, 
+                                            const uint8_t **buf, size_t buflen)
 {
     const uint8_t *p = *buf;
     uint8_t headlen = 1;

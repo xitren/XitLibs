@@ -39,7 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/CommandModule.o \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
-	${OBJECTDIR}/ExtMemModule.o \
+	${OBJECTDIR}/DistCalc.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -49,54 +49,19 @@ OBJECTFILES= \
 	${OBJECTDIR}/SymbolBuffer.o \
 	${OBJECTDIR}/UpdateModule.o \
 	${OBJECTDIR}/VideoModule.o \
-	${OBJECTDIR}/generatorModule.o \
-	${OBJECTDIR}/wiringPi/mcp23017.o \
-	${OBJECTDIR}/wiringPi/mcp23s08.o \
-	${OBJECTDIR}/wiringPi/mcp23s17.o \
-	${OBJECTDIR}/wiringPi/mcp3002.o \
-	${OBJECTDIR}/wiringPi/mcp3004.o \
-	${OBJECTDIR}/wiringPi/mcp3422.o \
-	${OBJECTDIR}/wiringPi/mcp4802.o \
-	${OBJECTDIR}/wiringPi/pcf8574.o \
-	${OBJECTDIR}/wiringPi/pcf8591.o \
-	${OBJECTDIR}/wiringPi/piHiPri.o \
-	${OBJECTDIR}/wiringPi/piThread.o \
-	${OBJECTDIR}/wiringPi/pseudoPins.o \
-	${OBJECTDIR}/wiringPi/rht03.o \
-	${OBJECTDIR}/wiringPi/sn3218.o \
-	${OBJECTDIR}/wiringPi/softPwm.o \
-	${OBJECTDIR}/wiringPi/softServo.o \
-	${OBJECTDIR}/wiringPi/softTone.o \
-	${OBJECTDIR}/wiringPi/sr595.o \
-	${OBJECTDIR}/wiringPi/wiringPi.o \
-	${OBJECTDIR}/wiringPi/wiringPiI2C.o \
-	${OBJECTDIR}/wiringPi/wiringPiSPI.o \
-	${OBJECTDIR}/wiringPi/wiringSerial.o \
-	${OBJECTDIR}/wiringPi/wiringShift.o \
-	${OBJECTDIR}/wiringPi/wpiExtensions.o
+	${OBJECTDIR}/generatorModule.o
 
 # Test Directory
 TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f6 \
-	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f2 \
-	${TESTDIR}/TestFiles/f3 \
-	${TESTDIR}/TestFiles/f7 \
-	${TESTDIR}/TestFiles/f5 \
-	${TESTDIR}/TestFiles/f4
+	${TESTDIR}/TestFiles/f1
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/discovery_func_test.o \
-	${TESTDIR}/tests/dma_test.o \
-	${TESTDIR}/tests/ext_mem_test.o \
-	${TESTDIR}/tests/file_cvep_test.o \
-	${TESTDIR}/tests/json_parser.o \
-	${TESTDIR}/tests/operation_test.o \
-	${TESTDIR}/tests/pocket_test.o
+	${TESTDIR}/External/ExtFunctions.o \
+	${TESTDIR}/tests/dma_test.o
 
 # C Compiler Flags
 CFLAGS=-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
@@ -144,10 +109,10 @@ ${OBJECTDIR}/DMAretransmitter.o: nbproject/Makefile-${CND_CONF}.mk DMAretransmit
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
-${OBJECTDIR}/ExtMemModule.o: nbproject/Makefile-${CND_CONF}.mk ExtMemModule.c 
+${OBJECTDIR}/DistCalc.o: nbproject/Makefile-${CND_CONF}.mk DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtMemModule.o ExtMemModule.c
+	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
 ${OBJECTDIR}/FunctionsDiscovery.o: nbproject/Makefile-${CND_CONF}.mk FunctionsDiscovery.c 
 	${MKDIR} -p ${OBJECTDIR}
@@ -199,126 +164,6 @@ ${OBJECTDIR}/generatorModule.o: nbproject/Makefile-${CND_CONF}.mk generatorModul
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
 
-${OBJECTDIR}/wiringPi/mcp23017.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/mcp23017.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp23017.o wiringPi/mcp23017.c
-
-${OBJECTDIR}/wiringPi/mcp23s08.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/mcp23s08.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp23s08.o wiringPi/mcp23s08.c
-
-${OBJECTDIR}/wiringPi/mcp23s17.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/mcp23s17.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp23s17.o wiringPi/mcp23s17.c
-
-${OBJECTDIR}/wiringPi/mcp3002.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/mcp3002.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp3002.o wiringPi/mcp3002.c
-
-${OBJECTDIR}/wiringPi/mcp3004.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/mcp3004.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp3004.o wiringPi/mcp3004.c
-
-${OBJECTDIR}/wiringPi/mcp3422.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/mcp3422.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp3422.o wiringPi/mcp3422.c
-
-${OBJECTDIR}/wiringPi/mcp4802.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/mcp4802.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp4802.o wiringPi/mcp4802.c
-
-${OBJECTDIR}/wiringPi/pcf8574.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/pcf8574.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/pcf8574.o wiringPi/pcf8574.c
-
-${OBJECTDIR}/wiringPi/pcf8591.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/pcf8591.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/pcf8591.o wiringPi/pcf8591.c
-
-${OBJECTDIR}/wiringPi/piHiPri.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/piHiPri.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/piHiPri.o wiringPi/piHiPri.c
-
-${OBJECTDIR}/wiringPi/piThread.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/piThread.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/piThread.o wiringPi/piThread.c
-
-${OBJECTDIR}/wiringPi/pseudoPins.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/pseudoPins.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/pseudoPins.o wiringPi/pseudoPins.c
-
-${OBJECTDIR}/wiringPi/rht03.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/rht03.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/rht03.o wiringPi/rht03.c
-
-${OBJECTDIR}/wiringPi/sn3218.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/sn3218.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/sn3218.o wiringPi/sn3218.c
-
-${OBJECTDIR}/wiringPi/softPwm.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/softPwm.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/softPwm.o wiringPi/softPwm.c
-
-${OBJECTDIR}/wiringPi/softServo.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/softServo.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/softServo.o wiringPi/softServo.c
-
-${OBJECTDIR}/wiringPi/softTone.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/softTone.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/softTone.o wiringPi/softTone.c
-
-${OBJECTDIR}/wiringPi/sr595.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/sr595.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/sr595.o wiringPi/sr595.c
-
-${OBJECTDIR}/wiringPi/wiringPi.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/wiringPi.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringPi.o wiringPi/wiringPi.c
-
-${OBJECTDIR}/wiringPi/wiringPiI2C.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/wiringPiI2C.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringPiI2C.o wiringPi/wiringPiI2C.c
-
-${OBJECTDIR}/wiringPi/wiringPiSPI.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/wiringPiSPI.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringPiSPI.o wiringPi/wiringPiSPI.c
-
-${OBJECTDIR}/wiringPi/wiringSerial.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/wiringSerial.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringSerial.o wiringPi/wiringSerial.c
-
-${OBJECTDIR}/wiringPi/wiringShift.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/wiringShift.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringShift.o wiringPi/wiringShift.c
-
-${OBJECTDIR}/wiringPi/wpiExtensions.o: nbproject/Makefile-${CND_CONF}.mk wiringPi/wpiExtensions.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wpiExtensions.o wiringPi/wpiExtensions.c
-
 # Subprojects
 .build-subprojects:
 	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug
@@ -327,75 +172,21 @@ ${OBJECTDIR}/wiringPi/wpiExtensions.o: nbproject/Makefile-${CND_CONF}.mk wiringP
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/discovery_func_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} -lWs2_32 
-
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/External/ExtFunctions.o ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lWs2_32 
 
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/ext_mem_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} -lWs2_32 
 
-${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/file_cvep_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} -L../cVEP/dist/Debug/MinGW-Windows -lWs2_32 -lcvep 
-
-${TESTDIR}/TestFiles/f7: ${TESTDIR}/tests/operation_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} -lWs2_32 
-
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/json_parser.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} -lWs2_32 
-
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/pocket_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} -lWs2_32 
-
-
-${TESTDIR}/tests/discovery_func_test.o: tests/discovery_func_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
+${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
+	${MKDIR} -p ${TESTDIR}/External
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -DCPU -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/discovery_func_test.o tests/discovery_func_test.c
+	$(COMPILE.c) -g -DDEBUG -DMC -DCPU -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/External/ExtFunctions.o External/ExtFunctions.c
 
 
 ${TESTDIR}/tests/dma_test.o: tests/dma_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -DCPU -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/dma_test.o tests/dma_test.c
-
-
-${TESTDIR}/tests/ext_mem_test.o: tests/ext_mem_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -DCPU -DDEBUG -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ext_mem_test.o tests/ext_mem_test.c
-
-
-${TESTDIR}/tests/file_cvep_test.o: tests/file_cvep_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/file_cvep_test.o tests/file_cvep_test.c
-
-
-${TESTDIR}/tests/operation_test.o: tests/operation_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/operation_test.o tests/operation_test.c
-
-
-${TESTDIR}/tests/json_parser.o: tests/json_parser.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_parser.o tests/json_parser.c
-
-
-${TESTDIR}/tests/pocket_test.o: tests/pocket_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/pocket_test.o tests/pocket_test.c
 
 
 ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c 
@@ -450,17 +241,17 @@ ${OBJECTDIR}/DMAretransmitter_nomain.o: ${OBJECTDIR}/DMAretransmitter.o DMAretra
 	    ${CP} ${OBJECTDIR}/DMAretransmitter.o ${OBJECTDIR}/DMAretransmitter_nomain.o;\
 	fi
 
-${OBJECTDIR}/ExtMemModule_nomain.o: ${OBJECTDIR}/ExtMemModule.o ExtMemModule.c 
+${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExtMemModule.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/DistCalc.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtMemModule_nomain.o ExtMemModule.c;\
+	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
 	else  \
-	    ${CP} ${OBJECTDIR}/ExtMemModule.o ${OBJECTDIR}/ExtMemModule_nomain.o;\
+	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
 	fi
 
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 
@@ -593,329 +384,11 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 	    ${CP} ${OBJECTDIR}/generatorModule.o ${OBJECTDIR}/generatorModule_nomain.o;\
 	fi
 
-${OBJECTDIR}/wiringPi/mcp23017_nomain.o: ${OBJECTDIR}/wiringPi/mcp23017.o wiringPi/mcp23017.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/mcp23017.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp23017_nomain.o wiringPi/mcp23017.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/mcp23017.o ${OBJECTDIR}/wiringPi/mcp23017_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/mcp23s08_nomain.o: ${OBJECTDIR}/wiringPi/mcp23s08.o wiringPi/mcp23s08.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/mcp23s08.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp23s08_nomain.o wiringPi/mcp23s08.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/mcp23s08.o ${OBJECTDIR}/wiringPi/mcp23s08_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/mcp23s17_nomain.o: ${OBJECTDIR}/wiringPi/mcp23s17.o wiringPi/mcp23s17.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/mcp23s17.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp23s17_nomain.o wiringPi/mcp23s17.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/mcp23s17.o ${OBJECTDIR}/wiringPi/mcp23s17_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/mcp3002_nomain.o: ${OBJECTDIR}/wiringPi/mcp3002.o wiringPi/mcp3002.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/mcp3002.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp3002_nomain.o wiringPi/mcp3002.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/mcp3002.o ${OBJECTDIR}/wiringPi/mcp3002_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/mcp3004_nomain.o: ${OBJECTDIR}/wiringPi/mcp3004.o wiringPi/mcp3004.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/mcp3004.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp3004_nomain.o wiringPi/mcp3004.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/mcp3004.o ${OBJECTDIR}/wiringPi/mcp3004_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/mcp3422_nomain.o: ${OBJECTDIR}/wiringPi/mcp3422.o wiringPi/mcp3422.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/mcp3422.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp3422_nomain.o wiringPi/mcp3422.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/mcp3422.o ${OBJECTDIR}/wiringPi/mcp3422_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/mcp4802_nomain.o: ${OBJECTDIR}/wiringPi/mcp4802.o wiringPi/mcp4802.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/mcp4802.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/mcp4802_nomain.o wiringPi/mcp4802.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/mcp4802.o ${OBJECTDIR}/wiringPi/mcp4802_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/pcf8574_nomain.o: ${OBJECTDIR}/wiringPi/pcf8574.o wiringPi/pcf8574.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/pcf8574.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/pcf8574_nomain.o wiringPi/pcf8574.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/pcf8574.o ${OBJECTDIR}/wiringPi/pcf8574_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/pcf8591_nomain.o: ${OBJECTDIR}/wiringPi/pcf8591.o wiringPi/pcf8591.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/pcf8591.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/pcf8591_nomain.o wiringPi/pcf8591.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/pcf8591.o ${OBJECTDIR}/wiringPi/pcf8591_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/piHiPri_nomain.o: ${OBJECTDIR}/wiringPi/piHiPri.o wiringPi/piHiPri.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/piHiPri.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/piHiPri_nomain.o wiringPi/piHiPri.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/piHiPri.o ${OBJECTDIR}/wiringPi/piHiPri_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/piThread_nomain.o: ${OBJECTDIR}/wiringPi/piThread.o wiringPi/piThread.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/piThread.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/piThread_nomain.o wiringPi/piThread.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/piThread.o ${OBJECTDIR}/wiringPi/piThread_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/pseudoPins_nomain.o: ${OBJECTDIR}/wiringPi/pseudoPins.o wiringPi/pseudoPins.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/pseudoPins.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/pseudoPins_nomain.o wiringPi/pseudoPins.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/pseudoPins.o ${OBJECTDIR}/wiringPi/pseudoPins_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/rht03_nomain.o: ${OBJECTDIR}/wiringPi/rht03.o wiringPi/rht03.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/rht03.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/rht03_nomain.o wiringPi/rht03.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/rht03.o ${OBJECTDIR}/wiringPi/rht03_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/sn3218_nomain.o: ${OBJECTDIR}/wiringPi/sn3218.o wiringPi/sn3218.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/sn3218.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/sn3218_nomain.o wiringPi/sn3218.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/sn3218.o ${OBJECTDIR}/wiringPi/sn3218_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/softPwm_nomain.o: ${OBJECTDIR}/wiringPi/softPwm.o wiringPi/softPwm.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/softPwm.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/softPwm_nomain.o wiringPi/softPwm.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/softPwm.o ${OBJECTDIR}/wiringPi/softPwm_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/softServo_nomain.o: ${OBJECTDIR}/wiringPi/softServo.o wiringPi/softServo.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/softServo.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/softServo_nomain.o wiringPi/softServo.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/softServo.o ${OBJECTDIR}/wiringPi/softServo_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/softTone_nomain.o: ${OBJECTDIR}/wiringPi/softTone.o wiringPi/softTone.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/softTone.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/softTone_nomain.o wiringPi/softTone.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/softTone.o ${OBJECTDIR}/wiringPi/softTone_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/sr595_nomain.o: ${OBJECTDIR}/wiringPi/sr595.o wiringPi/sr595.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/sr595.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/sr595_nomain.o wiringPi/sr595.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/sr595.o ${OBJECTDIR}/wiringPi/sr595_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/wiringPi_nomain.o: ${OBJECTDIR}/wiringPi/wiringPi.o wiringPi/wiringPi.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/wiringPi.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringPi_nomain.o wiringPi/wiringPi.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/wiringPi.o ${OBJECTDIR}/wiringPi/wiringPi_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/wiringPiI2C_nomain.o: ${OBJECTDIR}/wiringPi/wiringPiI2C.o wiringPi/wiringPiI2C.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/wiringPiI2C.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringPiI2C_nomain.o wiringPi/wiringPiI2C.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/wiringPiI2C.o ${OBJECTDIR}/wiringPi/wiringPiI2C_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/wiringPiSPI_nomain.o: ${OBJECTDIR}/wiringPi/wiringPiSPI.o wiringPi/wiringPiSPI.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/wiringPiSPI.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringPiSPI_nomain.o wiringPi/wiringPiSPI.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/wiringPiSPI.o ${OBJECTDIR}/wiringPi/wiringPiSPI_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/wiringSerial_nomain.o: ${OBJECTDIR}/wiringPi/wiringSerial.o wiringPi/wiringSerial.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/wiringSerial.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringSerial_nomain.o wiringPi/wiringSerial.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/wiringSerial.o ${OBJECTDIR}/wiringPi/wiringSerial_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/wiringShift_nomain.o: ${OBJECTDIR}/wiringPi/wiringShift.o wiringPi/wiringShift.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/wiringShift.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wiringShift_nomain.o wiringPi/wiringShift.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/wiringShift.o ${OBJECTDIR}/wiringPi/wiringShift_nomain.o;\
-	fi
-
-${OBJECTDIR}/wiringPi/wpiExtensions_nomain.o: ${OBJECTDIR}/wiringPi/wpiExtensions.o wiringPi/wpiExtensions.c 
-	${MKDIR} -p ${OBJECTDIR}/wiringPi
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/wiringPi/wpiExtensions.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/wiringPi/wpiExtensions_nomain.o wiringPi/wpiExtensions.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/wiringPi/wpiExtensions.o ${OBJECTDIR}/wiringPi/wpiExtensions_nomain.o;\
-	fi
-
 # Run Test Targets
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
-	    ${TESTDIR}/TestFiles/f2 || true; \
-	    ${TESTDIR}/TestFiles/f3 || true; \
-	    ${TESTDIR}/TestFiles/f7 || true; \
-	    ${TESTDIR}/TestFiles/f5 || true; \
-	    ${TESTDIR}/TestFiles/f4 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

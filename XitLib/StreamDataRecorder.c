@@ -3,15 +3,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
 #include <time.h>  //вызов функции asctime()
-
 #include <math.h>
 #include "Handler.h"
-#include "ExtMemModule.h"
-#ifndef CPU
-    #include "ad7190.h"
-#endif
+#include "DistCalc.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -41,7 +36,7 @@ char *path_ext_eeg="EEGSETTOEXTMEM";
 int32_t GetMiddleADC(uint8_t _channel);
 void EEG_unreaded_dump(void);
 /*============================================================================*/
-//#define EXTMEMSERVER
+
 /* Functions declaration -----------------------------------------------------*/
 #ifdef EXTMEMSERVER
     int EEGPutExtMem(ParameterList_t *TempParam)
@@ -136,8 +131,6 @@ void EEG_unreaded_dump(void);
         {
             fscanf(fp,"%d\t%d\t%d\t%d\t%d\t%d\t%d\t%d\r\n\r",
                     sd,sd+1,sd+2,sd+3,sd+4,sd+5,sd+6,sd+7);
-//            printf("%09d\t%09d\t%09d\t%09d\t%09d\t%09d\t%09d\t%09d\r\n\r",
-//                    *sd,*(sd+1),*(sd+2),*(sd+3),*(sd+4),*(sd+5),*(sd+6),*(sd+7));
             for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
                 Data_samples[j][samples_cnt%BUFFER_2ND_MAX] = sd[j];
             samples_cnt++;
@@ -147,17 +140,10 @@ void EEG_unreaded_dump(void);
             {
                 int hlen = GetDataReadyCnt(byN,bufsa);
                 hlen*=4;
-                //EEG_dump((uint8_t *)bufsa, hlen);
-//                ret = CreateExtMemReq((uint8_t *)bufsa,&(hlen),
-//                        history_eeg[history_eeg_cnt++] = (intextid++));
                 if (ret < 0)
                 {       
                     return -1;
                 }
-                //uint32_t _popid = AddHistoryExtId(intextid-1);
-    //            history_eeg[history_eeg_cnt-1] = GetMemExtByInt(intextid-1);
-    //            DeleteExtMemReq(intextid-1);
-                //printf("---------------> Translation\r\n\r");
             }
         }
         for(i=0;i < history_eeg_cnt;i++)
@@ -235,56 +221,45 @@ int GetLastBlock(ParameterList_t *TempParam)
     AddToTransmit("{\n \"DATABLOCK\": [\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
-//    if ((scratch_buf.len > 0))
-//    {
-        l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize),(int32_t *)scratch_raw);
-        //l = GetDataReady(ReadMem(REG_EEG_PocketSize),(int32_t *)scratch_raw);
-        if (l > 0)
+    l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize),(int32_t *)scratch_raw);
+    if (l > 0)
+    {
+        for (i=0;(i < l) && ((i+7) < l);i+=8)
         {
-//            sprintf(buffer,"<COUNT>%d</COUNT>\n",l);
-//            AddToTransmit(buffer);
-            for (i=0;(i < l) && ((i+7) < l);i+=8)
+            if(i != 0)
             {
-                if(i != 0)
-                {
-                    AddToTransmit(",\n");
-                }
-//                sprintf(buffer,"<SAMPLE%d>",k);
-//                AddToTransmit(buffer);
-                snprintf(buffer,STRING_SIZE,"  {\"sample\": %d, \"data\": [",
-                                                                        k++);
-                AddToTransmit(buffer);
-                snprintf(buffer,STRING_SIZE,"%d, %d, " 
-                                            ,((int*)scratch_raw)[i]
-                                            ,((int*)scratch_raw)[i+1]);
-                AddToTransmit(buffer);
-                snprintf(buffer,STRING_SIZE,"%d, %d, " 
-                                            ,((int*)scratch_raw)[i+2]
-                                            ,((int*)scratch_raw)[i+3]);
-                AddToTransmit(buffer);
-                snprintf(buffer,STRING_SIZE,"%d, %d, " 
-                                            ,((int*)scratch_raw)[i+4]
-                                            ,((int*)scratch_raw)[i+5]);
-                AddToTransmit(buffer);
-                snprintf(buffer,STRING_SIZE,"%d, %d]}" 
-                                            ,((int*)scratch_raw)[i+6]
-                                            ,((int*)scratch_raw)[i+7]);
-                AddToTransmit(buffer);
-//                sprintf(buffer,"</SAMPLE%d>\n",k++);
-//                AddToTransmit(buffer);
+                AddToTransmit(",\n");
             }
-            //samples_nmbr=samples_nmbr+k;
+            snprintf(buffer,STRING_SIZE,"  {\"sample\": %d, \"data\": [",
+                                                                    k++);
+            AddToTransmit(buffer);
+            snprintf(buffer,STRING_SIZE,"%d, %d, " 
+                                        ,((int*)scratch_raw)[i]
+                                        ,((int*)scratch_raw)[i+1]);
+            AddToTransmit(buffer);
+            snprintf(buffer,STRING_SIZE,"%d, %d, " 
+                                        ,((int*)scratch_raw)[i+2]
+                                        ,((int*)scratch_raw)[i+3]);
+            AddToTransmit(buffer);
+            snprintf(buffer,STRING_SIZE,"%d, %d, " 
+                                        ,((int*)scratch_raw)[i+4]
+                                        ,((int*)scratch_raw)[i+5]);
+            AddToTransmit(buffer);
+            snprintf(buffer,STRING_SIZE,"%d, %d]}" 
+                                        ,((int*)scratch_raw)[i+6]
+                                        ,((int*)scratch_raw)[i+7]);
+            AddToTransmit(buffer);
         }
-        else
-        {
-            //AddToTransmit("</NO_DATA>\r\n\r");
-        }
-//    }
+    }
+    else
+    {
+        AddToTransmit("</NO_DATA>\r\n\r");
+    }
     AddToTransmit("\n ]\n}\n");
 
     return(ret_val);
 }
-//**GetConcreteBlock**//
+
 int GetConcreteBlock(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
@@ -321,16 +296,12 @@ int GetConcreteBlock(ParameterList_t *TempParam)
           l=GetDataPtrCnt(Number,Size,(int32_t *)scratch_raw);
           if (l > 0)
         {
-//            sprintf(buffer,"<COUNT>%d</COUNT>\n",l);
-//            AddToTransmit(buffer);
             for (i=0;(i < l) && ((i+7) < l);i+=8)
             {
                 if(i != 0)
                 {
                     AddToTransmit(",\n");
                 }
-//                sprintf(buffer,"<SAMPLE%d>",k);
-//                AddToTransmit(buffer);
                 snprintf(buffer,STRING_SIZE,"  {\"sample\": %d, \"data\": [",
                                                                         k++);
                 AddToTransmit(buffer);
@@ -350,18 +321,13 @@ int GetConcreteBlock(ParameterList_t *TempParam)
                                             ,((int*)scratch_raw)[i+6]
                                             ,((int*)scratch_raw)[i+7]);
                 AddToTransmit(buffer);
-//                sprintf(buffer,"</SAMPLE%d>\n",k++);
-//                AddToTransmit(buffer);
             }
-            //samples_nmbr=samples_nmbr+k;
         }
         else
         {
-            //AddToTransmit("</NO_DATA>\r\n\r");
+            AddToTransmit("</NO_DATA>\r\n\r");
         }
        }
-        
-//    
         AddToTransmit("\n ]\n}\n");
           #ifdef DEBUG
              printf("--//internal//--HERE!!! Current sample - %d Block[%d] setted to %d.\r\n\r",samples_cnt,Number,Size);
@@ -511,7 +477,7 @@ void AddSample()
                 if ((ad_id[selAD] != 0x00) && (ad_id[selAD] != 0xFF))
                 {
                     Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
-                        ad7190_read_data_c(selAD);
+                        ADC_read_data_c(selAD);
                 }
                 else
                 {
@@ -523,7 +489,7 @@ void AddSample()
             uint32_t selAD_DRIVE = ReadMem(REG_AD_CHB);
             if (selAD_DRIVE < 8)
                 Data_samples[selAD_DRIVE][samples_cnt%BUFFER_2ND_MAX] = 
-                                                ad7190_read_data_c(0x08);
+                                                ADC_read_data_c(0x08);
         #endif
         }
         else if (signal_type == 2)
@@ -595,21 +561,10 @@ uint32_t GetDataReady(int32_t *_buffer)
 	uint32_t cnt = (samples_cnt-readed_cnt);
         printf("Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
         printf("--Counter not read sample %d-- \r\n\r",cnt);
-/*
-	if ((cnt) > BUFFER_2ND_MAX)
-		cnt = BUFFER_2ND_MAX;
-*/
-        // Kat's code
-//        if ((cnt) > 16)
-//            cnt = 16;
-        //
         printf("--End number samples in block %d-- \r\n\r",cnt);
 	for(i=(samples_cnt-cnt);i<samples_cnt;i++)
 		for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
 			_buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
-        
-        //printf("--New readed_cnt %d-- \r\n\r",readed_cnt);
-//        printf("Out-%d-\n",ptr);
         return ptr;
 }
 uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer)

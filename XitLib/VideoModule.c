@@ -16,7 +16,6 @@
     #include <sys/ioctl.h>
     #include <linux/videodev2.h>
 #endif
-//#include "../XitLib/wiringPi/wiringPi.h"          //wiringPiSetup()
 #include "VideoModule.h"
 #include "xitlibtypes.h"             /* Application Header.            */
 #include "CommandModule.h"

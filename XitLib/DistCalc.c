@@ -1,6 +1,6 @@
 
 /* Local headers -------------------------------------------------------------*/
-#include "ExtMemModule.h"
+#include "DistCalc.h"
 #include "Handler.h"
 #include <stdio.h>
 #include <string.h>

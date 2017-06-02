@@ -15,13 +15,13 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "../XitLib/CommandModule.h"
-#include "../XitLib/InOutBuffer.h"
-#include "../XitLib/coap.h"
-#include "../XitLib/ExtMemModule.h"
-#include "../XitLib/StreamDataRecorder.h"
-#include "../XitLib/DMAretransmitter.h"
-#include "../XitLib/Handler.h"
+#include "CommandModule.h"
+#include "InOutBuffer.h"
+#include "coap.h"
+#include "ExtMemModule.h"
+#include "StreamDataRecorder.h"
+#include "DMAretransmitter.h"
+#include "Handler.h"
 #include <winsock2.h>
 
 /*

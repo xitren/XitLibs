@@ -10,7 +10,7 @@
 #include "CommandModule.h"
 #include "DMAretransmitter.h"
 #include "Packet.h"
-#include "ExtMemModule.h"
+#include "DistCalc.h"
 #include "../CoAP/coap.h"
 #include "StreamDataRecorder.h"
 #include "FunctionsDiscovery.h"

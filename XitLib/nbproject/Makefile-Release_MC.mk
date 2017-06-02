@@ -39,7 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/CommandModule.o \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
-	${OBJECTDIR}/ExtMemModule.o \
+	${OBJECTDIR}/DistCalc.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -56,23 +56,12 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f6 \
-	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f2 \
-	${TESTDIR}/TestFiles/f3 \
-	${TESTDIR}/TestFiles/f7 \
-	${TESTDIR}/TestFiles/f5 \
-	${TESTDIR}/TestFiles/f4
+	${TESTDIR}/TestFiles/f1
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/discovery_func_test.o \
-	${TESTDIR}/tests/dma_test.o \
-	${TESTDIR}/tests/ext_mem_test.o \
-	${TESTDIR}/tests/file_cvep_test.o \
-	${TESTDIR}/tests/json_parser.o \
-	${TESTDIR}/tests/operation_test.o \
-	${TESTDIR}/tests/pocket_test.o
+	${TESTDIR}/External/ExtFunctions.o \
+	${TESTDIR}/tests/dma_test.o
 
 # C Compiler Flags
 CFLAGS=-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
@@ -120,10 +109,10 @@ ${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
-${OBJECTDIR}/ExtMemModule.o: ExtMemModule.c 
+${OBJECTDIR}/DistCalc.o: DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtMemModule.o ExtMemModule.c
+	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
 ${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c 
 	${MKDIR} -p ${OBJECTDIR}
@@ -183,75 +172,21 @@ ${OBJECTDIR}/generatorModule.o: generatorModule.c
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/discovery_func_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS} 
-
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/External/ExtFunctions.o ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
 
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/ext_mem_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
 
-${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/file_cvep_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} 
-
-${TESTDIR}/TestFiles/f7: ${TESTDIR}/tests/operation_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS} 
-
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/json_parser.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} 
-
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/pocket_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} 
-
-
-${TESTDIR}/tests/discovery_func_test.o: tests/discovery_func_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
+${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
+	${MKDIR} -p ${TESTDIR}/External
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/discovery_func_test.o tests/discovery_func_test.c
+	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/External/ExtFunctions.o External/ExtFunctions.c
 
 
 ${TESTDIR}/tests/dma_test.o: tests/dma_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/dma_test.o tests/dma_test.c
-
-
-${TESTDIR}/tests/ext_mem_test.o: tests/ext_mem_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ext_mem_test.o tests/ext_mem_test.c
-
-
-${TESTDIR}/tests/file_cvep_test.o: tests/file_cvep_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/file_cvep_test.o tests/file_cvep_test.c
-
-
-${TESTDIR}/tests/operation_test.o: tests/operation_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/operation_test.o tests/operation_test.c
-
-
-${TESTDIR}/tests/json_parser.o: tests/json_parser.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_parser.o tests/json_parser.c
-
-
-${TESTDIR}/tests/pocket_test.o: tests/pocket_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/pocket_test.o tests/pocket_test.c
 
 
 ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c 
@@ -306,17 +241,17 @@ ${OBJECTDIR}/DMAretransmitter_nomain.o: ${OBJECTDIR}/DMAretransmitter.o DMAretra
 	    ${CP} ${OBJECTDIR}/DMAretransmitter.o ${OBJECTDIR}/DMAretransmitter_nomain.o;\
 	fi
 
-${OBJECTDIR}/ExtMemModule_nomain.o: ${OBJECTDIR}/ExtMemModule.o ExtMemModule.c 
+${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExtMemModule.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/DistCalc.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtMemModule_nomain.o ExtMemModule.c;\
+	    $(COMPILE.c) -O2 -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
 	else  \
-	    ${CP} ${OBJECTDIR}/ExtMemModule.o ${OBJECTDIR}/ExtMemModule_nomain.o;\
+	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
 	fi
 
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 
@@ -453,13 +388,7 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
-	    ${TESTDIR}/TestFiles/f2 || true; \
-	    ${TESTDIR}/TestFiles/f3 || true; \
-	    ${TESTDIR}/TestFiles/f7 || true; \
-	    ${TESTDIR}/TestFiles/f5 || true; \
-	    ${TESTDIR}/TestFiles/f4 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

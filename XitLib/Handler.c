@@ -1,47 +1,11 @@
 
-#ifdef CPU
-    #ifdef PLATFORM_WINDOWS
-        #pragma comment ( lib, "ws2_32.lib" )
-    #endif
-#endif
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "Handler.h"
 
-#ifdef CPU
-    #ifdef PLATFORM_WINDOWS
-        #include <winsock2.h>
-    #else
-        #include <getopt.h> 
-        #include <sys/socket.h>
-        #include <netinet/in.h>
-        #include <arpa/inet.h>
-        #include <fcntl.h>
-        #include <errno.h>
-        #include <unistd.h>
-        #include <sys/ioctl.h>
-        #include <sys/types.h>
-        #include <sys/time.h>
-        #include <sys/mman.h>
-        typedef int SOCKET;
-    #endif
-    #ifdef PLATFORM_LINUX
-        #include "VideoModule.h"
-    #endif
-#else
-    #include "usart.h"
-#endif
-#ifdef PROXY
-    #include "../COMtoUDP_Retransliator/ComPort.h"
-#endif
-
 #define TXTIMEOUT 10
-#ifdef EXTMEMSERVER
-    #define PORT_BACK 5683
-#else        
-    #define PORT_BACK 5683
-#endif
+#define PORT_BACK 5683
 
 /* Private variables ---------------------------------------------------------*/
 uint8_t buffer[STRING_SIZE];
@@ -70,23 +34,6 @@ uint32_t lenght = 0;
 uint8_t transfer_free = 1;
 uint32_t transfer_time = 0;
 uint8_t content_type;
-#ifdef CPU
-    struct sockaddr_in cliaddr_hd;
-    int fd_hd;
-    #ifdef PLATFORM_WINDOWS
-        WORD wVersionRequested = MAKEWORD(2, 2);
-        WSADATA wsaData;
-    #else
-    #endif
-    int err1;
-    int fd;
-    #ifdef IPV6
-        struct sockaddr_in6 servaddr, cliaddr;
-    #else /* IPV6 */
-        struct sockaddr_in servaddr, cliaddr;
-    #endif /* IPV6 */
-    int err;
-#endif
 /*============================================================================*/
 
 /* Private constants ---------------------------------------------------------*/
@@ -95,118 +42,33 @@ const char *path_clock = "/clock";
 const char *path_dist = "/distance";
 /*============================================================================*/
 
-#define PORT 5683
-
 /* Private function prototypes -----------------------------------------------*/
-int TransferDMA(const uint8_t *data, const uint32_t datalen);
-int TransferUDP(const uint8_t *data, const uint32_t datalen,
-        const char* address, const uint32_t port);
-int TransferBroadbandUDP(const uint8_t *data, const uint32_t datalen,
-        const uint32_t port);
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-int TransferDMA(const uint8_t *data, const uint32_t datalen) {
-#ifndef CPU
-    HAL_UART_Transmit_DMA(&huart1, (uint8_t *) data, datalen);
-#endif
-    return 0;
-}
-
-int TransferUDP(const uint8_t *data, const uint32_t datalen,
-        const char* address /* = "192.168.1.255" */,
-        const uint32_t port /* = 5683 */) {
-#ifdef CPU
-#ifdef DEBUG
-    printf("TransferUDP %s port:%d.\n", address, port);
-#endif   
-    //        #ifdef EXTMEMSERVER
-    //            printf("ext TransferUDP\n");
-    //            cliaddr_hd.sin_port=htons(PORT_BACK);
-    //            sendto(fd_hd, data, *datalen, 0, (struct sockaddr *) 
-    //                    &cliaddr_hd,sizeof(cliaddr_hd));
-    //        #else        
-    //            SOCKET my_sock=socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    struct sockaddr_in dest_addr;
-    int status;
-    int yes = 1;
-
-    dest_addr.sin_family = PF_INET;
-    dest_addr.sin_port = htons(port);
-    dest_addr.sin_addr.s_addr = inet_addr(address);
-    //dest_addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
-    memset(dest_addr.sin_zero, '\0', sizeof (dest_addr.sin_zero));
-
-    int m = sendto(fd, data, datalen, 0,
-            (struct sockaddr *) &dest_addr, sizeof (dest_addr));
-
-    //            #ifdef PLATFORM_WINDOWS
-    //                closesocket(my_sock);
-    //            #else
-    //                close(my_sock);
-    //            #endif
-    //        #endif
-#endif
-    return 0;
-}
-
-int TransferBroadbandUDP(const uint8_t *data, const uint32_t datalen,
-        const uint32_t port /* = 5683 */) {
-#ifdef CPU
-#ifdef DEBUG
-    printf("TransferBroadbandUDP ALL port:%d.\n", port);
-#endif       
-    //        SOCKET my_sock=socket(PF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    struct sockaddr_in dest_addr;
-    int yes = 1;
-
-    if ((setsockopt(fd, SOL_SOCKET, SO_BROADCAST,
-            (char *) &yes, sizeof (yes))) != 0) {
-        printf("Setsockopt - SOL_SOCKET error\r\n\r");
-    }
-
-    dest_addr.sin_family = PF_INET;
-    dest_addr.sin_port = htons(port);
-    dest_addr.sin_addr.s_addr = htonl(INADDR_BROADCAST);
-    //dest_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    memset(dest_addr.sin_zero, '\0', sizeof (dest_addr.sin_zero));
-
-    int m = sendto(fd, data, datalen, 0,
-            (struct sockaddr *) &dest_addr, sizeof (dest_addr));
-    //        #ifdef PLATFORM_WINDOWS
-    //            closesocket(my_sock);
-    //        #else
-    //            close(my_sock);
-    //        #endif
-#endif
-    return 0;
-}
-
 int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func) {
     //    transfer_time = 0;
     //    while ((!transfer_free) && (transfer_time < TXTIMEOUT));
     //    if (transfer_time >= TXTIMEOUT)
     //        return -1;
-#ifdef CPU
-    transfer_free = 1;
-    if (data[0] == 0) {
-        printf("Bad packet\n");
-        #ifdef DEBUG
-            coap_dumpHeader(&pkt.hdr);
-            printf("Received: ");
-            coap_dump(data, datalen, true);
-            printf("\r\n\r");
-            exit(0);
-        #endif
-    }
-    //return TransferUDP(data,&datalen,"192.168.1.255",5683);
-    //return TransferUDP(data,&datalen,"127.0.0.1",PORT_BACK);
-    return TransferUDP(data, datalen,
-            get_first_node_by_func(_func), PORT_BACK);
-#else
-    transfer_free = 0;
-    return TransferDMA(data, datalen);
-#endif
+    #ifdef CPU
+        transfer_free = 1;
+        if (data[0] == 0) {
+            printf("Bad packet\n");
+            #ifdef DEBUG
+                coap_dumpHeader(&pkt.hdr);
+                printf("Received: ");
+                coap_dump(data, datalen, true);
+                printf("\r\n\r");
+                exit(0);
+            #endif
+        }
+        return TransferUDP(data, datalen,
+                get_first_node_by_func(_func), PORT_BACK);
+    #else
+        transfer_free = 0;
+        return TransferDMA(data, datalen);
+    #endif
     return -2;
 }
 
@@ -215,268 +77,70 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
     //    while ((!transfer_free) && (transfer_time < TXTIMEOUT));
     //    if (transfer_time >= TXTIMEOUT)
     //        return -1;
-#ifdef CPU
-    transfer_free = 1;
-    if (data[0] == 0) {
-        printf("Bad packet\n");
-        #ifdef DEBUG
-            coap_dumpHeader(&pkt.hdr);
-            printf("Received: ");
-            coap_dump(data, datalen, true);
-            printf("\r\n\r");
-            exit(0);
-        #endif
-    }
-    return TransferBroadbandUDP(data, datalen, PORT_BACK);
-#else
-    transfer_free = 0;
-    return TransferDMA(data, datalen);
-#endif
+    #ifdef CPU
+        transfer_free = 1;
+        if (data[0] == 0) {
+            printf("Bad packet\n");
+            #ifdef DEBUG
+                coap_dumpHeader(&pkt.hdr);
+                printf("Received: ");
+                coap_dump(data, datalen, true);
+                printf("\r\n\r");
+                exit(0);
+            #endif
+        }
+        return TransferBroadbandUDP(data, datalen, PORT_BACK);
+    #else
+        transfer_free = 0;
+        return TransferDMA(data, datalen);
+    #endif
     return -2;
 }
-#ifdef CPU
-
-void InitUDP(void) {
-#ifdef PLATFORM_WINDOWS
-    // Инициализация WinSock
-    err1 = WSAStartup(wVersionRequested, &wsaData);
-    if (err1 != 0) {
-        printf("WSAStartup error: %d\n", WSAGetLastError());
-    }
-#endif
-
-#ifdef IPV6
-    fd = socket(AF_INET6, SOCK_DGRAM, 0);
-#else /* IPV6 */
-    fd = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-    printf("Socket create complete.\n");
-#endif /* IPV6 */
-
-    //bzero(&servaddr,sizeof(servaddr));
-#ifdef IPV6
-    servaddr.sin6_family = AF_INET6;
-    servaddr.sin6_addr = in6addr_any;
-    servaddr.sin6_port = htons(PORT);
-#else /* IPV6 */
-    servaddr.sin_family = AF_INET;
-    servaddr.sin_addr.s_addr = htonl(INADDR_ANY);
-    //        servaddr.sin_addr.s_addr = inet_addr("127.0.0.1");
-    servaddr.sin_port = htons(PORT);
-    memset(servaddr.sin_zero, '\0', sizeof (servaddr.sin_zero));
-#endif /* IPV6 */
-
-    err = bind(fd, (struct sockaddr *) &servaddr, sizeof (servaddr));
-    printf("Socket bind complete %d port:%d.\n", err, PORT);
-    fd_hd = fd;
-
-    return;
-}
-#endif
 
 void InitHandler(DeviceTypeDef device) {
-    printf("Memory used by CoAP: %d Bytes\r\n\r",MEMORY_COAP);
-    printf("Memory used by CommandModule: %d Bytes\r\n\r",MEMORY_COMMAND);
-    printf("Memory used by ConfigModule: %d Bytes\r\n\r",MEMORY_CONFIG);
-    printf("Memory used by DMAModule: %d Bytes\r\n\r",MEMORY_DMA);
-    printf("Memory used by DiscoveryModule: %d Bytes\r\n\r",MEMORY_CORE_WELLKNOWN);
-    printf("Memory used by InOutBuffer: %d Bytes\r\n\r",MEMORY_INOUT);
-    printf("Memory used by StreamDataRecorder: %d Bytes\r\n\r",MEMORY_STREAM);
-    printf("========ALL=========================%d=Bytes====\r\n\r"
-            ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
-            MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
+    #ifdef DEBUG
+        printf("Memory used by CoAP: %d Bytes\r\n\r",MEMORY_COAP);
+        printf("Memory used by CommandModule: %d Bytes\r\n\r",MEMORY_COMMAND);
+        printf("Memory used by ConfigModule: %d Bytes\r\n\r",MEMORY_CONFIG);
+        printf("Memory used by DMAModule: %d Bytes\r\n\r",MEMORY_DMA);
+        printf("Memory used by DiscoveryModule: %d Bytes\r\n\r",MEMORY_CORE_WELLKNOWN);
+        printf("Memory used by InOutBuffer: %d Bytes\r\n\r",MEMORY_INOUT);
+        printf("Memory used by StreamDataRecorder: %d Bytes\r\n\r",MEMORY_STREAM);
+        printf("========ALL=========================%d=Bytes====\r\n\r"
+                ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
+                MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
+    #endif
     transfer_free = 1;
     transfer_time = 0;
-#ifdef CPU
-    InitUDP();
-#endif
     InitCfgMem();
     InitCfgDevType();
     DEVICE = device;
     ClearBuffer();
     Interface_Memory();
-#ifdef PLATFORM_LINUX
-    //VideoFrameInitHandler();
-#endif
     rsplen = sizeof (buf);
     return;
 }
 #ifdef PLATFORM_LINUX
-
-void VideoFrameInitHandler(void) {
-    open_device("/dev/video0");
-    init_device();
-    start_capturing();
-    return;
-}
-
-void VideoFrameDeInitHandler(void) {
-    stop_capturing();
-    uninit_device();
-    close_device();
-    return;
-}
-#endif
-
-void ProtocolHandler(void) {
-#ifdef CPU
-    int n, rc;
-    int len = sizeof (cliaddr);
-
-    memset(buf, 0, sizeof (buf));
-    n = recvfrom(fd, buf, sizeof (buf), 0, (struct sockaddr *) &cliaddr, &len);
-    cliaddr_hd = cliaddr;
-
-    if (n >= 4) {
-#ifdef PROXY
-        ComWrite(buf, n);
-#ifdef DEBUG
-        printf("Received %s: ", inet_ntoa(cliaddr.sin_addr));
-        coap_dump(buf, n, true);
-        printf("\r\n\r");
-#endif
-
-        if ((n = ComRead(buf, 4096)) > 0) {
-#ifdef DEBUG
-            printf("Answer: ");
-            coap_dump(buf, n, true);
-            printf("\r\n\r");
-#endif
-        } else {
-            printf("Answer error\r\n\r");
-            return;
-        }
-
-
-        if ((rc = sendto(fd, buf, n, 0,
-                (struct sockaddr *) &cliaddr, sizeof (cliaddr))) == -1) {
-            printf("sendto failed rc=%d\r\n\r", rc);
-            exit(1);
-        }
-#else
-        #ifdef DEBUG
-                printf("Received by server %s: ", inet_ntoa(cliaddr.sin_addr));
-                coap_dump(buf, n, true);
-                printf("\r\n\r");
-        #endif
-        if (0 != (rc = coap_parse(&pkt, buf, n))) {
-            printf("Bad packet(%d) ", rc);
-            printf("Received %s: ", inet_ntoa(cliaddr.sin_addr));
-            #ifdef DEBUG
-                coap_dump(buf, n, true);
-            #endif
-            printf("\r\n\r");
-        } else {
-            #ifdef DEBUG
-                coap_dumpHeader(&pkt.hdr);
-                //coap_dumpOptions(&pkt.opts, pkt.numopts);
-            #endif
-            content_type = COAP_CONTENTTYPE_APPLICATION_XML;
-            coap_handle_req(&scratch_buf, &pkt, &rsppkt,
-                    CommandLineInterpreter,
-                    inet_ntoa(cliaddr.sin_addr));
-            size_t rsplen = sizeof (buf);
-
-            uint32_t cmdlen;
-            char* tbuffer;
-            if (NULL != (tbuffer = ProceedTransmit(&cmdlen))) {
-                tbuffer[cmdlen] = 0;
-                #ifdef DEBUG
-                    printf("%s length %d\r\n\r", tbuffer, cmdlen);
-                #endif
-                scratch_buf.len = 4096;
-                if (opt_part.num == 0)
-                    coap_make_response(&scratch_buf, &rsppkt, 0,
-                        (uint8_t*) tbuffer, cmdlen,
-                        pkt.hdr.id[0], pkt.hdr.id[1],
-                        pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
-                        content_type);
-                else
-                {
-                    coap_make_response(&scratch_buf, &rsppkt, &opt_part,
-                        (uint8_t*) bufsa, size_parts_cur,
-                        pkt.hdr.id[0], pkt.hdr.id[1],
-                        pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
-                        content_type);
-                    opt_part.num = 0;
-                }
-            } else {
-                return;
-            }
-
-            if (0 != (rc = coap_build(buf, &rsplen, &rsppkt, NULL, NULL))) {
-                printf("coap_build failed rc=%d\r\n\r", rc);
-            } else {
-#ifdef DEBUG
-                printf("Sending: ");
-                coap_dump(buf, rsplen, true);
-                printf("\r\n\r");
-#endif
-#ifdef DEBUG
-                printf("Sended to %s:%d \r\n\r",
-                        inet_ntoa(cliaddr.sin_addr),
-                        ntohs(cliaddr.sin_port));
-#endif
-                TransferUDP(buf, rsplen,
-                        inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-            }
-        }
-#endif
+    void VideoFrameInitHandler(void) {
+        open_device("/dev/video0");
+        init_device();
+        start_capturing();
+        return;
     }
-#else
-    char buffer[STRING_SIZE];
-    uint32_t cmdlent = 0;
-    if (NO_BUFFER_ERROR == ProceedReceive((char*) tbuffer, &cmdlent)) {
-        if (ReadMem(REG_Simple_link) > 0) {
-            char* tbuffer2;
-            CommandLineInterpreter((char*) &tbuffer);
-            if (0 != (tbuffer2 = ProceedTransmit(&lenght))) {
-                Transfer((uint8_t*) tbuffer2, lenght, 0);
-            }
-            return;
-        }
-//        if ((tbuffer[0] == '/')
-//                && (tbuffer[1] == '/')
-//                && (tbuffer[2] == '/')) {
-//            WriteMem(REG_Simple_link, 1);
-//            sprintf((char*) tbuffer, "Simple command link.\r\n\r");
-//            Transfer((uint8_t*) tbuffer, strlen((char const *) tbuffer), 0);
-//            return;
-//        }
-//        memcpy((char *) buffer, (char const *) tbuffer, cmdlent);
-//        SetCStatLedsUnderPWM(0, 0, 100);
-//        if (!(rc = coap_parse(&pkt, tbuffer, cmdlent))) {
-//            content_type = COAP_CONTENTTYPE_APPLICATION_XML;
-//            coap_handle_req(&scratch_buf, &pkt, &rsppkt,
-//                    CommandLineInterpreter, 0);
-//            char* tbuffer2;
-//            if (NULL != (tbuffer2 = ProceedTransmit(&cmdlent))) {
-//                coap_make_response(&scratch_buf, &rsppkt,
-//                        (uint8_t*) tbuffer2, cmdlent,
-//                        pkt.hdr.id[0], pkt.hdr.id[1],
-//                        &pkt.tok, COAP_RSPCODE_CONTENT,
-//                        content_type);
-//            } else {
-//                return;
-//            }
-//        } else {
-//            sprintf((char*) tbuffer, "<MSG>\r\n\r%s\r\n\r</MSG>\r\n\r<MSGS>\r\n\r%d\r\n\r</MSGS>\r\n\r<ERROR>\r\n\r%d\r\n\r</ERROR>\r\n\r", buffer, cmdlent, rc);
-//            coap_make_response(&scratch_buf, &rsppkt, tbuffer, strlen((char const *) tbuffer), pkt.hdr.id[0], pkt.hdr.id[1], &pkt.tok, COAP_RSPCODE_BAD_REQUEST, COAP_CONTENTTYPE_APPLICATION_XML);
-//        }
 
-//        rsplen = sizeof (buf);
-//        if (!(rc = coap_build(buf, &rsplen, &rsppkt, NULL)))
-//            Transfer((uint8_t*) buf, rsplen, 0);
-//        else {
-//            sprintf((char*) tbuffer, "<MSG>\r\n\r%s\r\n\r</MSG>\r\n\r<MSGS>\r\n\r%d\r\n\r</MSGS>\r\n\r<BERROR>\r\n\r%d\r\n\r</BERROR>\r\n\r", buffer, cmdlent, rc);
-//            Transfer((uint8_t*) tbuffer, strlen((char const *) tbuffer), 0);
-//        }
-        //ClearBuffer();
+    void VideoFrameDeInitHandler(void) {
+        stop_capturing();
+        uninit_device();
+        close_device();
+        return;
     }
 #endif
-    return;
-}
 
 int old_s[4];
+
+void SampleHandler(void) {
+    AddSample();
+}
 
 void OperationHandler(void) {
     int i,j, k = 0, l = 0;
@@ -535,7 +199,6 @@ void OperationHandler(void) {
         WriteMem(REG_AD_RP,0);
     }
     
-    
     if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) > 0)) {
         l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize), (int*) scratch_raw);
         if (l > 0) {
@@ -547,62 +210,12 @@ void OperationHandler(void) {
     }
     #else
     #endif
-//    HAL_UART_Transmit(&huart1, (uint8_t *) "al21", 4, 1000);
-//    if ((ReadMem(REG_Distance_Band) > 0) &&
-//            (ReadMem(REG_Distance_Auto_Band) > 0)) {
-//        WriteMem(REG_Distance_Band, 0);
-//        pktlen = sizeof (buf);
-//        sprintf((char *) buffer2, "%d\r\n\r", (int) ReadMem(REG_Distance));
-//        opt.num = COAP_OPTION_URI_PATH;
-//        opt.buf.p = (uint8_t*) path_dist;
-//        opt.buf.len = (size_t) strlen(path_dist);
-//        coap_make_msg(&scratch_buf, &pkt, &opt, NULL, NULL,
-//                buffer2, strlen((char const *) buffer2),
-//                0, id_out++, 0, 0,
-//                COAP_METHOD_PUT,
-//                COAP_CONTENTTYPE_TEXT_PLAIN);
-//        if (!(rc = coap_build(buf, &pktlen, &pkt, NULL, NULL)))
-//            TransferBand((uint8_t*) buf, pktlen);
-//    }
-//    HAL_UART_Transmit(&huart1, (uint8_t *) "al31", 4, 1000);
-//    if ((ReadMem(REG_CLK_Band) > 0) && (ReadMem(REG_CLK_Auto_Band) > 0)) {
-//        WriteMem(REG_CLK_Band, 0);
-//        pktlen = sizeof (buf);
-//        sprintf((char *) buffer2, "%d\r\n\r", (int) GetClock());
-//        opt.num = COAP_OPTION_URI_PATH;
-//        opt.buf.p = (uint8_t*) path_clock;
-//        opt.buf.len = (size_t) strlen(path_clock);
-//        coap_make_msg(&scratch_buf, &pkt, &opt, NULL, NULL,
-//                buffer2, (size_t) strlen((char const *) buffer2),
-//                0, id_out++, 0, 0,
-//                COAP_METHOD_PUT,
-//                COAP_CONTENTTYPE_TEXT_PLAIN);
-//        if (!(rc = coap_build(buf, &pktlen, &pkt, NULL, NULL)))
-//            TransferBand((uint8_t*) buf, pktlen);
-//    }
-//    HAL_UART_Transmit(&huart1, (uint8_t *) "al41", 4, 1000);
-//    if (ReadMem(REG_Led_Start) > 0) {
-//        WriteMem(REG_Led_Start, 0);
-//#ifndef CPU
-//        HAL_TIM_Base_Start_IT(&htim6);
-//        HAL_TIM_Base_Start_IT(&htim7);
-//#endif
-//    }
-//    HAL_UART_Transmit(&huart1, (uint8_t *) "al51", 4, 1000);
-//    if (ReadMem(REG_Led_Stop) > 0) {
-//        WriteMem(REG_Led_Stop, 0);
-//#ifndef CPU
-//        HAL_TIM_Base_Stop(&htim6);
-//        HAL_TIM_Base_Stop(&htim7);
-//        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_8, GPIO_PIN_RESET);
-//        HAL_GPIO_WritePin(GPIOC, GPIO_PIN_7, GPIO_PIN_SET);
-//#endif
-//    }
-    //printf("ReadMem(REG_UPD_File)=%d", ReadMem(REG_UPD_File));
-       if (ReadMem(REG_UPD_File) > 0) {
+
+    if (ReadMem(REG_UPD_File) > 0) 
+    {
         WriteMem(REG_UPD_File, 0);
         function_update(0);
-       }
+    }
     return;
 }
 
@@ -610,8 +223,8 @@ void CalculationHandler(void) {
     FreeCycle();
     return;
 }
-#ifdef PLATFORM_LINUX
 
+#ifdef PLATFORM_LINUX
 void VideoFrameHandler(void) {
     //mainloop();
     return;
