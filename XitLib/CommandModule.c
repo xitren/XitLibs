@@ -19,8 +19,9 @@
    /* information used in the interpretation and execution of Commands. */
 typedef struct _tagCommandTable_t
 {
-   char              *CommandName;
-   CommandFunction_t  CommandFunction;
+   char                 *CommandName;
+   char                 *Link;
+   CommandFunction_t    CommandFunction;
 } CommandTable_t;
 /*============================================================================*/
 
@@ -65,88 +66,48 @@ CommandFunction_t FindCommand(char *Command);
 void Interface_Memory(void)
 {
     ClearCommands();
-    AddCommand("/RESET", Reset);
-    AddCommand("/GET/MEMORY", MEMRead);
-    AddCommand("/PUT/MEMORY", MEMWrite);
-    AddCommand("/GET/.WELL-KNOWN/CORE", WELLKnown);
-    AddCommand("/CALLBACK/.WELL-KNOWN/CORE", CallbackWELLKnown);
-    AddCommand("/PUT/CLOCK", CLOCKSet);
-    AddCommand("/GET/CLOCK", CLOCKGet);
-    AddCommand("/GET/CALCULATE/CYCLES/FREE", CALCFREECYCLESGet);
-    AddCommand("/GET/CALCULATE/CYCLES/MAX", CALCMAXCYCLESGet);
-    AddCommand("/GET/CALCULATE/CYCLES/PERCENT", CALCPERCENTCYCLESGet); 
-    AddCommand("/GET/QUERYNODES", QueryNodes);
+    AddCommand("/RESET", "</reset>", Reset);
+    AddCommand("/GET/MEMORY", "</memory>", MEMRead);
+    AddCommand("/PUT/MEMORY", "</memory>", MEMWrite);
+    AddCommand("/GET/.WELL-KNOWN/CORE", "</.well-known/core>", WELLKnown);
+    AddCommand("/CALLBACK/.WELL-KNOWN/CORE", "</.well-known/core>", 
+                                                        CallbackWELLKnown);
+    AddCommand("/PUT/CLOCK", "</clock>", CLOCKSet);
+    AddCommand("/GET/CLOCK", "</clock>", CLOCKGet);
+    AddCommand("/GET/CALCULATE/CYCLES/FREE", "</calculate/cycles/free>", 
+                                                        CALCFREECYCLESGet);
+    AddCommand("/GET/CALCULATE/CYCLES/MAX", "</calculate/cycles/max>", 
+                                                        CALCMAXCYCLESGet);
+    AddCommand("/GET/CALCULATE/CYCLES/PERCENT", "</calculate/cycles/percent>", 
+                                                        CALCPERCENTCYCLESGet); 
+    AddCommand("/GET/QUERYNODES", "</querynodes>;if=\"dev_n\"", QueryNodes);
     if (signal_type == 2) 
     {
-        AddCommand("/GET/MOVEMENT", GetLastBlock);
+        AddCommand("/GET/MOVEMENT", "</movement>;if=\"accel\"", GetLastBlock);
     }
     else
     {
-              /**EEG**/
-        AddCommand("/GET/EEG", GetLastBlock); //передача последнего блока семплов ЭЭГ
-        AddCommand("/GET/EEGCONCRETEBLOCK", GetConcreteBlock); //передача последнего блока семплов ЭЭГ
-        //AddCommand("/GET/EEGWRITE", EEGWriteInFile); //меням режим на запись ЭЭГ в файл
-        //AddCommand("/GET/EEGLISTFILES", EEGGetListFiles); //список файлов с ЭЭГ данными
-        //AddCommand("/GET/EEGOFFILE", EEGofFile); //режим передачи ЭЭГ из файла
-        //AddCommand("/GET/EEG-FILE", EEGGetFile); //передача файла с ЭЭГ данными
+        AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
+        AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
+                GetConcreteBlock); //передача последнего блока семплов ЭЭГ
 
     }
-                  /**generator**/
-    AddCommand("/GET/RUNGENERATOR", RunGenerator); //запуск программы чтения файла на расберри
-    AddCommand("/GET/STOPGENERATOR", StopGenerator); //выключение программы чтения файла на расберри
+    AddCommand("/GET/RUNGENERATOR", "</rungenerator>;if=\"generator\"", 
+            RunGenerator); //запуск программы чтения файла на расберри
+    AddCommand("/GET/STOPGENERATOR", "</stopgenerator>;if=\"generator\"", 
+            StopGenerator); //выключение программы чтения файла на расберри
     #ifdef CPU
-        AddCommand("/GET/SNAP", Snap);
-        AddCommand("/GET/LIGHT", Light);
-        AddCommand("/GET/VIDEOTHREAD", VIDEOThread);
-        AddCommand("/GET/VERSION", Version);
-        AddCommand("/GET/UPDATE", Update);
-        AddCommand("/GET/UPDATEHASH", UpdateHash);
-        AddCommand("/CALLBACK/UPDATE", CallbackUpdate);
-        AddCommand("/CALLBACK/UPDATEHASH", CallbackUpdateHash);
-        AddCommand("/REQUERY/UPDATE", QueryUpdate);
-        AddCommand("/GET/TECHUPDATE", TechUpdate); 
-        AddCommand("/REQUERY/UPDATEHASH", QueryUpdateHash); 
-    #endif
-    #ifdef DEBUG
-        printf("\t/GET/MEMORY\r\n\r");
-        printf("\t/PUT/MEMORY\r\n\r");
-        printf("\t/GET/UPDATE\r\n\r");
-        printf("\t/GET/UPDATEHASH\r\n\r");
-        printf("\t/GET/DISTANCE\r\n\r");
-        printf("\t/GET/.WELL-KNOWN/CORE\r\n\r");
-        printf("\t/CALLBACK/.WELL-KNOWN/CORE\r\n\r");
-        printf("\t/PUT/CLOCK\r\n\r");
-        printf("\t/GET/CLOCK\r\n\r");
-        printf("\t/GET/CALCULATE/CYCLES/FREE\r\n\r");
-        printf("\t/GET/CALCULATE/CYCLES/MAX\r\n\r");
-        printf("\t/GET/CALCULATE/CYCLES/PERCENT\r\n\r");
-         if (signal_type == 2) 
-        {
-            printf("\t/GET/MOVEMENT\r\n\r");
-        }
-        else
-        {
-            printf("\t/GET/EEG\r\n\r");
-        }
-    #endif
-    #ifdef EXTMEMSERVER
-        AddCommand("/PUT/EXTMEMORY", ExtMemCreateReq);
-        AddCommand("/GET/EXTMEMORY", ExtMemGetReq);
-        AddCommand("/DELETE/EXTMEMORY", ExtMemDeleteReq);
-        AddCommand("/RESET/EXTMEMORY", ExtMemClearReq);
-        AddCommand("/PUT/EEGSETTOEXTMEM", EEGPutExtMem);
-        printf("\t/PUT/EXTMEMORY\r\n\r");
-        printf("\t/RESET/EXTMEMORY\r\n\r");
-        printf("\t/GET/EXTMEMORY\r\n\r");
-        printf("\t/DELETE/EXTMEMORY\r\n\r");
-        printf("\t/PUT/EEGSETTOEXTMEM\r\n\r");
-    #else
-//        AddCommand("/CALLBACK/EXTMEMORY/CREATE", CallbackExtMemCreateReq);
-//        AddCommand("/CALLBACK/EXTMEMORY/RETURN", CallbackExtMemGetReq);
-//        #ifdef DEBUG
-//            printf("\t/CALLBACK/EXTMEMORY/CREATE\r\n\r");
-//            printf("\t/CALLBACK/EXTMEMORY/RETURN\r\n\r");
-//        #endif
+        AddCommand("/GET/SNAP", "</snap>;if=\"video\"", Snap);
+        AddCommand("/GET/LIGHT", "</light>;if=\"lamp\"", Light);
+        AddCommand("/GET/VIDEOTHREAD", "</videothread>;if=\"video\"", VIDEOThread);
+        AddCommand("/GET/VERSION", "</version>", Version);
+        AddCommand("/GET/UPDATE", "</update>", Update);
+        AddCommand("/GET/UPDATEHASH", "</updatehash>", UpdateHash);
+        AddCommand("/CALLBACK/UPDATE", "</update>", CallbackUpdate);
+        AddCommand("/CALLBACK/UPDATEHASH", "</updatehash>", CallbackUpdateHash);
+        AddCommand("/REQUERY/UPDATE", "</update>", QueryUpdate);
+        AddCommand("/GET/TECHUPDATE", "</techupdate>", TechUpdate); 
+        AddCommand("/REQUERY/UPDATEHASH", "</updatehash>", QueryUpdateHash); 
     #endif
 
     #ifdef PLATFORM_LINUX
@@ -159,20 +120,20 @@ void Interface_Memory(void)
 }
 void Interface_Callback(void)
 {
-    ClearCommands();
-    AddCommand("/CALLBACK/.WELL-KNOWN/CORE", CallbackWELLKnown);
-    #ifdef DEBUG
-        printf("\t/CALLBACK/.WELL-KNOWN/CORE\r\n\r");
-    #endif
-    #ifdef EXTMEMSERVER
-    #else
-//        AddCommand("/CALLBACK/EXTMEMORY/CREATE", CallbackExtMemCreateReq);
-//        AddCommand("/CALLBACK/EXTMEMORY/RETURN", CallbackExtMemGetReq);
-        #ifdef DEBUG
-            printf("\t/CALLBACK/EXTMEMORY/CREATE\r\n\r");
-            printf("\t/CALLBACK/EXTMEMORY/RETURN\r\n\r");
-        #endif
-    #endif
+//    ClearCommands();
+//    AddCommand("/CALLBACK/.WELL-KNOWN/CORE", CallbackWELLKnown);
+//    #ifdef DEBUG
+//        printf("\t/CALLBACK/.WELL-KNOWN/CORE\r\n\r");
+//    #endif
+//    #ifdef EXTMEMSERVER
+//    #else
+////        AddCommand("/CALLBACK/EXTMEMORY/CREATE", CallbackExtMemCreateReq);
+////        AddCommand("/CALLBACK/EXTMEMORY/RETURN", CallbackExtMemGetReq);
+//        #ifdef DEBUG
+//            printf("\t/CALLBACK/EXTMEMORY/CREATE\r\n\r");
+//            printf("\t/CALLBACK/EXTMEMORY/RETURN\r\n\r");
+//        #endif
+//    #endif
    
 }
 int Reset(ParameterList_t *TempParam)
@@ -724,6 +685,14 @@ char *StringParser(char *String)
    return(ret_val);
 }
 
+char* GetCommandLink(int N)
+{   
+    return CommandTable[N].Link;
+}
+int GetCommandsNumber(void)
+{
+    return NumberCommands;
+}
    /* This function is responsable for taking command strings and       */
    /* parsing them into a command, param1, and param2.  After parsing   */
    /* this string the data is stored into a UserCommand_t structure to  */
@@ -881,7 +850,7 @@ int CommandInterpreter(UserCommand_t *TempCommand)
    /* (NULL terminated ASCII string) to a command function.  This       */
    /* function returns zero if successful, or a non-zero value if the   */
    /* command could not be added to the list.                           */
-int AddCommand(char *CommandName, CommandFunction_t CommandFunction)
+int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
 {
    int ret_val = 0;
 
@@ -896,6 +865,7 @@ int AddCommand(char *CommandName, CommandFunction_t CommandFunction)
          /* Simply add the command data to the command table and        */
          /* increment the number of supported commands.                 */
          CommandTable[NumberCommands].CommandName       = CommandName;
+         CommandTable[NumberCommands].Link              = Link;
          CommandTable[NumberCommands++].CommandFunction = CommandFunction;
 
          /* Return success to the caller.                               */
@@ -926,7 +896,9 @@ CommandFunction_t FindCommand(char *Command)
       /* a match.                                                       */
       for(Index=0,ret_val=NULL;((Index<NumberCommands) && (!ret_val));Index++)
       {
-         if((strlen(CommandTable[Index].CommandName) == strlen(Command)) && (memcmp(Command, CommandTable[Index].CommandName, strlen(CommandTable[Index].CommandName)) == 0))
+         if((strlen(CommandTable[Index].CommandName) == strlen(Command)) 
+                 && (memcmp(Command, CommandTable[Index].CommandName, 
+                            strlen(CommandTable[Index].CommandName)) == 0))
             ret_val = CommandTable[Index].CommandFunction;
       }
    }

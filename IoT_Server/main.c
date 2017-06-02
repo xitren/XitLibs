@@ -26,6 +26,7 @@
 #include "coap.h"
 #include "Handler.h"
 #include "CommandModule.h"
+#include "ExtFunctions.h"
 
 DWORD WINAPI ThreadFunc1s()
 {

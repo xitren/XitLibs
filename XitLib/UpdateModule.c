@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "version.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -23,7 +24,7 @@ char path_update_clb[50]="/CALLBACK/UPDATE?type=0";
 char path_update_hash_clb[50]="/CALLBACK/UPDATEHASH?type=0";
 const char *updateserver = "10.10.30.35";
 const char *updatefile = "Updater.sh";
-char *version ="1.2";
+char *version = VERSION;
 /*============================================================================*/
 uint32_t config_dev_type[CFG_SIZE];
 char updatefilepath[200]="Updater.sh";

@@ -18,11 +18,6 @@ uint32_t nodes_cnt = 0;
 const char *token_well_core="wknown";
 const char *path_well_core=".well-known/core";
 const char *path_well_core_clb="/CALLBACK/.WELL-KNOWN/CORE";
-#ifdef EXTMEMSERVER
-    const char *path_known_func="</memory>;if=\"controller\",</clock>;if=\"controller\",</extmemory>;if=\"controller\",</calculate/cycles/free>;if=\"controller\",</update>;if=\"update\",</updatehash>;if=\"updatehash\",</snap>;if=\"video\",</videothread>;if=\"video\",";
-#else
-    const char *path_known_func="</memory>;if=\"controller\",</clock>;if=\"controller\",</calculate/cycles/free>;if=\"controller\"";
-#endif
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
@@ -350,66 +345,39 @@ return;
    /* return value if there was an error.                               */
 int WELLKnown(ParameterList_t *TempParam)
 {
-   int  ret_val = 0;
+   int  ret_val = 0,i;
 
-   #ifdef DEBUG
-      printf("--//internal//-- Into WELLKnown.\r\n\r");
-   #endif
-   //AddToTransmit("<WELLKNOWN>\r\n\r");
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
+    #ifdef DEBUG
+        printf("--//internal//-- Into WELLKnown.\r\n\r");
+    #endif
+    //AddToTransmit("<WELLKNOWN>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
         #ifdef DEBUG
            printf("--//internal//--  id %02X %02X\r\n\r",pkt.hdr.id[0], pkt.hdr.id[1]);
         #endif
            //pkt->hdr.t
-        AddToTransmit("</memory>;if=\"controller\",");
-        AddToTransmit("</clock>;if=\"controller\",");
-        AddToTransmit("</updatehash>;if=\"controller\",");
-        AddToTransmit("</techupdate>;if=\"controller\",");
-        AddToTransmit("</snap>;if=\"video\",");
-        AddToTransmit("</videothread>;if=\"video\",");
-        AddToTransmit("</light>;if=\"lamp\",");
-        AddToTransmit("</calculate/cycles/free>;if=\"controller\",");
-        AddToTransmit("</calculate/cycles/max>;if=\"controller\",");
-        AddToTransmit("</calculate/cycles/percent>;if=\"controller\",");
-        #ifdef EXTMEMSERVER
-            AddToTransmit("</extmemory>;if=\"controller\",");
-        #endif
-        if (signal_type == 2) 
+        for (i=0;i < GetCommandsNumber();i++)
         {
-            AddToTransmit("</movement>;if=\"accel\",");
+            AddToTransmit(GetCommandLink(i));
+            AddToTransmit(",");
         }
-        else
-        {
-            AddToTransmit("</version>;if=\"controller\",");
-            AddToTransmit("</eeg>;if=\"neuro\",");
-            AddToTransmit("</eegconcreteblock>;if=\"neuro\",");
-            //AddToTransmit("</eegwritefile>;if=\"wfile\",");//write file меням режим на запись ЭЭГ в файл
-            //AddToTransmit("</eeglistfiles>;if=\"lfile\",");//list file список файлов с ЭЭГ данными
-            //AddToTransmit("</eeggetfile>;if=\"gfile\",");//get file передача файла с ЭЭГ данными
-            //AddToTransmit("</eegreadfile>;if=\"rfile\",");//read file режим передачи ЭЭГ из файла
-            
-        
-        }
-        AddToTransmit("</rungenerator>;if=\"generator\",");
-        AddToTransmit("</stopgenerator>;if=\"generator\",");
-        AddToTransmit("</querynodes>;if=\"dev_n\"");//список устройств и их функций
         content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-   }
-   else
-   {
+    }
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
         #ifdef DEBUG
            printf("--//internal//--  Invalid parameters.\r\n\r");
         #endif
-   }
-   //AddToTransmit("</WELLKNOWN>\r\n\r");
+    }
+    //AddToTransmit("</WELLKNOWN>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
    /* The following function is responsible for Giving current          */
    /* functions. This function returns zero is successful or a negative */

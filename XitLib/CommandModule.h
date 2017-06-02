@@ -91,7 +91,9 @@ extern int size_parts_cur;
 void Interface_Memory(void);
 void Interface_Callback(void);
 int CommandLineInterpreter(char *Command);
-int AddCommand(char *CommandName, CommandFunction_t CommandFunction);
+int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction);
+char* GetCommandLink(int N);
+int GetCommandsNumber(void);
 void ClearCommands(void);
 unsigned long StringToUnsignedInteger(char *StringInteger);
 /*============================================================================*/
