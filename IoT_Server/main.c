@@ -51,7 +51,7 @@ DWORD WINAPI ThreadFunc250ms()
 {
     while (1)
     {
-        AddSample();
+        SampleHandler();
         Sleep(4);
     }
     return 0;
@@ -113,8 +113,8 @@ int main(int argc, char** argv) {
     //function_beakon();
     while(1)
     {
-        ProtocolHandler();
-        //CalculationHandler();
+        UserProtocolHandler();
+        CalculationHandler();
     }
     return (EXIT_SUCCESS);
 }

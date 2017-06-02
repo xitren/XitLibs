@@ -72,9 +72,23 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/VideoModule.c</file>
         </group>
         <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/SymbolBuffer.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/PWMModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/DMAretransmitter.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Packet.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/DistCalc.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/External/ExtFunctions.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/version.h</file>
         </group>
     </open-files>
 </project-private>

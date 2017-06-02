@@ -17,8 +17,6 @@ uint32_t hashes_cnt = 0;
 /* Private constants ---------------------------------------------------------*/
 char tok_update[7];
 const char *tok_update_hash="updhsh";
-//const char *path_update="update?type=2";
-//const char *path_update_hash="updatehash?type=2";
 const char *path_update_reqry="/REQUERY/UPDATE";
 char path_update_clb[50]="/CALLBACK/UPDATE?type=0";
 char path_update_hash_clb[50]="/CALLBACK/UPDATEHASH?type=0";

@@ -142,6 +142,24 @@ void SampleHandler(void) {
     AddSample();
 }
 
+void ProtocolHandler(void) {
+#ifdef CPU
+#else
+    char buffer[STRING_SIZE];
+    uint32_t cmdlent = 0;
+    if (NO_BUFFER_ERROR == ProceedReceive((char*) tbuffer, &cmdlent)) {
+        if (ReadMem(REG_Simple_link) > 0) {
+            char* tbuffer2;
+            CommandLineInterpreter((char*) &tbuffer);
+            if (0 != (tbuffer2 = ProceedTransmit(&lenght))) {
+                Transfer((uint8_t*) tbuffer2, lenght, 0);
+            }
+            return;
+        }
+    }
+#endif
+    return;
+}
 void OperationHandler(void) {
     int i,j, k = 0, l = 0;
     l = GetCnt();
@@ -149,40 +167,6 @@ void OperationHandler(void) {
 
     #ifdef PLATFORM_LINUX
         //VideoFrameHandler();
-    #endif
-
-    #ifdef EV3
-    for (i=0;i < 4;i++)
-    {
-        if (ReadMem(REG_SERVO_1+i) != old_s[i])
-        {
-            if (ReadMem(REG_SERVO_1+i) == 0)
-            {
-                snprintf(systemcmd,sizeof(systemcmd),
-                        "echo stop > /sys/class/tacho-motor/motor%d/command"
-                                                    ,i);
-                printf(systemcmd);
-                printf("\n");
-                system(systemcmd);
-            }
-            else
-            {
-                snprintf(systemcmd,sizeof(systemcmd),
-                         "echo %d > /sys/class/tacho-motor/motor%d/speed_sp"
-                                                    ,ReadMem(REG_SERVO_1+i),i);
-                printf(systemcmd);
-                printf("\n");
-                system(systemcmd);
-                snprintf(systemcmd,sizeof(systemcmd),
-                         "echo run-forever > /sys/class/tacho-motor/motor%d/command"
-                                                    ,i);
-                printf(systemcmd);
-                printf("\n");
-                system(systemcmd);
-            }
-        }
-        old_s[i] = ReadMem(REG_SERVO_1+i);
-    }
     #endif
 
     #ifndef CPU
@@ -202,8 +186,8 @@ void OperationHandler(void) {
     if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) > 0)) {
         l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize), (int*) scratch_raw);
         if (l > 0) {
-            if ((k = Packetize((uint8_t*) scratch_raw,
-                    l * 4, BUFFER_SAMPLE_SIZE * ReadMem(REG_EEG_PocketSize) + 22)) > 0) {
+            if ((k = Packetize((uint8_t*) scratch_raw, l * 4, 
+                BUFFER_SAMPLE_SIZE * ReadMem(REG_EEG_PocketSize) + 22)) > 0) {
                 TransferBand((uint8_t*) scratch_raw, k);
             }
         }
