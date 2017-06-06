@@ -474,15 +474,15 @@ void AddSample()
                 uint32_t selAD = ReadMem(REG_AD_CH1+i);
                 if (selAD > 7)
                     selAD = 7;
-                if ((ad_id[selAD] != 0x00) && (ad_id[selAD] != 0xFF))
-                {
+//                if ((ad_id[selAD] != 0x00) && (ad_id[selAD] != 0xFF))
+//                {
                     Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
                         ADC_read_data_c(selAD);
-                }
-                else
-                {
-                    Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = -1;
-                }
+//                }
+//                else
+//                {
+//                    Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = -1;
+//                }
             #endif
             }
         #ifndef CPU

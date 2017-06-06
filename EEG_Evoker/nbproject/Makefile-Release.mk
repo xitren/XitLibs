@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
-CND_DLIB_EXT=dll
+CND_PLATFORM=GNU-Linux
+CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -75,12 +75,12 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a
 
-${OBJECTDIR}/ImageVisualise.o: ImageVisualise.c
+${OBJECTDIR}/ImageVisualise.o: ImageVisualise.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DP300 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ImageVisualise.o ImageVisualise.c
 
-${OBJECTDIR}/p300v5.o: p300v5.c
+${OBJECTDIR}/p300v5.o: p300v5.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DP300 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p300v5.o p300v5.c
@@ -94,7 +94,7 @@ ${OBJECTDIR}/p300v5.o: p300v5.c
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/P300test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
 
 
 ${TESTDIR}/tests/P300test.o: tests/P300test.c 
@@ -141,6 +141,7 @@ ${OBJECTDIR}/p300v5_nomain.o: ${OBJECTDIR}/p300v5.o p300v5.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a
 
 # Subprojects
 .clean-subprojects:

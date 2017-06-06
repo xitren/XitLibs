@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
+CND_PLATFORM=MinGW-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug_Windows
 CND_DISTDIR=dist
@@ -91,77 +91,77 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
-${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/CRC16ANSI.o: nbproject/Makefile-${CND_CONF}.mk CRC16ANSI.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 
-${OBJECTDIR}/CommandModule.o: CommandModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/CommandModule.o: nbproject/Makefile-${CND_CONF}.mk CommandModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule.o CommandModule.c
 
-${OBJECTDIR}/ConfigMem.o: ConfigMem.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/ConfigMem.o: nbproject/Makefile-${CND_CONF}.mk ConfigMem.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem.o ConfigMem.c
 
-${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/DMAretransmitter.o: nbproject/Makefile-${CND_CONF}.mk DMAretransmitter.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
-${OBJECTDIR}/DistCalc.o: DistCalc.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/DistCalc.o: nbproject/Makefile-${CND_CONF}.mk DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
-${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/FunctionsDiscovery.o: nbproject/Makefile-${CND_CONF}.mk FunctionsDiscovery.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c
 
-${OBJECTDIR}/Handler.o: Handler.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Handler.o: nbproject/Makefile-${CND_CONF}.mk Handler.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
 
-${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/InOutBuffer.o: nbproject/Makefile-${CND_CONF}.mk InOutBuffer.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 
-${OBJECTDIR}/LogModule.o: LogModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/LogModule.o: nbproject/Makefile-${CND_CONF}.mk LogModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule.o LogModule.c
 
-${OBJECTDIR}/PWMModule.o: PWMModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/PWMModule.o: nbproject/Makefile-${CND_CONF}.mk PWMModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
 
-${OBJECTDIR}/Packet.o: Packet.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/Packet.o: nbproject/Makefile-${CND_CONF}.mk Packet.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
 
-${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/StreamDataRecorder.o: nbproject/Makefile-${CND_CONF}.mk StreamDataRecorder.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
 
-${OBJECTDIR}/UpdateModule.o: UpdateModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/UpdateModule.o: nbproject/Makefile-${CND_CONF}.mk UpdateModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
-${OBJECTDIR}/VideoModule.o: VideoModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/VideoModule.o: nbproject/Makefile-${CND_CONF}.mk VideoModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule.o VideoModule.c
 
-${OBJECTDIR}/generatorModule.o: generatorModule.c nbproject/Makefile-${CND_CONF}.mk
+${OBJECTDIR}/generatorModule.o: nbproject/Makefile-${CND_CONF}.mk generatorModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
@@ -176,11 +176,11 @@ ${OBJECTDIR}/generatorModule.o: generatorModule.c nbproject/Makefile-${CND_CONF}
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/External/ExtFunctions.o ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   -lWs2_32 
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lWs2_32 
 
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
 
 
 ${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
@@ -409,6 +409,7 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
 # Subprojects
 .clean-subprojects:

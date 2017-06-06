@@ -16,8 +16,8 @@
 #include "FunctionsDiscovery.h"
 #include "UpdateModule.h"
 #ifndef CPU
-    #include "tim.h"
-    #include "usart.h"
+//    #include "tim.h"
+//    #include "usart.h"
 #endif
 /*============================================================================*/
 
@@ -55,6 +55,7 @@ extern int size_parts_cur;
 
 /* Public function prototypes ------------------------------------------------*/
 void InitHandler(DeviceTypeDef device);
+void SampleHandler(void);
 void ProtocolHandler(void);
 void OperationHandler(void);
 void CalculationHandler(void);

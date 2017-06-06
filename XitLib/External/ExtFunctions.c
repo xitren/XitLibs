@@ -8,6 +8,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "ExtFunctions.h"
+#include "Handler.h"
 
 #ifdef CPU
     #ifdef PLATFORM_WINDOWS

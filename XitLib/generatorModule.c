@@ -4,18 +4,18 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include <pthread.h>
-
-uint32_t IDThread1; 
-pthread_t thread1;
-
-uint32_t *ThreadGenerator() {
-    while (1) {
-        printf ("Information sended on generator\r\n\r");
-        usleep(480000);
-    }
-    return 0;
-}
+//#include <pthread.h>
+//
+//uint32_t IDThread1; 
+//pthread_t thread1;
+//
+//uint32_t *ThreadGenerator() {
+//    while (1) {
+//        printf ("Information sended on generator\r\n\r");
+//        usleep(480000);
+//    }
+//    return 0;
+//}
 
 int RunGenerator(ParameterList_t *TempParam)
 {

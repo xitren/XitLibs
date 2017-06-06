@@ -170,18 +170,18 @@ void OperationHandler(void) {
     #endif
 
     #ifndef CPU
-    if (ReadMem(REG_AD_RP) > 0)
-    {
-                
-        HAL_TIM_Base_Stop(&htim14); 
-        HAL_TIM_Base_Stop(&htim2); 
-        
-        ad7190_setup_all();
-        
-        HAL_TIM_Base_Start_IT(&htim14);
-        HAL_TIM_Base_Start_IT(&htim2);
-        WriteMem(REG_AD_RP,0);
-    }
+//    if (ReadMem(REG_AD_RP) > 0)
+//    {
+//                
+//        HAL_TIM_Base_Stop(&htim14); 
+//        HAL_TIM_Base_Stop(&htim2); 
+//        
+//        ad7190_setup_all();
+//        
+//        HAL_TIM_Base_Start_IT(&htim14);
+//        HAL_TIM_Base_Start_IT(&htim2);
+//        WriteMem(REG_AD_RP,0);
+//    }
     
     if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) > 0)) {
         l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize), (int*) scratch_raw);
@@ -242,7 +242,7 @@ void UartReceiveCompleteHandler(void) {
     unsigned char pstrs = 0;
 
 #ifndef CPU
-    HAL_TIM_Base_Stop(&htim13);
+//    HAL_TIM_Base_Stop(&htim13);
 #endif
     pstr = (char*) GetPocketBuffer(&pstrs);
     //    sprintf((char*)buffer,"len %d\r\n\r",pstrs);

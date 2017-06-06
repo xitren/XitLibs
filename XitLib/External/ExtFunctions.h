@@ -4,25 +4,19 @@
 #include <stdint.h>
 #include <string.h>
 #include "LibConfig.h"
-#include "PWMModule.h"
 #include "ConfigMem.h"
 #include "InOutBuffer.h"
 #include "CommandModule.h"
-#include "DMAretransmitter.h"
-#include "Packet.h"
-#include "DistCalc.h"
 #include "../CoAP/coap.h"
 #include "StreamDataRecorder.h"
-#include "FunctionsDiscovery.h"
-#include "UpdateModule.h"
 #ifndef CPU
     #include "tim.h"
     #include "usart.h"
 #endif
 /*============================================================================*/
 
-#ifndef __EXT_FUNCTIONS_H__
-#define __EXT_FUNCTIONS_H__  
+#ifndef __EXTERNAL_H__
+#define __EXTERNAL_H__  
 
 #ifdef __cplusplus
 extern "C" {
@@ -54,27 +48,10 @@ extern int size_parts_cur;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
-void InitHandler(DeviceTypeDef device);
-void ProtocolHandler(void);
-void OperationHandler(void);
-void CalculationHandler(void);
-#ifdef PLATFORM_LINUX
-    void VideoFrameHandler(void);
-    void VideoFrameInitHandler(void);
-    void VideoFrameDeInitHandler(void);
-#endif
-void UartDistanceHandler(void);
-void UartProtocolHandler(void);
-void UartTransferCompleteHandler(void);
-void UartReceiveCompleteHandler(void);
-void SecClockHandler(void);
-void SoftPWMHandler(void);
-void StatChangeHandler(void);
-int ResetReq();
-int Update(ParameterList_t *TempParam);
-int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func);
-int TransferBand(const uint8_t *data, const uint32_t datalen);
-void HandlerImage(void);
+void InitUDP(void);
+void SetLeds(uint8_t q_green,uint8_t q_red,uint8_t q_blue);
+void UserOperationHandler(void);
+void UserProtocolHandler(void);
 /*============================================================================*/
 
 #ifdef __cplusplus
