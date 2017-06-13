@@ -79,6 +79,12 @@
         <cTool>
           <standard>3</standard>
           <commandlineTool>gcc</commandlineTool>
+          <incDir>
+            <pElem>../CoAP</pElem>
+            <pElem>../EEG_Evoker</pElem>
+            <pElem>../XitLib</pElem>
+            <pElem>../XitLib/External</pElem>
+          </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
             <Elem>DEBUG</Elem>

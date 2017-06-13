@@ -75,7 +75,7 @@ int main(int argc, char** argv) {
     
     InitUDP();
     //InitImageP300();
-    InitHandler(0);
+    InitHandler(EEG);
     EEGRecorderInit(0,250);
     
     uint32_t amplitude[7] = {10000,10000,100000,1000000,100000,10000,10000};

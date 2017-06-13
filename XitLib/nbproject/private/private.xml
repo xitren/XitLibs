@@ -2,7 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>3</activeConfTypeElem>
-        <activeConfIndexElem>5</activeConfIndexElem>
+        <activeConfIndexElem>3</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
@@ -62,25 +62,6 @@
             <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/VideoModule.c</file>
             <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/FunctionsDiscovery.c</file>
         </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/SymbolBuffer.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/PWMModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/DMAretransmitter.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Packet.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/DistCalc.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/External/ExtFunctions.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/version.h</file>
-        </group>
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/LogModule.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/External/ExtFunctions.h</file>
@@ -96,6 +77,16 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/FunctionsDiscovery.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/CommandModule.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/LogModule.h</file>
+        </group>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/External/ExtFunctions.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/External/ExtFunctions.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/LogModule.c</file>
         </group>
     </open-files>
 </project-private>

@@ -563,6 +563,7 @@
           <developmentMode>5</developmentMode>
           <preprocessorList>
             <Elem>CPU</Elem>
+            <Elem>PI</Elem>
             <Elem>PLATFORM_LINUX</Elem>
           </preprocessorList>
         </cTool>
