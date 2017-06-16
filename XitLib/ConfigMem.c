@@ -59,22 +59,31 @@ void InitCfgMem(void)
   config_reg[REG_GYRO_Z] = 0;
   config_reg[REG_TEMP] = 0;
   
-  config_reg[REG_AD_GPIO] = 0x3F;
-  config_reg[REG_AD_CONF] = 0;
-  config_reg[REG_AD_RP] = 0;
-  config_reg[REG_AD_GPIO2] = 0x3F;
+  config_reg[REG_ADC_REG1] = 0;
+  config_reg[REG_ADC_REG2] = 0;
+  config_reg[REG_ADC_REG3] = 0;
+  config_reg[REG_ADC_REG4] = 0;
+  config_reg[REG_ADC_REG5] = 0;
+  config_reg[REG_ADC_REG6] = 0;
+  config_reg[REG_ADC_REG7] = 0;
+  config_reg[REG_ADC_REG8] = 0;
+  config_reg[REG_ADC_REG9] = 0;
+  config_reg[REG_ADC_REG10] = 0;
+  config_reg[REG_ADC_REG11] = 0;
+  config_reg[REG_ADC_REG12] = 0;
+  config_reg[REG_ADC_REG13] = 0;
+  config_reg[REG_ADC_REG14] = 0;
   
-  config_reg[REG_AD_CH1] = 0;
-  config_reg[REG_AD_CH2] = 1;
-  config_reg[REG_AD_CH3] = 2;
-  config_reg[REG_AD_CH4] = 3;
-  config_reg[REG_AD_CH5] = 4;
-  config_reg[REG_AD_CH6] = 5;
-  config_reg[REG_AD_CH7] = 6;
-  config_reg[REG_AD_CH8] = 7;
-  config_reg[REG_AD_CHB] = 2;
+  config_reg[REG_ADC_ORDER] = 0;
   
-  config_reg[REG_AD_MODE] = 0x14000C;
+  config_reg[REG_ADC_CH1] = 0;
+  config_reg[REG_ADC_CH2] = 0;
+  config_reg[REG_ADC_CH3] = 0;
+  config_reg[REG_ADC_CH4] = 0;
+  config_reg[REG_ADC_CH5] = 0;
+  config_reg[REG_ADC_CH6] = 0;
+  config_reg[REG_ADC_CH7] = 0;
+  config_reg[REG_ADC_CH8] = 0;
   
   config_reg[REG_Imp_CH1] = 0;
   config_reg[REG_Imp_CH2] = 0;
@@ -89,6 +98,19 @@ void InitCfgMem(void)
   
   config_reg[REG_STREAM_REC] = 0;
   config_reg[REG_LOG_LVL] = 2;
+  
+  config_reg[REG_EYE_ThrH] = 0;
+  config_reg[REG_EYE_ThrL] = 0;
+  config_reg[REG_EYE_RGB] = 0;
+  config_reg[REG_EYE_WIDTH] = 0;
+  config_reg[REG_EYE_HEIGHT] = 0;
+  config_reg[REG_EYE_FRAME_RATE] = 0;
+  config_reg[REG_EYE_ThrH_READ] = 0;
+  config_reg[REG_EYE_ThrL_READ] = 0;
+  config_reg[REG_EYE_X1] = 0;
+  config_reg[REG_EYE_X2] = 0;
+  config_reg[REG_EYE_Y1] = 0;
+  config_reg[REG_EYE_Y2] = 0;
   return;
 }
 void WriteMem(uint32_t _adr, uint32_t _val)

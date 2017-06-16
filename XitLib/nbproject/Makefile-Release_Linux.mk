@@ -94,77 +94,77 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a: ${OBJECTFILES}
 ${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 
 ${OBJECTDIR}/CommandModule.o: CommandModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule.o CommandModule.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule.o CommandModule.c
 
 ${OBJECTDIR}/ConfigMem.o: ConfigMem.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem.o ConfigMem.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem.o ConfigMem.c
 
 ${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
 ${OBJECTDIR}/DistCalc.o: DistCalc.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
 ${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c
 
 ${OBJECTDIR}/Handler.o: Handler.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
 
 ${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 
 ${OBJECTDIR}/LogModule.o: LogModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule.o LogModule.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule.o LogModule.c
 
 ${OBJECTDIR}/PWMModule.o: PWMModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
 
 ${OBJECTDIR}/Packet.o: Packet.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
 
 ${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
 
 ${OBJECTDIR}/UpdateModule.o: UpdateModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
 ${OBJECTDIR}/VideoModule.o: VideoModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule.o VideoModule.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule.o VideoModule.c
 
 ${OBJECTDIR}/generatorModule.o: generatorModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
 
 # Subprojects
 .build-subprojects:
@@ -185,19 +185,19 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o
 ${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
 	${MKDIR} -p ${TESTDIR}/External
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/External/ExtFunctions.o External/ExtFunctions.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/External/ExtFunctions.o External/ExtFunctions.c
 
 
 ${TESTDIR}/tests/dma_test.o: tests/dma_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/dma_test.o tests/dma_test.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/dma_test.o tests/dma_test.c
 
 
 ${TESTDIR}/tests/LogTest.o: tests/LogTest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LogTest.o tests/LogTest.c
+	$(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LogTest.o tests/LogTest.c
 
 
 ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c 
@@ -208,7 +208,7 @@ ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI_nomain.o CRC16ANSI.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI_nomain.o CRC16ANSI.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/CRC16ANSI.o ${OBJECTDIR}/CRC16ANSI_nomain.o;\
 	fi
@@ -221,7 +221,7 @@ ${OBJECTDIR}/CommandModule_nomain.o: ${OBJECTDIR}/CommandModule.o CommandModule.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule_nomain.o CommandModule.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule_nomain.o CommandModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/CommandModule.o ${OBJECTDIR}/CommandModule_nomain.o;\
 	fi
@@ -234,7 +234,7 @@ ${OBJECTDIR}/ConfigMem_nomain.o: ${OBJECTDIR}/ConfigMem.o ConfigMem.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem_nomain.o ConfigMem.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem_nomain.o ConfigMem.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ConfigMem.o ${OBJECTDIR}/ConfigMem_nomain.o;\
 	fi
@@ -247,7 +247,7 @@ ${OBJECTDIR}/DMAretransmitter_nomain.o: ${OBJECTDIR}/DMAretransmitter.o DMAretra
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter_nomain.o DMAretransmitter.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter_nomain.o DMAretransmitter.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/DMAretransmitter.o ${OBJECTDIR}/DMAretransmitter_nomain.o;\
 	fi
@@ -260,7 +260,7 @@ ${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
 	fi
@@ -273,7 +273,7 @@ ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o Func
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery_nomain.o FunctionsDiscovery.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery_nomain.o FunctionsDiscovery.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/FunctionsDiscovery.o ${OBJECTDIR}/FunctionsDiscovery_nomain.o;\
 	fi
@@ -286,7 +286,7 @@ ${OBJECTDIR}/Handler_nomain.o: ${OBJECTDIR}/Handler.o Handler.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler_nomain.o Handler.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler_nomain.o Handler.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Handler.o ${OBJECTDIR}/Handler_nomain.o;\
 	fi
@@ -299,7 +299,7 @@ ${OBJECTDIR}/InOutBuffer_nomain.o: ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer_nomain.o InOutBuffer.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer_nomain.o InOutBuffer.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/InOutBuffer.o ${OBJECTDIR}/InOutBuffer_nomain.o;\
 	fi
@@ -312,7 +312,7 @@ ${OBJECTDIR}/LogModule_nomain.o: ${OBJECTDIR}/LogModule.o LogModule.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule_nomain.o LogModule.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule_nomain.o LogModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/LogModule.o ${OBJECTDIR}/LogModule_nomain.o;\
 	fi
@@ -325,7 +325,7 @@ ${OBJECTDIR}/PWMModule_nomain.o: ${OBJECTDIR}/PWMModule.o PWMModule.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule_nomain.o PWMModule.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule_nomain.o PWMModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/PWMModule.o ${OBJECTDIR}/PWMModule_nomain.o;\
 	fi
@@ -338,7 +338,7 @@ ${OBJECTDIR}/Packet_nomain.o: ${OBJECTDIR}/Packet.o Packet.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet_nomain.o Packet.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet_nomain.o Packet.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/Packet.o ${OBJECTDIR}/Packet_nomain.o;\
 	fi
@@ -351,7 +351,7 @@ ${OBJECTDIR}/StreamDataRecorder_nomain.o: ${OBJECTDIR}/StreamDataRecorder.o Stre
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder_nomain.o StreamDataRecorder.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder_nomain.o StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/StreamDataRecorder.o ${OBJECTDIR}/StreamDataRecorder_nomain.o;\
 	fi
@@ -364,7 +364,7 @@ ${OBJECTDIR}/UpdateModule_nomain.o: ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule_nomain.o UpdateModule.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule_nomain.o UpdateModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/UpdateModule.o ${OBJECTDIR}/UpdateModule_nomain.o;\
 	fi
@@ -377,7 +377,7 @@ ${OBJECTDIR}/VideoModule_nomain.o: ${OBJECTDIR}/VideoModule.o VideoModule.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule_nomain.o VideoModule.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule_nomain.o VideoModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/VideoModule.o ${OBJECTDIR}/VideoModule_nomain.o;\
 	fi
@@ -390,7 +390,7 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_LINUX -DPI -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule_nomain.o generatorModule.c;\
+	    $(COMPILE.c) -O2 -DCPU -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule_nomain.o generatorModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/generatorModule.o ${OBJECTDIR}/generatorModule_nomain.o;\
 	fi

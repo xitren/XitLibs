@@ -139,6 +139,7 @@ int Snap(ParameterList_t *TempParam)
             }
         }
 
+        printf("Send query snap pre.jpg\r\n\r");
         #ifdef PI
         if (ind_i == 0)
         {

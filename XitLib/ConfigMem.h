@@ -69,42 +69,64 @@ typedef enum
   REG_GYRO_Z             =       0x00000025,
   REG_TEMP               =       0x00000026,
           
-  REG_AD_GPIO            =       0x00000027,
-  REG_AD_CONF            =       0x00000028,
-  REG_AD_RP              =       0x00000029,
-  REG_AD_GPIO2           =       0x0000002A,
+  REG_ADC_REG1           =       0x00000027, //REG_ADS_CONFIG1
+  REG_ADC_REG2           =       0x00000028, //REG_ADS_CONFIG2
+  REG_ADC_REG3           =       0x00000029, //REG_ADS_CONFIG3
+  REG_ADC_REG4           =       0x0000002A, //REG_ADS_LOFF
+  REG_ADC_REG5           =       0x0000002B, //REG_ADS_BIAS_SENSP         
+  REG_ADC_REG6           =       0x0000002C, //REG_ADS_BIAS_SENSN
+  REG_ADC_REG7           =       0x0000002D, //REG_ADS_LOFF_SENSP
+  REG_ADC_REG8           =       0x0000002E, //REG_ADS_LOFF_SENSN
+  REG_ADC_REG9           =       0x0000002F, //REG_ADS_LOFF_FLIP
+  REG_ADC_REG10          =       0x00000030, //REG_ADS_GPIO
+  REG_ADC_REG11          =       0x00000031, //REG_ADS_MISC1
+  REG_ADC_REG12          =       0x00000032, //REG_ADS_MISC2
+  REG_ADC_REG13          =       0x00000033, //REG_ADS_CONFIG4
+  REG_ADC_REG14          =       0x00000034, //REG_ADS_MODE
           
-  REG_AD_CH1             =       0x0000002B,
-  REG_AD_CH2             =       0x0000002C,
-  REG_AD_CH3             =       0x0000002D,
-  REG_AD_CH4             =       0x0000002E,
-  REG_AD_CH5             =       0x0000002F,
-  REG_AD_CH6             =       0x00000030,
-  REG_AD_CH7             =       0x00000031,
-  REG_AD_CH8             =       0x00000032,
-  REG_AD_CHB             =       0x00000033,
+  REG_ADC_CH1            =       0x00000035,
+  REG_ADC_CH2            =       0x00000036,
+  REG_ADC_CH3            =       0x00000037,
+  REG_ADC_CH4            =       0x00000038,
+  REG_ADC_CH5            =       0x00000039,
+  REG_ADC_CH6            =       0x0000003A,
+  REG_ADC_CH7            =       0x0000003B,
+  REG_ADC_CH8            =       0x0000003C,
           
-  REG_AD_MODE            =       0x00000034,
-  
-  REG_Imp_CH1            =       0x00000035,
-  REG_Imp_CH2            =       0x00000036,
-  REG_Imp_CH3            =       0x00000037,
-  REG_Imp_CH4            =       0x00000038,
-  REG_Imp_CH5            =       0x00000039,
-  REG_Imp_CH6            =       0x0000003A,
-  REG_Imp_CH7            =       0x0000003B,
+  REG_EEG_File           =       0x0000003D,
+  REG_UPD_File           =       0x0000003E,
+  REG_STREAM_REC         =       0x0000003F,
+  REG_LOG_LVL            =       0x00000040,
           
-  REG_EEG_File           =       0x0000003C,
-  REG_UPD_File           =       0x0000003D,
-  REG_STREAM_REC         =       0x0000003E,
-  REG_LOG_LVL            =       0x0000003F
+  REG_EYE_ThrH           =       0x00000041,
+  REG_EYE_ThrL           =       0x00000042,
+  REG_EYE_RGB            =       0x00000043,
+  REG_EYE_WIDTH          =       0x00000044,
+  REG_EYE_HEIGHT         =       0x00000045,
+  REG_EYE_FRAME_RATE     =       0x00000046,
+  REG_EYE_ThrH_READ      =       0x00000047,
+  REG_EYE_ThrL_READ      =       0x00000048,
+  REG_EYE_X1             =       0x00000049,
+  REG_EYE_X2             =       0x0000004A,
+  REG_EYE_Y1             =       0x0000004B,
+  REG_EYE_Y2             =       0x0000004C,
+          
+  REG_Imp_CH1            =       0x0000004D,
+  REG_Imp_CH2            =       0x0000004E,
+  REG_Imp_CH3            =       0x0000004F,
+  REG_Imp_CH4            =       0x00000050,
+  REG_Imp_CH5            =       0x00000051,
+  REG_Imp_CH6            =       0x00000052,
+  REG_Imp_CH7            =       0x00000053,
+          
+  REG_ADC_ORDER          =       0x00000054
 } RegDef;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
 void InitCfgMem(void);
-void WriteMem(uint32_t _adr, uint32_t _val);
-uint32_t ReadMem(uint32_t _adr);
+inline void WriteMem(uint32_t _adr, uint32_t _val);
+inline uint32_t ReadMem(uint32_t _adr);
 /*============================================================================*/
 
 #ifdef __cplusplus
