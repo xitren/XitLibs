@@ -73,8 +73,16 @@ void InitCfgMem(void)
   config_reg[REG_ADC_REG12] = 0;
   config_reg[REG_ADC_REG13] = 0;
   config_reg[REG_ADC_REG14] = 0;
+  config_reg[REG_ADC_REG15] = 0;
+  config_reg[REG_ADC_REG16] = 0;
+  config_reg[REG_ADC_REG17] = 0;
+  config_reg[REG_ADC_REG18] = 0;
+  config_reg[REG_ADC_REG19] = 0;
+  config_reg[REG_ADC_REG20] = 0;
+  config_reg[REG_ADC_REG21] = 0;
+  config_reg[REG_ADC_REG22] = 0;
   
-  config_reg[REG_ADC_ORDER] = 0;
+  config_reg[REG_ADC_ORDER] = 0x76543210;
   
   config_reg[REG_ADC_CH1] = 0;
   config_reg[REG_ADC_CH2] = 0;
@@ -113,7 +121,7 @@ void InitCfgMem(void)
   config_reg[REG_EYE_Y2] = 0;
   return;
 }
-void WriteMem(uint32_t _adr, uint32_t _val)
+inline void WriteMem(uint32_t _adr, uint32_t _val)
 {
   if (_adr < CFG_SIZE)
   {
@@ -121,7 +129,7 @@ void WriteMem(uint32_t _adr, uint32_t _val)
   }
   return;
 }
-uint32_t ReadMem(uint32_t _adr)
+inline uint32_t ReadMem(uint32_t _adr)
 {
   if (_adr < CFG_SIZE)
   {

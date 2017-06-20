@@ -142,7 +142,7 @@ void SampleHandler(void) {
     AddSample();
 }
 
-void ProtocolHandler(void) {
+inline void ProtocolHandler(void) {
 #ifdef CPU
 #else
     char buffer[STRING_SIZE];
@@ -160,7 +160,7 @@ void ProtocolHandler(void) {
 #endif
     return;
 }
-void OperationHandler(void) {
+inline void OperationHandler(void) {
     int i,j, k = 0, l = 0;
     l = GetCnt();
     char systemcmd[100];
@@ -198,7 +198,9 @@ void OperationHandler(void) {
     if (ReadMem(REG_UPD_File) > 0) 
     {
         WriteMem(REG_UPD_File, 0);
+    #ifdef CPU
         function_update(0);
+    #endif
     }
     return;
 }

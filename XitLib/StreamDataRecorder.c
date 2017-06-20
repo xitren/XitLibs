@@ -471,26 +471,13 @@ void AddSample()
             #ifdef CPU
                 Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = GetMiddleADC(i);
             #else
-                uint32_t selAD = ReadMem(REG_AD_CH1+i);
+                uint32_t selAD = (ReadMem(REG_ADC_ORDER) >> (i*4)) & 0x0000000F;
                 if (selAD > 7)
                     selAD = 7;
-//                if ((ad_id[selAD] != 0x00) && (ad_id[selAD] != 0xFF))
-//                {
-                    Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
-                        ADC_read_data_c(selAD);
-//                }
-//                else
-//                {
-//                    Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = -1;
-//                }
+                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
+                        ReadMem(REG_ADC_CH1+selAD);
             #endif
             }
-        #ifndef CPU
-            uint32_t selAD_DRIVE = ReadMem(REG_AD_CHB);
-            if (selAD_DRIVE < 8)
-                Data_samples[selAD_DRIVE][samples_cnt%BUFFER_2ND_MAX] = 
-                                                ADC_read_data_c(0x08);
-        #endif
         }
         else if (signal_type == 2)
             for(i=0;i < 4;i++)

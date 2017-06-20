@@ -119,14 +119,22 @@ typedef enum
   REG_Imp_CH6            =       0x00000052,
   REG_Imp_CH7            =       0x00000053,
           
-  REG_ADC_ORDER          =       0x00000054
+  REG_ADC_ORDER          =       0x00000054,
+  REG_ADC_REG15          =       0x00000055, //REG_ADS_CH1SET
+  REG_ADC_REG16          =       0x00000056, //REG_ADS_CH2SET
+  REG_ADC_REG17          =       0x00000057, //REG_ADS_CH3SET
+  REG_ADC_REG18          =       0x00000058, //REG_ADS_CH4SET
+  REG_ADC_REG19          =       0x00000059, //REG_ADS_CH5SET
+  REG_ADC_REG20          =       0x0000005A, //REG_ADS_CH6SET
+  REG_ADC_REG21          =       0x0000005B, //REG_ADS_CH7SET
+  REG_ADC_REG22          =       0x0000005C  //REG_ADS_CH8SET
 } RegDef;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
 void InitCfgMem(void);
-inline void WriteMem(uint32_t _adr, uint32_t _val);
-inline uint32_t ReadMem(uint32_t _adr);
+void WriteMem(uint32_t _adr, uint32_t _val);
+uint32_t ReadMem(uint32_t _adr);
 /*============================================================================*/
 
 #ifdef __cplusplus
