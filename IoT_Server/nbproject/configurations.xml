@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -10,9 +10,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="CoAP" projectFiles="true">
-        <itemPath>../CoAP/coap.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f3" displayName="cVEP" projectFiles="true">
         <itemPath>../EEG_Evoker/ImageVisualise.h</itemPath>
         <itemPath>../EEG_Evoker/cvepv4.h</itemPath>
@@ -34,11 +31,9 @@
         <itemPath>../XitLib/PWMModule.h</itemPath>
         <itemPath>../XitLib/Packet.h</itemPath>
         <itemPath>../XitLib/StreamDataRecorder.h</itemPath>
-        <itemPath>../XitLib/SymbolBuffer.h</itemPath>
         <itemPath>../XitLib/UpdateModule.h</itemPath>
         <itemPath>../XitLib/VideoModule.h</itemPath>
         <itemPath>../XitLib/generatorModule.h</itemPath>
-        <itemPath>../XitLib/jSONparser.h</itemPath>
         <itemPath>../XitLib/version.h</itemPath>
         <itemPath>../XitLib/xitlibtypes.h</itemPath>
       </logicalFolder>
@@ -165,8 +160,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../EEG_Evoker/cvepv4.h" ex="false" tool="3" flavor2="0">
@@ -207,15 +200,11 @@
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/SymbolBuffer.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -269,8 +258,6 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../EEG_Evoker/cvepv4.h" ex="false" tool="3" flavor2="0">
@@ -311,15 +298,11 @@
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/SymbolBuffer.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>

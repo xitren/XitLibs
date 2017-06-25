@@ -21,8 +21,8 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=GNU-Linux
-CND_DLIB_EXT=so
+CND_PLATFORM=Cygwin-Windows
+CND_DLIB_EXT=dll
 CND_CONF=Debug
 CND_DISTDIR=dist
 CND_BUILDDIR=build
@@ -53,28 +53,28 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../EEG_Evoker/dist/Debug/GNU-Linux/libeeg_evoker.a ../XitLib/dist/Debug_Windows/MinGW-Windows/libxitlib.a ../CoAP/dist/Debug/GNU-Linux/libcoap.a -lWs2_32
+LDLIBSOPTIONS=../EEG_Evoker/dist/Debug/Cygwin-Windows/libeeg_evoker.a ../XitLib/dist/Debug_Windows/Cygwin-Windows/libxitlib.a ../CoAP/dist/Debug/Cygwin-Windows/libcoap.a -lWs2_32
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server: ../EEG_Evoker/dist/Debug/GNU-Linux/libeeg_evoker.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../EEG_Evoker/dist/Debug/Cygwin-Windows/libeeg_evoker.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server: ../XitLib/dist/Debug_Windows/MinGW-Windows/libxitlib.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../XitLib/dist/Debug_Windows/Cygwin-Windows/libxitlib.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server: ../CoAP/dist/Debug/GNU-Linux/libcoap.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../CoAP/dist/Debug/Cygwin-Windows/libcoap.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c 
+${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DCPU -DDEBUG -DPLATFORM_WINDOWS -I../CoAP -I../EEG_Evoker -I../XitLib -I../XitLib/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
 
-${OBJECTDIR}/main.o: main.c 
+${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DCPU -DDEBUG -DPLATFORM_WINDOWS -I../CoAP -I../EEG_Evoker -I../XitLib -I../XitLib/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
@@ -91,7 +91,6 @@ ${OBJECTDIR}/main.o: main.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server
 
 # Subprojects
 .clean-subprojects:
