@@ -60,7 +60,8 @@ CommandFunction_t FindCommand(char *Command);
    /* interface to memory map.                                          */
 void Interface_Memory(void)
 {
-    array_new(&CommandTableArray);
+    if (array_new(&CommandTableArray) != 0)
+        return;
     //array_size(CommandTableArray);
     ClearCommands();
     AddCommand("/RESET", "</reset>", Reset);
@@ -803,8 +804,13 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
             comm->CommandName = CommandName;
             comm->Link = Link;
             comm->CommandFunction = CommandFunction;
-            array_add(CommandTableArray, (void *)comm);
+            if (array_add(CommandTableArray, (void *)comm) != 0)
+            {
+                umm_free((void *)comm);
+                return 1;
+            }
             printf(comm->CommandName);
+            printf("\n");
 
             /* Return success to the caller.                               */
             ret_val                                        = 0;

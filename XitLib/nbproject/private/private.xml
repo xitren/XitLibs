@@ -74,6 +74,7 @@
         </group>
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/DMAretransmitter.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc_cfg.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/External/ExtFunctions.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/InOutBuffer.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/InOutBuffer.h</file>
@@ -90,15 +91,19 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/StreamDataRecorder.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/PWMModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/include/common.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/LibConfig.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/include/array.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/UpdateModule.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/LogTest.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/UpdateModule.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/ConfigMem.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/ConfigMem.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/FunctionsDiscovery.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/coap/coap.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/FunctionsDiscovery.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/json/cJSON.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/VideoModule.c</file>

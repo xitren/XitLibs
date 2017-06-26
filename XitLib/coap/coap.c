@@ -7,11 +7,14 @@
 #include <string.h>
 #include <stddef.h>
 #include "coap.h"
+#include "array.h"
+#include "umm_malloc.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
-static coap_token_record awaited_answers[MAXWAIT];
-uint32_t awaited_answers_cnt = 0;
+static Array *AwaitedAnswersArray;
+//static coap_token_record awaited_answers[MAXWAIT];
+//uint32_t awaited_answers_cnt = 0;
 static uint8_t part_buff[3];
 /*============================================================================*/
 
@@ -19,23 +22,22 @@ static uint8_t part_buff[3];
 void coap_clock(void)
 {
     int i,j;
-    for (i=0;i<awaited_answers_cnt;i++)
+    coap_token_record *answer;
+    coap_token_record *removed;
+    for (i=0;i < array_size(AwaitedAnswersArray);i++)
     {
-        awaited_answers[i].tok_wait--;
-        if (!(awaited_answers[i].tok_wait))
+        array_get_at(AwaitedAnswersArray, i, (void**)&answer);
+        answer->tok_wait--;
+        if (!(answer->tok_wait))
         {
             printf("Released %d: %06s %d\r\n\r",i,
-                    awaited_answers[i].p,awaited_answers[i].used);
-            if ((!(awaited_answers[i].used)) 
-                    && (awaited_answers[awaited_answers_cnt].release[0]))
+                    answer->p,answer->used);
+            if ( (!(answer->used)) && (answer->release[0] != 0) )
             {
-                CommandLineInterpreter(awaited_answers[i].release);
+                CommandLineInterpreter(answer->release);
             }
-            for (j=i+1;j<awaited_answers_cnt;j++)
-            {
-                awaited_answers[j-1] = awaited_answers[j];
-            }
-            awaited_answers_cnt--;
+            array_remove_at(AwaitedAnswersArray, i, (void **)&removed);
+            umm_free((void *)removed);
         }
     }
     return;
@@ -43,13 +45,15 @@ void coap_clock(void)
 char* coap_check_ans(const char *other)
 {
     int i,j;
-    for (i=0;i<awaited_answers_cnt;i++)
+    coap_token_record *answer;
+    for (i=0;i < array_size(AwaitedAnswersArray);i++)
     {
+        array_get_at(AwaitedAnswersArray, i, (void**)&answer);
         //printf("I %d: %6s <-> %6s\r\n\r",i,other,awaited_answers[i].p);
-        if (!strncmp(other,awaited_answers[i].p,awaited_answers[i].len))
+        if (!strncmp(other,answer->p,answer->len))
         {
-            awaited_answers[i].used = 1;
-            return awaited_answers[i].callback;
+            answer->used = 1;
+            return answer->callback;
         }
     }
     return 0;
@@ -330,6 +334,7 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     size_t i;
     uint8_t *p;
     uint16_t running_delta = 0;
+    coap_token_record *answer;
 
     // build header
     if (*buflen < (4U + pkt->hdr.tkl))
@@ -407,11 +412,14 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     }
     else
         *buflen = opts_len + 4;
-    printf("--//internal//-- awaited_answers_cnt %d < MAXWAIT %d && callback %d.\r\n\r",awaited_answers_cnt,MAXWAIT, callback);
-    if ((awaited_answers_cnt < MAXWAIT) && (callback))
+    printf("--//internal//-- awaited_answers_cnt %d < MAXWAIT %d && callback %d.\r\n\r"
+            ,array_size(AwaitedAnswersArray),MAXWAIT, callback);
+    //if ((awaited_answers_cnt < MAXWAIT) && (callback))
+    if (callback)
     {
+        answer = (coap_token_record *)umm_calloc(1,sizeof(coap_token_record));
         if (pkt->hdr.tkl > 0)
-            memcpy(awaited_answers[awaited_answers_cnt].p,pkt->tok_p,pkt->hdr.tkl);
+            memcpy(answer->p,pkt->tok_p,pkt->hdr.tkl);
         #ifdef DEBUG
             printf("--//internal//-- add tkn %06s clb %s.\r\n\r",
                         pkt->tok_p,callback);
@@ -420,18 +428,21 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
                 printf("--//internal//-- release %s.\r\n\r",release_cmd);
             }
         #endif
-        awaited_answers[awaited_answers_cnt].len = pkt->hdr.tkl;
-        awaited_answers[awaited_answers_cnt].tok_wait = MAXWAITTIME;
-        awaited_answers[awaited_answers_cnt].callback = callback;
-        awaited_answers[awaited_answers_cnt].used = 0;
+        answer->len = pkt->hdr.tkl;
+        answer->tok_wait = MAXWAITTIME;
+        answer->callback = callback;
+        answer->used = 0;
         if (release_cmd)
         {
-            strncpy(awaited_answers[awaited_answers_cnt].release,release_cmd
-                                                               ,MAXRELEASESTR);
+            strncpy(answer->release,release_cmd,MAXRELEASESTR);
         }
         else
-            awaited_answers[awaited_answers_cnt].release[0] = 0;
-        awaited_answers_cnt++;
+            answer->release[0] = 0;
+        if (array_add(AwaitedAnswersArray, (void *)answer) != 0)
+        {
+            umm_free((void *)answer);
+            return -1;
+        }
     }
     
     return 0;
@@ -753,5 +764,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
 
 void coap_setup(void)
 {
+    if (array_new(&AwaitedAnswersArray) != 0)
+        return;
 }
 /*============================================================================*/

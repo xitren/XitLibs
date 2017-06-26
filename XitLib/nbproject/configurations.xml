@@ -360,6 +360,7 @@
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
             <Elem>__USE_W32_SOCKETS</Elem>
           </preprocessorList>

@@ -16,7 +16,7 @@ extern "C" {
 #define MAXWAIT 2000
 #define MAXWAITTIME 10
 #define MAXRELEASESTR 60
-#define MEMORY_COAP sizeof(coap_token_record)*MAXWAIT+4+3
+#define MEMORY_COAP 7
 /*============================================================================*/
 
 /* Public types --------------------------------------------------------------*/

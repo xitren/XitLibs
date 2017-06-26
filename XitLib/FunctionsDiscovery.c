@@ -7,11 +7,14 @@
 #include <string.h>
 #include <stdlib.h>
 #include "generatorModule.h"
+#include "array.h"
+#include "umm_malloc.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
-function_node nodes[NODE_MAX];
-uint32_t nodes_cnt = 0;
+static Array *NodesArray;
+//function_node nodes[NODE_MAX];
+//uint32_t nodes_cnt = 0;
 /*============================================================================*/
 
 /* Private constants ---------------------------------------------------------*/
@@ -22,36 +25,38 @@ const char *path_well_core_clb="/CALLBACK/.WELL-KNOWN/CORE";
 
 /* Functions declaration -----------------------------------------------------*/
 int EEGGetFile(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+
+    if ((TempParam))
     {
-        int  ret_val = 0;
-        
-        if ((TempParam))
-        {
-            content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-        }
-        else
-        {
-        }
-       return(ret_val); 
+        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
+    }
+    else
+    {
     }
     
-   
-    
-    int EEGGetListFiles(ParameterList_t *TempParam)
+    return(ret_val); 
+}
+
+
+
+int EEGGetListFiles(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+
+    if ((TempParam))
     {
-        int  ret_val = 0;
-        
-        if ((TempParam))
-        {
-            content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-        }
-        else
-        {
-        }
-       return(ret_val); 
+        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
+    }
+    else
+    {
     }
     
-    int EEGWriteInFile(ParameterList_t *TempParam)
+    return(ret_val); 
+}
+
+int EEGWriteInFile(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
     int  Adress= 60;
@@ -67,12 +72,12 @@ int EEGGetFile(ParameterList_t *TempParam)
     {
         res=ReadMem(60);
         #ifdef DEBUG
-        printf("Value REG WriteInFile %d",res);
+            printf("Value REG WriteInFile %d",res);
         #endif
         WriteMem(60,Value);
         res=ReadMem(60);
         #ifdef DEBUG
-        printf("New value REG WriteInFile %d",res);
+            printf("New value REG WriteInFile %d",res);
         #endif
         AddToTransmit("<WR/>\r\n\r");
         #ifdef DEBUG
@@ -97,63 +102,64 @@ int EEGGetFile(ParameterList_t *TempParam)
 int QueryNodes(ParameterList_t *TempParam) 
 {   //AddCommand("/GET/QUERYNODES", QueryNodes);
     #ifdef DEBUG
-      printf("--//internal//-- Into QUERYNodes.\r\n\r");
+        printf("--//internal//-- Into QUERYNodes.\r\n\r");
     #endif 
     int  ret_val = 0;
-      
     int i,j,k=0;
     char *strptr;
     char strbuf[80];
+    function_node *node;
+    function_proto *proto;
     
     memset(strbuf,0,80);
     strptr = (char*)strbuf;
     
     //AddToTransmit("<NODES>\r\n\r");  // "<NODES>\r\n\r"     "{\n \"EEGBLOCK\": [\n"
-   /* First check to see if the parameters required for the execution of*/
-   /* this function appear to be semi-valid.                            */
-   if ((TempParam))
-   {
-          
-    if(nodes_cnt==0) 
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
     {
-       AddToTransmit("<ERROR_NODES_NULL>\r\n\r"); 
-    }
-    else 
-    {
-        for (i=0;i < nodes_cnt;i++)
+        if(array_size(NodesArray)==0) 
         {
-            for (j=0;j < nodes[i].len;j++)
+           AddToTransmit("<ERROR_NODES_NULL>\r\n\r"); 
+        }
+        else 
+        {
+            for (i=0;i < array_size(NodesArray);i++)
             {
-                if((i==nodes_cnt-1)&&(j==nodes[i].len-1))
+                array_get_at(NodesArray, i, (void**)&node);
+                for (j=0;j < array_size(node->proto);j++)
                 {
-                    sprintf(strptr,
-                        "<coap://%s%s>;if=\"controller\"\n",
-                        nodes[i].ip,nodes[i].proto[j].name);
-                    AddToTransmit(strptr);
-                    break;
+                    array_get_at(node->proto, i, (void**)&proto);
+                    if( (i==array_size(NodesArray)-1) 
+                            && (j==array_size(node->proto)-1) )
+                    {
+                        sprintf(strptr,
+                            "<coap://%s%s>;if=\"controller\"\n",
+                            node->ip,proto->name);
+                        AddToTransmit(strptr);
+                        break;
+                    }
+                sprintf(strptr,"<coap://%s%s>;if=\"controller\",\n",
+                            node->ip,proto->name);
+                AddToTransmit(strptr);
                 }
-            sprintf(strptr,
-                        "<coap://%s%s>;if=\"controller\",\n",
-                        nodes[i].ip,nodes[i].proto[j].name);
-            AddToTransmit(strptr);
             }
         }
+        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
     }
-    content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-   }
-   else
-   {
+    else
+    {
         /* One or more of the necessary parameters are invalid.           */
-
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
         #ifdef DEBUG
            printf("--//internal//--  Invalid param test.\r\n\r");
         #endif
-   }
-   //AddToTransmit("</NODES>\r\n\r");
-     
-   return ret_val;
+    }
+    //AddToTransmit("</NODES>\r\n\r");
+
+    return ret_val;
 }
 
 void put_node_msg(char *_ip,char *_name)
@@ -162,12 +168,28 @@ void put_node_msg(char *_ip,char *_name)
     int ip_id = -1;
     uint32_t name_ptr = 0;
     int i;
+    function_node *node;
+    function_proto *proto;
+    function_proto *protoi;
     #ifdef DEBUG
         printf("--//internal//-- Into put_node_msg.\r\n\r");
     #endif
-    for (i=0;i < nodes_cnt;i++)
+    if (NodesArray == 0)
     {
-        if (!strcmp(_ip,nodes[i].ip))
+        if (array_new(&NodesArray) != 0)
+            return;
+    }
+    else
+        for (i=0;i < array_size(NodesArray);i++)
+        {
+            array_get_at(NodesArray, i, (void**)&node);
+            array_remove_all_free(node->proto);
+        }
+        array_remove_all_free(NodesArray);
+    for (i=0;i < array_size(NodesArray);i++)
+    {
+        array_get_at(NodesArray, i, (void**)&node);
+        if (!strcmp(_ip,node->ip))
         {    
             ip_id = i;
             break;
@@ -175,65 +197,75 @@ void put_node_msg(char *_ip,char *_name)
     }
     if (ip_id < 0)
     {
-        if (nodes_cnt < NODE_MAX)
+        node = (function_node *)umm_calloc(1,sizeof(function_node));
+        if (array_new(&(node->proto)) != 0)
+            return;
+        strncpy(node->ip,_ip,strlen(_ip));
+        ip_id = array_size(NodesArray);
+        if (array_add(NodesArray, (void *)node) != 0)
         {
-            strncpy(nodes[nodes_cnt].ip,_ip,strlen(_ip));
-            ip_id = nodes_cnt;
-            nodes_cnt++;
+            array_destroy_free(node->proto);
+            umm_free((void *)node);
+            return;
         }
-    }
-    if (nodes[ip_id].len >= PROTO_MAX)
-    {
-        return;
     }
     for (name_ptr=1;name_ptr < strlen(_name);name_ptr++) 
         if ((_name[name_ptr-1] == '<') && (_name[name_ptr] == '/'))
         {
-            nodes[ip_id].proto[nodes[ip_id].len].len = 0;
+            //array_get_at(node->proto, array_size(node->proto), (void**)&proto);
+            proto = (function_proto *)umm_calloc(1,sizeof(function_proto));
+            proto->len = 0;
             while ((_name[name_ptr] != '>') && (name_ptr < strlen(_name)))
             {
-                //printf("%d %d %c %c\n",nodes[ip_id].proto[nodes[ip_id].len].len,name_ptr,_name[name_ptr],'>');
-                nodes[ip_id].proto[nodes[ip_id].len].name
-                        [nodes[ip_id].proto[nodes[ip_id].len].len++] 
-                        = _name[name_ptr];
+//                printf("%d %d %c %c\n",nodes[ip_id].proto[nodes[ip_id].len].len,name_ptr,_name[name_ptr],'>');
+                proto->name[proto->len++] = _name[name_ptr];
                 name_ptr++;
             }
-            nodes[ip_id].proto[nodes[ip_id].len].name
-                        [nodes[ip_id].proto[nodes[ip_id].len].len++] 
-                        = 0;
+            proto->name[proto->len++] = 0;
 //            printf("--//internal//-- %s\r\n\r",
 //                    nodes[ip_id].proto[nodes[ip_id].len].name);
-            for (i=0;i < (nodes[ip_id].len);i++)
+            for (i=0;i < array_size(node->proto);i++)
             {
-                printf("%s = %s\n",nodes[ip_id].proto[i].name,nodes[ip_id].proto[nodes[ip_id].len].name);
-                if (!strcmp(nodes[ip_id].proto[i].name,nodes[ip_id].proto[nodes[ip_id].len].name))
+                array_get_at(node->proto, i, (void**)&protoi);
+                printf("%s = %s\n",protoi->name,proto->name);
+                if (!strcmp(protoi->name,proto->name))
                 {
                     break;
                 }
             }
-            if (i < nodes[ip_id].len)
+            if (i < array_size(node->proto))
+            {
+                umm_free((void *)proto);
                 continue;
+            }
             //printf("%d %d name: %s\n",nodes[i].len,ip_id,_name);
             //strncpy(nodes[ip_id].proto[nodes[ip_id].len].name,_name,strlen(_name));
-            nodes[ip_id].proto[nodes[ip_id].len].len = 
-                    strlen(nodes[ip_id].proto[nodes[ip_id].len].name);
-            nodes[ip_id].len++;
+            proto->len = strlen(proto->name);
+            if (array_add(node->proto, (void *)proto) != 0)
+            {
+                umm_free((void *)proto);
+                return;
+            }
         }
     return;
 }
 char* get_first_node_by_func(const char *_name)
 {
     int i,j;
+    function_node *node;
+    function_proto *proto;
     #ifdef DEBUG
         printf("--//internal//-- Into get_first_node_by_func.\r\n\r");
     #endif
-    for (i=0;i < nodes_cnt;i++)
+    for (i=0;i < array_size(NodesArray);i++)
     {
-        for (j=0;j < nodes[i].len;j++)
+        array_get_at(NodesArray, i, (void**)&node);
+        for (j=0;j < array_size(node->proto);j++)
         {
-            if (strcmp(nodes[i].proto[j].name,_name))
+            array_get_at(node->proto, i, (void**)&proto);
+            if (strcmp(proto->name,_name))
             {
-                return nodes[i].ip;
+                return node->ip;
             }
         }     
     }
@@ -280,19 +312,23 @@ void print_node_and_func(void)
     int i,j;
     char *strptr;
     char strbuf[10000];
+    function_node *node;
+    function_proto *proto;
+    
     memset(strbuf,0,10000);
     strptr = (char*)strbuf;
     printf("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n");
     
-    for (i=0;i < nodes_cnt;i++)
+    for (i=0;i < array_size(NodesArray);i++)
     {
-        //printf("LENGTH%d\n",nodes[i].len);
-        for (j=0;j < nodes[i].len;j++)
+        array_get_at(NodesArray, i, (void**)&node);
+        for (j=0;j < array_size(node->proto);j++)
         {
+            array_get_at(node->proto, j, (void**)&proto);
             strptr += snprintf(strptr,
                     10000-((int)strptr-(int)strbuf),
                     "<coap://%s%s>;if=\"controller\",\n",
-                    nodes[i].ip,nodes[i].proto[j].name);
+                    node->ip,proto->name);
         }     
     }
     *(strptr-2) = 0;

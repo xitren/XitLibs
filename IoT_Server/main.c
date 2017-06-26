@@ -41,7 +41,7 @@ DWORD WINAPI ThreadFunc10s()
 {
     while (1)
     {
-        //function_beakon();
+//        function_beakon();
         //function_update();
         Sleep(10000);
     }
@@ -110,7 +110,7 @@ int main(int argc, char** argv) {
          &IDThread);              // returns thread identifier
     
 //    function_update();
-    //function_beakon();
+    function_beakon();
     while(1)
     {
         UserProtocolHandler();
