@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
+CND_PLATFORM=MinGW-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug
 CND_DISTDIR=dist
@@ -53,17 +53,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../EEG_Evoker/dist/Debug/Cygwin-Windows/libeeg_evoker.a ../XitLib/dist/Debug_Windows/Cygwin-Windows/libxitlib.a ../CoAP/dist/Debug/Cygwin-Windows/libcoap.a -lWs2_32
+LDLIBSOPTIONS=../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a -lWs2_32 ../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../EEG_Evoker/dist/Debug/Cygwin-Windows/libeeg_evoker.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../XitLib/dist/Debug_Windows/Cygwin-Windows/libxitlib.a
-
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../CoAP/dist/Debug/Cygwin-Windows/libcoap.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -72,21 +70,15 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DPLATFORM_WINDOWS -I../CoAP -I../EEG_Evoker -I../XitLib -I../XitLib/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
+	$(COMPILE.c) -g -DCPU -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DPLATFORM_WINDOWS -I../CoAP -I../EEG_Evoker -I../XitLib -I../XitLib/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -DCPU -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 # Subprojects
 .build-subprojects:
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Windows
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Windows
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -94,12 +86,6 @@ ${OBJECTDIR}/main.o: main.c
 
 # Subprojects
 .clean-subprojects:
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Windows clean
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Windows clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

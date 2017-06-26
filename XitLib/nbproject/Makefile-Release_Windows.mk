@@ -39,6 +39,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/CommandModule.o \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
+	${OBJECTDIR}/DistCalc.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -124,6 +125,11 @@ ${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
+
+${OBJECTDIR}/DistCalc.o: DistCalc.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
 ${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -252,7 +258,6 @@ ${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c
 
 # Subprojects
 .build-subprojects:
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Release
 
 # Build Test Targets
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
@@ -335,6 +340,19 @@ ${OBJECTDIR}/DMAretransmitter_nomain.o: ${OBJECTDIR}/DMAretransmitter.o DMAretra
 	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter_nomain.o DMAretransmitter.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/DMAretransmitter.o ${OBJECTDIR}/DMAretransmitter_nomain.o;\
+	fi
+
+${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/DistCalc.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -DCPU -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
 	fi
 
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 
@@ -678,7 +696,6 @@ ${OBJECTDIR}/models/src/treetable_nomain.o: ${OBJECTDIR}/models/src/treetable.o 
 
 # Subprojects
 .clean-subprojects:
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Release clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

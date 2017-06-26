@@ -31,6 +31,7 @@
       <itemPath>CommandModule.c</itemPath>
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DMAretransmitter.c</itemPath>
+      <itemPath>DistCalc.c</itemPath>
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
@@ -178,6 +179,8 @@
       <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -372,18 +375,6 @@
         </asmTool>
         <archiverTool>
         </archiverTool>
-        <requiredProjects>
-          <makeArtifact PL="../CoAP"
-                        CT="3"
-                        CN="Release"
-                        AC="false"
-                        BL="true"
-                        WD="../CoAP"
-                        BC="${MAKE}  -f Makefile CONF=Release"
-                        CC="${MAKE}  -f Makefile CONF=Release clean"
-                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
-          </makeArtifact>
-        </requiredProjects>
       </compileType>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
@@ -406,6 +397,8 @@
       <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -622,6 +615,8 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
@@ -829,6 +824,8 @@
       <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1043,6 +1040,8 @@
       <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1269,6 +1268,8 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
@@ -1468,6 +1469,8 @@
       <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>

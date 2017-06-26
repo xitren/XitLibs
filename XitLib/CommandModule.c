@@ -13,6 +13,8 @@
 #include "generatorModule.h"
 #include "VideoModule.h"
 #include "LogModule.h"
+#include "array.h"
+#include "umm_malloc.h"
 /*============================================================================*/                           
 
 /* Private structures --------------------------------------------------------*/
@@ -30,15 +32,7 @@ typedef struct _tagCommandTable_t
    /* Internal Variables to this Module (Remember that all variables    */
    /* declared static are initialized to 0 automatically by the         */
    /* compiler as part of standard C/C++).                              */
-static CommandTable_t      CommandTable[MAX_SUPPORTED_COMMANDS]; 
-                                        /* Variable which is               */
-                                        /* used to hold the actual Commands*/
-                                        /* that are supported by this      */
-                                        /* application.                    */
-static unsigned int        NumberCommands; /* Variable which is used to hold  */
-                                           /* the number of Commands that are */
-                                           /* supported by this application.  */
-                                           /* Commands are added individually.*/
+static Array *CommandTableArray;
 /*============================================================================*/
 
 extern uint8_t bufsa[1024];
@@ -66,6 +60,8 @@ CommandFunction_t FindCommand(char *Command);
    /* interface to memory map.                                          */
 void Interface_Memory(void)
 {
+    array_new(&CommandTableArray);
+    //array_size(CommandTableArray);
     ClearCommands();
     AddCommand("/RESET", "</reset>", Reset);
     AddCommand("/GET/MEMORY", "</memory>", MEMRead);
@@ -623,11 +619,13 @@ char *StringParser(char *String)
 
 char* GetCommandLink(int N)
 {   
-    return CommandTable[N].Link;
+    CommandTable_t *Comm;
+    array_get_at(CommandTableArray, N, (void**)&Comm);
+    return Comm->Link;
 }
 int GetCommandsNumber(void)
 {
-    return NumberCommands;
+    return array_size(CommandTableArray);
 }
    /* This function is responsable for taking command strings and       */
    /* parsing them into a command, param1, and param2.  After parsing   */
@@ -788,32 +786,36 @@ int CommandInterpreter(UserCommand_t *TempCommand)
    /* command could not be added to the list.                           */
 int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
 {
-   int ret_val = 0;
+    int ret_val = 0;
+    CommandTable_t *comm;
 
-   /* First, make sure that the parameters passed to us appear to be    */
-   /* semi-valid.                                                       */
-   if((CommandName) && (CommandFunction))
-   {
-      /* Next, make sure that we still have room in the Command Table   */
-      /* to add commands.                                               */
-      if(NumberCommands < MAX_SUPPORTED_COMMANDS)
-      {
-         /* Simply add the command data to the command table and        */
-         /* increment the number of supported commands.                 */
-         CommandTable[NumberCommands].CommandName       = CommandName;
-         CommandTable[NumberCommands].Link              = Link;
-         CommandTable[NumberCommands++].CommandFunction = CommandFunction;
+    /* First, make sure that the parameters passed to us appear to be    */
+    /* semi-valid.                                                       */
+    if((CommandName) && (CommandFunction))
+    {
+        /* Next, make sure that we still have room in the Command Table   */
+        /* to add commands.                                               */
+        if(array_size(CommandTableArray) < MAX_SUPPORTED_COMMANDS)
+        {
+            /* Simply add the command data to the command table and        */
+            /* increment the number of supported commands.                 */
+            comm = (CommandTable_t *)umm_calloc(1,sizeof(CommandTable_t));
+            comm->CommandName = CommandName;
+            comm->Link = Link;
+            comm->CommandFunction = CommandFunction;
+            array_add(CommandTableArray, (void *)comm);
+            printf(comm->CommandName);
 
-         /* Return success to the caller.                               */
-         ret_val                                        = 0;
-      }
-      else
-         ret_val = 1;
-   }
-   else
-      ret_val = 1;
+            /* Return success to the caller.                               */
+            ret_val                                        = 0;
+        }
+        else
+            ret_val = 1;
+    }
+    else
+        ret_val = 1;
 
-   return(ret_val);
+    return(ret_val);
 }
 
    /* The following function searches the Command Table for the         */
@@ -822,33 +824,37 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
    /* this function returns NULL.                                       */
 CommandFunction_t FindCommand(char *Command)
 {
-   unsigned int      Index;
-   CommandFunction_t ret_val;
+    unsigned int      Index;
+    CommandFunction_t ret_val;
+    CommandTable_t    *Comm;
 
-   /* First, make sure that the command specified is semi-valid.        */
-   if(Command)
-   {
-      /* Now loop through each element in the table to see if there is  */
-      /* a match.                                                       */
-      for(Index=0,ret_val=NULL;((Index<NumberCommands) && (!ret_val));Index++)
-      {
-         if((strlen(CommandTable[Index].CommandName) == strlen(Command)) 
-                 && (memcmp(Command, CommandTable[Index].CommandName, 
-                            strlen(CommandTable[Index].CommandName)) == 0))
-            ret_val = CommandTable[Index].CommandFunction;
-      }
-   }
-   else
-      ret_val = NULL;
+    /* First, make sure that the command specified is semi-valid.        */
+    if(Command)
+    {
+        /* Now loop through each element in the table to see if there is  */
+        /* a match.                                                       */
+        for(Index=0,ret_val=NULL;
+                ((Index<array_size(CommandTableArray)) && (!ret_val));
+                  Index++)
+        {
+            array_get_at(CommandTableArray, Index, (void**)&Comm);
+            if((strlen(Comm->CommandName) == strlen(Command)) 
+                   && (memcmp(Command, Comm->CommandName, 
+                              strlen(Comm->CommandName)) == 0))
+                ret_val = Comm->CommandFunction;
+        }
+    }
+    else
+        ret_val = NULL;
 
-   return(ret_val);
+    return(ret_val);
 }
 
    /* The following function is provided to allow a means to clear out  */
    /* all available commands from the command table.                    */
 void ClearCommands(void)
 {
-   /* Simply flag that there are no commands present in the table.      */
-   NumberCommands = 0;
+    /* Simply flag that there are no commands present in the table.      */
+    array_remove_all_free(CommandTableArray);
 }
 /*============================================================================*/
