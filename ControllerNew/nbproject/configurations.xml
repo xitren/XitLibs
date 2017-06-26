@@ -1,0 +1,1926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <logicalFolder name="SourceFiles"
+                   displayName="Исходные файлы"
+                   projectFiles="true">
+      <logicalFolder name="f1" displayName="Peripherals" projectFiles="true">
+        <itemPath>libraries/Imp/Src/AD5933.c</itemPath>
+        <itemPath>libraries/Imp/Src/ADG728.c</itemPath>
+        <itemPath>libraries/Imp/Src/PCF8574A.c</itemPath>
+        <itemPath>Periph/ads1299.c</itemPath>
+        <itemPath>Periph/dma.c</itemPath>
+        <itemPath>Periph/gpio.c</itemPath>
+        <itemPath>Periph/i2c.c</itemPath>
+        <itemPath>Periph/spi.c</itemPath>
+        <itemPath>Periph/tim.c</itemPath>
+        <itemPath>Periph/usart.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="STM32F4xx_HAL_Driver" projectFiles="true">
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma2d.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dsi.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_eth.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hcd.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_irda.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_lptim.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nand.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nor.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pccard.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sdram.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smartcard.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spdifrx.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sram.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fsmc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c</itemPath>
+      </logicalFolder>
+      <itemPath>ExtFunctions.c</itemPath>
+      <itemPath>main.c</itemPath>
+      <itemPath>newlib_stab.c</itemPath>
+      <itemPath>startup_stm32f4xx.s</itemPath>
+      <itemPath>stm32f4xx_hal_msp.c</itemPath>
+      <itemPath>stm32f4xx_it.c</itemPath>
+      <itemPath>system_stm32f4xx.c</itemPath>
+    </logicalFolder>
+    <logicalFolder name="HeaderFiles"
+                   displayName="Файлы заголовков"
+                   projectFiles="true">
+      <logicalFolder name="f5" displayName="CoAP" projectFiles="true">
+        <itemPath>../CoAP/coap.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="EEG_Evoker" projectFiles="true">
+        <itemPath>../EEG_Evoker/ImageVisualise.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="Peripherals" projectFiles="true">
+        <itemPath>libraries/Imp/Inc/AD5933.h</itemPath>
+        <itemPath>libraries/Imp/Inc/ADG728.h</itemPath>
+        <itemPath>libraries/Imp/Inc/PCF8574A.h</itemPath>
+        <itemPath>Periph/ad7190.h</itemPath>
+        <itemPath>Periph/ads1299.h</itemPath>
+        <itemPath>Periph/dma.h</itemPath>
+        <itemPath>Periph/gpio.h</itemPath>
+        <itemPath>Periph/i2c.h</itemPath>
+        <itemPath>Periph/ltdc.h</itemPath>
+        <itemPath>Periph/mxconstants.h</itemPath>
+        <itemPath>Periph/spi.h</itemPath>
+        <itemPath>Periph/tim.h</itemPath>
+        <itemPath>Periph/usart.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="STM32F4xx_HAL_Driver" projectFiles="true">
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cec.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_conf_template.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma2d.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dsi.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_eth.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hcd.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_irda.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_lptim.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nand.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nor.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pccard.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_qspi.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sdram.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_smartcard.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spdifrx.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_wwdg.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fmc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h</itemPath>
+        <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="XitLib" projectFiles="true">
+        <itemPath>../XitLib/CRC16ANSI.h</itemPath>
+        <itemPath>../XitLib/CommandModule.h</itemPath>
+        <itemPath>../XitLib/ConfigMem.h</itemPath>
+        <itemPath>../XitLib/DMAretransmitter.h</itemPath>
+        <itemPath>../XitLib/FunctionsDiscovery.h</itemPath>
+        <itemPath>../XitLib/Handler.h</itemPath>
+        <itemPath>../XitLib/InOutBuffer.h</itemPath>
+        <itemPath>../XitLib/LibConfig.h</itemPath>
+        <itemPath>../XitLib/PWMModule.h</itemPath>
+        <itemPath>../XitLib/Packet.h</itemPath>
+        <itemPath>../XitLib/StreamDataRecorder.h</itemPath>
+        <itemPath>../XitLib/VideoModule.h</itemPath>
+        <itemPath>../XitLib/jSONparser.h</itemPath>
+        <itemPath>../XitLib/xitlibtypes.h</itemPath>
+      </logicalFolder>
+      <itemPath>ExtFunctions.h</itemPath>
+      <itemPath>main.h</itemPath>
+      <itemPath>stm32f4xx_conf.h</itemPath>
+      <itemPath>stm32f4xx_hal_conf.h</itemPath>
+      <itemPath>stm32f4xx_it.h</itemPath>
+    </logicalFolder>
+    <logicalFolder name="ResourceFiles"
+                   displayName="Файлы ресурсов"
+                   projectFiles="true">
+    </logicalFolder>
+    <logicalFolder name="TestFiles"
+                   displayName="Файлы тестов"
+                   projectFiles="false"
+                   kind="TEST_LOGICAL_FOLDER">
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Важные файлы"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Debug" type="1">
+      <toolsSet>
+        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <standard>3</standard>
+          <incDir>
+            <pElem>../XitLib</pElem>
+            <pElem>Periph</pElem>
+            <pElem>libraries/Imp/Inc</pElem>
+            <pElem>.</pElem>
+            <pElem>libraries/CMSIS/Include</pElem>
+            <pElem>libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+            <pElem>libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+          </incDir>
+          <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
+          <preprocessorList>
+            <Elem>STM32F429xx</Elem>
+            <Elem>USE_HAL_DRIVER</Elem>
+          </preprocessorList>
+        </cTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf</output>
+          <linkerLibItems>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../XitLib"
+                            CT="3"
+                            CN="Debug_MC"
+                            AC="true"
+                            BL="true"
+                            WD="../XitLib"
+                            BC="${MAKE}  -f Makefile CONF=Debug_MC"
+                            CC="${MAKE}  -f Makefile CONF=Debug_MC clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../EEG_Evoker"
+                            CT="3"
+                            CN="Debug_MC"
+                            AC="false"
+                            BL="true"
+                            WD="../EEG_Evoker"
+                            BC="${MAKE}  -f Makefile CONF=Debug_MC"
+                            CC="${MAKE}  -f Makefile CONF=Debug_MC clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibProjectItem>
+              <makeArtifact PL="../CoAP"
+                            CT="3"
+                            CN="Debug_MC"
+                            AC="false"
+                            BL="true"
+                            WD="../CoAP"
+                            BC="${MAKE}  -f Makefile CONF=Debug_MC"
+                            CC="${MAKE}  -f Makefile CONF=Debug_MC clean"
+                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
+              </makeArtifact>
+            </linkerLibProjectItem>
+            <linkerLibLibItem>gcc</linkerLibLibItem>
+            <linkerLibLibItem>m</linkerLibLibItem>
+            <linkerLibLibItem>c</linkerLibLibItem>
+          </linkerLibItems>
+          <commandLine>-Tstm32f4_flash.ld</commandLine>
+        </linkerTool>
+        <requiredProjects>
+          <makeArtifact PL="../EEG_Evoker"
+                        CT="3"
+                        CN="Debug_MC"
+                        AC="false"
+                        BL="true"
+                        WD="../EEG_Evoker"
+                        BC="${MAKE}  -f Makefile CONF=Debug_MC"
+                        CC="${MAKE}  -f Makefile CONF=Debug_MC clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a">
+          </makeArtifact>
+          <makeArtifact PL="../XitLib"
+                        CT="3"
+                        CN="Debug_MC"
+                        AC="false"
+                        BL="true"
+                        WD="../XitLib"
+                        BC="${MAKE}  -f Makefile CONF=Debug_MC"
+                        CC="${MAKE}  -f Makefile CONF=Debug_MC clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a">
+          </makeArtifact>
+          <makeArtifact PL="../CoAP"
+                        CT="3"
+                        CN="Debug_MC"
+                        AC="false"
+                        BL="true"
+                        WD="../CoAP"
+                        BC="${MAKE}  -f Makefile CONF=Debug_MC"
+                        CC="${MAKE}  -f Makefile CONF=Debug_MC clean"
+                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
+          </makeArtifact>
+        </requiredProjects>
+      </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/ad7190.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/ads1299.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/ads1299.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/dma.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/dma.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/gpio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/i2c.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/i2c.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/ltdc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/mxconstants.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/spi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/tim.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/tim.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/usart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/usart.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Inc/AD5933.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Inc/ADG728.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Inc/PCF8574A.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Src/AD5933.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Src/ADG728.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Src/PCF8574A.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cec.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_conf_template.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma2d.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dsi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_eth.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hcd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_irda.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_lptim.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nand.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pccard.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_qspi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sdram.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_smartcard.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spdifrx.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_wwdg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fmc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma2d.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dsi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_eth.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hcd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_irda.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_lptim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nand.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nor.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pccard.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sdram.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smartcard.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spdifrx.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sram.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fsmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="newlib_stab.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="startup_stm32f4xx.s" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="stm32f4xx_conf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="stm32f4xx_hal_conf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="stm32f4xx_hal_msp.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="stm32f4xx_it.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="stm32f4xx_it.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system_stm32f4xx.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+    <conf name="Release" type="1">
+      <toolsSet>
+        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>5</developmentMode>
+          <standard>3</standard>
+          <incDir>
+            <pElem>../XitLib</pElem>
+            <pElem>Periph</pElem>
+            <pElem>libraries/Imp/Inc</pElem>
+            <pElem>.</pElem>
+            <pElem>libraries/CMSIS/Include</pElem>
+            <pElem>libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
+            <pElem>libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+          </incDir>
+          <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
+          <preprocessorList>
+            <Elem>STM32F429xx</Elem>
+            <Elem>USE_HAL_DRIVER</Elem>
+          </preprocessorList>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+          <commandlineTool>arm-none-eabi-as</commandlineTool>
+        </asmTool>
+        <linkerTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf</output>
+          <linkerLibItems>
+            <linkerLibFileItem>../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a</linkerLibFileItem>
+            <linkerLibFileItem>../CoAP/dist/Release_MC/GNU_ARM-Windows/libcoap.a</linkerLibFileItem>
+            <linkerLibFileItem>../EEG_Evoker/dist/Release_MC/GNU_ARM-Windows/libeeg_evoker.a</linkerLibFileItem>
+            <linkerLibLibItem>gcc</linkerLibLibItem>
+            <linkerLibLibItem>c</linkerLibLibItem>
+            <linkerLibLibItem>m</linkerLibLibItem>
+          </linkerLibItems>
+          <commandLine>-Tstm32f4_flash.ld</commandLine>
+        </linkerTool>
+      </compileType>
+      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/CommandModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/ConfigMem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/Handler.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/InOutBuffer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/LibConfig.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/PWMModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/Packet.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/ad7190.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/ads1299.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/ads1299.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/dma.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/dma.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/gpio.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/gpio.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/i2c.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/i2c.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/ltdc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/mxconstants.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/spi.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/spi.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/tim.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/tim.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Periph/usart.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="Periph/usart.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Inc/AD5933.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Inc/ADG728.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Inc/PCF8574A.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Src/AD5933.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Src/ADG728.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="libraries/Imp/Src/PCF8574A.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_adc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cec.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_conf_template.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_crc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cryp_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dac_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dcmi_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma2d.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dsi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_eth.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_flash_ramfunc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_fmpi2c_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hash_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_hcd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2c_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_i2s_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_irda.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_iwdg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_lptim.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_ltdc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nand.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_nor.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pccard.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pcd_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_qspi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rcc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rng.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_rtc_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sai_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sd.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sdram.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_smartcard.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spdifrx.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_sram.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_usart.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_wwdg.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fmc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_fsmc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_adc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_can.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cec.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_crc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cryp_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dac_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dcmi_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma2d.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dma_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_dsi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_eth.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_flash_ramfunc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_fmpi2c_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hash_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_hcd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2s_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_irda.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_iwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_lptim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_ltdc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nand.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_nor.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pccard.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pwr_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_qspi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rng.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rtc_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sai_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sd.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sdram.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_smartcard.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spdifrx.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_spi.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_sram.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_usart.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_wwdg.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_fsmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_sdmmc.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c"
+            ex="false"
+            tool="0"
+            flavor2="0">
+      </item>
+      <item path="main.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="main.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="newlib_stab.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="startup_stm32f4xx.s" ex="false" tool="4" flavor2="0">
+      </item>
+      <item path="stm32f4xx_conf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="stm32f4xx_hal_conf.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="stm32f4xx_hal_msp.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="stm32f4xx_it.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="stm32f4xx_it.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="system_stm32f4xx.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>
