@@ -1,9 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
                    projectFiles="true">
+      <logicalFolder name="f4" displayName="coap" projectFiles="true">
+        <itemPath>coap/coap.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="json" projectFiles="true">
+        <itemPath>json/cJSON.c</itemPath>
+        <itemPath>json/cJSON_Utils.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f1" displayName="malloc" projectFiles="true">
+        <itemPath>malloc/umm_malloc.c</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="models" projectFiles="true">
+        <itemPath>models/src/array.c</itemPath>
+        <itemPath>models/src/common.c</itemPath>
+        <itemPath>models/src/deque.c</itemPath>
+        <itemPath>models/src/hashset.c</itemPath>
+        <itemPath>models/src/hashtable.c</itemPath>
+        <itemPath>models/src/list.c</itemPath>
+        <itemPath>models/src/queue.c</itemPath>
+        <itemPath>models/src/slist.c</itemPath>
+        <itemPath>models/src/stack.c</itemPath>
+        <itemPath>models/src/treeset.c</itemPath>
+        <itemPath>models/src/treetable.c</itemPath>
+      </logicalFolder>
       <itemPath>CRC16ANSI.c</itemPath>
       <itemPath>CommandModule.c</itemPath>
       <itemPath>ConfigMem.c</itemPath>
@@ -23,8 +46,30 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="CoAP" projectFiles="true">
-        <itemPath>../CoAP/coap.h</itemPath>
+      <logicalFolder name="f1" displayName="coap" projectFiles="true">
+        <itemPath>coap/coap.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f2" displayName="json" projectFiles="true">
+        <itemPath>json/cJSON.h</itemPath>
+        <itemPath>json/cJSON_Utils.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f3" displayName="malloc" projectFiles="true">
+        <itemPath>malloc/dbglog.h</itemPath>
+        <itemPath>malloc/umm_malloc.h</itemPath>
+        <itemPath>malloc/umm_malloc_cfg.h</itemPath>
+      </logicalFolder>
+      <logicalFolder name="f4" displayName="models" projectFiles="true">
+        <itemPath>models/include/array.h</itemPath>
+        <itemPath>models/include/common.h</itemPath>
+        <itemPath>models/include/deque.h</itemPath>
+        <itemPath>models/include/hashset.h</itemPath>
+        <itemPath>models/include/hashtable.h</itemPath>
+        <itemPath>models/include/list.h</itemPath>
+        <itemPath>models/include/queue.h</itemPath>
+        <itemPath>models/include/slist.h</itemPath>
+        <itemPath>models/include/stack.h</itemPath>
+        <itemPath>models/include/treeset.h</itemPath>
+        <itemPath>models/include/treetable.h</itemPath>
       </logicalFolder>
       <itemPath>CRC16ANSI.h</itemPath>
       <itemPath>CommandModule.h</itemPath>
@@ -113,8 +158,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -180,6 +223,10 @@
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.h" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles/f1">
         <cTool>
@@ -224,6 +271,66 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashtable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/deque.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/list.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/queue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/slist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
@@ -243,12 +350,17 @@
         <cTool>
           <developmentMode>5</developmentMode>
           <incDir>
-            <pElem>../CoAP</pElem>
             <pElem>../EEG_Evoker</pElem>
             <pElem>.</pElem>
+            <pElem>models/include</pElem>
+            <pElem>coap</pElem>
+            <pElem>json</pElem>
+            <pElem>malloc</pElem>
+            <pElem>models</pElem>
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
             <Elem>__USE_W32_SOCKETS</Elem>
           </preprocessorList>
@@ -264,21 +376,7 @@
         </asmTool>
         <archiverTool>
         </archiverTool>
-        <requiredProjects>
-          <makeArtifact PL="../CoAP"
-                        CT="3"
-                        CN="Release"
-                        AC="false"
-                        BL="true"
-                        WD="../CoAP"
-                        BC="${MAKE}  -f Makefile CONF=Release"
-                        CC="${MAKE}  -f Makefile CONF=Release clean"
-                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
-          </makeArtifact>
-        </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -345,6 +443,10 @@
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -385,6 +487,66 @@
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashtable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/deque.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/list.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/queue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/slist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -432,8 +594,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -499,6 +659,10 @@
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.h" ex="false" tool="3" flavor2="0">
       </item>
       <folder path="TestFiles/f1">
         <cTool>
@@ -543,6 +707,66 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashtable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/deque.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/list.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/queue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/slist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/dma_test.c" ex="false" tool="0" flavor2="0">
@@ -554,7 +778,7 @@
     </conf>
     <conf name="Release_Linux" type="3">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -580,8 +804,6 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -648,6 +870,10 @@
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
+      <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -681,6 +907,66 @@
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashtable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/deque.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/list.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/queue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/slist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -734,8 +1020,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -802,6 +1086,10 @@
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
+      <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -844,6 +1132,66 @@
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashtable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/deque.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/list.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/queue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/slist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -899,8 +1247,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -967,6 +1313,10 @@
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
+      <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -1000,6 +1350,66 @@
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashtable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/deque.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/list.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/queue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/slist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1039,8 +1449,6 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1063,7 +1471,7 @@
       </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="DistCalc.c" ex="false" tool="0" flavor2="9">
+      <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1107,6 +1515,10 @@
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
+      <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -1140,6 +1552,66 @@
       <item path="generatorModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/hashtable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/deque.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/hashtable.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/list.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/queue.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/slist.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/stack.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/LogTest.c" ex="false" tool="0" flavor2="0">
       </item>

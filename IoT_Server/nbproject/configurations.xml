@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -10,9 +10,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="CoAP" projectFiles="true">
-        <itemPath>../CoAP/coap.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f3" displayName="cVEP" projectFiles="true">
         <itemPath>../EEG_Evoker/ImageVisualise.h</itemPath>
         <itemPath>../EEG_Evoker/cvepv4.h</itemPath>
@@ -34,11 +31,10 @@
         <itemPath>../XitLib/PWMModule.h</itemPath>
         <itemPath>../XitLib/Packet.h</itemPath>
         <itemPath>../XitLib/StreamDataRecorder.h</itemPath>
-        <itemPath>../XitLib/SymbolBuffer.h</itemPath>
         <itemPath>../XitLib/UpdateModule.h</itemPath>
         <itemPath>../XitLib/VideoModule.h</itemPath>
+        <itemPath>../XitLib/coap/coap.h</itemPath>
         <itemPath>../XitLib/generatorModule.h</itemPath>
-        <itemPath>../XitLib/jSONparser.h</itemPath>
         <itemPath>../XitLib/version.h</itemPath>
         <itemPath>../XitLib/xitlibtypes.h</itemPath>
       </logicalFolder>
@@ -62,16 +58,13 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>coap</Elem>
-    <Elem>XitLib</Elem>
-    <Elem>coap</Elem>
     <Elem>XitLib</Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug" type="1">
       <toolsSet>
-        <compilerSet>default</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -80,93 +73,27 @@
           <standard>3</standard>
           <commandlineTool>gcc</commandlineTool>
           <incDir>
-            <pElem>../CoAP</pElem>
             <pElem>../EEG_Evoker</pElem>
             <pElem>../XitLib</pElem>
             <pElem>../XitLib/External</pElem>
+            <pElem>../XitLib/coap</pElem>
+            <pElem>../XitLib/json</pElem>
+            <pElem>../XitLib/malloc</pElem>
+            <pElem>../XitLib/models/include</pElem>
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
-            <Elem>DEBUG</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
           </preprocessorList>
         </cTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../EEG_Evoker"
-                            CT="3"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../EEG_Evoker"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../XitLib"
-                            CT="3"
-                            CN="Debug_Windows"
-                            AC="true"
-                            BL="true"
-                            WD="../XitLib"
-                            BC="${MAKE}  -f Makefile CONF=Debug_Windows"
-                            CC="${MAKE}  -f Makefile CONF=Debug_Windows clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a">
-              </makeArtifact>
-            </linkerLibProjectItem>
-            <linkerLibProjectItem>
-              <makeArtifact PL="../CoAP"
-                            CT="3"
-                            CN="Debug"
-                            AC="true"
-                            BL="true"
-                            WD="../CoAP"
-                            BC="${MAKE}  -f Makefile CONF=Debug"
-                            CC="${MAKE}  -f Makefile CONF=Debug clean"
-                            OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
-              </makeArtifact>
-            </linkerLibProjectItem>
+            <linkerLibFileItem>../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a</linkerLibFileItem>
             <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+            <linkerLibFileItem>../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
-        <requiredProjects>
-          <makeArtifact PL="../CoAP"
-                        CT="3"
-                        CN="Debug"
-                        AC="true"
-                        BL="true"
-                        WD="../CoAP"
-                        BC="${MAKE}  -f Makefile CONF=Debug"
-                        CC="${MAKE}  -f Makefile CONF=Debug clean"
-                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libcoap.a">
-          </makeArtifact>
-          <makeArtifact PL="../EEG_Evoker"
-                        CT="3"
-                        CN="Debug"
-                        AC="true"
-                        BL="true"
-                        WD="../EEG_Evoker"
-                        BC="${MAKE}  -f Makefile CONF=Debug"
-                        CC="${MAKE}  -f Makefile CONF=Debug clean"
-                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a">
-          </makeArtifact>
-          <makeArtifact PL="../XitLib"
-                        CT="3"
-                        CN="Debug_Windows"
-                        AC="true"
-                        BL="true"
-                        WD="../XitLib"
-                        BC="${MAKE}  -f Makefile CONF=Debug_Windows"
-                        CC="${MAKE}  -f Makefile CONF=Debug_Windows clean"
-                        OP="${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a">
-          </makeArtifact>
-        </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../EEG_Evoker/cvepv4.h" ex="false" tool="3" flavor2="0">
@@ -207,15 +134,13 @@
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/SymbolBuffer.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
+      <item path="../XitLib/coap/coap.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
+      <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -269,8 +194,6 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../EEG_Evoker/cvepv4.h" ex="false" tool="3" flavor2="0">
@@ -311,15 +234,13 @@
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/SymbolBuffer.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
+      <item path="../XitLib/coap/coap.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
+      <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>

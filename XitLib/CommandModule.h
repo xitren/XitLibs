@@ -61,7 +61,7 @@
                                                          /* User Commands that*/
                                                          /* are supported by  */
                                                          /* this application. */
-#define MEMORY_COMMAND (sizeof(CommandFunction_t)+sizeof(char*))*MAX_SUPPORTED_COMMANDS+4
+#define MEMORY_COMMAND sizeof(CommandFunction_t)+4
 /*============================================================================*/
 
 #ifdef __cplusplus

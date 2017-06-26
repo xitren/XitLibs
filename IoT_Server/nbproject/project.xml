@@ -8,15 +8,8 @@
             <cpp-extensions/>
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
-            <make-dep-projects>
-                <make-dep-project>../EEG_Evoker</make-dep-project>
-                <make-dep-project>../CoAP</make-dep-project>
-                <make-dep-project>../XitLib</make-dep-project>
-            </make-dep-projects>
+            <make-dep-projects/>
             <sourceRootList>
-                <sourceRootElem>coap</sourceRootElem>
-                <sourceRootElem>XitLib</sourceRootElem>
-                <sourceRootElem>coap</sourceRootElem>
                 <sourceRootElem>XitLib</sourceRootElem>
             </sourceRootList>
             <confList>

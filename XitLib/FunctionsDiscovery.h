@@ -9,10 +9,11 @@ extern "C" {
 /* Global headers ------------------------------------------------------------*/
 #include "xitlibtypes.h"             /* Application Header.            */
 #include "LibConfig.h"
+#include "array.h"
 /*============================================================================*/
     
 /* Public defines ------------------------------------------------------------*/
-#define MEMORY_DMA sizeof(DMAoccure_t)*DMA_MAX+8
+#define MEMORY_CORE_WELLKNOWN 4
 /*============================================================================*/
 
 /* Public types --------------------------------------------------------------*/
@@ -24,13 +25,8 @@ typedef struct
 typedef struct
 {
     char ip[15];
-    function_proto proto[PROTO_MAX];
-    uint32_t len;
+    Array *proto;
 } function_node;
-/*============================================================================*/
-
-/* Public defines ------------------------------------------------------------*/
-#define MEMORY_CORE_WELLKNOWN sizeof(function_node)*NODE_MAX+4
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/

@@ -98,7 +98,7 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
 }
 
 void InitHandler(DeviceTypeDef device) {
-    #ifdef DEBUG
+//    #ifdef DEBUG
         printf("Memory used by CoAP: %d Bytes\r\n\r",MEMORY_COAP);
         printf("Memory used by CommandModule: %d Bytes\r\n\r",MEMORY_COMMAND);
         printf("Memory used by ConfigModule: %d Bytes\r\n\r",MEMORY_CONFIG);
@@ -109,9 +109,10 @@ void InitHandler(DeviceTypeDef device) {
         printf("========ALL=========================%d=Bytes====\r\n\r"
                 ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
                 MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
-    #endif
+//    #endif
     transfer_free = 1;
     transfer_time = 0;
+    coap_setup();
     InitCfgMem();
     InitCfgDevType();
     DEVICE = device;
