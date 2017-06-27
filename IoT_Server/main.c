@@ -55,7 +55,7 @@ DWORD WINAPI ThreadFunc250ms()
         SampleHandler();
         Sleep(4);
         devp300showme();
-        printf("%d, %d, %d ,%d\n",selection[0],selection[1],selection[2],selection[3]);
+        //printf("%d, %d, %d ,%d\n",selection[0],selection[1],selection[2],selection[3]);
     }
     return 0;
 }

@@ -111,7 +111,7 @@ int QueryUpdate(ParameterList_t *TempParam)
                            0, id_out+=5, pkt.tok_p, pkt.tok_len, 
                            COAP_METHOD_GET, 
                            COAP_CONTENTTYPE_NONE);
-        if (repeat <= 0)
+        if (repeat > 0)
         {
             snprintf(requery,100,
                     "/REQUERY/UPDATE?part=%d&end=%d&repeat=%d&ip=%s&port=%d&type=%d"

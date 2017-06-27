@@ -32,16 +32,19 @@
         </group>
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/Periph/gpio.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/Periph/ads1299.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/ExtFunctions.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/Periph/ads1299.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/Periph/tim.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/ExtFunctions.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/newlib_stab.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/Periph/spi.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/stm32f4xx_it.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/main.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/Periph/ads1299.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/stm32f4xx_it.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.h</file>
         </group>
     </open-files>
 </project-private>

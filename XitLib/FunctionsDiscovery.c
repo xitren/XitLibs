@@ -227,7 +227,7 @@ void put_node_msg(char *_ip,char *_name)
             for (i=0;i < array_size(node->proto);i++)
             {
                 array_get_at(node->proto, i, (void**)&protoi);
-                printf("%s = %s\n",protoi->name,proto->name);
+//                printf("%s = %s\n",protoi->name,proto->name);
                 if (!strcmp(protoi->name,proto->name))
                 {
                     break;
