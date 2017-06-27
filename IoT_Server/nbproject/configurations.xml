@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -83,14 +83,16 @@
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
+            <Elem>P300</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
           </preprocessorList>
+          <useLinkerLibraries>false</useLinkerLibraries>
         </cTool>
         <linkerTool>
           <linkerLibItems>
             <linkerLibFileItem>../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a</linkerLibFileItem>
             <linkerLibLibItem>Ws2_32</linkerLibLibItem>
-            <linkerLibFileItem>../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a</linkerLibFileItem>
+            <linkerLibFileItem>../EEG_Evoker/dist/Release/MinGW-Windows/libeeg_evoker.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

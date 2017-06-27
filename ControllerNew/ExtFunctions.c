@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "ExtFunctions.h"
 #include "Handler.h"
+#include "ImageVisualise.h"
 
 #include "usart.h"
 #include "ads1299.h"
@@ -198,6 +199,7 @@ inline int32_t ADC_read_data_c(){
     WriteMem(REG_ADC_CH6,data[5]);
     WriteMem(REG_ADC_CH7,data[6]);
     WriteMem(REG_ADC_CH8,data[7]);
+    AddSample();
     return 0;
 }
 

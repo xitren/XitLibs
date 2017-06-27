@@ -62,16 +62,6 @@
             <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/VideoModule.c</file>
             <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/FunctionsDiscovery.c</file>
         </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/LogModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
-        </group>
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/DMAretransmitter.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc_cfg.h</file>
@@ -109,6 +99,18 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/VideoModule.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/External/ExtFunctions.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/LogModule.h</file>
+        </group>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Packet.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/LogModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.c</file>
         </group>
     </open-files>
 </project-private>

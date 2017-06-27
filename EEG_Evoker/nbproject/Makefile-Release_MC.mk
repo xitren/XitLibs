@@ -78,12 +78,12 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libeeg_evoker.a: ${OBJECTFILES}
 ${OBJECTDIR}/ImageVisualise.o: ImageVisualise.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ImageVisualise.o ImageVisualise.c
+	$(COMPILE.c) -O2 -DP300 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ImageVisualise.o ImageVisualise.c
 
 ${OBJECTDIR}/p300v5.o: p300v5.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p300v5.o p300v5.c
+	$(COMPILE.c) -O2 -DP300 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p300v5.o p300v5.c
 
 # Subprojects
 .build-subprojects:
@@ -100,7 +100,7 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/P300test.o ${OBJECTFILES:%.o=%_nomain.
 ${TESTDIR}/tests/P300test.o: tests/P300test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/P300test.o tests/P300test.c
+	$(COMPILE.c) -O2 -DP300 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/P300test.o tests/P300test.c
 
 
 ${OBJECTDIR}/ImageVisualise_nomain.o: ${OBJECTDIR}/ImageVisualise.o ImageVisualise.c 
@@ -111,7 +111,7 @@ ${OBJECTDIR}/ImageVisualise_nomain.o: ${OBJECTDIR}/ImageVisualise.o ImageVisuali
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ImageVisualise_nomain.o ImageVisualise.c;\
+	    $(COMPILE.c) -O2 -DP300 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ImageVisualise_nomain.o ImageVisualise.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/ImageVisualise.o ${OBJECTDIR}/ImageVisualise_nomain.o;\
 	fi
@@ -124,7 +124,7 @@ ${OBJECTDIR}/p300v5_nomain.o: ${OBJECTDIR}/p300v5.o p300v5.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p300v5_nomain.o p300v5.c;\
+	    $(COMPILE.c) -O2 -DP300 -I../ControllerNew/Periph -I../ControllerNew/libraries/CMSIS/Include -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/p300v5_nomain.o p300v5.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/p300v5.o ${OBJECTDIR}/p300v5_nomain.o;\
 	fi

@@ -45,6 +45,7 @@
 #include <string.h>
 #include "Handler.h"
 #include "ads1299.h"
+#include "ImageVisualise.h"
 
 #include "stm32f4xx_it.h"
 
@@ -93,6 +94,7 @@ int main(void)
   MX_GPIO_Init();
   MX_DMA_Init();
   MX_SPI6_Init();
+  MX_SPI4_Init();
   MX_TIM2_Init();
   MX_TIM13_Init();
   MX_TIM14_Init();
@@ -100,6 +102,7 @@ int main(void)
   
   /* USER CODE BEGIN 2 */ 
   InitHandler(0);
+  InitImageP300();
   //EEGRecorderInit(1, 250);
     
   HAL_TIM_Base_Start_IT(&htim2);

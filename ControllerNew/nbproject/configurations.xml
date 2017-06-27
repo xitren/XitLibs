@@ -95,9 +95,6 @@
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
                    projectFiles="true">
-      <logicalFolder name="f5" displayName="CoAP" projectFiles="true">
-        <itemPath>../CoAP/coap.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f4" displayName="EEG_Evoker" projectFiles="true">
         <itemPath>../EEG_Evoker/ImageVisualise.h</itemPath>
       </logicalFolder>
@@ -187,6 +184,30 @@
         <itemPath>libraries/STM32F4xx_HAL_Driver/Inc/stm32f4xx_ll_sdmmc.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f3" displayName="XitLib" projectFiles="true">
+        <logicalFolder name="f1" displayName="coap" projectFiles="true">
+          <itemPath>../XitLib/coap/coap.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="json" projectFiles="true">
+          <itemPath>../XitLib/json/cJSON.h</itemPath>
+          <itemPath>../XitLib/json/cJSON_Utils.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f3" displayName="malloc" projectFiles="true">
+          <itemPath>../XitLib/malloc/umm_malloc.h</itemPath>
+          <itemPath>../XitLib/malloc/umm_malloc_cfg.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f4" displayName="models" projectFiles="true">
+          <itemPath>../XitLib/models/include/array.h</itemPath>
+          <itemPath>../XitLib/models/include/common.h</itemPath>
+          <itemPath>../XitLib/models/include/deque.h</itemPath>
+          <itemPath>../XitLib/models/include/hashset.h</itemPath>
+          <itemPath>../XitLib/models/include/hashtable.h</itemPath>
+          <itemPath>../XitLib/models/include/list.h</itemPath>
+          <itemPath>../XitLib/models/include/queue.h</itemPath>
+          <itemPath>../XitLib/models/include/slist.h</itemPath>
+          <itemPath>../XitLib/models/include/stack.h</itemPath>
+          <itemPath>../XitLib/models/include/treeset.h</itemPath>
+          <itemPath>../XitLib/models/include/treetable.h</itemPath>
+        </logicalFolder>
         <itemPath>../XitLib/CRC16ANSI.h</itemPath>
         <itemPath>../XitLib/CommandModule.h</itemPath>
         <itemPath>../XitLib/ConfigMem.h</itemPath>
@@ -328,8 +349,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
@@ -356,7 +375,45 @@
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../XitLib/coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashtable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treetable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1119,9 +1176,15 @@
             <pElem>libraries/CMSIS/Include</pElem>
             <pElem>libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
             <pElem>libraries/STM32F4xx_HAL_Driver/Inc</pElem>
+            <pElem>../XitLib/coap</pElem>
+            <pElem>../XitLib/models/include</pElem>
+            <pElem>../XitLib/json</pElem>
+            <pElem>../XitLib/malloc</pElem>
+            <pElem>../EEG_Evoker</pElem>
           </incDir>
           <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
           <preprocessorList>
+            <Elem>P300</Elem>
             <Elem>STM32F429xx</Elem>
             <Elem>USE_HAL_DRIVER</Elem>
           </preprocessorList>
@@ -1140,7 +1203,6 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf</output>
           <linkerLibItems>
             <linkerLibFileItem>../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a</linkerLibFileItem>
-            <linkerLibFileItem>../CoAP/dist/Release_MC/GNU_ARM-Windows/libcoap.a</linkerLibFileItem>
             <linkerLibFileItem>../EEG_Evoker/dist/Release_MC/GNU_ARM-Windows/libeeg_evoker.a</linkerLibFileItem>
             <linkerLibLibItem>gcc</linkerLibLibItem>
             <linkerLibLibItem>c</linkerLibLibItem>
@@ -1149,8 +1211,6 @@
           <commandLine>-Tstm32f4_flash.ld</commandLine>
         </linkerTool>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
@@ -1177,7 +1237,45 @@
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../XitLib/coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/jSONparser.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashtable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treetable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>

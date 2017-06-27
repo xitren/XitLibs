@@ -51,7 +51,12 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/IoT_Server/main.c</file>
         </group>
         <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/DistCalc.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/IoT_Server/main.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/External/ExtFunctions.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/EEG_Evoker/ImageVisualise.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.h</file>
         </group>
     </open-files>
 </project-private>

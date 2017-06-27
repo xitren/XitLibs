@@ -39,6 +39,8 @@
 
 #include "Handler.h"
 #include "main.h"
+#include "spi.h"
+#include "ImageVisualise.h"
 
 /* USER CODE END 0 */
 
@@ -249,6 +251,9 @@ void SysTick_Handler(void)
 //*/
 void TIM2_IRQHandler(void)/**/
 {
+    uint8_t rd;
+    uint8_t cnt;
+    uint16_t data_temp;
   /* USER CODE BEGIN TIM2_IRQn 0 */
 //  HAL_UART_Transmit(&huart3,"TIM2.",5/*STRING_SIZE*/,100);
 
@@ -257,6 +262,24 @@ void TIM2_IRQHandler(void)/**/
   /* USER CODE BEGIN TIM2_IRQn 1 */  
 
 //  SoftPWMHandler();
+  if ((cnt%2) == 0)
+    devp300showme();
+  cnt++;
+      
+    HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
+    data_temp = ImgP[cycle_cnt%8][0];
+    HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                    (uint8_t*) &rd, 1, 10);
+    data_temp = ImgP[cycle_cnt%8][1];
+    HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                    (uint8_t*) &rd, 1, 10);
+    data_temp = ImgP[cycle_cnt%8][2];
+    HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                    (uint8_t*) &rd, 1, 10);
+    data_temp = 1<<((cycle_cnt)%8);
+    HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                    (uint8_t*) &rd, 1, 10);
+    HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_11);
   
   /* USER CODE END TIM2_IRQn 1 */
 }
@@ -409,8 +432,7 @@ void EXTI15_10_IRQHandler(void)
     /* USER CODE END EXTI15_10_IRQn 0 */
     HAL_GPIO_EXTI_IRQHandler(BCI_DRDY_Pin);
     /* USER CODE BEGIN EXTI15_10_IRQn 1 */
-//    int m = sprintf((char*)buffer,"%d",ReadMem(REG_EEG_Auto_Band));
-//    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+    
     if (ReadMem(REG_EEG_Auto_Band) > 0)
     {
         ADC_read_data_c();

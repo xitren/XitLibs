@@ -230,6 +230,9 @@
             <pElem>../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include</pElem>
           </incDir>
           <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
+          <preprocessorList>
+            <Elem>P300</Elem>
+          </preprocessorList>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>

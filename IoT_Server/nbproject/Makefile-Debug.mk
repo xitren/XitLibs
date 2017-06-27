@@ -53,7 +53,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a -lWs2_32 ../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a
+LDLIBSOPTIONS=../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a -lWs2_32 ../EEG_Evoker/dist/Release/MinGW-Windows/libeeg_evoker.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -61,21 +61,21 @@ LDLIBSOPTIONS=../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a -lWs2_32 
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ../EEG_Evoker/dist/Release/MinGW-Windows/libeeg_evoker.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c
+${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
+	$(COMPILE.c) -g -DCPU -DP300 -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
 
-${OBJECTDIR}/main.o: main.c
+${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -DCPU -DP300 -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 # Subprojects
 .build-subprojects:
@@ -83,6 +83,7 @@ ${OBJECTDIR}/main.o: main.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe
 
 # Subprojects
 .clean-subprojects:

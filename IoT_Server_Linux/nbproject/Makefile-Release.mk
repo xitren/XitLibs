@@ -52,17 +52,17 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a ../CoAP/dist/Release/GNU-Linux/libcoap.a
+LDLIBSOPTIONS=../EEG_Evoker/dist/Release/MinGW-Windows/libeeg_evoker.a ../XitLib/dist/Release_Linux/MinGW-Windows/libxitlib.a ../CoAP/dist/Release/None-Linux/libcoap.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../EEG_Evoker/dist/Release/MinGW-Windows/libeeg_evoker.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../XitLib/dist/Release_Linux/MinGW-Windows/libxitlib.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../CoAP/dist/Release/GNU-Linux/libcoap.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../CoAP/dist/Release/None-Linux/libcoap.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}

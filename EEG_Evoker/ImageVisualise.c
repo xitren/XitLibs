@@ -104,7 +104,7 @@ void devp300showme(void)
     selection[1] = 0;
     selection[2] = 0;
     selection[3] = 0;
-    p300show(t_counter,selection);
+    p300show(t_counter++,selection);
     for (i=0;i<8;i++)
     {
         for (j=0;j<3;j++)
@@ -116,6 +116,11 @@ void devp300showme(void)
             }
             ImgP[i][j] = t >> (j*8);
         }
+    }
+    cycle_cnt++;
+    if (cycle_cnt >= MAXFRAMES)
+    {
+        cycle_cnt = 0; 
     }
     return;
 }

@@ -27,6 +27,7 @@
 #include "Handler.h"
 #include "CommandModule.h"
 #include "ExtFunctions.h"
+#include "ImageVisualise.h"
 
 DWORD WINAPI ThreadFunc1s()
 {
@@ -53,6 +54,8 @@ DWORD WINAPI ThreadFunc250ms()
     {
         SampleHandler();
         Sleep(4);
+        devp300showme();
+        printf("%d, %d, %d ,%d\n",selection[0],selection[1],selection[2],selection[3]);
     }
     return 0;
 }
@@ -74,7 +77,7 @@ int main(int argc, char** argv) {
     HANDLE hThread; 
     
     InitUDP();
-    //InitImageP300();
+    InitImageP300();
     InitHandler(EEG);
     EEGRecorderInit(0,250);
     

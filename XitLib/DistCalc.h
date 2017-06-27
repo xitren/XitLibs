@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include "xitlibtypes.h"
-#include "../CoAP/coap.h"
+#include "coap.h"
 /*============================================================================*/
 
 #ifndef __CALCMODULE_H__

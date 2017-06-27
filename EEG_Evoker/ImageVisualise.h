@@ -25,6 +25,7 @@ typedef short               int16_t;
 extern uint32_t MAXFRAMES;
 extern uint32_t MAXSTEPS;
 extern uint8_t ImgP[8][3];
+extern unsigned char selection[4];
 extern int cycle_cnt;
 extern int t_counter;
 
