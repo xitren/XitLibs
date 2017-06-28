@@ -360,6 +360,7 @@
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
+            <Elem>DBG_LOG_LEVEL=0</Elem>
             <Elem>DEBUG</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
             <Elem>__USE_W32_SOCKETS</Elem>

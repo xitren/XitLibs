@@ -121,6 +121,7 @@ int main(int argc, char** argv) {
     {
         UserProtocolHandler();
         CalculationHandler();
+        //umm_info(0,1);
     }
     return (EXIT_SUCCESS);
 }

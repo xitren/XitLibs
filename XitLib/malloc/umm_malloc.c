@@ -632,6 +632,14 @@ void *umm_info( void *ptr, int force ) {
                (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo,
                UMM_NFREE(blockNo),
                UMM_PFREE(blockNo) );
+         printf("|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|NF %5i|PF %5i|\n",
+               (unsigned int)(&UMM_BLOCK(blockNo)),
+               blockNo,
+               UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK,
+               UMM_PBLOCK(blockNo),
+               (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo,
+               UMM_NFREE(blockNo),
+               UMM_PFREE(blockNo) );
 
          // Does this block address match the ptr we may be trying to free?
 

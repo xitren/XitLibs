@@ -34,7 +34,10 @@
         <itemPath>../XitLib/UpdateModule.h</itemPath>
         <itemPath>../XitLib/VideoModule.h</itemPath>
         <itemPath>../XitLib/coap/coap.h</itemPath>
+        <itemPath>../XitLib/malloc/dbglog.h</itemPath>
         <itemPath>../XitLib/generatorModule.h</itemPath>
+        <itemPath>../XitLib/malloc/umm_malloc.h</itemPath>
+        <itemPath>../XitLib/malloc/umm_malloc_cfg.h</itemPath>
         <itemPath>../XitLib/version.h</itemPath>
         <itemPath>../XitLib/xitlibtypes.h</itemPath>
       </logicalFolder>
@@ -144,6 +147,12 @@
       </item>
       <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../XitLib/malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
@@ -177,6 +186,7 @@
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
+            <Elem>DBG_LOG_LEVEL=0</Elem>
             <Elem>EXTMEMSERVER</Elem>
             <Elem>P300</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
@@ -246,6 +256,12 @@
       <item path="../XitLib/coap/coap.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/generatorModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>
