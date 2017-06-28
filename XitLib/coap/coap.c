@@ -9,6 +9,7 @@
 #include "coap.h"
 #include "array.h"
 #include "umm_malloc.h"
+#include "LogModule.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -22,6 +23,7 @@ static uint8_t part_buff[3];
 void coap_clock(void)
 {
     int i,j;
+    char buf[60];
     coap_token_record *answer;
     coap_token_record *removed;
     for (i=0;i < array_size(AwaitedAnswersArray);i++)
@@ -30,16 +32,18 @@ void coap_clock(void)
         answer->tok_wait--;
         if ((answer->used) && (answer->p[0] == 'u'))
         {
-            printf("Released like used %d: %06s %d\r\n\r",i,
+            snprintf(buf,60,"Released like used %d: %6s %d\n",i,
                     answer->p,answer->used);
+            DBG_LOG_TRACE(buf);
             array_remove_at(AwaitedAnswersArray, i, (void **)&removed);
             umm_free((void *)removed);
             i--;
         }
         if (!(answer->tok_wait))
         {
-            printf("Released %d: %06s %d\r\n\r",i,
+            snprintf(buf,60,"Released %d: %6s %d\n",i,
                     answer->p,answer->used);
+            DBG_LOG_TRACE(buf);
             if ( (!(answer->used)) && (answer->release[0] != 0) )
             {
                 CommandLineInterpreter(answer->release);
@@ -54,11 +58,14 @@ void coap_clock(void)
 char* coap_check_ans(const char *other)
 {
     int i,j;
+    char buf[60];
     coap_token_record *answer;
     for (i=0;i < array_size(AwaitedAnswersArray);i++)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
-        //printf("I %d: %6s <-> %6s\r\n\r",i,other,awaited_answers[i].p);
+        snprintf(buf,60,"I %d: %6s <-> %6s\n",i,
+                answer->p,answer->used);
+        DBG_LOG_TRACE(buf);
         if (!strncmp(other,answer->p,answer->len))
         {
             answer->used = 1;
@@ -71,66 +78,101 @@ char* coap_check_ans(const char *other)
 #ifdef DEBUG
 void coap_dumpHeader(coap_header_t *hdr)
 {
-    printf("Header:\r\n\r");
-    printf("  ver  0x%02X\r\n\r", hdr->ver);
-    printf("  t    0x%02X\r\n\r", hdr->t);
-    printf("  tkl  0x%02X\r\n\r", hdr->tkl);
-    printf("  code 0x%02X\r\n\r", hdr->code);
-    printf("  id   0x%02X%02X\r\n\r", hdr->id[0], hdr->id[1]);
+    char buf[60];
+    snprintf(buf,60,"Header:\n");
+    DBG_LOG_DEBUG(buf);
+    snprintf(buf,60,"  ver  0x%02X\n", hdr->ver);
+    DBG_LOG_DEBUG(buf);
+    snprintf(buf,60,"  t    0x%02X\n", hdr->t);
+    DBG_LOG_DEBUG(buf);
+    snprintf(buf,60,"  tkl  0x%02X\n", hdr->tkl);
+    DBG_LOG_DEBUG(buf);
+    snprintf(buf,60,"  code 0x%02X\n", hdr->code);
+    DBG_LOG_DEBUG(buf);
+    snprintf(buf,60,"  id   0x%02X%02X\n", hdr->id[0], hdr->id[1]);
+    DBG_LOG_DEBUG(buf);
 }
 void coap_dumpOptions(coap_option_t *opts, size_t numopt)
 {
     size_t i;
-    printf(" Options:\r\n\r");
+    char buf[60];
+    snprintf(buf,60," Options:\n");
+    DBG_LOG_DEBUG(buf);
     for (i=0;i<numopt;i++)
     {
-        printf("  0x%02X [ ", opts[i].num);
+        snprintf(buf,60,"  0x%02X [ ", opts[i].num);
+        DBG_LOG_DEBUG(buf);
         coap_dump(opts[i].buf.p, opts[i].buf.len, true);
-        printf(" ]\r\n\r");
+        snprintf(buf,60," ]\n");
+        DBG_LOG_DEBUG(buf);
     }
     for (i=0;i<numopt;i++)
     {
-        printf("  0x%02X [ ", opts[i].num);
+        snprintf(buf,60,"  0x%02X [ ", opts[i].num);
+        DBG_LOG_DEBUG(buf);
         coap_dump_char(opts[i].buf.p, opts[i].buf.len, true);
-        printf(" ]\r\n\r");
+        snprintf(buf,60," ]\n");
+        DBG_LOG_DEBUG(buf);
     }
 }
 void coap_dumpPacket(coap_packet_t *pkt)
 {
+    char buf[60];
     coap_dumpHeader(&pkt->hdr);
     coap_dumpOptions(pkt->opts, pkt->numopts);
-    printf("Payload: Size of %d", pkt->payload.len);
-    printf("\r\n\r");
-    printf("\r\n\r");
+    snprintf(buf,60,"Payload: Size of %d", pkt->payload.len);
+    DBG_LOG_DEBUG(buf);
+    snprintf(buf,60,"\n");
+    DBG_LOG_DEBUG(buf);
+    snprintf(buf,60,"\n");
+    DBG_LOG_DEBUG(buf);
 }
 void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
 {
+    char buf_local[60];
     if (bare)
     {
         while(buflen--)
-            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
+        {
+            snprintf(buf_local,60,"%02X%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_DEBUG(buf_local);
+        }
     }
     else
     {
-        printf("Dump: ");
+        snprintf(buf_local,60,"Dump: ");
+        DBG_LOG_DEBUG(buf_local);
         while(buflen--)
-            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
-        printf("\r\n\r");
+        {
+            snprintf(buf_local,60,"%02X%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_DEBUG(buf_local);
+        }
+        snprintf(buf_local,60,"\r\n\r");
+        DBG_LOG_DEBUG(buf_local);
     }
 }
 void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
 {
+    char buf_local[60];
     if (bare)
     {
         while(buflen--)
-            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
+        {
+            snprintf(buf_local,60,"%c%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_DEBUG(buf_local);
+        }
     }
     else
     {
-        printf("Dump: ");
+        snprintf(buf_local,60,"Dump: ");
+        DBG_LOG_DEBUG(buf_local);
         while(buflen--)
-            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
-        printf("\r\n\r");
+        {
+            snprintf(buf_local,60,"%c%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_DEBUG(buf_local);
+        }
+        snprintf(buf_local,60,"\r\n\r");
+        DBG_LOG_DEBUG(buf_local);
     }
 }
 #endif
@@ -344,6 +386,7 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     uint8_t *p;
     uint16_t running_delta = 0;
     coap_token_record *answer;
+    char buf_local[60];
 
     // build header
     if (*buflen < (4U + pkt->hdr.tkl))
@@ -364,7 +407,8 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     if (pkt->hdr.tkl > 0)
     {
         memcpy(p, pkt->tok_p, pkt->hdr.tkl);
-        printf("%d coap_build len\n",pkt->hdr.tkl);
+        snprintf(buf_local,60,"%d coap_build len\n",pkt->hdr.tkl);
+        DBG_LOG_DEBUG(buf_local);
     }
 
     // // http://tools.ietf.org/html/rfc7252#section-3.1
@@ -421,8 +465,10 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     }
     else
         *buflen = opts_len + 4;
-    printf("--//internal//-- awaited_answers_cnt %d < MAXWAIT %d && callback %d.\r\n\r"
-            ,array_size(AwaitedAnswersArray),MAXWAIT, callback);
+        snprintf(buf_local,60,
+                "awaited_answers_cnt %d && callback %s.\n"
+                , array_size(AwaitedAnswersArray), callback);
+        DBG_LOG_DEBUG(buf_local);
     //if ((awaited_answers_cnt < MAXWAIT) && (callback))
     if (callback)
     {
@@ -430,11 +476,13 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
         if (pkt->hdr.tkl > 0)
             memcpy(answer->p,pkt->tok_p,pkt->hdr.tkl);
         #ifdef DEBUG
-            printf("--//internal//-- add tkn %06s clb %s.\r\n\r",
+            snprintf(buf_local,60,"add tkn %06s clb %s.\n",
                         pkt->tok_p,callback);
+            DBG_LOG_TRACE(buf_local);
             if (release_cmd)
             {
-                printf("--//internal//-- release %s.\r\n\r",release_cmd);
+                snprintf(buf_local,60,"release %s.\n",release_cmd);
+                DBG_LOG_TRACE(buf_local);
             }
         #endif
         answer->len = pkt->hdr.tkl;
@@ -476,6 +524,7 @@ int make_part_option(coap_option_t *opt_part, uint32_t num,
         coap_option_part_size sizep, uint8_t last)
 {
     uint32_t value;
+    char buf_local[60];
     if (last)
         value = (num << 4) + sizep;
     else
@@ -487,8 +536,10 @@ int make_part_option(coap_option_t *opt_part, uint32_t num,
     opt_part->buf.p = part_buff;
     opt_part->buf.len = 2;
     #ifdef DEBUG
-        printf("--//internal//-- Into make_part_option %02X %02X %02X Lenght %d End %d .\r\n\r",
-                    part_buff[2],part_buff[1],part_buff[0],opt_part->buf.len, last);
+        snprintf(buf_local,60,
+                "Into make_part_option %02X %02X %02X Lenght %d End %d .\n",
+                part_buff[2],part_buff[1],part_buff[0],opt_part->buf.len, last);
+        DBG_LOG_TRACE(buf_local);
     #endif
     return 0;
 }
@@ -496,6 +547,7 @@ int parse_part_option(const coap_buffer_t *opt_part,uint8_t *end)
 {
     uint32_t value = 0;
     uint32_t len = opt_part->len;
+    char buf_local[60];
     
     if (len == 3)
     {
@@ -520,8 +572,10 @@ int parse_part_option(const coap_buffer_t *opt_part,uint8_t *end)
     
     
     #ifdef DEBUG
-        printf("--//internal//-- %04X Into parse_part_option %X end %02X Lenght %d .\r\n\r"
-                    ,((opt_part->p[0]*256) + (opt_part->p[1])),value,*end,len);
+        snprintf(buf_local,60,
+        "--//internal//-- %04X Into parse_part_option %X end %02X Lenght %d .\n"
+        ,((opt_part->p[0]*256) + (opt_part->p[1])),value,*end,len);
+        DBG_LOG_TRACE(buf_local);
     #endif
     return value;
 }
@@ -533,6 +587,7 @@ int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         const char* tok_p, size_t tok_len, coap_responsecode_t rspcode, 
         coap_content_type_t content_type)
 {
+    char buf_local[60];
     pkt->hdr.ver = 0x01;
     pkt->hdr.t = COAP_TYPE_NONCON;
     pkt->hdr.tkl = 0;
@@ -546,7 +601,8 @@ int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         pkt->hdr.tkl = tok_len;
         pkt->tok_len = tok_len;
         memcpy(pkt->tok_p,tok_p,tok_len);
-        printf("%d make_msg len\n",tok_len);
+        snprintf(buf_local,60,"%d make_msg len\n",tok_len);
+        DBG_LOG_TRACE(buf_local);
     }
 
     if (opt_path){
@@ -579,6 +635,7 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         const char* tok_p, size_t tok_len, coap_responsecode_t rspcode, 
         coap_content_type_t content_type)
 {
+    char buf_local[60];
     pkt->hdr.ver = 0x01;
     pkt->hdr.t = COAP_TYPE_ACK;
     pkt->hdr.tkl = 0;
@@ -592,7 +649,8 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         pkt->hdr.tkl = tok_len;
         pkt->tok_len = tok_len;
         memcpy(pkt->tok_p,tok_p,tok_len);
-        printf("%d make_response len\n",tok_len);
+        snprintf(buf_local,60,"%d make_response len\n",tok_len);
+        DBG_LOG_TRACE(buf_local);
     }
 
     // safe because 1 < MAXOPT
@@ -625,12 +683,14 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     const coap_option_t *opt;
     uint8_t count;
     uint8_t contentistext = 0;
+    char buf_local[60];
     int i,j,k;
     char* cbl;
     uint32_t lenght = 0;
     bufhr[0]='\0';
     #ifdef DEBUG
-        printf("--//internal//-- Into coap_handle_req.\r\n\r");
+        snprintf(buf_local,60,"Into coap_handle_req.\n");
+        DBG_LOG_DEBUG(buf_local);
     #endif
     if (inpkt->hdr.code < 5)
     {
@@ -706,7 +766,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     else
     {
         #ifdef DEBUG
-            printf("--//internal//-- Look for answer waiting list.\r\n\r");
+            snprintf(buf_local,60,"Look for answer waiting list.\n");
+            DBG_LOG_DEBUG(buf_local);
         #endif
         if (cbl = coap_check_ans((inpkt->tok_p)))
         {
@@ -745,13 +806,16 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 memcpy(scratch->p,inpkt->payload.p,scratch->len = inpkt->payload.len);
             #ifdef DEBUG
                 printf("--//internal//-- Found.\r\n\r");
+                snprintf(buf_local,60,"Found.\n");
+                DBG_LOG_DEBUG(buf_local);
             #endif
         }
         else
         {
             #ifdef DEBUG
-                printf("--//internal//-- Not Found Any.\r\n\r");
-                printf("--//internal//-- Into END of coap_handle_req.\r\n\r");
+                snprintf(buf_local,60,
+                        "Not Found Any.\nInto END of coap_handle_req.\n");
+                DBG_LOG_DEBUG(buf_local);
             #endif
             return 0;
         }
@@ -766,7 +830,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     scratch->len = 4096;
 
     #ifdef DEBUG
-        printf("--//internal//-- Into END of coap_handle_req.\r\n\r");
+        snprintf(buf_local,60,"Into END of coap_handle_req.\n");
+        DBG_LOG_DEBUG(buf_local);
     #endif
     return 0;
 }

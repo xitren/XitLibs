@@ -3,6 +3,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "Handler.h"
+#include "LogModule.h"
 
 #define TXTIMEOUT 10
 #define PORT_BACK 5683
@@ -54,12 +55,11 @@ int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func) {
     #ifdef CPU
         transfer_free = 1;
         if (data[0] == 0) {
-            printf("Bad packet\n");
+            DBG_LOG_ERROR("Bad packet\n");
             #ifdef DEBUG
                 coap_dumpHeader(&pkt.hdr);
-                printf("Received: ");
+                DBG_LOG_DEBUG("Received: ");
                 coap_dump(data, datalen, true);
-                printf("\r\n\r");
                 exit(0);
             #endif
         }
@@ -80,12 +80,11 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
     #ifdef CPU
         transfer_free = 1;
         if (data[0] == 0) {
-            printf("Bad packet\n");
+            DBG_LOG_ERROR("Bad packet\n");
             #ifdef DEBUG
                 coap_dumpHeader(&pkt.hdr);
-                printf("Received: ");
+                DBG_LOG_DEBUG("Received: ");
                 coap_dump(data, datalen, true);
-                printf("\r\n\r");
                 exit(0);
             #endif
         }
@@ -98,18 +97,26 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
 }
 
 void InitHandler(DeviceTypeDef device) {
-//    #ifdef DEBUG
-        printf("Memory used by CoAP: %d Bytes\r\n\r",MEMORY_COAP);
-        printf("Memory used by CommandModule: %d Bytes\r\n\r",MEMORY_COMMAND);
-        printf("Memory used by ConfigModule: %d Bytes\r\n\r",MEMORY_CONFIG);
-        printf("Memory used by DMAModule: %d Bytes\r\n\r",MEMORY_DMA);
-        printf("Memory used by DiscoveryModule: %d Bytes\r\n\r",MEMORY_CORE_WELLKNOWN);
-        printf("Memory used by InOutBuffer: %d Bytes\r\n\r",MEMORY_INOUT);
-        printf("Memory used by StreamDataRecorder: %d Bytes\r\n\r",MEMORY_STREAM);
-        printf("========ALL=========================%d=Bytes====\r\n\r"
-                ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
-                MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
-//    #endif
+    char buf_local[60];
+    ClearLog();
+    DBG_LOG_PREPARE(buf_local,60,"Memory used by CoAP: %d Bytes\n",MEMORY_COAP);
+    DBG_LOG_INFO(buf_local);
+    DBG_LOG_PREPARE(buf_local,60,"Memory used by CommandModule: %d Bytes\n",MEMORY_COMMAND);
+    DBG_LOG_INFO(buf_local);
+    DBG_LOG_PREPARE(buf_local,60,"Memory used by ConfigModule: %d Bytes\n",MEMORY_CONFIG);
+    DBG_LOG_INFO(buf_local);
+    DBG_LOG_PREPARE(buf_local,60,"Memory used by DMAModule: %d Bytes\n",MEMORY_DMA);
+    DBG_LOG_INFO(buf_local);
+    DBG_LOG_PREPARE(buf_local,60,"Memory used by DiscoveryModule: %d Bytes\n",MEMORY_CORE_WELLKNOWN);
+    DBG_LOG_INFO(buf_local);
+    DBG_LOG_PREPARE(buf_local,60,"Memory used by InOutBuffer: %d Bytes\n",MEMORY_INOUT);
+    DBG_LOG_INFO(buf_local);
+    DBG_LOG_PREPARE(buf_local,60,"Memory used by StreamDataRecorder: %d Bytes\n",MEMORY_STREAM);
+    DBG_LOG_INFO(buf_local);
+    DBG_LOG_PREPARE(buf_local,60,"========ALL=========================%d=Bytes====\n"
+            ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
+            MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
+    DBG_LOG_INFO(buf_local);
     transfer_free = 1;
     transfer_time = 0;
     coap_setup();
@@ -170,20 +177,7 @@ inline void OperationHandler(void) {
         //VideoFrameHandler();
     #endif
 
-    #ifndef CPU
-//    if (ReadMem(REG_AD_RP) > 0)
-//    {
-//                
-//        HAL_TIM_Base_Stop(&htim14); 
-//        HAL_TIM_Base_Stop(&htim2); 
-//        
-//        ad7190_setup_all();
-//        
-//        HAL_TIM_Base_Start_IT(&htim14);
-//        HAL_TIM_Base_Start_IT(&htim2);
-//        WriteMem(REG_AD_RP,0);
-//    }
-    
+    #ifndef CPU    
     if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) > 0)) {
         l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize), (int*) scratch_raw);
         if (l > 0) {
@@ -250,7 +244,7 @@ void UartReceiveCompleteHandler(void) {
     pstr = (char*) GetPocketBuffer(&pstrs);
     //    sprintf((char*)buffer,"len %d\r\n\r",pstrs);
     //    AddToTransmit((char*)buffer);
-      Transfer((uint8_t*)pstr,pstrs,0);
+//      Transfer((uint8_t*)pstr,pstrs,0);
     AddToReceive(pstr, pstrs);
     SetCStatLedsUnderPWM(0, 0, 0);
     return;
@@ -279,9 +273,7 @@ void StatChangeHandler(void) {
 
 int ResetReq() {
     int rc;
-#ifdef DEBUG
-    printf("--//internal//-- Into ResetReq.\r\n\r");
-#endif
+    DBG_LOG_DEBUG("Into ResetReq.\n");
     //ToDo: Make query
     pktlen = sizeof (buf);
 #ifdef CPU

@@ -169,23 +169,23 @@ inline void UserOperationHandler(void) {    int j, k = 0, l = 0,m;
         {
             if ( (k = Packetize((uint8_t*) scratch_raw, l * 4, BUFFER_SAMPLE_SIZE * ReadMem(REG_EEG_PocketSize) + 22)) > 0 )
             {
-                TransferBand((uint8_t*) scratch_raw, k);
+                TransferDMA((uint8_t*) scratch_raw, k);
             }
         }
     }
     
-    if( (ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) == 2) )
-    {
-        //WriteMem(REG_EEG_PocketSize,256);
-        l = GetDataReadyCnt( (int32_t)ReadMem(REG_EEG_PocketSize), (int32_t*) scratch_raw );
-        if (l > 0)
-        {
-            val_temp = find_power( (int32_t*)scratch_raw );
-            TransferBand((uint8_t*) &val_temp, 1);
-        }
-    }
+//    if( (ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) == 2) )
+//    {
+//        //WriteMem(REG_EEG_PocketSize,256);
+//        l = GetDataReadyCnt( (int32_t)ReadMem(REG_EEG_PocketSize), (int32_t*) scratch_raw );
+//        if (l > 0)
+//        {
+//            val_temp = find_power( (int32_t*)scratch_raw );
+//            TransferBand((uint8_t*) &val_temp, 1);
+//        }
+//    }
 
-    OperationHandler();
+    //OperationHandler();
     return;
 }
 
@@ -205,7 +205,7 @@ inline int32_t ADC_read_data_c(){
 
 int TransferDMA(const uint8_t *data, const uint32_t datalen) {
 #ifndef CPU
-    HAL_UART_Transmit_DMA(&huart1, (uint8_t *) data, datalen);
+    HAL_UART_Transmit_IT(&huart1, (uint8_t *) data, datalen);
 #endif
     return 0;
 }

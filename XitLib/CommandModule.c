@@ -62,10 +62,9 @@ void Interface_Memory(void)
 {
     if (array_new(&CommandTableArray) != 0)
         return;
-    //array_size(CommandTableArray);
     ClearCommands();
     AddCommand("/RESET", "</reset>", Reset);
-    AddCommand("/QUERY/UPDATE", "</reset>", QueryUpdate);
+//    AddCommand("/QUERY/UPDATE", "</reset>", QueryUpdate);
     AddCommand("/GET/MEMORY", "</memory>", MEMRead);
     AddCommand("/PUT/MEMORY", "</memory>", MEMWrite);
     AddCommand("/GET/LOG", "</log>", LOGRead);
@@ -122,7 +121,7 @@ int Reset(ParameterList_t *TempParam)
 {
    int  ret_val = 0;
 
-    AddToLog("Into Reset.\n", 1);
+    DBG_LOG_DEBUG("Into Reset.\n");
     AddToTransmit("<RESET>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -139,7 +138,7 @@ int Reset(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</RESET>\r\n\r");
 
@@ -152,7 +151,7 @@ int CLOCKSet(ParameterList_t *TempParam)
     int i;
     char buffer[STRING_SIZE];
 
-    AddToLog("Into CLOCKSet.\n", 1);
+    DBG_LOG_DEBUG("Into CLOCKSet.\n");
     AddToTransmit("<CLOCKSET>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -173,7 +172,7 @@ int CLOCKSet(ParameterList_t *TempParam)
         {
             SetClock(Clock);
             AddToTransmit(" <SET/>\r\n\r");
-            AddToLog("Invalid clock parameter.\n", 1);
+            DBG_LOG_WARNING("Invalid clock parameter.\n");
         }
     }
     else
@@ -181,7 +180,7 @@ int CLOCKSet(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</CLOCKSET>\r\n\r");
 
@@ -192,7 +191,7 @@ int CLOCKGet(ParameterList_t *TempParam)
     int  ret_val = 0;
     char buffer[STRING_SIZE];
 
-    AddToLog("Into CLOCKGet.\n", 1);
+    DBG_LOG_DEBUG("Into CLOCKGet.\n");
     AddToTransmit("<CLOCK>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -206,7 +205,7 @@ int CLOCKGet(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_ERROR("Invalid parameters.\n");
     }
     AddToTransmit("</CLOCK>\r\n\r");
 
@@ -218,7 +217,7 @@ int CALCFREECYCLESGet(ParameterList_t *TempParam)
     int  ret_val = 0;
     char buffer[STRING_SIZE];
 
-    AddToLog("Into CALCFREECYCLESGet.\n", 1);
+    DBG_LOG_DEBUG("Into CALCFREECYCLESGet.\n");
     AddToTransmit("<CALCFREECYCLES>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -232,7 +231,7 @@ int CALCFREECYCLESGet(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</CALCFREECYCLES>\r\n\r");
 
@@ -243,7 +242,7 @@ int CALCMAXCYCLESGet(ParameterList_t *TempParam)
     int  ret_val = 0;
     char buffer[STRING_SIZE];
 
-    AddToLog("Into CALCFREECYCLESGet.\n", 1);
+    DBG_LOG_DEBUG("Into CALCFREECYCLESGet.\n");
     AddToTransmit("<CALCMAXCYCLES>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -257,7 +256,7 @@ int CALCMAXCYCLESGet(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</CALCMAXCYCLES>\r\n\r");
 
@@ -268,7 +267,7 @@ int CALCPERCENTCYCLESGet(ParameterList_t *TempParam)
     int  ret_val = 0;
     char buffer[STRING_SIZE];
 
-    AddToLog("Into CALCFREECYCLESGet.\n", 1);
+    DBG_LOG_DEBUG("Into CALCFREECYCLESGet.\n");
     AddToTransmit("<CALCPERCENTCYCLES>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -282,7 +281,7 @@ int CALCPERCENTCYCLESGet(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</CALCPERCENTCYCLES>\r\n\r");
 
@@ -300,7 +299,7 @@ int MEMRead(ParameterList_t *TempParam)
     char buffer[STRING_SIZE];
     int i;
 
-    AddToLog("Into MEMRead.\n", 1);
+    DBG_LOG_DEBUG("Into MEMRead.\n");
     AddToTransmit("<MEMORY>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -330,7 +329,7 @@ int MEMRead(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</MEMORY>\r\n\r");
 
@@ -346,8 +345,9 @@ int MEMWrite(ParameterList_t *TempParam)
     int  Adress;
     int  Value;
     int  i;
+    char buf_local[60];
 
-    AddToLog("Into MEMWrite.\n", 1);
+    DBG_LOG_DEBUG("Into MEMWrite.\n");
     AddToTransmit("<MEMORY>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -369,7 +369,8 @@ int MEMWrite(ParameterList_t *TempParam)
           WriteMem(Adress,Value);
           AddToTransmit("<WR/>\r\n\r");
           #ifdef DEBUG
-             printf("--//internal//-- Mem[%d] setted to %d.\r\n\r",Adress,Value);
+             DBG_LOG_PREPARE(buf_local,60,"Mem[%d] setted to %d.\r\n\r",Adress,Value);
+             DBG_LOG_TRACE(buf_local);
           #endif
        }
     }
@@ -378,7 +379,7 @@ int MEMWrite(ParameterList_t *TempParam)
          /* One or more of the necessary parameters are invalid.           */
          ret_val = INVALID_PARAMETERS_ERROR;
          AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-         AddToLog("Invalid parameters.\n", 1);
+         DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</MEMORY>\r\n\r");
 
@@ -393,7 +394,7 @@ int DISTRead(ParameterList_t *TempParam)
     int  ret_val = 0;
     char buffer[STRING_SIZE];
 
-    AddToLog("Into DISTRead.\n", 1);
+    DBG_LOG_DEBUG("Into DISTRead.\n");
     AddToTransmit("<DISTANCE>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -407,7 +408,7 @@ int DISTRead(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</DISTANCE>\r\n\r");
 
@@ -422,25 +423,25 @@ int CommandLineInterpreter(char *Command)
     int     		Result = !EXIT_CODE;
     uint8_t      	ret_val = 0;
     UserCommand_t 	TempCommand;
+    char                buf_local[60];
 
-    AddToLog("Into CommandLineInterpreter.\n", 1);
-    printf(">>>>>>>>>>>>>>>> %s\r\n\r",Command);
+    DBG_LOG_DEBUG("Into CommandLineInterpreter.\n");
+    snprintf(buf_local,60,"> %s\n",Command);
+    DBG_LOG_DEBUG(buf_local);
     /* The string input by the user contains a value, now run the string */
     /* through the Command Parser.                                       */
-//    printf("CommandParser\n");
     if(CommandParser(&TempCommand, Command) >= 0)
     {
-//        printf("CommandInterpreter\n");
         /* The Command was successfully parsed run the Command.           */
         Result = CommandInterpreter(&TempCommand);
         switch(Result)
         {
             case INVALID_COMMAND_ERROR:
-                AddToLog("Invalid command.\n", 1);
+                DBG_LOG_WARNING("Invalid command.\n");
                 ret_val = 0;
                 break;
             case FUNCTION_ERROR:
-                AddToLog("Invalid function.\n", 1);
+                DBG_LOG_WARNING("Invalid function.\n");
                 ret_val = 0;
                 break;
             case EXIT_CODE:
@@ -452,10 +453,10 @@ int CommandLineInterpreter(char *Command)
     }
     else
     {
-        AddToLog("INVALID_COMMAND_ERROR.\n", 1);
+        DBG_LOG_WARNING("INVALID_COMMAND_ERROR.\n");
     }
 
-    AddToLog("Into END of CommandLineInterpreter.\n", 1);
+    DBG_LOG_DEBUG("Into END of CommandLineInterpreter.\n");
     return(ret_val);
 }
 
@@ -598,12 +599,8 @@ char *StringParser(char *String)
         /* The string appears to be at least semi-valid.  Search for the  */
         /* first space character and replace it with a NULL terminating   */
         /* character.                                                     */
-//        printf("1:2->1:%d\n",strlen(String));
-//        printf("%s\n",String);
         for(Index=0, ret_val=String;Index < strlen(String);Index++)
         {
-//        printf("1:2->1:%d-",Index);
-//        printf("%c\n",String[Index]);
             /* Is this the space character.                                */
             if((String[Index] == ' ') || (String[Index] == '\r') 
                                    || (String[Index] == '?') 
@@ -617,7 +614,6 @@ char *StringParser(char *String)
                 /* terminating character and set the return value to the    */
                 /* begining character of the string.                        */
                 String[Index] = '\0';
-//        printf("1:2->1:%d:2\n",Index);
                 break;
             }
         }
@@ -655,62 +651,49 @@ int CommandParser(UserCommand_t *TempCommand, char *Input)
 
    /* Before proceeding make sure that the passed parameters appear to  */
    /* be at least semi-valid.                                           */ 
-//   printf("1\n");
    if((TempCommand) && (Input) && (strlen(Input)))
-   {                            
-//    printf("1:1\n");
+   {                       
       /* First get the initial string length.                           */
       StringLength = strlen(Input);
            
-//    printf("1:2\n");
       /* Retrieve the first token in the string, this should be the     */
       /* commmand.                                                      */
       TempCommand->Command = StringParser(Input);
            
-//    printf("1:3\n");
       /* Flag that there are NO Parameters for this Command Parse.      */
       TempCommand->Parameters.NumberofParameters = 0;
            
-//    printf("1:4 %s\n",TempCommand->Command);
        /* Check to see if there is a Command                            */
       if(TempCommand->Command)
       {
-//    printf("1:4:1\n");
          /* Initialize the return value to zero to indicate success on  */
          /* commands with no parameters.                                */
          ret_val    = 0;
 
-//    printf("1:4:2\n");
          /* Adjust the UserInput pointer and StringLength to remove the */
          /* Command from the data passed in before parsing the          */
          /* parameters.                                                 */
          Input        += strlen(TempCommand->Command)+1;
          StringLength  = strlen(Input);
 
-//    printf("1:4:3\n");
          /* There was an available command, now parse out the parameters*/
          while((StringLength > 0) && ((LastParameter = StringParser(Input)) != NULL))
          {
-//    printf("1:4:3:1\n");
             /* There is an available parameter, now check to see if     */
             /* there is room in the UserCommand to store the parameter  */
             if(Count < (sizeof(TempCommand->Parameters.Params)/sizeof(Parameter_t)))
             {
-//    printf("1:4:3:1:1\n");
                /* Save the parameter as a string.                       */
                TempCommand->Parameters.Params[Count].strParam = LastParameter;
 
-//    printf("1:4:3:1:2\n");
                /* Save the parameter as an unsigned int intParam will   */
                /* have a value of zero if an error has occurred.        */
                TempCommand->Parameters.Params[Count].intParam = StringToUnsignedInteger(LastParameter);
 
-//    printf("1:4:3:1:3\n");
                Count++;
                Input        += strlen(LastParameter)+1;
                StringLength -= strlen(LastParameter)+1;
 
-//    printf("1:4:3:1:4\n");
                ret_val = 0;
             }
             else
@@ -718,7 +701,6 @@ int CommandParser(UserCommand_t *TempCommand, char *Input)
                /* Be sure we exit out of the Loop.                      */
                StringLength = 0;
 
-//    printf("1:4:3:1:5\n");
                ret_val      = TO_MANY_PARAMS;
             }
          }
@@ -790,9 +772,7 @@ int CommandInterpreter(UserCommand_t *TempCommand)
         }
         else
         {
-            #ifdef DEBUG
-               printf("--//internal//-- Command not found.\r\n\r");
-            #endif
+            DBG_LOG_WARNING("Command not found.\n");
         }
    }
    else
@@ -831,8 +811,8 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
                 umm_free((void *)comm);
                 return 1;
             }
-            printf(comm->CommandName);
-            printf("\n");
+            DBG_LOG_INFO("Command added. \n");
+            DBG_LOG_INFO(comm->CommandName);
 
             /* Return success to the caller.                               */
             ret_val                                        = 0;

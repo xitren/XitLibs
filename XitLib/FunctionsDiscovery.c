@@ -9,12 +9,11 @@
 #include "generatorModule.h"
 #include "array.h"
 #include "umm_malloc.h"
+#include "LogModule.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
 static Array *NodesArray;
-//function_node nodes[NODE_MAX];
-//uint32_t nodes_cnt = 0;
 /*============================================================================*/
 
 /* Private constants ---------------------------------------------------------*/
@@ -39,8 +38,6 @@ int EEGGetFile(ParameterList_t *TempParam)
     return(ret_val); 
 }
 
-
-
 int EEGGetListFiles(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
@@ -63,26 +60,17 @@ int EEGWriteInFile(ParameterList_t *TempParam)
     int  Value=1;
     int  i;
     uint32_t res;
+    char buf[60];
    
-    AddToLog("Into EEGWriteInFile.\n", 1);
+    DBG_LOG_DEBUG("Into EEGWriteInFile.\n");
     AddToTransmit("<EEGWRITE>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam))
     {
-        res=ReadMem(60);
-        #ifdef DEBUG
-            printf("Value REG WriteInFile %d",res);
-        #endif
         WriteMem(60,Value);
         res=ReadMem(60);
-        #ifdef DEBUG
-            printf("New value REG WriteInFile %d",res);
-        #endif
         AddToTransmit("<WR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//-- Mem[%d] setted to %d.\r\n\r",60,Value);
-        #endif
         content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
     }
     else
@@ -90,9 +78,7 @@ int EEGWriteInFile(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</EEGWRITE>\r\n\r");
 
@@ -100,10 +86,7 @@ int EEGWriteInFile(ParameterList_t *TempParam)
 }
     
 int QueryNodes(ParameterList_t *TempParam) 
-{   //AddCommand("/GET/QUERYNODES", QueryNodes);
-    #ifdef DEBUG
-        printf("--//internal//-- Into QUERYNodes.\r\n\r");
-    #endif 
+{   
     int  ret_val = 0;
     int i,j,k=0;
     char *strptr;
@@ -114,6 +97,7 @@ int QueryNodes(ParameterList_t *TempParam)
     memset(strbuf,0,80);
     strptr = (char*)strbuf;
     
+    DBG_LOG_DEBUG("Into QUERYNodes.\n");
     //AddToTransmit("<NODES>\r\n\r");  // "<NODES>\r\n\r"     "{\n \"EEGBLOCK\": [\n"
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -121,7 +105,8 @@ int QueryNodes(ParameterList_t *TempParam)
     {
         if(array_size(NodesArray)==0) 
         {
-           AddToTransmit("<ERROR_NODES_NULL>\r\n\r"); 
+            AddToTransmit("<ERROR_NODES_NULL>\r\n\r"); 
+            DBG_LOG_WARNING("Into QUERYNodes.\n");
         }
         else 
         {
@@ -140,9 +125,9 @@ int QueryNodes(ParameterList_t *TempParam)
                         AddToTransmit(strptr);
                         break;
                     }
-                sprintf(strptr,"<coap://%s%s>;if=\"controller\",\n",
-                            node->ip,proto->name);
-                AddToTransmit(strptr);
+                    sprintf(strptr,"<coap://%s%s>;if=\"controller\",\n",
+                                node->ip,proto->name);
+                    AddToTransmit(strptr);
                 }
             }
         }
@@ -153,11 +138,8 @@ int QueryNodes(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid param test.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
-    //AddToTransmit("</NODES>\r\n\r");
 
     return ret_val;
 }
@@ -171,9 +153,8 @@ void put_node_msg(char *_ip,char *_name)
     function_node *node;
     function_proto *proto;
     function_proto *protoi;
-    #ifdef DEBUG
-        printf("--//internal//-- Into put_node_msg.\r\n\r");
-    #endif
+    
+    DBG_LOG_DEBUG("Into put_node_msg.\n");
     if (NodesArray == 0)
     {
         if (array_new(&NodesArray) != 0)
@@ -212,22 +193,17 @@ void put_node_msg(char *_ip,char *_name)
     for (name_ptr=1;name_ptr < strlen(_name);name_ptr++) 
         if ((_name[name_ptr-1] == '<') && (_name[name_ptr] == '/'))
         {
-            //array_get_at(node->proto, array_size(node->proto), (void**)&proto);
             proto = (function_proto *)umm_calloc(1,sizeof(function_proto));
             proto->len = 0;
             while ((_name[name_ptr] != '>') && (name_ptr < strlen(_name)))
             {
-//                printf("%d %d %c %c\n",nodes[ip_id].proto[nodes[ip_id].len].len,name_ptr,_name[name_ptr],'>');
                 proto->name[proto->len++] = _name[name_ptr];
                 name_ptr++;
             }
             proto->name[proto->len++] = 0;
-//            printf("--//internal//-- %s\r\n\r",
-//                    nodes[ip_id].proto[nodes[ip_id].len].name);
             for (i=0;i < array_size(node->proto);i++)
             {
                 array_get_at(node->proto, i, (void**)&protoi);
-//                printf("%s = %s\n",protoi->name,proto->name);
                 if (!strcmp(protoi->name,proto->name))
                 {
                     break;
@@ -238,8 +214,6 @@ void put_node_msg(char *_ip,char *_name)
                 umm_free((void *)proto);
                 continue;
             }
-            //printf("%d %d name: %s\n",nodes[i].len,ip_id,_name);
-            //strncpy(nodes[ip_id].proto[nodes[ip_id].len].name,_name,strlen(_name));
             proto->len = strlen(proto->name);
             if (array_add(node->proto, (void *)proto) != 0)
             {
@@ -254,9 +228,8 @@ char* get_first_node_by_func(const char *_name)
     int i,j;
     function_node *node;
     function_proto *proto;
-    #ifdef DEBUG
-        printf("--//internal//-- Into get_first_node_by_func.\r\n\r");
-    #endif
+    
+    DBG_LOG_DEBUG("Into get_first_node_by_func.\n");
     for (i=0;i < array_size(NodesArray);i++)
     {
         array_get_at(NodesArray, i, (void**)&node);
@@ -272,41 +245,6 @@ char* get_first_node_by_func(const char *_name)
     return 0;
 }
 
-/*
-int serverIP(char *ServerIP)
-{
-    int ret_val=0;
-    int i,j;
-    int found =0;
-    char *strptr;
-    char strbuf[10000];
-    memset(strbuf,0,10000);
-    strptr = (char*)strbuf;
-    for (i=0;i < nodes_cnt;i++)
-    {
-        //printf("LENGTH%d\n",nodes[i].len);
-        for (j=0;j < nodes[i].len;j++)
-        {
-            strptr += snprintf(strptr,
-                    10000-((int)strptr-(int)strbuf),
-                    "<coap://%s%s>;if=\"controller\",\n",
-                    nodes[i].ip,nodes[i].proto[j].name);
-            if (strcmp(nodes[i].proto[j].name, "/techupdate")==0) {
-                ServerIP = nodes[i].ip;
-                found =1;
-            }
-        }     
-    }
-    *(strptr-2) = 0;
-    
-    if (found==1) {
-        ret_val = 1;
-    }
-    return ret_val;
-}
-*/
-
-
 void print_node_and_func(void)
 {
     int i,j;
@@ -317,7 +255,7 @@ void print_node_and_func(void)
     
     memset(strbuf,0,10000);
     strptr = (char*)strbuf;
-    printf("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n");
+    DBG_LOG_DEBUG("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n");
     
     for (i=0;i < array_size(NodesArray);i++)
     {
@@ -332,7 +270,8 @@ void print_node_and_func(void)
         }     
     }
     *(strptr-2) = 0;
-    printf("%s\n&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n",strbuf);
+    DBG_LOG_DEBUG(strbuf);
+    DBG_LOG_DEBUG("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n");
     return;
 }
 
@@ -341,9 +280,8 @@ void function_beakon(void)
     int rc,i;
     #ifdef CPU
     coap_buffer_t tokfb;
-    #ifdef DEBUG
-        printf("--//internal//-- Into function_beakon.\r\n\r");
-    #endif
+    
+    DBG_LOG_DEBUG("Into function_beakon.\n");
     pktlen = sizeof(buf);
     opt_path.num = COAP_OPTION_URI_PATH;
     opt_path.buf.len = strlen(path_well_core);
@@ -359,16 +297,6 @@ void function_beakon(void)
     {
         TransferBand((uint8_t*)buf,pktlen);
     }
-/*
-    for (i=0;i < nodes_cnt;i++)
-    {
-        if (nodes[i].len>14)
-        {
-            printf("Error: nodes_length less PROTO_MAX\n");
-            PROTO_MAX=nodes[i].len;
-        }
-    }
-*/
     #endif
 return;
 }
@@ -378,20 +306,14 @@ return;
    /* return value if there was an error.                               */
 int WELLKnown(ParameterList_t *TempParam)
 {
-   int  ret_val = 0,i;
+    int  ret_val = 0,i;
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into WELLKnown.\r\n\r");
-    #endif
-    //AddToTransmit("<WELLKNOWN>\r\n\r");
+    DBG_LOG_DEBUG("Into WELLKnown.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam))
     {
-        #ifdef DEBUG
-           printf("--//internal//--  id %02X %02X\r\n\r",pkt.hdr.id[0], pkt.hdr.id[1]);
-        #endif
-           //pkt->hdr.t
+        //snprintf(buf_local,60,"id %02X %02X\r\n\r",pkt.hdr.id[0], pkt.hdr.id[1]);
         for (i=0;i < GetCommandsNumber();i++)
         {
             AddToTransmit(GetCommandLink(i));
@@ -404,11 +326,8 @@ int WELLKnown(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        #ifdef DEBUG
-           printf("--//internal//--  Invalid parameters.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
-    //AddToTransmit("</WELLKNOWN>\r\n\r");
 
     return(ret_val);
 }
@@ -421,10 +340,7 @@ int CallbackWELLKnown(ParameterList_t *TempParam)
     int  i,ind_i;
     char *ip;
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into CallbackWELLKnown.\r\n\r");
-    #endif
-    //AddToTransmit("<CALLBACKWELLKNOWN>\r\n\r");
+    DBG_LOG_DEBUG("Into CallbackWELLKnown.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam))
@@ -451,16 +367,10 @@ int CallbackWELLKnown(ParameterList_t *TempParam)
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
-        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
-    //AddToTransmit("</CALLBACKWELLKNOWN>\r\n\r");
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of CallbackWELLKnown.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of CallbackWELLKnown.\n");
     return(ret_val);
 }
 /*============================================================================*/

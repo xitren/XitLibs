@@ -20,33 +20,35 @@ int WriteToFile(char* filename);
 int AddToLog(char *str, int lvl)
 {
     int ret_val = NO_LOGGER_ERROR;
-   
+//    str[59]=0;
+       
     if ((uint32_t)lvl > ReadMem(REG_LOG_LVL))
+    {
         return(ret_val);
-    
+    }
     #ifdef PLATFORM_WINDOWS
         printf("LOGGER<%d>:--//internal//-- %s",lvl,str);
     #else
         printf("LOGGER<%d>:--//internal//-- %s\r",lvl,str);
     #endif
 
-    #ifdef CPU
-        if ( !(( ((LogCnt+strlen(str))/STRING_SIZE) + 1) < BUFFER_SIZE) )
-        {
-            WriteToFile(def_filename);
-            ClearLog();
-        }
-    #endif
-   
-    if ( ( ((LogCnt+strlen(str))/STRING_SIZE) + 1) < BUFFER_SIZE)
-    {
-        strncpy(((char*)log_buffer)+LogCnt,(const char*)str,strlen(str));
-        LogCnt += strlen(str);
-    }
-    else
-    {
-        ret_val = NO_LOGGER_SPACE;
-    }
+//    #ifdef CPU
+//        if ( !(( ((LogCnt+strlen(str))/STRING_SIZE) + 1) < BUFFER_SIZE) )
+//        {
+//            WriteToFile(def_filename);
+//            ClearLog();
+//        }
+//    #endif
+//   
+//    if ( ( ((LogCnt+strlen(str))/STRING_SIZE) + 1) < BUFFER_SIZE)
+//    {
+//        strncpy(((char*)log_buffer)+LogCnt,(const char*)str,strlen(str));
+//        LogCnt += strlen(str);
+//    }
+//    else
+//    {
+//        ret_val = NO_LOGGER_SPACE;
+//    }
    
     return(ret_val);
 }
@@ -84,7 +86,9 @@ int WriteToFile(char* filename) {
     FILE *logFile = fopen(filename, "a+"); 
     // a+ (create + append) option will allow appending which is useful in a log file
     if (logFile == NULL) {
-        perror("Ошибка при открытии serverlog.log - логи не будут сохранены.\r\n\r");
+        DBG_LOG_ERROR("Cant open serverlog.log\n");
+        DBG_LOG_ERROR("Cant save logs\n");
+        return 0;
     }
     fwrite((char*)log_buffer, 1, LogCnt, logFile);
     fclose(logFile);
@@ -103,7 +107,7 @@ int LOGRead(ParameterList_t *TempParam)
     char* log;
     uint32_t N;
 
-    AddToLog("Into LOGRead.\n", 1);
+    DBG_LOG_TRACE("Into LOGRead.\n");
     AddToTransmit("<LOG>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -118,7 +122,7 @@ int LOGRead(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = -6;
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-        AddToLog("Invalid parameters.\n", 1);
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</LOG>\r\n\r");
 

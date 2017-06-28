@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include "version.h"
+#include "LogModule.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -42,7 +43,6 @@ inline void InitCfgDevType(void) {
 #ifdef CPU
 int QueryUpdate(ParameterList_t *TempParam)
 {
-        printf("Before parameters.");
     int ret_val = 0;
     int i,ind_i = 0,end;
     const char *ip = updateserver;
@@ -54,10 +54,9 @@ int QueryUpdate(ParameterList_t *TempParam)
     coap_buffer_t tokfb;
     int pktlen = sizeof(buf);
     int type=0;
+    char buf_local[60];
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into QueryUpdate.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into QueryUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -88,7 +87,6 @@ int QueryUpdate(ParameterList_t *TempParam)
             if (!strcmp(TempParam->Params[i-1].strParam,"type"))
             {
                 type = TempParam->Params[i].intParam;
-                printf("type got***: %d\r\n\r", type);
             }
         }
         //printf("After parameters.");
@@ -135,27 +133,20 @@ int QueryUpdate(ParameterList_t *TempParam)
             }
         }
         #ifdef DEBUG
-            printf("Sending: ");
+            DBG_LOG_DEBUG("Sending: ");
             coap_dump(buf, pktlen, true);
-            printf("\r\n\r");
         #endif
-        #ifdef DEBUG
-            printf("--//internal//-- Sended %d part query.\r\n\r",ind_i);
-        #endif
+        DBG_LOG_PREPARE(buf_local,60,"Sended %d part query.\n",ind_i);
+        DBG_LOG_TRACE(buf_local);
     }
     else
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
-        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parametest.\n");
     }
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of QueryUpdate.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of QueryUpdate.\n");
     return(ret_val);
 }
 int QueryUpdateHash(ParameterList_t *TempParam)
@@ -172,9 +163,7 @@ int QueryUpdateHash(ParameterList_t *TempParam)
     char path_update_hash_clb[50];
     int type;
     
-    #ifdef DEBUG
-        printf("--//internal//-- Into QueryUpdateHash.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into QueryUpdateHash.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -196,12 +185,11 @@ int QueryUpdateHash(ParameterList_t *TempParam)
             if (!strcmp(TempParam->Params[i-1].strParam,"type"))
             {
                 type = TempParam->Params[i].intParam;
-                printf("type got***: %d\r\n\r", type);
             }
         }
         if (repeat <= 0)
         {
-            printf("No more repeats.");
+            DBG_LOG_CRITICAL("No more repeats.");
             return;
         }
         snprintf(path_update_hash,50,"updatehash?type=%d",type);
@@ -237,27 +225,20 @@ int QueryUpdateHash(ParameterList_t *TempParam)
             }
         }
         #ifdef DEBUG
-            printf("Sending: ");
+            DBG_LOG_DEBUG("Sending: ");
             coap_dump(buf, pktlen, true);
-            printf("\r\n\r");
         #endif
-        #ifdef DEBUG
-            printf("--//internal//-- Sended parts hash query.\r\n\r");
-        #endif
+        DBG_LOG_TRACE("--//internal//-- Sended parts hash query.\n");
     }
     else
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("--//internal//--  Invalid parametest.\n");
     }
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of QueryUpdateHash.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("--//internal//-- Into END of QueryUpdateHash.\n");
     return(ret_val);
 }
 
@@ -292,10 +273,9 @@ int CallbackUpdate(ParameterList_t *TempParam)
     char filename[50];
     FILE *fp,*fpo;
     int type;
+    char buf_local[60];
     
-    #ifdef DEBUG
-        printf("--//internal//-- Into CallbackUpdate.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("--//internal//-- Into CallbackUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -313,7 +293,6 @@ int CallbackUpdate(ParameterList_t *TempParam)
             if (!strcmp(TempParam->Params[i-1].strParam,"type"))
             {
                 type = TempParam->Params[i].intParam;
-                printf("type got***: %d\r\n\r", type);
             }
         }
         //save to file
@@ -339,13 +318,12 @@ int CallbackUpdate(ParameterList_t *TempParam)
         
         snprintf(namepart,100,"%s.p%02d",filename,ind_i);
         fp = fopen(namepart,"w"); // read mode
-        #ifdef DEBUG
-            printf("--//internal//-- Create file %s.\r\n\r",namepart);
-        #endif
+        DBG_LOG_PREPARE(buf_local,60,"Create file %s\n",namepart);
+        DBG_LOG_DEBUG(buf_local);
 
         if( fp == NULL )
         {
-           printf("Error while opening update the file callback_update.\r\n\r");
+           DBG_LOG_ERROR("Error while opening update the file callback_update.\n");
         }
         fwrite(scratch_buf.p,sizeof(uint8_t),scratch_buf.len,fp);
         fclose(fp);
@@ -355,9 +333,6 @@ int CallbackUpdate(ParameterList_t *TempParam)
             snprintf(command,100,"/REQUERY/UPDATE?part=%d&end=%d&repeat=3&type=%d"
                                                                 ,ind_i+1,end,type);
             CommandLineInterpreter(command);
-            #ifdef DEBUG
-                printf("--//internal//-- %s.\r\n\r",command);
-            #endif
         }
         else
         {
@@ -365,9 +340,8 @@ int CallbackUpdate(ParameterList_t *TempParam)
             sprintf(systemcommand, "sudo cp %s old_%s", filename, filename);
             system(systemcommand);
             fp = fopen(namepart,"w"); // read mode
-            #ifdef DEBUG
-                printf("--//internal//-- Create file %s.\r\n\r",namepart);
-            #endif
+            DBG_LOG_PREPARE(buf_local,60,"Create file %s\n",namepart);
+            DBG_LOG_DEBUG(buf_local);
             for(i=0;i<=ind_i;i++)
             {
                 snprintf(namepart,100,"%s.p%02d",filename,i);
@@ -383,67 +357,53 @@ int CallbackUpdate(ParameterList_t *TempParam)
             
             //собрали. теперь выполним
 
-            //usleep(30000000);
             if (type==0) { //Updater.sh
-                sprintf(systemcommand, "sudo sh %s", filename);
-                printf("Command: [%s]\r\n\r", systemcommand);
-                system(systemcommand);
-                printf("Command: sudo ~/iotserverdaemon/iotservdaemon 0\r\n\r");
-                system("sudo ~/iotserverdaemon/iotservdaemon 0");
+                DBG_LOG_DEBUG("Execute file\n");
+//                sprintf(systemcommand, "sudo sh %s", filename);
+//                printf("Command: [%s]\r\n\r", systemcommand);
+//                system(systemcommand);
+//                printf("Command: sudo ~/iotserverdaemon/iotservdaemon 0\r\n\r");
+//                system("sudo ~/iotserverdaemon/iotservdaemon 0");
                 //system("sudo sh Updater.sh");
             }
             else {
-                sprintf(systemcommand, "sudo sh %s", filename);
-                printf("Command: [%s]\r\n\r", systemcommand);
-                system(systemcommand);
-                if (type==1) {
-                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 1]\r\n\r");
-                    system("sudo ~/iotserverdaemon/iotservdaemon 1");
-                }
-                else if (type==2) {
-                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 2]\r\n\r");
-                    system("sudo ~/iotserverdaemon/iotservdaemon 2");
-                }
-                else if (type==3) {
-                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 3]\r\n\r");
-                    system("sudo ~/iotserverdaemon/iotservdaemon 3");
-                }
-                else if (type==4) {
-                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 4]\r\n\r");
-                    system("sudo ~/iotserverdaemon/iotservdaemon 4");
-                }
-                else if (type==5) {
-                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 5]\r\n\r");
-                    system("sudo ~/iotserverdaemon/iotservdaemon 5");
-                }
+//                sprintf(systemcommand, "sudo sh %s", filename);
+//                printf("Command: [%s]\r\n\r", systemcommand);
+//                system(systemcommand);
+//                if (type==1) {
+//                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 1]\r\n\r");
+//                    system("sudo ~/iotserverdaemon/iotservdaemon 1");
+//                }
+//                else if (type==2) {
+//                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 2]\r\n\r");
+//                    system("sudo ~/iotserverdaemon/iotservdaemon 2");
+//                }
+//                else if (type==3) {
+//                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 3]\r\n\r");
+//                    system("sudo ~/iotserverdaemon/iotservdaemon 3");
+//                }
+//                else if (type==4) {
+//                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 4]\r\n\r");
+//                    system("sudo ~/iotserverdaemon/iotservdaemon 4");
+//                }
+//                else if (type==5) {
+//                    printf("Command: [sudo ~/iotserverdaemon/iotservdaemon 5]\r\n\r");
+//                    system("sudo ~/iotserverdaemon/iotservdaemon 5");
+//                }
             }
             
-            //usleep(30000000);
+            DBG_LOG_INFO("Shut down server\n");
             exit(0);
-  
-          
-//            system("sudo sh Updater.sh");
-            
-            #ifdef PLATFORM_WINDOWS
-                system("chmod 777 update.sh");
-                system("start sh update.sh");
-                exit(0);
-            #endif
         }
     }
     else
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
-        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parametest.\n");
     }
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of CallbackUpdate.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of CallbackUpdate.\n");
     return(ret_val);
 }
    /* The following function is responsible for Giving current          */
@@ -466,27 +426,25 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
     uint16_t allhashserver = 0;
     char filename[50];
     int type;
+    char buf_local[60];
     
-    #ifdef DEBUG
-        printf("--//internal//-- Into CallbackUpdateHash.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into CallbackUpdateHash.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
     {
         for (i=1;i<TempParam->NumberofParameters;i+=2)
         {
-        if (!strcmp(TempParam->Params[i-1].strParam,"type"))
+            if (!strcmp(TempParam->Params[i-1].strParam,"type"))
             {
                 type = TempParam->Params[i].intParam;
-                printf("type got***: %d\r\n\r", type);
             }
-
         }
         
         //прочитать хэш нужного файла
         //если раздаёт BaseStation, читаем из update
-        printf("Device type***: %d\r\n\r", DEVICE);
+        DBG_LOG_PREPARE(buf_local,60,"Device type***: %d\n", DEVICE);
+        DBG_LOG_DEBUG(buf_local);
         if (DEVICE == 0) {
             if (type==0) { //Updater.sh
                 strcpy(filename, "Updater.sh");
@@ -531,7 +489,8 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             else strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
         }
         
-        printf("THE FILE NAME IS***: %s\r\n\r", filename);
+        DBG_LOG_PREPARE(buf_local,60,"THE FILE NAME IS***: %s\n", filename);
+        DBG_LOG_DEBUG(buf_local);
         
         fp = fopen(filename,"r"); // read mode
 
@@ -541,9 +500,8 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             while (end == 0)
             {
                 sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                #ifdef DEBUG
-                    printf("--//internal//-- %d readed from file.\r\n\r",sizefp);
-                #endif
+                DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
+                DBG_LOG_DEBUG(buf_local);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
 
@@ -559,10 +517,9 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             allhashserver = StringToUnsignedInteger(ptr);
             scratch_buf.p = ptr+1;
             fclose(fp);
-            #ifdef DEBUG
-                printf("--//internal//-- %X <> %X.\r\n\r",allhashserver,
+            DBG_LOG_PREPARE(buf_local,60,"%X <> %X.\n",allhashserver,
                                                         allhash);
-            #endif
+            DBG_LOG_DEBUG(buf_local);
             if (allhashserver != allhash)
             {
                 //system("sudo rm Complexmedsh");
@@ -579,19 +536,19 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             }
             else
             {
-                printf("--//internal//-- Updates already implemented.\r\n\r");
+                DBG_LOG_INFO("Updates already implemented.\n");
                 //exit(0);
             }
         }
         else
         {
-                snprintf(command,100,"/REQUERY/UPDATE?part=0&repeat=3&type=%d",type);
-                CommandLineInterpreter(command);
-                //usleep(1000000);
-                //system("sudo sh Updater.sh");
-                //system("sudo ~/pi/iotdevicedaemon/iotdevicedaemon");
-                //usleep(1000000);
-                //exit(0);
+            snprintf(command,100,"/REQUERY/UPDATE?part=0&repeat=3&type=%d",type);
+            CommandLineInterpreter(command);
+            //usleep(1000000);
+            //system("sudo sh Updater.sh");
+            //system("sudo ~/pi/iotdevicedaemon/iotdevicedaemon");
+            //usleep(1000000);
+            //exit(0);
 //            system("sudo wget http://188.64.170.71:80/Complexmed.sh");
 //            system("sudo chmod 777 Complexmed.sh");
 //            system("sh Complexmed.sh"); 
@@ -603,35 +560,12 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
-        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parametest.\n");
     }
 
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of CallbackUpdateHash.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of CallbackUpdateHash.\n");
     return(ret_val);
 }
-
-/*
-int FindUpdateServer()
-{   
-    int ret_val = 0;
-    char* ServerIP[50];
-    
-
-    if (serverIP(ServerIP)) {
-        //printf("SERRRRVERRRR FOUND!!*****\n");
-        return 1;
-    }
-    //else printf("NOT FOUND!!*****");
-
-    return ret_val;
-    
-}
-*/
 
 int TechUpdate(ParameterList_t *TempParam)
 {
@@ -639,9 +573,7 @@ int TechUpdate(ParameterList_t *TempParam)
     int i;
     char command[100];
     
-    #ifdef DEBUG
-        printf("--//internal//-- Into TechUpdate.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into TechUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -667,14 +599,9 @@ int TechUpdate(ParameterList_t *TempParam)
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
-        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parametest.\n");
     }
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of TechUpdate.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of TechUpdate.\n");
     return(ret_val);
 }
 
@@ -691,52 +618,38 @@ void function_update(int type)
                         // 2 - iotdeviceeegserverlinux.sh
                         // other - Updater.sh
     
-    #ifdef DEBUG
-        printf("--//internal//-- Into function_update2.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into function_update2.\n");
 
     //FindUpdateServer();
     if (type==0) {
-        printf("Sending1: ");
         snprintf(path_update_hash,100,"updatehash?type=%d?filepath=%s",type,updatefilepath);
     }   
     else {
-        printf("Sending:2 ");
         snprintf(path_update_hash,50,"updatehash?type=%d",type);
     }
     snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);    
-    printf("Sending:3 ");
     memset((uint8_t*)hashes,0,sizeof(uint16_t)*HASHES_MAX);
     opt_path.num = COAP_OPTION_URI_PATH;
     opt_path.buf.len = strlen(path_update_hash);
     opt_path.buf.p = (uint8_t*)path_update_hash;
     pkt.tok_len = strlen(tok_update_hash);
     memcpy(pkt.tok_p, tok_update_hash, pkt.tok_len);
-    printf("Sending: ");
     coap_make_msg(&scratch_buf, &pkt, &opt_path, 0, 0,
                        0, 0, 
                        0, id_out+=5, pkt.tok_p, pkt.tok_len, 
                        COAP_METHOD_GET, 
                        COAP_CONTENTTYPE_NONE);
     snprintf(command,100,"/REQUERY/UPDATEHASH?repeat=3&type=%s",type);
-    printf("coap: ");
     if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_hash_clb, command)))
     {
-        printf("after coap: ");
 //        Transfer((uint8_t*)buf,pktlen,"/updatehash");
         TransferUDP((uint8_t*)buf,pktlen,updateserver,5683);
     }
     #ifdef DEBUG
-        printf("Sending: ");
+        DBG_LOG_DEBUG("Sending: ");
         coap_dump(buf, pktlen, true);
-        printf("\r\n\r");
     #endif
-    #ifdef DEBUG
-        printf("--//internal//-- Sended parts hash query.\r\n\r");
-    #endif
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of function_update.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of function_update.\n");
     return;
 }
 int UpdateHash(ParameterList_t *TempParam)
@@ -751,10 +664,9 @@ int UpdateHash(ParameterList_t *TempParam)
     int end;
     char buffer[STRING_SIZE];
     int type;
+    char buf_local[60];
    
-    #ifdef DEBUG
-        printf("--//internal//-- Into UpdateHash.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into UpdateHash.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -768,14 +680,11 @@ int UpdateHash(ParameterList_t *TempParam)
             if (!strcmp(TempParam->Params[i-1].strParam,"type"))
             {
                 type = TempParam->Params[i].intParam;
-                printf("type got: %d\r\n\r", type);
             }
             if (!strcmp(TempParam->Params[i-1].strParam,"filepath"))
             {
                 strcpy(updatefilepath, TempParam->Params[i].strParam);
-                printf("filepath got: %s\r\n\r", updatefilepath);
             }
-
         }
         
         //прочитать хэш нужного файла
@@ -797,66 +706,62 @@ int UpdateHash(ParameterList_t *TempParam)
         else if (type==5) {
             strcpy(filename, "./update/iotdevicegeneratorlinux.sh");
         }
-        else strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
-        printf("THE FILE NAME IS***: %s\r\n\r", filename);
+        else 
+            strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
+        DBG_LOG_PREPARE(buf_local,60,"THE FILE NAME IS***: %s\n", filename);
+        DBG_LOG_DEBUG(buf_local);
 
         fp = fopen(filename,"r"); // read mode
 
         if( fp == NULL )
         {
-           printf("Error while opening update the file up_hash.\r\n\r");
+           DBG_LOG_ERROR("Error while opening update the file up_hash.\n");
            AddToTransmit("{\n\"UPDATEHASH\": [\n");
            snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",0);
            AddToTransmit(buffer);
            AddToTransmit("\n]\n}\n");
         }
-        else {
-        end = 0;
-        num = 0;
-        AddToTransmit("{\n\"UPDATEHASH\": [\n");
-        while (end == 0)
+        else 
         {
-            sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-            #ifdef DEBUG
-                printf("--//internal//-- %d readed from file.\r\n\r",sizefp);
-            #endif
-
-            allhash += CRC16ANSI(bufsa,sizefp);
-//            snprintf(buffer,STRING_SIZE,"{\"part\":%d,\"hash\":",num);
-//            AddToTransmit(buffer);
-//            snprintf(buffer,STRING_SIZE,"0x%04X}",CRC16ANSI(bufsa,sizefp));
-//            AddToTransmit(buffer);
-            
-            if (sizefp == 0)
-                return(INVALID_PARAMETERS_ERROR);
-            if (sizefp != size_parts)
+            end = 0;
+            num = 0;
+            AddToTransmit("{\n\"UPDATEHASH\": [\n");
+            while (end == 0)
             {
-                end = 1;
-                snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
-                AddToTransmit(buffer);
-            }
-//            else
-//                AddToTransmit(",\n");
-            num++;
-        } 
-        size_parts_cur = sizefp;
-        AddToTransmit("\n]\n}\n");
-        
-        fclose(fp);
-    }
+                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
+                DBG_LOG_TRACE(buf_local);
+
+                allhash += CRC16ANSI(bufsa,sizefp);
+    //            snprintf(buffer,STRING_SIZE,"{\"part\":%d,\"hash\":",num);
+    //            AddToTransmit(buffer);
+    //            snprintf(buffer,STRING_SIZE,"0x%04X}",CRC16ANSI(bufsa,sizefp));
+    //            AddToTransmit(buffer);
+
+                if (sizefp == 0)
+                    return(INVALID_PARAMETERS_ERROR);
+                if (sizefp != size_parts)
+                {
+                    end = 1;
+                    snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
+                    AddToTransmit(buffer);
+                }
+                num++;
+            } 
+            size_parts_cur = sizefp;
+            AddToTransmit("\n]\n}\n");
+
+            fclose(fp);
+        }
     }
     else
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parametest.\n");
     }
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of UpdateHash.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of UpdateHash.\n");
     return(ret_val);
 }
 
@@ -870,9 +775,10 @@ int Update(ParameterList_t *TempParam)
     int end;
     char filename[50];
     int type;
+    char buf_local[60];
     
     #ifdef DEBUG
-        printf("--//internal//-- Into Update.\r\n\r");
+        DBG_LOG_DEBUG("--//internal//-- Into Update.\r\n\r");
     #endif
     AddToTransmit("<UPDATE>\r\n\r");
     //AddToTransmit("<CALLBACKWELLKNOWN>\r\n\r");
@@ -915,8 +821,10 @@ int Update(ParameterList_t *TempParam)
         else if (type==5) {
             strcpy(filename, "./update/iotdevicegeneratorlinux.sh");
         }
-        else strcpy(filename, "Updater.sh");
-        printf("THE FILE NAME IS***: %s\r\n\r", filename);
+        else 
+            strcpy(filename, "Updater.sh");
+        DBG_LOG_PREPARE(buf_local,60,"THE FILE NAME IS***: %s\n", filename);
+        DBG_LOG_DEBUG(buf_local);
 
         fp = fopen(filename,"r"); // read mode
         content_type = COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM;
@@ -926,48 +834,45 @@ int Update(ParameterList_t *TempParam)
            printf("Error while opening update the file update.\r\n\r");
            
         }
-        else {
-
-        end = 0;
-        num = 0;
-        #ifdef DEBUG
-            printf("--//internal//-- Part %d .\r\n\r",ind_i);
-        #endif
-        if (ind_i == -1)
+        else 
         {
-            sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-            #ifdef DEBUG
-                printf("--//internal//-- %d readed from file.\r\n\r",sizefp);
-            #endif
-            if (sizefp == 0)
-                return(INVALID_PARAMETERS_ERROR);
-            if (sizefp != size_parts)
-                end = 1;
-            make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
-            size_parts_cur = sizefp;
-            num++;
-        }
-        else
-        {
-            while (num <= ind_i)
+            end = 0;
+            num = 0;
+            DBG_LOG_PREPARE(buf_local,60,"Part %d .\r\n\r",ind_i);
+            DBG_LOG_TRACE(buf_local);
+            if (ind_i == -1)
             {
                 sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                #ifdef DEBUG
-                    printf("--//internal//-- %d readed from file.\r\n\r",sizefp);
-                #endif
+                DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
+                DBG_LOG_TRACE(buf_local);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
                 if (sizefp != size_parts)
-                {
                     end = 1;
-                }
+                make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
+                size_parts_cur = sizefp;
                 num++;
-            } 
-            num--;
-            make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
-            size_parts_cur = sizefp;
-        }
-        fclose(fp);
+            }
+            else
+            {
+                while (num <= ind_i)
+                {
+                    sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                    DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
+                    DBG_LOG_TRACE(buf_local);
+                    if (sizefp == 0)
+                        return(INVALID_PARAMETERS_ERROR);
+                    if (sizefp != size_parts)
+                    {
+                        end = 1;
+                    }
+                    num++;
+                } 
+                num--;
+                make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
+                size_parts_cur = sizefp;
+            }
+            fclose(fp);
         }
     }
     else
@@ -975,16 +880,11 @@ int Update(ParameterList_t *TempParam)
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parametest.\n");
     }
-    //AddToTransmit("</CALLBACKWELLKNOWN>\r\n\r");
 
     AddToTransmit("</UPDATE>\r\n\r");
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of Update.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into END of Update.\n");
     return(ret_val);
 }
 #endif

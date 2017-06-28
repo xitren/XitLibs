@@ -7,6 +7,7 @@
 #include <math.h>
 #include "Handler.h"
 #include "DistCalc.h"
+#include "LogModule.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -122,7 +123,7 @@ void EEG_unreaded_dump(void);
 
         if( fp == NULL )
         {
-           perror("Error while opening the file eeg.\r\n\r");
+           DBG_LOG_ERROR("Error while opening the file eeg.\n");
            exit(EXIT_FAILURE);
         }
 
@@ -150,9 +151,9 @@ void EEG_unreaded_dump(void);
         {
             //history_eeg_ext[history_eeg_cnt_ext++] = GetMemExtByInt(history_eeg[i]);
         }
-        printf("---------------> Setted ext history\r\n\r");
+        //printf("---------------> Setted ext history\r\n\r");
         EEGPutExtMemReq((uint32_t*)history_eeg_ext,history_eeg_cnt_ext);
-        printf("---------------> EEG reconstruction\r\n\r");
+        //printf("---------------> EEG reconstruction\r\n\r");
 
         fclose(fp);
         return 0;
@@ -175,7 +176,7 @@ void EEG_unreaded_dump(void);
 
         if( fp == NULL )
         {
-           perror("Error while opening the file eeg.\r\n\r");
+           DBG_LOG_ERROR("Error while opening the file eeg.\n");
            exit(EXIT_FAILURE);
         }
 
@@ -213,10 +214,7 @@ int GetLastBlock(ParameterList_t *TempParam)
 		cnt = ReadMem(REG_EEG_PocketSize);
     k=samples_cnt-cnt;
 
-    #ifdef DEBUG
-       printf("--//internal//-- Into GetLastBlock.\r\n\r");
-       printf("Number k first sample %d  count %d.\r\n\r",k,cnt);
-    #endif
+    DBG_LOG_DEBUG("Into GetLastBlock.\n");
     content_type = COAP_CONTENTTYPE_APPLICATION_JSON;
     AddToTransmit("{\n \"DATABLOCK\": [\n");
     /* First check to see if the parameters required for the execution of*/
@@ -266,11 +264,10 @@ int GetConcreteBlock(ParameterList_t *TempParam)
     int i,l,k=0; //samples_nmbr
     int  Number;
     int  Size;
+    char buf_local[60];
 
     
-    #ifdef DEBUG
-       printf("--//internal//-- Into GetConcreteBlock.\r\n\r");
-    #endif
+    DBG_LOG_DEBUG("Into GetConcreteBlock.\n");
     content_type = COAP_CONTENTTYPE_APPLICATION_JSON;
     AddToTransmit("{\n \"DATABLOCK\": [\n");
     /* First check to see if the parameters required for the execution of*/
@@ -290,11 +287,12 @@ int GetConcreteBlock(ParameterList_t *TempParam)
        }
        
        k=Number;
-       printf("---- Current sample %d.",samples_cnt);
+       DBG_LOG_PREPARE(buf_local,60,"Current sample %d.",samples_cnt);
+       DBG_LOG_TRACE(buf_local);
        if (Size > 0)
        {
-          l=GetDataPtrCnt(Number,Size,(int32_t *)scratch_raw);
-          if (l > 0)
+        l=GetDataPtrCnt(Number,Size,(int32_t *)scratch_raw);
+        if (l > 0)
         {
             for (i=0;(i < l) && ((i+7) < l);i+=8)
             {
@@ -329,18 +327,15 @@ int GetConcreteBlock(ParameterList_t *TempParam)
         }
        }
         AddToTransmit("\n ]\n}\n");
-          #ifdef DEBUG
-             printf("--//internal//--HERE!!! Current sample - %d Block[%d] setted to %d.\r\n\r",samples_cnt,Number,Size);
-          #endif
+        DBG_LOG_PREPARE(buf_local,60,"Current sample - %d Block[%d] setted to %d.\n",samples_cnt);
+        DBG_LOG_TRACE(buf_local);
     }
     else
     {
          /* One or more of the necessary parameters are invalid.           */
          ret_val = INVALID_PARAMETERS_ERROR;
          AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-         #ifdef DEBUG
-            printf("--//internal//--  Invalid parameters.\r\n\r");
-         #endif
+         DBG_LOG_WARNING("Invalid parameters.\n");
     }
     return(ret_val);
 }
@@ -354,12 +349,12 @@ uint32_t GetDataPtrCnt(int32_t _pointer,int32_t _size,int32_t *_buffer)
                        
         if (cnt > temp2)
         {
-            printf("--//Error//-- Clear data query.\r\n\r");
+            DBG_LOG_WARNING("Clear data query.\r\n\r");
         return 0;
         }
         if ((samples_cnt - _pointer) < _size)
         {
-                printf("--//Error//-- have data less than query.\r\n\r");
+                DBG_LOG_WARNING("have data less than query.\r\n\r");
                 return 0;
         }
                 for(i=(_pointer);(i < samples_cnt) && (ptr < (_size*BUFFER_SAMPLE_SIZE));i++)
@@ -377,7 +372,7 @@ void EEG_unreaded_dump(void)
     {
             for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
                     printf("%08X ",Data_samples[j][i%BUFFER_2ND_MAX]);
-            printf("\r\n\r");
+            printf("\n");
     }
 }
 int EEGPutExtMemReq(uint32_t *data, uint32_t datalen)
@@ -483,6 +478,10 @@ void AddSample()
             for(i=0;i < 4;i++)
                 Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
                         (int32_t)ReadMem(REG_ACCEL_X+i);
+        else if (signal_type == 3)
+        {
+        
+        }
         else
         {
             double phase = (TwoPi*samples_cnt)/sample_frequency;
@@ -493,6 +492,7 @@ void AddSample()
                                              sin(signal_frequency[i-1]*phase));
         }
 
+    #ifdef CPU
         if( ReadMem(REG_STREAM_REC) == 1 )
         {
             if( fp_rec == NULL )
@@ -500,7 +500,7 @@ void AddSample()
                 fp_rec = fopen("stream_rec.json","w"); // write mode
                 if( fp_rec == NULL )
                 {
-                    perror("Error while opening the file json.\r\n\r");
+                    DBG_LOG_ERROR("Error while opening the file json.\r\n\r");
                     exit(EXIT_FAILURE);
                 }
                 fprintf(fp_rec, "{\n \"DATABLOCK\": [\n");
@@ -533,6 +533,7 @@ void AddSample()
                 fp_rec = NULL;
             }
         }
+    #endif
         samples_cnt++;
         if ((samples_cnt - readed_cnt) > BUFFER_2ND_MAX)
             readed_cnt = samples_cnt - BUFFER_2ND_MAX;
@@ -545,10 +546,14 @@ uint32_t GetCnt()
 uint32_t GetDataReady(int32_t *_buffer)
 {
 	int i,j,ptr=0;
+        char buf_local[60];
 	uint32_t cnt = (samples_cnt-readed_cnt);
-        printf("Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
-        printf("--Counter not read sample %d-- \r\n\r",cnt);
-        printf("--End number samples in block %d-- \r\n\r",cnt);
+        DBG_LOG_PREPARE(buf_local,60,"Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_PREPARE(buf_local,60,"--Counter not read sample %d--\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_PREPARE(buf_local,60,"--End number samples in block %d--\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE(buf_local);
 	for(i=(samples_cnt-cnt);i<samples_cnt;i++)
 		for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
 			_buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
@@ -557,10 +562,14 @@ uint32_t GetDataReady(int32_t *_buffer)
 uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer)
 {
 	int i,j,ptr=0;
+        char buf_local[60];
 	uint32_t cnt = (samples_cnt-readed_cnt);
-        printf("---- Current sample %d.",samples_cnt);
-        printf("---- Readed sample %d.",readed_cnt);
-        printf("---- Count no read %d.",cnt);
+        DBG_LOG_PREPARE(buf_local,60,"---- Current sample %d\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_PREPARE(buf_local,60,"---- Readed sample %d\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_PREPARE(buf_local,60,"---- Count no read %d\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE(buf_local);
 	if ((cnt) > _size)
 		cnt = _size;
         if ((cnt) < _size)

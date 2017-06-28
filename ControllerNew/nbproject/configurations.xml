@@ -1202,8 +1202,8 @@
         <linkerTool>
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf</output>
           <linkerLibItems>
-            <linkerLibFileItem>../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a</linkerLibFileItem>
             <linkerLibFileItem>../EEG_Evoker/dist/Release_MC/GNU_ARM-Windows/libeeg_evoker.a</linkerLibFileItem>
+            <linkerLibFileItem>../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a</linkerLibFileItem>
             <linkerLibLibItem>gcc</linkerLibLibItem>
             <linkerLibLibItem>c</linkerLibLibItem>
             <linkerLibLibItem>m</linkerLibLibItem>

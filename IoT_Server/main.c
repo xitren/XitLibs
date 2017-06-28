@@ -79,13 +79,16 @@ int main(int argc, char** argv) {
     HANDLE hThread; 
     
     InitUDP();
+    printf("UDP ok.\n");
     InitImageP300();
+    printf("Imager ok.\n");
     InitHandler(EEG);
+    printf("Init XitLib ok.\n");
     EEGRecorderInit(0,250);
+    printf("EEG recorder ok.\n");
     
     uint32_t amplitude[7] = {10000,10000,100000,1000000,100000,10000,10000};
     uint32_t frequency[7] = {10,20,10,10,30,100,5};
-    printf("Command interface setted.\n");
     
     EEGTestInit(amplitude,frequency);
     
@@ -116,11 +119,11 @@ int main(int argc, char** argv) {
     
 //    function_update();
     //function_beakon();
-    CommandLineInterpreter(commandUpd);
+    //CommandLineInterpreter(commandUpd);
     while(1)
     {
         UserProtocolHandler();
-        CalculationHandler();
+//        CalculationHandler();
         //umm_info(0,1);
     }
     return (EXIT_SUCCESS);

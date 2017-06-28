@@ -4,6 +4,7 @@
 #include "InOutBuffer.h"
 #include <stdio.h>
 #include <string.h>
+#include "LogModule.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -16,10 +17,10 @@ uint32_t TxCnt = 0;
 int AddToTransmit(char *str)
 {
    int ret_val = NO_BUFFER_ERROR;
+   char buf_local[60];
    
-   #ifdef DEBUG
-      printf("--//internal//-- Into AddToTransmit. -%s- (%d)\r\n\r",str,TxCnt);
-   #endif
+   DBG_LOG_PREPARE(buf_local,60,"Into AddToTransmit. -%s- (%d)\n",str,TxCnt);
+   DBG_LOG_TRACE(buf_local);
    if ((RxCnt+(((TxCnt+strlen(str))/STRING_SIZE)+1)) < BUFFER_SIZE)
    {
       strncpy(((char*)inout_buffer)+TxCnt,(const char*)str,strlen(str));
@@ -77,10 +78,10 @@ int ProceedReceive(char *str,uint8_t *size)
 char* ProceedTransmit(uint32_t *num)
 {
    char* ret_val = 0;
+   char buf_local[60];
    
-   #ifdef DEBUG
-      printf("--//internal//-- Into ProceedTransmit. Count %d.\r\n\r",TxCnt);
-   #endif
+   DBG_LOG_PREPARE(buf_local,60,"Into ProceedTransmit. Count %d.\r\n\r",TxCnt);
+   DBG_LOG_TRACE(buf_local);
    if (TxCnt)
    {
      (*num) = TxCnt;

@@ -134,15 +134,15 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a ../EEG_Evoker/dist/Release_MC/GNU_ARM-Windows/libeeg_evoker.a -lgcc -lc -lm
+LDLIBSOPTIONS=../EEG_Evoker/dist/Release_MC/GNU_ARM-Windows/libeeg_evoker.a ../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a -lgcc -lc -lm
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf.exe
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf.exe: ../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a
-
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf.exe: ../EEG_Evoker/dist/Release_MC/GNU_ARM-Windows/libeeg_evoker.a
+
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf.exe: ../XitLib/dist/Release_MC/GNU_ARM-Windows/libxitlib.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
