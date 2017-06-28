@@ -11,7 +11,7 @@
 #include "DMAretransmitter.h"
 #include "Packet.h"
 #include "DistCalc.h"
-#include "../CoAP/coap.h"
+#include "coap.h"
 #include "StreamDataRecorder.h"
 #include "FunctionsDiscovery.h"
 #include "UpdateModule.h"

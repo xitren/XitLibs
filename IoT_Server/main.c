@@ -29,6 +29,8 @@
 #include "ExtFunctions.h"
 #include "ImageVisualise.h"
 
+char commandUpd[] = "/QUERY/UPDATE?repeat=3&type=0\0";
+
 DWORD WINAPI ThreadFunc1s()
 {
     while (1)
@@ -113,7 +115,8 @@ int main(int argc, char** argv) {
          &IDThread);              // returns thread identifier
     
 //    function_update();
-    function_beakon();
+    //function_beakon();
+    CommandLineInterpreter(commandUpd);
     while(1)
     {
         UserProtocolHandler();

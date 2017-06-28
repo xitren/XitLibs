@@ -28,6 +28,14 @@ void coap_clock(void)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
         answer->tok_wait--;
+        if ((answer->used) && (answer->p[0] == 'u'))
+        {
+            printf("Released like used %d: %06s %d\r\n\r",i,
+                    answer->p,answer->used);
+            array_remove_at(AwaitedAnswersArray, i, (void **)&removed);
+            umm_free((void *)removed);
+            i--;
+        }
         if (!(answer->tok_wait))
         {
             printf("Released %d: %06s %d\r\n\r",i,
@@ -38,6 +46,7 @@ void coap_clock(void)
             }
             array_remove_at(AwaitedAnswersArray, i, (void **)&removed);
             umm_free((void *)removed);
+            i--;
         }
     }
     return;

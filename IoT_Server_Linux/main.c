@@ -29,10 +29,10 @@
     #include <unistd.h>
 #endif
 
-#include "../EEG_Evoker/ImageVisualise.h"
-#include "../CoAP/coap.h"
-#include "../XitLib/Handler.h"
-#include "../XitLib/CommandModule.h"
+#include "ImageVisualise.h"
+#include "coap.h"
+#include "Handler.h"
+#include "CommandModule.h"
 
 #define PORT 5683
 
@@ -113,8 +113,14 @@
  */
 int main(int argc, char** argv) {
 
-    InitHandler();
-    printf("Command interface setted.\r\n\r");
+    InitUDP();
+    InitImageP300();
+    InitHandler(EEG);
+    EEGRecorderInit(0,250);
+    
+    uint32_t amplitude[7] = {10000,10000,100000,1000000,100000,10000,10000};
+    uint32_t frequency[7] = {10,20,10,10,30,100,5};
+    printf("Command interface setted.\n");
     
 //    #ifdef PI
 //	printf("**** PCA9685 test program ****\n");
@@ -149,7 +155,7 @@ int main(int argc, char** argv) {
 //	printf("**** PCA9685 set SERVO ****\n");
 //    #endif
     
-        //function_beakon();
+        function_beakon();
         //function_update();
         
     while(1)
@@ -162,7 +168,8 @@ int main(int argc, char** argv) {
 //        #endif
         
         
-        ProtocolHandler();
+        UserProtocolHandler();
+        UserOperationHandler();
         CalculationHandler();
                 
         //VideoFrameHandler();

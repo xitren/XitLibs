@@ -1,7 +1,7 @@
 
 /* Local headers -------------------------------------------------------------*/
 #include "UpdateModule.h"
-#include "../CoAP/coap.h"
+#include "coap.h"
 #include "Handler.h"
 #include <stdio.h>
 #include <string.h>
@@ -20,7 +20,8 @@ const char *tok_update_hash="updhsh";
 const char *path_update_reqry="/REQUERY/UPDATE";
 char path_update_clb[50]="/CALLBACK/UPDATE?type=0";
 char path_update_hash_clb[50]="/CALLBACK/UPDATEHASH?type=0";
-const char *updateserver = "10.10.30.35";
+const char *updateserver = "10.9.91.105";
+//const char *updateserver = "10.10.30.35";
 const char *updatefile = "Updater.sh";
 char *version = VERSION;
 /*============================================================================*/
@@ -41,8 +42,9 @@ inline void InitCfgDevType(void) {
 #ifdef CPU
 int QueryUpdate(ParameterList_t *TempParam)
 {
+        printf("Before parameters.");
     int ret_val = 0;
-    int i,ind_i,end;
+    int i,ind_i = 0,end;
     const char *ip = updateserver;
     char path_update[50];
     int port = 5683;
@@ -51,7 +53,7 @@ int QueryUpdate(ParameterList_t *TempParam)
     int rc;
     coap_buffer_t tokfb;
     int pktlen = sizeof(buf);
-    int type;
+    int type=0;
 
     #ifdef DEBUG
         printf("--//internal//-- Into QueryUpdate.\r\n\r");
@@ -60,6 +62,7 @@ int QueryUpdate(ParameterList_t *TempParam)
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
     {
+        //printf("Before parameters.");
         for (i=1;i<TempParam->NumberofParameters;i+=2)
         {
             if (!strcmp(TempParam->Params[i-1].strParam,"part"))
@@ -74,10 +77,10 @@ int QueryUpdate(ParameterList_t *TempParam)
             {
                 ip = TempParam->Params[i].strParam;
             }
-            if (!strcmp(TempParam->Params[i-1].strParam,"port"))
-            {
-                port = TempParam->Params[i].intParam;
-            }
+//            if (!strcmp(TempParam->Params[i-1].strParam,"port"))
+//            {
+//                port = TempParam->Params[i].intParam;
+//            }
             if (!strcmp(TempParam->Params[i-1].strParam,"repeat"))
             {
                 repeat = TempParam->Params[i].intParam;
@@ -88,6 +91,7 @@ int QueryUpdate(ParameterList_t *TempParam)
                 printf("type got***: %d\r\n\r", type);
             }
         }
+        //printf("After parameters.");
         if (repeat <= 0)
         {
             printf("No more repeats.");
@@ -119,7 +123,7 @@ int QueryUpdate(ParameterList_t *TempParam)
             if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_clb, requery)))
             {
                 //Transfer((uint8_t*)buf,pktlen,"/update");
-                TransferUDP((uint8_t*)buf,pktlen,ip,port);
+                TransferUDP((uint8_t*)buf,pktlen,updateserver,port);
             }
         }
         else
@@ -127,7 +131,7 @@ int QueryUpdate(ParameterList_t *TempParam)
             if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_clb, NULL)))
             {
                 //Transfer((uint8_t*)buf,pktlen,"/update");
-                TransferUDP((uint8_t*)buf,pktlen,ip,port);
+                TransferUDP((uint8_t*)buf,pktlen,updateserver,port);
             }
         }
         #ifdef DEBUG

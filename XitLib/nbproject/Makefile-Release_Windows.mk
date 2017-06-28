@@ -106,152 +106,152 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
-${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c 
+${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 
-${OBJECTDIR}/CommandModule.o: CommandModule.c 
+${OBJECTDIR}/CommandModule.o: CommandModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule.o CommandModule.c
 
-${OBJECTDIR}/ConfigMem.o: ConfigMem.c 
+${OBJECTDIR}/ConfigMem.o: ConfigMem.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem.o ConfigMem.c
 
-${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c 
+${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
-${OBJECTDIR}/DistCalc.o: DistCalc.c 
+${OBJECTDIR}/DistCalc.o: DistCalc.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
-${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c 
+${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c
 
-${OBJECTDIR}/Handler.o: Handler.c 
+${OBJECTDIR}/Handler.o: Handler.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
 
-${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c 
+${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 
-${OBJECTDIR}/LogModule.o: LogModule.c 
+${OBJECTDIR}/LogModule.o: LogModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule.o LogModule.c
 
-${OBJECTDIR}/PWMModule.o: PWMModule.c 
+${OBJECTDIR}/PWMModule.o: PWMModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
 
-${OBJECTDIR}/Packet.o: Packet.c 
+${OBJECTDIR}/Packet.o: Packet.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
 
-${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c 
+${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
 
-${OBJECTDIR}/UpdateModule.o: UpdateModule.c 
+${OBJECTDIR}/UpdateModule.o: UpdateModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
-${OBJECTDIR}/VideoModule.o: VideoModule.c 
+${OBJECTDIR}/VideoModule.o: VideoModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule.o VideoModule.c
 
-${OBJECTDIR}/coap/coap.o: coap/coap.c 
+${OBJECTDIR}/coap/coap.o: coap/coap.c
 	${MKDIR} -p ${OBJECTDIR}/coap
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/coap/coap.o coap/coap.c
 
-${OBJECTDIR}/generatorModule.o: generatorModule.c 
+${OBJECTDIR}/generatorModule.o: generatorModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
 
-${OBJECTDIR}/json/cJSON.o: json/cJSON.c 
+${OBJECTDIR}/json/cJSON.o: json/cJSON.c
 	${MKDIR} -p ${OBJECTDIR}/json
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON.o json/cJSON.c
 
-${OBJECTDIR}/json/cJSON_Utils.o: json/cJSON_Utils.c 
+${OBJECTDIR}/json/cJSON_Utils.o: json/cJSON_Utils.c
 	${MKDIR} -p ${OBJECTDIR}/json
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_Utils.o json/cJSON_Utils.c
 
-${OBJECTDIR}/malloc/umm_malloc.o: malloc/umm_malloc.c 
+${OBJECTDIR}/malloc/umm_malloc.o: malloc/umm_malloc.c
 	${MKDIR} -p ${OBJECTDIR}/malloc
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/malloc/umm_malloc.o malloc/umm_malloc.c
 
-${OBJECTDIR}/models/src/array.o: models/src/array.c 
+${OBJECTDIR}/models/src/array.o: models/src/array.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/array.o models/src/array.c
 
-${OBJECTDIR}/models/src/common.o: models/src/common.c 
+${OBJECTDIR}/models/src/common.o: models/src/common.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/common.o models/src/common.c
 
-${OBJECTDIR}/models/src/deque.o: models/src/deque.c 
+${OBJECTDIR}/models/src/deque.o: models/src/deque.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/deque.o models/src/deque.c
 
-${OBJECTDIR}/models/src/hashset.o: models/src/hashset.c 
+${OBJECTDIR}/models/src/hashset.o: models/src/hashset.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/hashset.o models/src/hashset.c
 
-${OBJECTDIR}/models/src/hashtable.o: models/src/hashtable.c 
+${OBJECTDIR}/models/src/hashtable.o: models/src/hashtable.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/hashtable.o models/src/hashtable.c
 
-${OBJECTDIR}/models/src/list.o: models/src/list.c 
+${OBJECTDIR}/models/src/list.o: models/src/list.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/list.o models/src/list.c
 
-${OBJECTDIR}/models/src/queue.o: models/src/queue.c 
+${OBJECTDIR}/models/src/queue.o: models/src/queue.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/queue.o models/src/queue.c
 
-${OBJECTDIR}/models/src/slist.o: models/src/slist.c 
+${OBJECTDIR}/models/src/slist.o: models/src/slist.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/slist.o models/src/slist.c
 
-${OBJECTDIR}/models/src/stack.o: models/src/stack.c 
+${OBJECTDIR}/models/src/stack.o: models/src/stack.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/stack.o models/src/stack.c
 
-${OBJECTDIR}/models/src/treeset.o: models/src/treeset.c 
+${OBJECTDIR}/models/src/treeset.o: models/src/treeset.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/treeset.o models/src/treeset.c
 
-${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c 
+${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/treetable.o models/src/treetable.c
@@ -265,11 +265,11 @@ ${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/External/ExtFunctions.o ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} ../CoAP/dist/Release/MinGW-Windows/libcoap.a -lws2_32 
+	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   ../CoAP/dist/Release/MinGW-Windows/libcoap.a -lws2_32 
 
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} ../CoAP/dist/Release/MinGW-Windows/libcoap.a 
+	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   ../CoAP/dist/Release/MinGW-Windows/libcoap.a 
 
 
 ${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
@@ -693,7 +693,6 @@ ${OBJECTDIR}/models/src/treetable_nomain.o: ${OBJECTDIR}/models/src/treetable.o 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
 # Subprojects
 .clean-subprojects:

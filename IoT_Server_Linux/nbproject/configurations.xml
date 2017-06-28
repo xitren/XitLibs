@@ -1,21 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
                    projectFiles="true">
-      <logicalFolder name="f1" displayName="CoAP" projectFiles="true">
-        <itemPath>../CoAP/coap.h</itemPath>
-      </logicalFolder>
       <logicalFolder name="f3" displayName="cVEP" projectFiles="true">
         <itemPath>../EEG_Evoker/ImageVisualise.h</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="XitLib" projectFiles="true">
+        <logicalFolder name="f1" displayName="coap" projectFiles="true">
+          <itemPath>../XitLib/coap/coap.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f3" displayName="json" projectFiles="true">
+          <itemPath>../XitLib/json/cJSON.h</itemPath>
+          <itemPath>../XitLib/json/cJSON_Utils.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f2" displayName="malloc" projectFiles="true">
+          <itemPath>../XitLib/malloc/dbglog.h</itemPath>
+          <itemPath>../XitLib/malloc/umm_malloc.h</itemPath>
+          <itemPath>../XitLib/malloc/umm_malloc_cfg.h</itemPath>
+        </logicalFolder>
+        <logicalFolder name="f4" displayName="models" projectFiles="true">
+          <itemPath>../XitLib/models/include/array.h</itemPath>
+          <itemPath>../XitLib/models/include/common.h</itemPath>
+          <itemPath>../XitLib/models/include/deque.h</itemPath>
+          <itemPath>../XitLib/models/include/hashset.h</itemPath>
+          <itemPath>../XitLib/models/include/hashtable.h</itemPath>
+          <itemPath>../XitLib/models/include/list.h</itemPath>
+          <itemPath>../XitLib/models/include/queue.h</itemPath>
+          <itemPath>../XitLib/models/include/slist.h</itemPath>
+          <itemPath>../XitLib/models/include/stack.h</itemPath>
+          <itemPath>../XitLib/models/include/treeset.h</itemPath>
+          <itemPath>../XitLib/models/include/treetable.h</itemPath>
+        </logicalFolder>
         <itemPath>../XitLib/CRC16ANSI.h</itemPath>
         <itemPath>../XitLib/CommandModule.h</itemPath>
         <itemPath>../XitLib/ConfigMem.h</itemPath>
         <itemPath>../XitLib/DMAretransmitter.h</itemPath>
-        <itemPath>../XitLib/ExtMemModule.h</itemPath>
+        <itemPath>../XitLib/DistCalc.h</itemPath>
         <itemPath>../XitLib/FunctionsDiscovery.h</itemPath>
         <itemPath>../XitLib/Handler.h</itemPath>
         <itemPath>../XitLib/InOutBuffer.h</itemPath>
@@ -27,6 +49,7 @@
         <itemPath>../XitLib/VideoModule.h</itemPath>
         <itemPath>../XitLib/xitlibtypes.h</itemPath>
       </logicalFolder>
+      <itemPath>../XitLib/External/ExtFunctions.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -35,6 +58,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
+      <itemPath>../XitLib/External/ExtFunctions.c</itemPath>
       <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -60,25 +84,31 @@
       <compileType>
         <cTool>
           <standard>3</standard>
+          <incDir>
+            <pElem>../EEG_Evoker</pElem>
+            <pElem>../XitLib</pElem>
+            <pElem>../XitLib/External</pElem>
+            <pElem>../XitLib/coap</pElem>
+            <pElem>../XitLib/json</pElem>
+            <pElem>../XitLib/malloc</pElem>
+            <pElem>../XitLib/models/include</pElem>
+          </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
             <Elem>DEBUG</Elem>
             <Elem>EXTMEMSERVER</Elem>
-            <Elem>PI</Elem>
+            <Elem>P300</Elem>
             <Elem>PLATFORM_LINUX</Elem>
           </preprocessorList>
         </cTool>
         <linkerTool>
           <linkerLibItems>
             <linkerLibFileItem>../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a</linkerLibFileItem>
-            <linkerLibFileItem>../CoAP/dist/Release/GNU-Linux/libcoap.a</linkerLibFileItem>
             <linkerLibFileItem>../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a</linkerLibFileItem>
           </linkerLibItems>
           <commandLine>-lm</commandLine>
         </linkerTool>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
@@ -89,7 +119,11 @@
       </item>
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="../XitLib/DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../XitLib/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -108,6 +142,46 @@
       <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashtable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treetable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -207,8 +281,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../CoAP/coap.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
@@ -219,7 +291,11 @@
       </item>
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/ExtMemModule.h" ex="false" tool="3" flavor2="0">
+      <item path="../XitLib/DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../XitLib/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -238,6 +314,46 @@
       <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/coap/coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/dbglog.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/malloc/umm_malloc_cfg.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/array.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/common.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/deque.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/hashtable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/list.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/queue.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/slist.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/stack.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treeset.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/models/include/treetable.h"
+            ex="false"
+            tool="3"
+            flavor2="0">
       </item>
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -65,6 +65,7 @@ void Interface_Memory(void)
     //array_size(CommandTableArray);
     ClearCommands();
     AddCommand("/RESET", "</reset>", Reset);
+    AddCommand("/QUERY/UPDATE", "</reset>", QueryUpdate);
     AddCommand("/GET/MEMORY", "</memory>", MEMRead);
     AddCommand("/PUT/MEMORY", "</memory>", MEMWrite);
     AddCommand("/GET/LOG", "</log>", LOGRead);
@@ -426,8 +427,10 @@ int CommandLineInterpreter(char *Command)
     printf(">>>>>>>>>>>>>>>> %s\r\n\r",Command);
     /* The string input by the user contains a value, now run the string */
     /* through the Command Parser.                                       */
+//    printf("CommandParser\n");
     if(CommandParser(&TempCommand, Command) >= 0)
     {
+//        printf("CommandInterpreter\n");
         /* The Command was successfully parsed run the Command.           */
         Result = CommandInterpreter(&TempCommand);
         switch(Result)
@@ -595,8 +598,12 @@ char *StringParser(char *String)
         /* The string appears to be at least semi-valid.  Search for the  */
         /* first space character and replace it with a NULL terminating   */
         /* character.                                                     */
+//        printf("1:2->1:%d\n",strlen(String));
+//        printf("%s\n",String);
         for(Index=0, ret_val=String;Index < strlen(String);Index++)
         {
+//        printf("1:2->1:%d-",Index);
+//        printf("%c\n",String[Index]);
             /* Is this the space character.                                */
             if((String[Index] == ' ') || (String[Index] == '\r') 
                                    || (String[Index] == '?') 
@@ -610,6 +617,7 @@ char *StringParser(char *String)
                 /* terminating character and set the return value to the    */
                 /* begining character of the string.                        */
                 String[Index] = '\0';
+//        printf("1:2->1:%d:2\n",Index);
                 break;
             }
         }
@@ -646,50 +654,63 @@ int CommandParser(UserCommand_t *TempCommand, char *Input)
    unsigned int   Count         = 0;
 
    /* Before proceeding make sure that the passed parameters appear to  */
-   /* be at least semi-valid.                                           */
+   /* be at least semi-valid.                                           */ 
+//   printf("1\n");
    if((TempCommand) && (Input) && (strlen(Input)))
-   {
+   {                            
+//    printf("1:1\n");
       /* First get the initial string length.                           */
       StringLength = strlen(Input);
-
+           
+//    printf("1:2\n");
       /* Retrieve the first token in the string, this should be the     */
       /* commmand.                                                      */
       TempCommand->Command = StringParser(Input);
-
+           
+//    printf("1:3\n");
       /* Flag that there are NO Parameters for this Command Parse.      */
       TempCommand->Parameters.NumberofParameters = 0;
-
+           
+//    printf("1:4 %s\n",TempCommand->Command);
        /* Check to see if there is a Command                            */
       if(TempCommand->Command)
       {
+//    printf("1:4:1\n");
          /* Initialize the return value to zero to indicate success on  */
          /* commands with no parameters.                                */
          ret_val    = 0;
 
+//    printf("1:4:2\n");
          /* Adjust the UserInput pointer and StringLength to remove the */
          /* Command from the data passed in before parsing the          */
          /* parameters.                                                 */
          Input        += strlen(TempCommand->Command)+1;
          StringLength  = strlen(Input);
 
+//    printf("1:4:3\n");
          /* There was an available command, now parse out the parameters*/
          while((StringLength > 0) && ((LastParameter = StringParser(Input)) != NULL))
          {
+//    printf("1:4:3:1\n");
             /* There is an available parameter, now check to see if     */
             /* there is room in the UserCommand to store the parameter  */
             if(Count < (sizeof(TempCommand->Parameters.Params)/sizeof(Parameter_t)))
             {
+//    printf("1:4:3:1:1\n");
                /* Save the parameter as a string.                       */
                TempCommand->Parameters.Params[Count].strParam = LastParameter;
 
+//    printf("1:4:3:1:2\n");
                /* Save the parameter as an unsigned int intParam will   */
                /* have a value of zero if an error has occurred.        */
                TempCommand->Parameters.Params[Count].intParam = StringToUnsignedInteger(LastParameter);
 
+//    printf("1:4:3:1:3\n");
                Count++;
                Input        += strlen(LastParameter)+1;
                StringLength -= strlen(LastParameter)+1;
 
+//    printf("1:4:3:1:4\n");
                ret_val = 0;
             }
             else
@@ -697,6 +718,7 @@ int CommandParser(UserCommand_t *TempCommand, char *Input)
                /* Be sure we exit out of the Loop.                      */
                StringLength = 0;
 
+//    printf("1:4:3:1:5\n");
                ret_val      = TO_MANY_PARAMS;
             }
          }
@@ -839,11 +861,14 @@ CommandFunction_t FindCommand(char *Command)
     {
         /* Now loop through each element in the table to see if there is  */
         /* a match.                                                       */
+        
+//        printf("find\n");
         for(Index=0,ret_val=NULL;
                 ((Index<array_size(CommandTableArray)) && (!ret_val));
                   Index++)
         {
             array_get_at(CommandTableArray, Index, (void**)&Comm);
+//            printf("%d of %d\n",Index,array_size(CommandTableArray));
             if((strlen(Comm->CommandName) == strlen(Command)) 
                    && (memcmp(Command, Comm->CommandName, 
                               strlen(Comm->CommandName)) == 0))

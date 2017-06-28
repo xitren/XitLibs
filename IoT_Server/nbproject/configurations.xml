@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -158,7 +158,7 @@
     </conf>
     <conf name="Release" type="1">
       <toolsSet>
-        <compilerSet>GNU|GNU</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -167,14 +167,18 @@
           <developmentMode>5</developmentMode>
           <standard>3</standard>
           <incDir>
-            <pElem>../CoAP</pElem>
             <pElem>../EEG_Evoker</pElem>
             <pElem>../XitLib</pElem>
             <pElem>../XitLib/External</pElem>
+            <pElem>../XitLib/coap</pElem>
+            <pElem>../XitLib/json</pElem>
+            <pElem>../XitLib/malloc</pElem>
+            <pElem>../XitLib/models/include</pElem>
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
             <Elem>EXTMEMSERVER</Elem>
+            <Elem>P300</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
           </preprocessorList>
         </cTool>
@@ -190,9 +194,8 @@
         <linkerTool>
           <linkerLibItems>
             <linkerLibFileItem>../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a</linkerLibFileItem>
-            <linkerLibFileItem>../CoAP/dist/Release/MinGW-Windows/libcoap.a</linkerLibFileItem>
-            <linkerLibFileItem>../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a</linkerLibFileItem>
             <linkerLibLibItem>Ws2_32</linkerLibLibItem>
+            <linkerLibFileItem>../EEG_Evoker/dist/Release/MinGW-Windows/libeeg_evoker.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

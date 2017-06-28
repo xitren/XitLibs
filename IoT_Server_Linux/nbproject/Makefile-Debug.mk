@@ -35,6 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
+	${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o \
 	${OBJECTDIR}/main.o
 
 
@@ -52,35 +53,32 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../EEG_Evoker/dist/Debug/GNU-Linux/libeeg_evoker.a ../XitLib/dist/Debug_Linux/GNU-Linux/libxitlib.a ../CoAP/dist/Debug/GNU-Linux/libcoap.a
+LDLIBSOPTIONS=../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a ../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
 	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../EEG_Evoker/dist/Debug/GNU-Linux/libeeg_evoker.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../XitLib/dist/Debug_Linux/GNU-Linux/libxitlib.a
-
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../CoAP/dist/Debug/GNU-Linux/libcoap.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux ${OBJECTFILES} ${LDLIBSOPTIONS} -lm
 
+${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DEXTMEMSERVER -DPLATFORM_LINUX -DP300 -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
+
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DEXTMEMSERVER -DPI -DPLATFORM_LINUX -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -g -DCPU -DDEBUG -DEXTMEMSERVER -DPLATFORM_LINUX -DP300 -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 # Subprojects
 .build-subprojects:
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Linux
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Linux
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug
 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
@@ -88,12 +86,6 @@ ${OBJECTDIR}/main.o: main.c
 
 # Subprojects
 .clean-subprojects:
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Linux clean
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../EEG_Evoker && ${MAKE}  -f Makefile CONF=Debug clean
-	cd ../XitLib && ${MAKE}  -f Makefile CONF=Debug_Linux clean
-	cd ../CoAP && ${MAKE}  -f Makefile CONF=Debug clean
 
 # Enable dependency checking
 .dep.inc: .depcheck-impl

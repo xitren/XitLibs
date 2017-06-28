@@ -19,7 +19,7 @@
 #include "VideoModule.h"
 #include "xitlibtypes.h"             /* Application Header.            */
 #include "CommandModule.h"
-#include "../CoAP/coap.h"
+#include "coap.h"
 #include "Handler.h"
 /*============================================================================*/
 

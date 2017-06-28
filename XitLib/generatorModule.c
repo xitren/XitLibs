@@ -1,5 +1,5 @@
 #include "generatorModule.h"
-#include "../CoAP/coap.h"
+#include "coap.h"
 #include "Handler.h"
 #include <stdio.h>
 #include <string.h>

@@ -7,7 +7,7 @@
 #include "ConfigMem.h"
 #include "InOutBuffer.h"
 #include "CommandModule.h"
-#include "../CoAP/coap.h"
+#include "coap.h"
 #include "StreamDataRecorder.h"
 #ifndef CPU
     #include "tim.h"
