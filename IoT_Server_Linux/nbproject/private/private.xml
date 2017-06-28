@@ -26,7 +26,22 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/IoT_Server_Linux/main.c</file>
         </group>
         <group name="Lib">
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc_cfg.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/External/ExtFunctions.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/include/common.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/IoT_Server_Linux/main.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/LibConfig.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/include/array.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/UpdateModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/InOutBuffer.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/xitlibtypes.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/Handler.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/ConfigMem.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/FunctionsDiscovery.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/coap/coap.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/CommandModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/External/ExtFunctions.c</file>
         </group>
     </open-files>
 </project-private>
