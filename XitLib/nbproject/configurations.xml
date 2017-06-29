@@ -103,32 +103,42 @@
                      displayName="CoAP test main"
                      projectFiles="true"
                      kind="TEST">
+        <itemPath>tests/ExtFunctions_coap.c</itemPath>
+        <itemPath>tests/ExtFunctions_coap.h</itemPath>
         <itemPath>tests/coap_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
                      displayName="jSON test main"
                      projectFiles="true"
                      kind="TEST">
+        <itemPath>tests/ExtFunctions_json.c</itemPath>
+        <itemPath>tests/ExtFunctions_json.h</itemPath>
         <itemPath>tests/json_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="Main engine test"
                      projectFiles="true"
                      kind="TEST">
+        <itemPath>tests/ExtFunctions_datasystem.c</itemPath>
+        <itemPath>tests/ExtFunctions_datasystem.h</itemPath>
         <itemPath>tests/datasystem_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Malloc test main"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/ExtFunctions.c</itemPath>
-        <itemPath>tests/ExtFunctions.h</itemPath>
+        <itemPath>tests/ExtFunctions_malloc.c</itemPath>
+        <itemPath>tests/ExtFunctions_malloc.h</itemPath>
         <itemPath>tests/malloc_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f4"
                      displayName="Models test main"
                      projectFiles="true"
                      kind="TEST">
+        <itemPath>tests/ExtFunctions_models.c</itemPath>
+        <itemPath>tests/ExtFunctions_models.h</itemPath>
+        <itemPath>tests/array_test.c</itemPath>
+        <itemPath>tests/array_test.h</itemPath>
         <itemPath>tests/models_test.c</itemPath>
       </logicalFolder>
     </logicalFolder>
@@ -381,9 +391,29 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -641,9 +671,29 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -900,9 +950,29 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1160,9 +1230,29 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1425,9 +1515,29 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1684,9 +1794,29 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1935,9 +2065,29 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>

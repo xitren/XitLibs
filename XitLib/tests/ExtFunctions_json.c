@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
-#include "ExtFunctions.h"
+#include "ExtFunctions_json.h"
 #include "Handler.h"
 
 #define TXTIMEOUT 10

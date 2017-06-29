@@ -79,7 +79,12 @@ TESTFILES= \
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/ExtFunctions.o \
+	${TESTDIR}/tests/ExtFunctions_coap.o \
+	${TESTDIR}/tests/ExtFunctions_datasystem.o \
+	${TESTDIR}/tests/ExtFunctions_json.o \
+	${TESTDIR}/tests/ExtFunctions_malloc.o \
+	${TESTDIR}/tests/ExtFunctions_models.o \
+	${TESTDIR}/tests/array_test.o \
 	${TESTDIR}/tests/coap_test.o \
 	${TESTDIR}/tests/datasystem_test.o \
 	${TESTDIR}/tests/json_test.o \
@@ -269,25 +274,31 @@ ${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/ExtFunctions_coap.o ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ExtFunctions_json.o ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/ExtFunctions_datasystem.o ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ExtFunctions.o ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ExtFunctions_malloc.o ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/models_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/ExtFunctions_models.o ${TESTDIR}/tests/array_test.o ${TESTDIR}/tests/models_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
+
+
+${TESTDIR}/tests/ExtFunctions_coap.o: tests/ExtFunctions_coap.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_coap.o tests/ExtFunctions_coap.c
 
 
 ${TESTDIR}/tests/coap_test.o: tests/coap_test.c 
@@ -296,10 +307,22 @@ ${TESTDIR}/tests/coap_test.o: tests/coap_test.c
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_test.o tests/coap_test.c
 
 
+${TESTDIR}/tests/ExtFunctions_json.o: tests/ExtFunctions_json.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_json.o tests/ExtFunctions_json.c
+
+
 ${TESTDIR}/tests/json_test.o: tests/json_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_test.o tests/json_test.c
+
+
+${TESTDIR}/tests/ExtFunctions_datasystem.o: tests/ExtFunctions_datasystem.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_datasystem.o tests/ExtFunctions_datasystem.c
 
 
 ${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c 
@@ -308,16 +331,28 @@ ${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/datasystem_test.o tests/datasystem_test.c
 
 
-${TESTDIR}/tests/ExtFunctions.o: tests/ExtFunctions.c 
+${TESTDIR}/tests/ExtFunctions_malloc.o: tests/ExtFunctions_malloc.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions.o tests/ExtFunctions.c
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_malloc.o tests/ExtFunctions_malloc.c
 
 
 ${TESTDIR}/tests/malloc_test.o: tests/malloc_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/malloc_test.o tests/malloc_test.c
+
+
+${TESTDIR}/tests/ExtFunctions_models.o: tests/ExtFunctions_models.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_models.o tests/ExtFunctions_models.c
+
+
+${TESTDIR}/tests/array_test.o: tests/array_test.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/array_test.o tests/array_test.c
 
 
 ${TESTDIR}/tests/models_test.o: tests/models_test.c 

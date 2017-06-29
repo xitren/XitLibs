@@ -86,8 +86,11 @@
         </group>
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/DMAretransmitter.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/ExtFunctions_json.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/ExtFunctions_malloc.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/malloc_test.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/InOutBuffer.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/ExtFunctions_datasystem.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/json/cJSON_Utils.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/datasystem_test.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/CommandModule.c</file>
@@ -98,16 +101,21 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/CRC16ANSI.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/Packet.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/LogModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/StreamDataRecorder.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/json_test.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/ExtFunctions_coap.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/array_test.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/PWMModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/include/common.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/models_test.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/coap/coap.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/ExtFunctions.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/include/array.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/array_test.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/LogTest.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/UpdateModule.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/tests/ExtFunctions_models.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/Handler.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/FunctionsDiscovery.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/json/cJSON.c</file>

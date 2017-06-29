@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "umm_malloc.h"
-#include "ExtFunctions.h"
+#include "ExtFunctions_coap.h"
 
 /*
  * Simple C Test Suite
@@ -26,7 +26,7 @@ void test1() {
 
 void test2() {
     printf("coap_test test 2\n");
-    printf("%%TEST_FAILED%% time=0 testname=test2 (coap_test) message=error message sample\n");
+    //printf("%%TEST_FAILED%% time=0 testname=test2 (coap_test) message=error message sample\n");
 }
 
 int main(int argc, char** argv) {

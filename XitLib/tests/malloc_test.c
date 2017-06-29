@@ -14,7 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "umm_malloc.h"
-#include "ExtFunctions.h"
+#include "ExtFunctions_malloc.h"
 
 /*
  * Simple C Test Suite
