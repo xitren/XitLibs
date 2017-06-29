@@ -281,11 +281,11 @@ void TIM2_IRQHandler(void)/**/
                                                     (uint8_t*) &rd, 1, 10);
     HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_11);
   
-        WriteMem(REG_ADC_CH8, ((((uint32_t)selection[3]) & 0x000000FF) << 24) |
-                                ((((uint32_t)selection[2]) & 0x000000FF) << 16) |
-                                ((((uint32_t)selection[1]) & 0x000000FF) << 8) |
-                                ((((uint32_t)selection[0]) & 0x000000FF)));
-        AddSample();
+//        WriteMem(REG_ADC_CH8, ((((uint32_t)selection[3]) & 0x000000FF) << 24) |
+//                            ((((uint32_t)selection[2]) & 0x000000FF) << 16) |
+//                            ((((uint32_t)selection[1]) & 0x000000FF) << 8) |
+//                            ((((uint32_t)selection[0]) & 0x000000FF)));
+//        AddSample();
   /* USER CODE END TIM2_IRQn 1 */
 }
 //

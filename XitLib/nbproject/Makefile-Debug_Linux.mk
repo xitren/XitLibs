@@ -71,14 +71,25 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
+	${TESTDIR}/TestFiles/f2 \
 	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f2
+	${TESTDIR}/TestFiles/f5 \
+	${TESTDIR}/TestFiles/f3 \
+	${TESTDIR}/TestFiles/f4
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/External/ExtFunctions.o \
-	${TESTDIR}/tests/LogTest.o \
-	${TESTDIR}/tests/dma_test.o
+	${TESTDIR}/tests/ExtFunctions_coap.o \
+	${TESTDIR}/tests/ExtFunctions_datasystem.o \
+	${TESTDIR}/tests/ExtFunctions_json.o \
+	${TESTDIR}/tests/ExtFunctions_malloc.o \
+	${TESTDIR}/tests/ExtFunctions_models.o \
+	${TESTDIR}/tests/array_test.o \
+	${TESTDIR}/tests/coap_test.o \
+	${TESTDIR}/tests/datasystem_test.o \
+	${TESTDIR}/tests/json_test.o \
+	${TESTDIR}/tests/malloc_test.o \
+	${TESTDIR}/tests/models_test.o
 
 # C Compiler Flags
 CFLAGS=
@@ -264,31 +275,91 @@ ${OBJECTDIR}/models/src/treetable.o: nbproject/Makefile-${CND_CONF}.mk models/sr
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/External/ExtFunctions.o ${TESTDIR}/tests/dma_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} -lWs2_32 
-
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/LogTest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/ExtFunctions_coap.o ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
 
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ExtFunctions_json.o ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
 
-${TESTDIR}/External/ExtFunctions.o: External/ExtFunctions.c 
-	${MKDIR} -p ${TESTDIR}/External
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -DCPU -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/External/ExtFunctions.o External/ExtFunctions.c
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/ExtFunctions_datasystem.o ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} 
+
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ExtFunctions_malloc.o ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} 
+
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/ExtFunctions_models.o ${TESTDIR}/tests/array_test.o ${TESTDIR}/tests/models_test.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} 
 
 
-${TESTDIR}/tests/dma_test.o: tests/dma_test.c 
+${TESTDIR}/tests/ExtFunctions_coap.o: tests/ExtFunctions_coap.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -DCPU -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/dma_test.o tests/dma_test.c
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_coap.o tests/ExtFunctions_coap.c
 
 
-${TESTDIR}/tests/LogTest.o: tests/LogTest.c 
+${TESTDIR}/tests/coap_test.o: tests/coap_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/LogTest.o tests/LogTest.c
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_test.o tests/coap_test.c
+
+
+${TESTDIR}/tests/ExtFunctions_json.o: tests/ExtFunctions_json.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_json.o tests/ExtFunctions_json.c
+
+
+${TESTDIR}/tests/json_test.o: tests/json_test.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_test.o tests/json_test.c
+
+
+${TESTDIR}/tests/ExtFunctions_datasystem.o: tests/ExtFunctions_datasystem.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_datasystem.o tests/ExtFunctions_datasystem.c
+
+
+${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/datasystem_test.o tests/datasystem_test.c
+
+
+${TESTDIR}/tests/ExtFunctions_malloc.o: tests/ExtFunctions_malloc.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_malloc.o tests/ExtFunctions_malloc.c
+
+
+${TESTDIR}/tests/malloc_test.o: tests/malloc_test.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/malloc_test.o tests/malloc_test.c
+
+
+${TESTDIR}/tests/ExtFunctions_models.o: tests/ExtFunctions_models.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_models.o tests/ExtFunctions_models.c
+
+
+${TESTDIR}/tests/array_test.o: tests/array_test.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/array_test.o tests/array_test.c
+
+
+${TESTDIR}/tests/models_test.o: tests/models_test.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/models_test.o tests/models_test.c
 
 
 ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c 
@@ -685,8 +756,11 @@ ${OBJECTDIR}/models/src/treetable_nomain.o: ${OBJECTDIR}/models/src/treetable.o 
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f5 || true; \
+	    ${TESTDIR}/TestFiles/f3 || true; \
+	    ${TESTDIR}/TestFiles/f4 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

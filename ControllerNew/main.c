@@ -110,10 +110,10 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim13);
   HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
   
-  //ads1299_reset();
+  ads1299_reset();
   
     //CommandLineInterpreter("/GET/ADCREADREGS");
-  //ads1299_send_command(ADS_START);
+  ads1299_send_command(ADS_START);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,9 +121,9 @@ int main(void)
     
     //HAL_GPIO_WritePin(LED_USER_STM_GPIO_Port, LED_USER_STM_Pin, GPIO_PIN_RESET);
   
-    WriteMem(REG_EEG_Auto_Band, 1);
+//    WriteMem(REG_EEG_Auto_Band, 1);
     WriteMem(REG_STREAM_REC, 0);
-//    WriteMem(REG_ADC_REG14, 1);
+    WriteMem(REG_ADC_REG14, 1);
     
     while(1)
     {
