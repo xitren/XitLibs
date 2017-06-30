@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -39,7 +39,6 @@
       <itemPath>PWMModule.c</itemPath>
       <itemPath>Packet.c</itemPath>
       <itemPath>StreamDataRecorder.c</itemPath>
-      <itemPath>UpdateModule.c</itemPath>
       <itemPath>VideoModule.c</itemPath>
       <itemPath>generatorModule.c</itemPath>
     </logicalFolder>
@@ -83,7 +82,6 @@
       <itemPath>PWMModule.h</itemPath>
       <itemPath>Packet.h</itemPath>
       <itemPath>StreamDataRecorder.h</itemPath>
-      <itemPath>UpdateModule.h</itemPath>
       <itemPath>generatorModule.h</itemPath>
       <itemPath>version.h</itemPath>
       <itemPath>xitlibtypes.h</itemPath>
@@ -243,10 +241,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -432,7 +426,7 @@
     </conf>
     <conf name="Release_Windows" type="3">
       <toolsSet>
-        <compilerSet>MinGW|MinGW</compilerSet>
+        <compilerSet>GNU|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -447,6 +441,7 @@
             <pElem>json</pElem>
             <pElem>malloc</pElem>
             <pElem>models</pElem>
+            <pElem>External</pElem>
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
@@ -523,10 +518,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -803,10 +794,6 @@
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
-      </item>
-      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
@@ -1006,6 +993,7 @@
             <pElem>json</pElem>
             <pElem>malloc</pElem>
             <pElem>models</pElem>
+            <pElem>External</pElem>
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
@@ -1082,10 +1070,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
-      </item>
-      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1368,10 +1352,6 @@
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
-      </item>
-      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
@@ -1571,6 +1551,7 @@
             <pElem>json</pElem>
             <pElem>malloc</pElem>
             <pElem>models</pElem>
+            <pElem>External</pElem>
           </incDir>
           <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
           <preprocessorList>
@@ -1646,10 +1627,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
-      </item>
-      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1917,10 +1894,6 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
-      </item>
-      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>

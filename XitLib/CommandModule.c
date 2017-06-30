@@ -89,7 +89,6 @@ void Interface_Memory(void)
         AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
         AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
                 GetConcreteBlock); //передача последнего блока семплов ЭЭГ
-
     }
     AddCommand("/GET/RUNGENERATOR", "</rungenerator>;if=\"generator\"", 
             RunGenerator); //запуск программы чтения файла на расберри

@@ -47,7 +47,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/PWMModule.o \
 	${OBJECTDIR}/Packet.o \
 	${OBJECTDIR}/StreamDataRecorder.o \
-	${OBJECTDIR}/UpdateModule.o \
 	${OBJECTDIR}/VideoModule.o \
 	${OBJECTDIR}/coap/coap.o \
 	${OBJECTDIR}/generatorModule.o \
@@ -176,11 +175,6 @@ ${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DEV3 -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
-
-${OBJECTDIR}/UpdateModule.o: UpdateModule.c 
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DEV3 -DPI -DPLATFORM_LINUX -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
 ${OBJECTDIR}/VideoModule.o: VideoModule.c 
 	${MKDIR} -p ${OBJECTDIR}
@@ -515,19 +509,6 @@ ${OBJECTDIR}/StreamDataRecorder_nomain.o: ${OBJECTDIR}/StreamDataRecorder.o Stre
 	    $(COMPILE.c) -O2 -DCPU -DEV3 -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder_nomain.o StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/StreamDataRecorder.o ${OBJECTDIR}/StreamDataRecorder_nomain.o;\
-	fi
-
-${OBJECTDIR}/UpdateModule_nomain.o: ${OBJECTDIR}/UpdateModule.o UpdateModule.c 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/UpdateModule.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DEV3 -DPI -DPLATFORM_LINUX -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule_nomain.o UpdateModule.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/UpdateModule.o ${OBJECTDIR}/UpdateModule_nomain.o;\
 	fi
 
 ${OBJECTDIR}/VideoModule_nomain.o: ${OBJECTDIR}/VideoModule.o VideoModule.c 

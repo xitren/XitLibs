@@ -76,7 +76,6 @@ void Error_Handler(void);
 
 int main(void)
 {
-
   /* USER CODE BEGIN 1 */  
   uint8_t accel_ip[3] = {0,0,0};
   uint8_t temp=0;
@@ -93,27 +92,26 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_DMA_Init();
-  MX_SPI6_Init();
   MX_SPI4_Init();
+  MX_SPI6_Init();
   MX_TIM2_Init();
   MX_TIM13_Init();
   MX_TIM14_Init();
   MX_USART1_UART_Init();
   
   /* USER CODE BEGIN 2 */ 
-  InitHandler(0);
-  InitImageP300();
-  EEGRecorderInit(1, 250);
+  InitHandler(EEG);
+  //EEGRecorderInit(1, 250);
     
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_Base_Start_IT(&htim13);
-  HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
+  //HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
   
-  ads1299_reset();
+  //ads1299_reset();
   
     //CommandLineInterpreter("/GET/ADCREADREGS");
-  ads1299_send_command(ADS_START);
+    //ads1299_send_command(ADS_START);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -121,20 +119,20 @@ int main(void)
     
     //HAL_GPIO_WritePin(LED_USER_STM_GPIO_Port, LED_USER_STM_Pin, GPIO_PIN_RESET);
   
-//    WriteMem(REG_EEG_Auto_Band, 1);
-    WriteMem(REG_STREAM_REC, 0);
+    int l = 0;
     WriteMem(REG_ADC_REG14, 1);
     
     while(1)
     {
         UserOperationHandler();    
         UserProtocolHandler();
-        CalculationHandler();   
+//        l = sprintf((char*)buffer,"cycle \n");
+//        HAL_UART_Transmit(&huart1, (uint8_t *) buffer, l, 1000);
+        //CalculationHandler(); 
     }
   /* USER CODE BEGIN 3 */  
     
   /* USER CODE END 3 */
-
 }
 
 /** System Clock Configuration
@@ -211,7 +209,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
     //HAL_TIM_Base_Stop(&htim13); 
 //    UartProtocolHandler();
 //    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, 1, 1000);
-    HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
+//    HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
     //HAL_TIM_Base_Start_IT(&htim13);
   }
   return;

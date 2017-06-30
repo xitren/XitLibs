@@ -57,135 +57,132 @@ uint8_t find_power(int32_t* in_power)
     return (uint8_t)(result_power >> 24);
 }
 
-inline void UserOperationHandler(void) {    int j, k = 0, l = 0,m;
-   char buffer[STRING_SIZE];
+inline void UserOperationHandler(void) { 
+    
+    int i,j, k = 0, l = 0, m;
+    char buffer[STRING_SIZE];
     uint8_t val_temp;
     uint8_t* rvars;
     uint8_t vals1[17] =
     {
-        ReadMem(REG_ADC_REG1),//REG_ADS_CONFIG1
-        ReadMem(REG_ADC_REG2),//REG_ADS_CONFIG2
-        ReadMem(REG_ADC_REG3),//REG_ADS_CONFIG3
-        ReadMem(REG_ADC_REG4),//REG_ADS_LOFF
-       
-        ReadMem(REG_ADC_REG15),//REG_ADS_CH1SET
-        ReadMem(REG_ADC_REG16),//REG_ADS_CH2SET
-        ReadMem(REG_ADC_REG17),//REG_ADS_CH3SET
-        ReadMem(REG_ADC_REG18),//REG_ADS_CH4SET
-        ReadMem(REG_ADC_REG19),//REG_ADS_CH5SET
-        ReadMem(REG_ADC_REG20),//REG_ADS_CH6SET
-        ReadMem(REG_ADC_REG21),//REG_ADS_CH7SET
-        ReadMem(REG_ADC_REG22),//REG_ADS_CH8SET
-        
-        ReadMem(REG_ADC_REG5),//REG_ADS_BIAS_SENSP 
-        ReadMem(REG_ADC_REG6),//REG_ADS_BIAS_SENSN
-        ReadMem(REG_ADC_REG7),//REG_ADS_LOFF_SENSP
-        ReadMem(REG_ADC_REG8),//REG_ADS_LOFF_SENSN
-        ReadMem(REG_ADC_REG9) //REG_ADS_LOFF_FLIP
+        ReadMem(REG_ADC_REG1),
+        ReadMem(REG_ADC_REG2),
+        ReadMem(REG_ADC_REG3),
+        ReadMem(REG_ADC_REG4),
+
+        ReadMem(REG_ADC_REG15),
+        ReadMem(REG_ADC_REG16),
+        ReadMem(REG_ADC_REG17),
+        ReadMem(REG_ADC_REG18),
+        ReadMem(REG_ADC_REG19),
+        ReadMem(REG_ADC_REG20),
+        ReadMem(REG_ADC_REG21),
+        ReadMem(REG_ADC_REG22),
+
+        ReadMem(REG_ADC_REG5),
+        ReadMem(REG_ADC_REG6),
+        ReadMem(REG_ADC_REG7),
+        ReadMem(REG_ADC_REG8),
+        ReadMem(REG_ADC_REG9)
     };
     uint8_t vals2[4] =
     {
-        ReadMem(REG_ADC_REG10),//REG_ADS_GPIO
-        ReadMem(REG_ADC_REG11),//REG_ADS_MISC1
-        ReadMem(REG_ADC_REG12),//REG_ADS_MISC2
-        ReadMem(REG_ADC_REG13) //REG_ADS_CONFIG4
+        ReadMem(REG_ADC_REG10),
+        ReadMem(REG_ADC_REG11),
+        ReadMem(REG_ADC_REG12),
+        ReadMem(REG_ADC_REG13)
     };
     uint8_t vals3[2] = {HIGH_RES_250_SPS, 0xD0};
-    uint8_t vals4[8] = {0x05, 0x05, 0x05, 0x05,
-                            0x05, 0x05, 0x05, 0x05};
-
+    uint8_t vals4[8] = {0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05, 0x05};
+    
     #ifdef PLATFORM_LINUX
         //VideoFrameHandler();
     #endif
     
     if( ReadMem(REG_ADC_REG14) > 0 )
-    {
-        m = sprintf((char*)buffer,"STOP\n");
+    {        
+//        HAL_Delay(1000);
+//        for(i = 0; i < 17; i++)
+//        {
+//            l = sprintf( (char*)buffer, "%02X ", vals1[i] );
+//            HAL_UART_Transmit(&huart1,(char*)buffer,l,1000);
+//        }
+//        for(i = 0; i < 4; i++)
+//        {
+//            l = sprintf( (char*)buffer, "%02X ", vals2[i] );
+//            HAL_UART_Transmit(&huart1,(char*)buffer,l,1000);
+//        }
+        m = sprintf((char*)buffer,"STOP %d\n",ReadMem(REG_ADC_REG14));
         HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+        
         HAL_NVIC_DisableIRQ(EXTI15_10_IRQn);
-        ads1299_send_command(ADS_STOP);
+        ads1299_reset();
+                
         switch( ReadMem(REG_ADC_REG14) )
         {
-            case 2:
-                ads1299_reset();
-                m = sprintf((char*)buffer,"Case 2\n");
+            case 1:
+                m = sprintf((char*)buffer, "Case 1\n");
                 HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-                ads1299_wreg(CONFIG1, vals3, 2); 
-                ads1299_wreg(CH1SET, vals4, 8);
-                rvars = ads1299_rreg(ID,24);
-                while ((rvars[1] != vals3[0]) 
-                        || (rvars[2] != vals3[1])){
-                    m = sprintf((char*)buffer,"ERR1\n");
-                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-                    ads1299_wreg(CONFIG1, vals3, 2); 
-                    ads1299_wreg(CH1SET, vals4, 8);
-                    rvars = ads1299_rreg(ID,24);
-                }
-                EEGRecorderInit(1, 250);
-                break;
-            case 3:
-                ads1299_reset();
-                m = sprintf((char*)buffer,"Case 3\n");
-                HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-                EEGRecorderInit(3, 250);
-                break;
-            default: 
-                ads1299_reset();
-                m = sprintf((char*)buffer,"Case !2 & !3\n");
-                HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-                ads1299_wreg(CONFIG1, vals1, 17);
-                rvars = ads1299_rreg(CONFIG1, 17);
+                
+//                ads1299_wreg(CONFIG1, vals1, 17);
+//                rvars = ads1299_rreg(CONFIG1, 17);
 //                while( ads1299_check(rvars, vals1, 17) != 0 )
 //                {
-                    m = sprintf((char*)buffer,"ERR1\n");
-                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-                    ads1299_wreg(CONFIG1, vals1, 17);
-                    rvars = ads1299_rreg(CONFIG1, 17);
+//                    m = sprintf((char*)buffer,"ERR1\n");
+//                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+//                    
+//                    ads1299_wreg(CONFIG1, vals1, 17);
+//                    rvars = ads1299_rreg(CONFIG1, 17);
 //                }
-//                while( ads1299_check(rvars, vals1, 4) != 0 )
+//                ads1299_wreg(GPIO, vals2, 4);
+//                rvars = ads1299_rreg(GPIO, 4);
+//                while( ads1299_check(rvars, vals2, 4) != 0 )
 //                {
-                    m = sprintf((char*)buffer,"ERR2\n");
-                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-                    ads1299_wreg(GPIO, vals1, 4);
-                    rvars = ads1299_rreg(GPIO, 4);
+//                    m = sprintf((char*)buffer,"ERR2\n");
+//                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+//                    
+//                    ads1299_wreg(GPIO, vals2, 4);
+//                    rvars = ads1299_rreg(GPIO, 4);
 //                }
                 EEGRecorderInit(1, 250);
                 break;
+            /* Test sinus */
+            case 2:
+                m = sprintf((char*)buffer, "Case 2\n");
+                HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+                
+                EEGRecorderInit(3, 250);
+                break;
+            default:
+                m = sprintf((char*)buffer, "Default\n");
+                HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+                
+                EEGRecorderInit(1, 250);
+                break;
         }
-        WriteMem(REG_ADC_REG14,0);
-        m = sprintf((char*)buffer,"START\n");
-        HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-        ads1299_send_command(ADS_RDATAC);
-        ads1299_send_command(ADS_START);
-        HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
-        WriteMem(REG_EEG_Auto_Band,1);
-    }
-    
-    l = GetCnt();
-    if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) == 1))
-    {
-        l = GetDataReadyCnt((int32_t)ReadMem(REG_EEG_PocketSize), (int32_t*) scratch_raw);
-        if (l > 0)
+        WriteMem(REG_ADC_REG14, 0);
+        
+        uint8_t* data = ads1299_rreg(CONFIG1, 23);
+        
+        for(i = 0; i < 23; i++)
         {
-            if ( (k = Packetize((uint8_t*) scratch_raw, l * 4, BUFFER_SAMPLE_SIZE * ReadMem(REG_EEG_PocketSize) + 22)) > 0 )
-            {
-                TransferDMA((uint8_t*) scratch_raw, k);
-            }
+            l = sprintf( (char*)buffer, "%02X ", data[i] );
+            HAL_UART_Transmit(&huart1,(char*)buffer,l,1000);
         }
+        HAL_Delay(3000);
+        
+        m = sprintf((char*)buffer,"FSTART\n");
+        HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+        
+        ads1299_send_command(ADS_START);
+        
+        HAL_NVIC_EnableIRQ(EXTI15_10_IRQn);
+        
+        WriteMem(REG_EEG_Auto_Band, 1);
+        InitImageP300();
     }
-    
-//    if( (ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) == 2) )
-//    {
-//        //WriteMem(REG_EEG_PocketSize,256);
-//        l = GetDataReadyCnt( (int32_t)ReadMem(REG_EEG_PocketSize), (int32_t*) scratch_raw );
-//        if (l > 0)
-//        {
-//            val_temp = find_power( (int32_t*)scratch_raw );
-//            TransferBand((uint8_t*) &val_temp, 1);
-//        }
-//    }
 
-    //OperationHandler();
+    OperationHandler();
     return;
 }
 

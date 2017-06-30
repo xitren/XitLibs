@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o \
+	${OBJECTDIR}/_ext/83d34d09/UpdateModule.o \
 	${OBJECTDIR}/main.o
 
 
@@ -71,6 +72,11 @@ ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDBG_LOG_LEVEL=0 -DEXTMEMSERVER -DP300 -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
+
+${OBJECTDIR}/_ext/83d34d09/UpdateModule.o: ../XitLib/External/UpdateModule.c 
+	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDBG_LOG_LEVEL=0 -DEXTMEMSERVER -DP300 -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/UpdateModule.o ../XitLib/External/UpdateModule.c
 
 ${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}

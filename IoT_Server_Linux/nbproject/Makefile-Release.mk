@@ -53,7 +53,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../EEG_Evoker/dist/Release/None-Linux/libeeg_evoker.a ../XitLib/dist/Release_Linux//libxitlib.a ../CoAP/dist/Release/None-Linux/libcoap.a
+LDLIBSOPTIONS=../EEG_Evoker/dist/Release/None-Linux/libeeg_evoker.a ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a ../CoAP/dist/Release/None-Linux/libcoap.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -61,7 +61,7 @@ LDLIBSOPTIONS=../EEG_Evoker/dist/Release/None-Linux/libeeg_evoker.a ../XitLib/di
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../EEG_Evoker/dist/Release/None-Linux/libeeg_evoker.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../XitLib/dist/Release_Linux//libxitlib.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../CoAP/dist/Release/None-Linux/libcoap.a
 

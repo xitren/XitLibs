@@ -128,33 +128,33 @@ int ads1299_setup(void)
     
     uint8_t vals1[17] =
     {
-        ReadMem(REG_ADC_REG1),//REG_ADS_CONFIG1
-        ReadMem(REG_ADC_REG2),//REG_ADS_CONFIG2
-        ReadMem(REG_ADC_REG3),//REG_ADS_CONFIG3
-        ReadMem(REG_ADC_REG4),//REG_ADS_LOFF
-       
-        ReadMem(REG_ADC_REG15),//REG_ADS_CH1SET
-        ReadMem(REG_ADC_REG16),//REG_ADS_CH2SET
-        ReadMem(REG_ADC_REG17),//REG_ADS_CH3SET
-        ReadMem(REG_ADC_REG18),//REG_ADS_CH4SET
-        ReadMem(REG_ADC_REG19),//REG_ADS_CH5SET
-        ReadMem(REG_ADC_REG20),//REG_ADS_CH6SET
-        ReadMem(REG_ADC_REG21),//REG_ADS_CH7SET
-        ReadMem(REG_ADC_REG22),//REG_ADS_CH8SET
+        ReadMem(REG_ADC_REG1),
+        ReadMem(REG_ADC_REG2),
+        ReadMem(REG_ADC_REG3),
+        ReadMem(REG_ADC_REG4),
         
-        ReadMem(REG_ADC_REG5),//REG_ADS_BIAS_SENSP 
-        ReadMem(REG_ADC_REG6),//REG_ADS_BIAS_SENSN
-        ReadMem(REG_ADC_REG7),//REG_ADS_LOFF_SENSP
-        ReadMem(REG_ADC_REG8),//REG_ADS_LOFF_SENSN
-        ReadMem(REG_ADC_REG9) //REG_ADS_LOFF_FLIP
+        ReadMem(REG_ADC_REG15),
+        ReadMem(REG_ADC_REG16),
+        ReadMem(REG_ADC_REG17),
+        ReadMem(REG_ADC_REG18),
+        ReadMem(REG_ADC_REG19),
+        ReadMem(REG_ADC_REG20),
+        ReadMem(REG_ADC_REG21),
+        ReadMem(REG_ADC_REG22),
+        
+        ReadMem(REG_ADC_REG5),
+        ReadMem(REG_ADC_REG6),
+        ReadMem(REG_ADC_REG7),
+        ReadMem(REG_ADC_REG8),
+        ReadMem(REG_ADC_REG9)
     };
     
     uint8_t vals2[4] =
     {
-        ReadMem(REG_ADC_REG10),//REG_ADS_GPIO
-        ReadMem(REG_ADC_REG11),//REG_ADS_MISC1
-        ReadMem(REG_ADC_REG12),//REG_ADS_MISC2
-        ReadMem(REG_ADC_REG13) //REG_ADS_CONFIG4
+        ReadMem(REG_ADC_REG10),
+        ReadMem(REG_ADC_REG11),
+        ReadMem(REG_ADC_REG12),
+        ReadMem(REG_ADC_REG13)
     };
     
     ads1299_wreg(CONFIG1, vals1, 17);
