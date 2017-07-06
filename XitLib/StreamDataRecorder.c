@@ -152,7 +152,7 @@ void EEG_unreaded_dump(void);
             //history_eeg_ext[history_eeg_cnt_ext++] = GetMemExtByInt(history_eeg[i]);
         }
         //printf("---------------> Setted ext history\r\n\r");
-        EEGPutExtMemReq((uint32_t*)history_eeg_ext,history_eeg_cnt_ext);
+        //EEGPutExtMemReq((uint32_t*)history_eeg_ext,history_eeg_cnt_ext);
         //printf("---------------> EEG reconstruction\r\n\r");
 
         fclose(fp);
@@ -287,8 +287,7 @@ int GetConcreteBlock(ParameterList_t *TempParam)
        }
        
        k=Number;
-       DBG_LOG_PREPARE(buf_local,60,"Current sample %d.",samples_cnt);
-       DBG_LOG_TRACE(buf_local);
+       DBG_LOG_TRACE("Current sample %d.",samples_cnt);
        if (Size > 0)
        {
         l=GetDataPtrCnt(Number,Size,(int32_t *)scratch_raw);
@@ -327,8 +326,7 @@ int GetConcreteBlock(ParameterList_t *TempParam)
         }
        }
         AddToTransmit("\n ]\n}\n");
-        DBG_LOG_PREPARE(buf_local,60,"Current sample - %d Block[%d] setted to %d.\n",samples_cnt);
-        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_TRACE("Current sample - %d Block[%d] setted to %d.\n",samples_cnt);
     }
     else
     {
@@ -546,14 +544,10 @@ uint32_t GetCnt()
 uint32_t GetDataReady(int32_t *_buffer)
 {
 	int i,j,ptr=0;
-        char buf_local[60];
 	uint32_t cnt = (samples_cnt-readed_cnt);
-        DBG_LOG_PREPARE(buf_local,60,"Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE(buf_local);
-        DBG_LOG_PREPARE(buf_local,60,"--Counter not read sample %d--\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE(buf_local);
-        DBG_LOG_PREPARE(buf_local,60,"--End number samples in block %d--\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_TRACE("Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE("--Counter not read sample %d--\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE("--End number samples in block %d--\n",cnt,samples_cnt,readed_cnt);
 	for(i=(samples_cnt-cnt);i<samples_cnt;i++)
 		for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
 			_buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
@@ -562,14 +556,10 @@ uint32_t GetDataReady(int32_t *_buffer)
 uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer)
 {
 	int i,j,ptr=0;
-        char buf_local[60];
 	uint32_t cnt = (samples_cnt-readed_cnt);
-        DBG_LOG_PREPARE(buf_local,60,"---- Current sample %d\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE(buf_local);
-        DBG_LOG_PREPARE(buf_local,60,"---- Readed sample %d\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE(buf_local);
-        DBG_LOG_PREPARE(buf_local,60,"---- Count no read %d\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_TRACE("---- Current sample %d\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE("---- Readed sample %d\n",cnt,samples_cnt,readed_cnt);
+        DBG_LOG_TRACE("---- Count no read %d\n",cnt,samples_cnt,readed_cnt);
 	if ((cnt) > _size)
 		cnt = _size;
         if ((cnt) < _size)

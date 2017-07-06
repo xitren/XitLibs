@@ -54,23 +54,21 @@
 #define MEMORY_LOGGER LOGGER_SIZE*STRING_SIZE+8
 
 #ifdef DEBUG
-    #define DBG_LOG_TRACE( string ) AddToLog( string, 6 )
-    #define DBG_LOG_DEBUG( string ) AddToLog( string, 5 )
-    #define DBG_LOG_CRITICAL( string ) AddToLog( string, 4 )
-    #define DBG_LOG_ERROR( string ) AddToLog( string, 3 )
-    #define DBG_LOG_WARNING( string ) AddToLog( string, 2 )
-    #define DBG_LOG_INFO( string ) AddToLog( string, 1 )
-    #define DBG_LOG_FORCE( force, string ) {if(force) {AddToLog( string, 0 );}}
-    #define DBG_LOG_PREPARE( buffer, max_size, format, ... ) {snprintf( buffer, max_size, format, ## __VA_ARGS__  );}
+    #define DBG_LOG_TRACE( format, ... ) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 6 );}
+    #define DBG_LOG_DEBUG( format, ... ) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 5 );}
+    #define DBG_LOG_CRITICAL( format, ... ) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 4 );}
+    #define DBG_LOG_ERROR( format, ... ) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 3 );}
+    #define DBG_LOG_WARNING( format, ... ) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 2 );}
+    #define DBG_LOG_INFO( format, ... ) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 1 );}
+    #define DBG_LOG_FORCE( force, format, ... ) {if(force) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 1 );}}
 #else
-    #define DBG_LOG_TRACE( string ) 
-    #define DBG_LOG_DEBUG( string ) 
-    #define DBG_LOG_CRITICAL( string ) 
-    #define DBG_LOG_ERROR( string ) 
-    #define DBG_LOG_WARNING( string ) 
-    #define DBG_LOG_INFO( string ) 
-    #define DBG_LOG_FORCE( force, string ) {if(force) {AddToLog( string, 0 );}}
-    #define DBG_LOG_PREPARE( buffer, max_size, format, ... ) 
+    #define DBG_LOG_TRACE( format, ... ) 
+    #define DBG_LOG_DEBUG( format, ... ) 
+    #define DBG_LOG_CRITICAL( format, ... ) 
+    #define DBG_LOG_ERROR( format, ... ) 
+    #define DBG_LOG_WARNING( format, ... ) 
+    #define DBG_LOG_INFO( format, ... ) 
+    #define DBG_LOG_FORCE( force, format, ... ) {if(force) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 1 );}}
 #endif
 /*============================================================================*/
 
@@ -79,7 +77,12 @@ extern "C" {
 #endif
   
 /* Public function prototypes ------------------------------------------------*/
-int AddToLog(char *str, int lvl);
+extern char buf_glob[STRING_SIZE];
+extern uint32_t size_glob;
+/*============================================================================*/
+
+/* Public function prototypes ------------------------------------------------*/
+int AddToLog(const char *str, uint32_t N, int lvl);
 char* ProceedLog(uint32_t *num);
 int ClearLog(void);
 int LOGRead(ParameterList_t *TempParam);

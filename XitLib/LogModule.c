@@ -4,12 +4,16 @@
 #include <string.h>
 #include "LogModule.h"
 #include "ConfigMem.h"
+#include "InOutBuffer.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
+#define BUFFER_LOGGER LOGGER_SIZE*STRING_SIZE
 char log_buffer[LOGGER_SIZE][STRING_SIZE];
 char* def_filename = "serverlog.log";
 uint32_t LogCnt = 0;
+char buf_glob[STRING_SIZE];
+uint32_t size_glob;
 /*============================================================================*/
 
 /* Private functions defines -------------------------------------------------*/
@@ -17,11 +21,11 @@ int WriteToFile(char* filename);
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-int AddToLog(char *str, int lvl)
+int AddToLog(const char *str, uint32_t N, int lvl)
 {
     int ret_val = NO_LOGGER_ERROR;
-//    str[59]=0;
-       
+    if (N > STRING_SIZE)
+        N = STRING_SIZE;
     if ((uint32_t)lvl > ReadMem(REG_LOG_LVL))
     {
         return(ret_val);
@@ -32,23 +36,25 @@ int AddToLog(char *str, int lvl)
         printf("LOGGER<%d>:--//internal//-- %s\r",lvl,str);
     #endif
 
-//    #ifdef CPU
-//        if ( !(( ((LogCnt+strlen(str))/STRING_SIZE) + 1) < BUFFER_SIZE) )
-//        {
-//            WriteToFile(def_filename);
-//            ClearLog();
-//        }
-//    #endif
-//   
-//    if ( ( ((LogCnt+strlen(str))/STRING_SIZE) + 1) < BUFFER_SIZE)
-//    {
-//        strncpy(((char*)log_buffer)+LogCnt,(const char*)str,strlen(str));
-//        LogCnt += strlen(str);
-//    }
-//    else
-//    {
-//        ret_val = NO_LOGGER_SPACE;
-//    }
+    #ifdef CPU
+        if ( ((LogCnt+N) + 1) >= BUFFER_LOGGER )
+        {
+            WriteToFile(def_filename);
+            ClearLog();
+        }
+    #endif
+   
+    if ( ((LogCnt+N) + 1) < BUFFER_LOGGER )
+    {
+        strncpy((((char*)log_buffer)+LogCnt),(const char*)str,N-1);
+        LogCnt += N-1;
+        strncpy((((char*)log_buffer)+LogCnt),"\n",1);
+        LogCnt += 1;
+    }
+    else
+    {
+        ret_val = NO_LOGGER_SPACE;
+    }
    
     return(ret_val);
 }
@@ -69,7 +75,7 @@ char* ProceedLog(uint32_t *num)
     else
     {
         *num = 0;
-        ret_val = 0;
+        ret_val = (char*)log_buffer;
     }
 
     return(ret_val);
@@ -113,7 +119,9 @@ int LOGRead(ParameterList_t *TempParam)
     /* this function appear to be semi-valid.                            */
     if ((TempParam))
     {
+//        WriteToFile(def_filename);
         log = ProceedLog(&N);
+        DBG_LOG_TRACE("N=%d.\n",N);
         log[N] = 0;
         AddToTransmit(log);
     }

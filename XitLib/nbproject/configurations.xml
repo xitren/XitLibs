@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -426,7 +426,7 @@
     </conf>
     <conf name="Release_Windows" type="3">
       <toolsSet>
-        <compilerSet>GNU|GNU</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -445,7 +445,6 @@
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
-            <Elem>DBG_LOG_LEVEL=0</Elem>
             <Elem>DEBUG</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
             <Elem>__USE_W32_SOCKETS</Elem>

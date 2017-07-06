@@ -264,7 +264,7 @@ void print_node_and_func(void)
         {
             array_get_at(node->proto, j, (void**)&proto);
             strptr += snprintf(strptr,
-                    10000-((int)strptr-(int)strbuf),
+                    10000-((int)(strptr-strbuf)),
                     "<coap://%s%s>;if=\"controller\",\n",
                     node->ip,proto->name);
         }     

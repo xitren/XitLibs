@@ -97,26 +97,17 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
 }
 
 void InitHandler(DeviceTypeDef device) {
-    char buf_local[60];
     ClearLog();
-    DBG_LOG_PREPARE(buf_local,60,"Memory used by CoAP: %d Bytes\n",MEMORY_COAP);
-    DBG_LOG_INFO(buf_local);
-    DBG_LOG_PREPARE(buf_local,60,"Memory used by CommandModule: %d Bytes\n",MEMORY_COMMAND);
-    DBG_LOG_INFO(buf_local);
-    DBG_LOG_PREPARE(buf_local,60,"Memory used by ConfigModule: %d Bytes\n",MEMORY_CONFIG);
-    DBG_LOG_INFO(buf_local);
-    DBG_LOG_PREPARE(buf_local,60,"Memory used by DMAModule: %d Bytes\n",MEMORY_DMA);
-    DBG_LOG_INFO(buf_local);
-    DBG_LOG_PREPARE(buf_local,60,"Memory used by DiscoveryModule: %d Bytes\n",MEMORY_CORE_WELLKNOWN);
-    DBG_LOG_INFO(buf_local);
-    DBG_LOG_PREPARE(buf_local,60,"Memory used by InOutBuffer: %d Bytes\n",MEMORY_INOUT);
-    DBG_LOG_INFO(buf_local);
-    DBG_LOG_PREPARE(buf_local,60,"Memory used by StreamDataRecorder: %d Bytes\n",MEMORY_STREAM);
-    DBG_LOG_INFO(buf_local);
-    DBG_LOG_PREPARE(buf_local,60,"========ALL=========================%d=Bytes====\n"
-            ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
-            MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
-    DBG_LOG_INFO(buf_local);
+    DBG_LOG_INFO("Memory used by CoAP: %d Bytes\n",MEMORY_COAP);
+    DBG_LOG_INFO("Memory used by CommandModule: %d Bytes\n",MEMORY_COMMAND);
+    DBG_LOG_INFO("Memory used by ConfigModule: %d Bytes\n",MEMORY_CONFIG);
+    DBG_LOG_INFO("Memory used by DMAModule: %d Bytes\n",MEMORY_DMA);
+    DBG_LOG_INFO("Memory used by DiscoveryModule: %d Bytes\n",MEMORY_CORE_WELLKNOWN);
+    DBG_LOG_INFO("Memory used by InOutBuffer: %d Bytes\n",MEMORY_INOUT);
+    DBG_LOG_INFO("Memory used by StreamDataRecorder: %d Bytes\n",MEMORY_STREAM);
+    DBG_LOG_INFO("========ALL=========================%d=Bytes====\n"
+                    ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
+                    MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
     transfer_free = 1;
     transfer_time = 0;
     coap_setup();

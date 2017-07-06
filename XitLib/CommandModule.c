@@ -368,8 +368,7 @@ int MEMWrite(ParameterList_t *TempParam)
           WriteMem(Adress,Value);
           AddToTransmit("<WR/>\r\n\r");
           #ifdef DEBUG
-             DBG_LOG_PREPARE(buf_local,60,"Mem[%d] setted to %d.\r\n\r",Adress,Value);
-             DBG_LOG_TRACE(buf_local);
+             DBG_LOG_TRACE("Mem[%d] setted to %d.\r\n\r",Adress,Value);
           #endif
        }
     }
@@ -425,8 +424,7 @@ int CommandLineInterpreter(char *Command)
     char                buf_local[60];
 
     DBG_LOG_DEBUG("Into CommandLineInterpreter.\n");
-    snprintf(buf_local,60,"> %s\n",Command);
-    DBG_LOG_DEBUG(buf_local);
+    DBG_LOG_DEBUG("> %s\n",Command);
     /* The string input by the user contains a value, now run the string */
     /* through the Command Parser.                                       */
     if(CommandParser(&TempCommand, Command) >= 0)

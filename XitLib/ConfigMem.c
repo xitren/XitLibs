@@ -125,8 +125,6 @@ void InitCfgMem(void)
 inline void WriteMem(uint32_t _adr, uint32_t _val)
 {
   char buf_local[60];
-//  DBG_LOG_PREPARE(buf_local,60,"Writed memory reg (%d) = %d\n",_adr,_val);
-//  DBG_LOG_TRACE(buf_local);
   if (_adr < CFG_SIZE)
   {
     config_reg[_adr] = _val;
@@ -138,8 +136,6 @@ inline uint32_t ReadMem(uint32_t _adr)
   char buf_local[60];
   if (_adr < CFG_SIZE)
   {
-//    DBG_LOG_PREPARE(buf_local,60,"Readed memory reg (%d) = %d\n",_adr,config_reg[_adr]);
-//    DBG_LOG_TRACE(buf_local);
     return config_reg[_adr];
   }
   else

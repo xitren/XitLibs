@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -209,9 +209,9 @@
         </asmTool>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a</linkerLibFileItem>
             <linkerLibLibItem>Ws2_32</linkerLibLibItem>
             <linkerLibFileItem>../EEG_Evoker/dist/Release/MinGW-Windows/libeeg_evoker.a</linkerLibFileItem>
+            <linkerLibFileItem>../XitLib/dist/Release_Windows/MinGW-Windows/libxitlib.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
       </compileType>

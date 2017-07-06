@@ -587,7 +587,6 @@ UMM_HEAP_INFO heapInfo;
 void *umm_info( void *ptr, int force ) {
 
    unsigned short int blockNo = 0;
-   char buf_local[60];
 
    // Protect the critical section...
    //
@@ -600,7 +599,7 @@ void *umm_info( void *ptr, int force ) {
 
    DBG_LOG_FORCE( force, "\n\nDumping the umm_heap...\n" );
 
-   DBG_LOG_PREPARE(buf_local,60,"|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|NF %5i|PF %5i|\n",
+   DBG_LOG_FORCE( force, "|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|NF %5i|PF %5i|\n",
          (unsigned int)(&UMM_BLOCK(blockNo)),
          blockNo,
          UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK,
@@ -608,7 +607,6 @@ void *umm_info( void *ptr, int force ) {
          (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo,
          UMM_NFREE(blockNo),
          UMM_PFREE(blockNo) );
-   DBG_LOG_FORCE( force, buf_local );
 
    // Now loop through the block lists, and keep track of the number and size
    // of used and free blocks. The terminating condition is an nb pointer with
@@ -626,15 +624,14 @@ void *umm_info( void *ptr, int force ) {
          ++heapInfo.freeEntries;
          heapInfo.freeBlocks += (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo;
 
-         DBG_LOG_PREPARE(buf_local,60,"|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|NF %5i|PF %5i|\n",
+         DBG_LOG_FORCE( force, "|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|NF %5i|PF %5i|\n",
                (unsigned int)(&UMM_BLOCK(blockNo)),
                blockNo,
                UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK,
                UMM_PBLOCK(blockNo),
                (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo,
                UMM_NFREE(blockNo),
-               UMM_PFREE(blockNo) );
-         DBG_LOG_FORCE( force, buf_local);
+               UMM_PFREE(blockNo));
 
          // Does this block address match the ptr we may be trying to free?
 
@@ -650,13 +647,12 @@ void *umm_info( void *ptr, int force ) {
          ++heapInfo.usedEntries;
          heapInfo.usedBlocks += (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo;
 
-         DBG_LOG_PREPARE(buf_local,60,"|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|\n",
+         DBG_LOG_FORCE( force, "|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|\n",
                (unsigned int)(&UMM_BLOCK(blockNo)),
                blockNo,
                UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK,
                UMM_PBLOCK(blockNo),
-               (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo );
-         DBG_LOG_FORCE( force, buf_local);
+               (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK )-blockNo);
       }
 
       blockNo = UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK;
@@ -668,27 +664,24 @@ void *umm_info( void *ptr, int force ) {
    heapInfo.freeBlocks  += UMM_NUMBLOCKS-blockNo;
    heapInfo.totalBlocks += UMM_NUMBLOCKS-blockNo;
 
-   DBG_LOG_PREPARE(buf_local,60,"|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|NF %5i|PF %5i|\n",
+   DBG_LOG_FORCE( force, "|0x%08x|B %5i|NB %5i|PB %5i|Z %5i|NF %5i|PF %5i|\n",
          (unsigned int)(&UMM_BLOCK(blockNo)),
          blockNo,
          UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK,
          UMM_PBLOCK(blockNo),
          UMM_NUMBLOCKS-blockNo,
          UMM_NFREE(blockNo),
-         UMM_PFREE(blockNo) );
-   DBG_LOG_FORCE( force, buf_local);
+         UMM_PFREE(blockNo));
 
-   DBG_LOG_PREPARE(buf_local,60,"Total Entries %5i    Used Entries %5i    Free Entries %5i\n",
+   DBG_LOG_FORCE( force, "Total Entries %5i    Used Entries %5i    Free Entries %5i\n",
          heapInfo.totalEntries,
          heapInfo.usedEntries,
-         heapInfo.freeEntries );
-   DBG_LOG_FORCE( force, buf_local);
+         heapInfo.freeEntries);
 
-   DBG_LOG_PREPARE(buf_local,60,"Total Blocks  %5i    Used Blocks  %5i    Free Blocks  %5i\n",
+   DBG_LOG_FORCE( force, "Total Blocks  %5i    Used Blocks  %5i    Free Blocks  %5i\n",
          heapInfo.totalBlocks,
          heapInfo.usedBlocks,
-         heapInfo.freeBlocks  );
-   DBG_LOG_FORCE( force, buf_local);
+         heapInfo.freeBlocks );
 
    // Release the critical section...
    //
@@ -781,7 +774,6 @@ static unsigned short int umm_assimilate_down( unsigned short int c, unsigned sh
 void umm_free( void *ptr ) {
 
    unsigned short int c;
-   char buf_local[60];
 
    // If we're being asked to free a NULL pointer, well that's just silly!
 
@@ -806,8 +798,7 @@ void umm_free( void *ptr ) {
 
    c = (ptr-(void *)(&(umm_heap[0])))/sizeof(umm_block);
 
-   DBG_LOG_PREPARE(buf_local,60,"Freeing block %6i\n", c );
-   DBG_LOG_DEBUG( buf_local );
+   DBG_LOG_DEBUG( "Freeing block %6i\n", c );
 
    // Now let's assimilate this block with the next one if possible.
 
@@ -865,7 +856,6 @@ void umm_free( void *ptr ) {
 void *umm_malloc( size_t size ) {
 
    unsigned short int blocks;
-   char buf_local[60];
    /* volatile --COMMENTED BY DFRANK because the version from FreeRTOS doesn't have it*/
    unsigned short int blockSize = 0;
 
@@ -905,8 +895,7 @@ void *umm_malloc( size_t size ) {
    while( UMM_NFREE(cf) ) {
       blockSize = (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK) - cf;
 
-      DBG_LOG_PREPARE(buf_local,60,"Looking at block %6i size %6i\n", cf, blockSize );
-      DBG_LOG_TRACE( buf_local );
+      DBG_LOG_TRACE( "Looking at block %6i size %6i\n", cf, blockSize );
 
 #if defined UMM_FIRST_FIT
       // This is the first block that fits!
@@ -935,8 +924,7 @@ void *umm_malloc( size_t size ) {
 
       if( blockSize == blocks ) {
          // It's an exact fit and we don't neet to split off a block.
-         DBG_LOG_PREPARE(buf_local,60,"Allocating %6i blocks starting at %6i - exact\n", blocks, cf );
-         DBG_LOG_DEBUG( buf_local );
+         DBG_LOG_DEBUG( "Allocating %6i blocks starting at %6i - exact\n", blocks, cf );
          
          // Disconnect this block from the FREE list
 
@@ -944,8 +932,7 @@ void *umm_malloc( size_t size ) {
 
       } else {
          // It's not an exact fit and we need to split off a block.
-         DBG_LOG_PREPARE(buf_local,60,"Allocating %6i blocks starting at %6i - existing\n", blocks, cf );
-         DBG_LOG_DEBUG( buf_local );
+         DBG_LOG_DEBUG( "Allocating %6i blocks starting at %6i - existing\n", blocks, cf );
          
          umm_make_new_block( cf, blockSize-blocks, UMM_FREELIST_MASK );
 
@@ -958,8 +945,7 @@ void *umm_malloc( size_t size ) {
       // time, which happens in the next conditional...
 
       if( UMM_NUMBLOCKS <= cf+blocks+1 ) {
-         DBG_LOG_PREPARE(buf_local,60, "Can't allocate %5i blocks at %5i\n", blocks, cf );
-         DBG_LOG_DEBUG( buf_local );
+         DBG_LOG_DEBUG( "Can't allocate %5i blocks at %5i\n", blocks, cf );
 
          // Release the critical section...
          //
@@ -979,8 +965,7 @@ void *umm_malloc( size_t size ) {
          cf            = 1;
       }
 
-      DBG_LOG_PREPARE(buf_local,60, "Allocating %6i blocks starting at %6i - new     \n", blocks, cf );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "Allocating %6i blocks starting at %6i - new     \n", blocks, cf );
       
       UMM_NFREE(UMM_PFREE(cf)) = cf+blocks;
 
@@ -1002,7 +987,6 @@ void *umm_malloc( size_t size ) {
 void *umm_calloc( size_t num, size_t sizen ) {
 
    unsigned short int blocks;
-   char buf_local[60];
    /* volatile --COMMENTED BY DFRANK because the version from FreeRTOS doesn't have it*/
    unsigned short int blockSize = 0;
 
@@ -1043,8 +1027,7 @@ void *umm_calloc( size_t num, size_t sizen ) {
    while( UMM_NFREE(cf) ) {
       blockSize = (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK) - cf;
 
-      DBG_LOG_PREPARE(buf_local,60, "Looking at block %6i size %6i\n", cf, blockSize );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "Looking at block %6i size %6i\n", cf, blockSize );
 
 #if defined UMM_FIRST_FIT
       // This is the first block that fits!
@@ -1073,8 +1056,7 @@ void *umm_calloc( size_t num, size_t sizen ) {
 
       if( blockSize == blocks ) {
          // It's an exact fit and we don't neet to split off a block.
-         DBG_LOG_PREPARE(buf_local,60, "Allocating %6i blocks starting at %6i - exact\n", blocks, cf );
-         DBG_LOG_DEBUG( buf_local );
+         DBG_LOG_DEBUG( "Allocating %6i blocks starting at %6i - exact\n", blocks, cf );
          
          // Disconnect this block from the FREE list
 
@@ -1082,8 +1064,7 @@ void *umm_calloc( size_t num, size_t sizen ) {
 
       } else {
          // It's not an exact fit and we need to split off a block.
-         DBG_LOG_PREPARE(buf_local,60, "Allocating %6i blocks starting at %6i - existing\n", blocks, cf );
-         DBG_LOG_DEBUG( buf_local );
+         DBG_LOG_DEBUG( "Allocating %6i blocks starting at %6i - existing\n", blocks, cf );
          
          umm_make_new_block( cf, blockSize-blocks, UMM_FREELIST_MASK );
 
@@ -1096,8 +1077,7 @@ void *umm_calloc( size_t num, size_t sizen ) {
       // time, which happens in the next conditional...
 
       if( UMM_NUMBLOCKS <= cf+blocks+1 ) {
-         DBG_LOG_PREPARE(buf_local,60,  "Can't allocate %5i blocks at %5i\n", blocks, cf );
-         DBG_LOG_DEBUG( buf_local );
+         DBG_LOG_DEBUG( "Can't allocate %5i blocks at %5i\n", blocks, cf );
 
          // Release the critical section...
          //
@@ -1117,8 +1097,7 @@ void *umm_calloc( size_t num, size_t sizen ) {
          cf            = 1;
       }
 
-      DBG_LOG_PREPARE(buf_local,60, "Allocating %6i blocks starting at %6i - new     \n", blocks, cf );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "Allocating %6i blocks starting at %6i - new     \n", blocks, cf );
       
       UMM_NFREE(UMM_PFREE(cf)) = cf+blocks;
 
@@ -1205,8 +1184,7 @@ void *umm_realloc( void *ptr, size_t size ) {
    if( blockSize == blocks ) {
       // This space intentionally left blank - return the original pointer!
 
-      DBG_LOG_PREPARE(buf_local,60, "realloc the same size block - %i, do nothing\n", blocks );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "realloc the same size block - %i, do nothing\n", blocks );
 
       // Release the critical section...
       //
@@ -1233,8 +1211,7 @@ void *umm_realloc( void *ptr, size_t size ) {
 
       // Check if the resulting block would be big enough...
 
-      DBG_LOG_PREPARE(buf_local,60, "realloc() could assimilate down %i blocks - fits!\n\r", c-UMM_PBLOCK(c) );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "realloc() could assimilate down %i blocks - fits!\n\r", c-UMM_PBLOCK(c) );
 
       // Disconnect the previous block from the FREE list
 
@@ -1262,15 +1239,13 @@ void *umm_realloc( void *ptr, size_t size ) {
    if( blockSize == blocks ) {
       // This space intentionally left blank - return the original pointer!
 
-      DBG_LOG_PREPARE(buf_local,60, "realloc the same size block - %i, do nothing\n", blocks );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "realloc the same size block - %i, do nothing\n", blocks );
 
    } else if (blockSize > blocks ) {
       // New block is smaller than the old block, so just make a new block
       // at the end of this one and put it up on the free list...
 
-      DBG_LOG_PREPARE(buf_local,60, "realloc %i to a smaller block %i, shrink and free the leftover bits\n", blockSize, blocks );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "realloc %i to a smaller block %i, shrink and free the leftover bits\n", blockSize, blocks );
 
       umm_make_new_block( c, blocks, 0 );
 
@@ -1280,8 +1255,7 @@ void *umm_realloc( void *ptr, size_t size ) {
 
       void *oldptr = ptr;
 
-      DBG_LOG_PREPARE(buf_local,60, "realloc %i to a bigger block %i, make new, copy, and free the old\n", blockSize, blocks );
-      DBG_LOG_DEBUG( buf_local );
+      DBG_LOG_DEBUG( "realloc %i to a bigger block %i, make new, copy, and free the old\n", blockSize, blocks );
 
       // Now umm_malloc() a new/ one, copy the old data to the new block, and
       // free up the old block, but only if the malloc was sucessful!
