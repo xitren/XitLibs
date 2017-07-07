@@ -54,7 +54,6 @@ int QueryUpdate(ParameterList_t *TempParam)
     coap_buffer_t tokfb;
     int pktlen = sizeof(buf);
     int type=0;
-    char buf_local[60];
 
     DBG_LOG_DEBUG("Into QueryUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
@@ -93,7 +92,7 @@ int QueryUpdate(ParameterList_t *TempParam)
         if (repeat <= 0)
         {
             printf("No more repeats.");
-            return;
+            return 0;
         }
         
         snprintf(path_update,50,"update?type=%d",type);
@@ -136,8 +135,7 @@ int QueryUpdate(ParameterList_t *TempParam)
             DBG_LOG_DEBUG("Sending: ");
             coap_dump(buf, pktlen, true);
         #endif
-        DBG_LOG_PREPARE(buf_local,60,"Sended %d part query.\n",ind_i);
-        DBG_LOG_TRACE(buf_local);
+        DBG_LOG_TRACE("Sended %d part query.\n",ind_i);
     }
     else
     {
@@ -190,7 +188,7 @@ int QueryUpdateHash(ParameterList_t *TempParam)
         if (repeat <= 0)
         {
             DBG_LOG_CRITICAL("No more repeats.");
-            return;
+            return 0;
         }
         snprintf(path_update_hash,50,"updatehash?type=%d",type);
         snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);    
@@ -273,7 +271,6 @@ int CallbackUpdate(ParameterList_t *TempParam)
     char filename[50];
     FILE *fp,*fpo;
     int type;
-    char buf_local[60];
     
     DBG_LOG_DEBUG("--//internal//-- Into CallbackUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
@@ -318,8 +315,7 @@ int CallbackUpdate(ParameterList_t *TempParam)
         
         snprintf(namepart,100,"%s.p%02d",filename,ind_i);
         fp = fopen(namepart,"w"); // read mode
-        DBG_LOG_PREPARE(buf_local,60,"Create file %s\n",namepart);
-        DBG_LOG_DEBUG(buf_local);
+        DBG_LOG_DEBUG("Create file %s\n",namepart);
 
         if( fp == NULL )
         {
@@ -340,8 +336,7 @@ int CallbackUpdate(ParameterList_t *TempParam)
             sprintf(systemcommand, "sudo cp %s old_%s", filename, filename);
             system(systemcommand);
             fp = fopen(namepart,"w"); // read mode
-            DBG_LOG_PREPARE(buf_local,60,"Create file %s\n",namepart);
-            DBG_LOG_DEBUG(buf_local);
+            DBG_LOG_DEBUG("Create file %s\n",namepart);
             for(i=0;i<=ind_i;i++)
             {
                 snprintf(namepart,100,"%s.p%02d",filename,i);
@@ -426,7 +421,6 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
     uint16_t allhashserver = 0;
     char filename[50];
     int type;
-    char buf_local[60];
     
     DBG_LOG_DEBUG("Into CallbackUpdateHash.\n");
     /* First check to see if the parameters required for the execution of*/
@@ -443,8 +437,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
         
         //прочитать хэш нужного файла
         //если раздаёт BaseStation, читаем из update
-        DBG_LOG_PREPARE(buf_local,60,"Device type***: %d\n", DEVICE);
-        DBG_LOG_DEBUG(buf_local);
+        DBG_LOG_DEBUG("Device type***: %d\n", DEVICE);
         if (DEVICE == 0) {
             if (type==0) { //Updater.sh
                 strcpy(filename, "Updater.sh");
@@ -489,8 +482,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             else strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
         }
         
-        DBG_LOG_PREPARE(buf_local,60,"THE FILE NAME IS***: %s\n", filename);
-        DBG_LOG_DEBUG(buf_local);
+        DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
         
         fp = fopen(filename,"r"); // read mode
 
@@ -500,8 +492,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             while (end == 0)
             {
                 sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
-                DBG_LOG_DEBUG(buf_local);
+                DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
 
@@ -517,9 +508,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             allhashserver = StringToUnsignedInteger(ptr);
             scratch_buf.p = ptr+1;
             fclose(fp);
-            DBG_LOG_PREPARE(buf_local,60,"%X <> %X.\n",allhashserver,
-                                                        allhash);
-            DBG_LOG_DEBUG(buf_local);
+            DBG_LOG_DEBUG("%X <> %X.\n",allhashserver,allhash);
             if (allhashserver != allhash)
             {
                 //system("sudo rm Complexmedsh");
@@ -664,7 +653,6 @@ int UpdateHash(ParameterList_t *TempParam)
     int end;
     char buffer[STRING_SIZE];
     int type;
-    char buf_local[60];
    
     DBG_LOG_DEBUG("Into UpdateHash.\n");
     /* First check to see if the parameters required for the execution of*/
@@ -708,8 +696,7 @@ int UpdateHash(ParameterList_t *TempParam)
         }
         else 
             strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
-        DBG_LOG_PREPARE(buf_local,60,"THE FILE NAME IS***: %s\n", filename);
-        DBG_LOG_DEBUG(buf_local);
+        DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
 
         fp = fopen(filename,"r"); // read mode
 
@@ -729,8 +716,7 @@ int UpdateHash(ParameterList_t *TempParam)
             while (end == 0)
             {
                 sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
-                DBG_LOG_TRACE(buf_local);
+                DBG_LOG_TRACE("%d readed from file.\n",sizefp);
 
                 allhash += CRC16ANSI(bufsa,sizefp);
     //            snprintf(buffer,STRING_SIZE,"{\"part\":%d,\"hash\":",num);
@@ -775,7 +761,6 @@ int Update(ParameterList_t *TempParam)
     int end;
     char filename[50];
     int type;
-    char buf_local[60];
     
     #ifdef DEBUG
         DBG_LOG_DEBUG("--//internal//-- Into Update.\r\n\r");
@@ -823,8 +808,7 @@ int Update(ParameterList_t *TempParam)
         }
         else 
             strcpy(filename, "Updater.sh");
-        DBG_LOG_PREPARE(buf_local,60,"THE FILE NAME IS***: %s\n", filename);
-        DBG_LOG_DEBUG(buf_local);
+        DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
 
         fp = fopen(filename,"r"); // read mode
         content_type = COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM;
@@ -838,13 +822,11 @@ int Update(ParameterList_t *TempParam)
         {
             end = 0;
             num = 0;
-            DBG_LOG_PREPARE(buf_local,60,"Part %d .\r\n\r",ind_i);
-            DBG_LOG_TRACE(buf_local);
+            DBG_LOG_TRACE("Part %d .\r\n\r",ind_i);
             if (ind_i == -1)
             {
                 sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
-                DBG_LOG_TRACE(buf_local);
+                DBG_LOG_TRACE("%d readed from file.\n",sizefp);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
                 if (sizefp != size_parts)
@@ -858,8 +840,7 @@ int Update(ParameterList_t *TempParam)
                 while (num <= ind_i)
                 {
                     sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                    DBG_LOG_PREPARE(buf_local,60,"%d readed from file.\n",sizefp);
-                    DBG_LOG_TRACE(buf_local);
+                    DBG_LOG_TRACE("%d readed from file.\n",sizefp);
                     if (sizefp == 0)
                         return(INVALID_PARAMETERS_ERROR);
                     if (sizefp != size_parts)

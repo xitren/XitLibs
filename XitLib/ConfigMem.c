@@ -129,6 +129,8 @@ inline void WriteMem(uint32_t _adr, uint32_t _val)
   {
     config_reg[_adr] = _val;
   }
+  else
+    DBG_LOG_WARNING("Memory address greater than CFG");
   return;
 }
 inline uint32_t ReadMem(uint32_t _adr)
@@ -139,7 +141,7 @@ inline uint32_t ReadMem(uint32_t _adr)
     return config_reg[_adr];
   }
   else
-//    DBG_LOG_WARNING("Memory address greater than CFG");
+    DBG_LOG_WARNING("Memory address greater than CFG");
   return 0;
 }
 /*============================================================================*/

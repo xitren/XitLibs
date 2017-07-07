@@ -124,26 +124,26 @@ inline void UserOperationHandler(void) {
                 m = sprintf((char*)buffer, "Case 1\n");
                 HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
                 
-//                ads1299_wreg(CONFIG1, vals1, 17);
-//                rvars = ads1299_rreg(CONFIG1, 17);
-//                while( ads1299_check(rvars, vals1, 17) != 0 )
-//                {
-//                    m = sprintf((char*)buffer,"ERR1\n");
-//                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-//                    
-//                    ads1299_wreg(CONFIG1, vals1, 17);
-//                    rvars = ads1299_rreg(CONFIG1, 17);
-//                }
-//                ads1299_wreg(GPIO, vals2, 4);
-//                rvars = ads1299_rreg(GPIO, 4);
-//                while( ads1299_check(rvars, vals2, 4) != 0 )
-//                {
-//                    m = sprintf((char*)buffer,"ERR2\n");
-//                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
-//                    
-//                    ads1299_wreg(GPIO, vals2, 4);
-//                    rvars = ads1299_rreg(GPIO, 4);
-//                }
+                ads1299_wreg(CONFIG1, vals1, 17);
+                rvars = ads1299_rreg(CONFIG1, 17);
+                while( ads1299_check(rvars, vals1, 17) != 0 )
+                {
+                    m = sprintf((char*)buffer,"ERR1\n");
+                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+                    
+                    ads1299_wreg(CONFIG1, vals1, 17);
+                    rvars = ads1299_rreg(CONFIG1, 17);
+                }
+                ads1299_wreg(GPIO, vals2, 4);
+                rvars = ads1299_rreg(GPIO, 4);
+                while( ads1299_check(rvars, vals2, 4) != 0 )
+                {
+                    m = sprintf((char*)buffer,"ERR2\n");
+                    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, m, 1000);
+                    
+                    ads1299_wreg(GPIO, vals2, 4);
+                    rvars = ads1299_rreg(GPIO, 4);
+                }
                 EEGRecorderInit(1, 250);
                 break;
             /* Test sinus */
@@ -181,6 +181,7 @@ inline void UserOperationHandler(void) {
         WriteMem(REG_EEG_Auto_Band, 1);
         InitImageP300();
     }
+    //HAL_UART_Transmit(&huart1, "1", 1, 1000);
 
     OperationHandler();
     return;
@@ -196,7 +197,7 @@ inline int32_t ADC_read_data_c(){
     WriteMem(REG_ADC_CH6,data[5]);
     WriteMem(REG_ADC_CH7,data[6]);
     WriteMem(REG_ADC_CH8,data[7]);
-    AddSample();
+//    AddSample();
     return 0;
 }
 

@@ -106,7 +106,7 @@ int main(void)
   HAL_TIM_Base_Start_IT(&htim2);
   HAL_TIM_Base_Start_IT(&htim14);
   HAL_TIM_Base_Start_IT(&htim13);
-  //HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
+  HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
   
   //ads1299_reset();
   
@@ -124,7 +124,7 @@ int main(void)
     
     while(1)
     {
-        UserOperationHandler();    
+        //UserOperationHandler();    
         UserProtocolHandler();
 //        l = sprintf((char*)buffer,"cycle \n");
 //        HAL_UART_Transmit(&huart1, (uint8_t *) buffer, l, 1000);
@@ -206,11 +206,11 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
 //  }
   if (UartHandle->Instance == USART1)
   {
-    //HAL_TIM_Base_Stop(&htim13); 
-//    UartProtocolHandler();
+    HAL_TIM_Base_Stop(&htim13); 
+    UartProtocolHandler();
 //    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, 1, 1000);
-//    HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
-    //HAL_TIM_Base_Start_IT(&htim13);
+    HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
+    HAL_TIM_Base_Start_IT(&htim13);
   }
   return;
 }

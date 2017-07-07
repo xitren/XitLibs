@@ -261,26 +261,26 @@ void TIM2_IRQHandler(void)/**/
   HAL_TIM_IRQHandler(&htim2);
   /* USER CODE BEGIN TIM2_IRQn 1 */  
 //      
-//        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
-//        data_temp = ImgP[cycle_cnt%8][0];
-//        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
-//                                                        (uint8_t*) &rd, 1, 10);
-//        data_temp = ImgP[cycle_cnt%8][1];
-//        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
-//                                                        (uint8_t*) &rd, 1, 10);
-//        data_temp = ImgP[cycle_cnt%8][2];
-//        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
-//                                                        (uint8_t*) &rd, 1, 10);
-//        data_temp = 1<<((cycle_cnt)%8);
-//        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
-//                                                        (uint8_t*) &rd, 1, 10);
-//        HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_11);
+        HAL_GPIO_WritePin(GPIOE, GPIO_PIN_11, GPIO_PIN_RESET);
+        data_temp = ImgP[cycle_cnt%8][0];
+        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                        (uint8_t*) &rd, 1, 10);
+        data_temp = ImgP[cycle_cnt%8][1];
+        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                        (uint8_t*) &rd, 1, 10);
+        data_temp = ImgP[cycle_cnt%8][2];
+        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                        (uint8_t*) &rd, 1, 10);
+        data_temp = 1<<((cycle_cnt)%8);
+        HAL_SPI_TransmitReceive(&hspi4, (uint8_t*) &(data_temp), 
+                                                        (uint8_t*) &rd, 1, 10);
+        HAL_GPIO_TogglePin(GPIOE,GPIO_PIN_11);
 //  
-//        WriteMem(REG_ADC_CH8, ((((uint32_t)selection[3]) & 0x000000FF) << 24) |
-//                            ((((uint32_t)selection[2]) & 0x000000FF) << 16) |
-//                            ((((uint32_t)selection[1]) & 0x000000FF) << 8) |
-//                            ((((uint32_t)selection[0]) & 0x000000FF)));
-//        AddSample();
+    WriteMem(REG_ADC_CH8, ((((uint32_t)selection[3]) & 0x000000FF) << 24) |
+                        ((((uint32_t)selection[2]) & 0x000000FF) << 16) |
+                        ((((uint32_t)selection[1]) & 0x000000FF) << 8) |
+                        ((((uint32_t)selection[0]) & 0x000000FF)));
+    //AddSample();
   /* USER CODE END TIM2_IRQn 1 */
 }
 //
@@ -352,7 +352,7 @@ void TIM8_UP_TIM13_IRQHandler(void)
   /* USER CODE BEGIN TIM8_UP_TIM13_IRQn 1 */  
 
 //  HAL_TIM_Base_Stop(&htim13);
-//  UartReceiveCompleteHandler();
+  UartReceiveCompleteHandler();
 //  HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_9); //my
   /* USER CODE END TIM8_UP_TIM13_IRQn 1 */
 }
@@ -369,8 +369,8 @@ void TIM8_TRG_COM_TIM14_IRQHandler(void)
   HAL_TIM_IRQHandler(&htim14);
   /* USER CODE BEGIN TIM8_TRG_COM_TIM14_IRQn 1 */  
 //
-//  SecClockHandler();
-//  StatChangeHandler();
+  SecClockHandler();
+  StatChangeHandler();
 //  HAL_GPIO_TogglePin(GPIOG,GPIO_PIN_9); //my
 
   /* USER CODE END TIM8_TRG_COM_TIM14_IRQn 1 */
@@ -416,7 +416,8 @@ void DMA2_Stream7_IRQHandler(void)
   HAL_DMA_IRQHandler(&hdma_usart1_tx);
   /* USER CODE BEGIN DMA2_Stream7_IRQn 1 */
   
-//  UartTransferCompleteHandler();
+  HAL_TIM_Base_Stop(&htim13);
+  UartTransferCompleteHandler();
 
   /* USER CODE END DMA2_Stream7_IRQn 1 */
 }
@@ -431,23 +432,23 @@ void EXTI15_10_IRQHandler(void)
     /* USER CODE BEGIN EXTI15_10_IRQn 0 */
 
     /* USER CODE END EXTI15_10_IRQn 0 */
-    HAL_GPIO_EXTI_IRQHandler(BCI_DRDY_Pin);
-    /* USER CODE BEGIN EXTI15_10_IRQn 1 */
+//    HAL_GPIO_EXTI_IRQHandler(BCI_DRDY_Pin);
+//    /* USER CODE BEGIN EXTI15_10_IRQn 1 */
 //    if (ReadMem(REG_EEG_Auto_Band) > 0)
 //    {
 //        AddSample();
-//        devp300showme();
 //    }
-    
-//    if (ReadMem(REG_EEG_Auto_Band) > 0)
-//    {
-//        ADC_read_data_c();
-//        WriteMem(REG_ADC_CH8, ((((uint32_t)selection[3]) & 0x000000FF) << 24) |
-//                                ((((uint32_t)selection[2]) & 0x000000FF) << 16) |
-//                                ((((uint32_t)selection[1]) & 0x000000FF) << 8) |
-//                                ((((uint32_t)selection[0]) & 0x000000FF)));
-//        AddSample();
-//    }
+//    
+    if (ReadMem(REG_EEG_Auto_Band) > 0)
+    {
+        devp300showme();
+        ADC_read_data_c();
+        WriteMem(REG_ADC_CH8, ((((uint32_t)selection[3]) & 0x000000FF) << 24) |
+                                ((((uint32_t)selection[2]) & 0x000000FF) << 16) |
+                                ((((uint32_t)selection[1]) & 0x000000FF) << 8) |
+                                ((((uint32_t)selection[0]) & 0x000000FF)));
+        AddSample();
+    }
 
     /* USER CODE END EXTI15_10_IRQn 1 */
 }
