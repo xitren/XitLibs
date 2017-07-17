@@ -9,9 +9,12 @@
 
 // ----------------------------------------------------------------------------
 
-
-
-
+#ifdef CPU
+#  define umm_free    free
+#  define umm_malloc  malloc
+#  define umm_calloc  calloc
+#  define umm_realloc realloc
+#else
 typedef struct UMM_HEAP_INFO_t {
    unsigned short int totalEntries;
    unsigned short int usedEntries;
@@ -35,7 +38,7 @@ void *umm_malloc( size_t size );
 void *umm_calloc( size_t num, size_t sizen );
 void *umm_realloc( void *ptr, size_t size );
 void umm_free( void *ptr );
-
+#endif 
 
 // ----------------------------------------------------------------------------
 

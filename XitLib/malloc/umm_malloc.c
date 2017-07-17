@@ -502,18 +502,11 @@
 #  endif
 #endif
 
-//#ifndef UMM_DBG_LOG_LEVEL
-//#  undef  DBG_LOG_LEVEL
-//#  define DBG_LOG_LEVEL 0
-//#else
-//#  undef  DBG_LOG_LEVEL
-//#  define DBG_LOG_LEVEL UMM_DBG_LOG_LEVEL
-//#endif
-
 #include "LogModule.h"
 
 // ----------------------------------------------------------------------------
 
+#ifndef CPU
 UMM_H_ATTPACKPRE typedef struct umm_ptr_t {
    unsigned short int next;
    unsigned short int prev;
@@ -1276,4 +1269,5 @@ void *umm_realloc( void *ptr, size_t size ) {
 
 // ----------------------------------------------------------------------------
 
+#endif
 #endif
