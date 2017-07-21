@@ -68,17 +68,17 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c
+${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DCPU -DP300 -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
 
-${OBJECTDIR}/_ext/83d34d09/UpdateModule.o: ../XitLib/External/UpdateModule.c
+${OBJECTDIR}/_ext/83d34d09/UpdateModule.o: ../XitLib/External/UpdateModule.c 
 	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DCPU -DP300 -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/UpdateModule.o ../XitLib/External/UpdateModule.c
 
-${OBJECTDIR}/main.o: main.c
+${OBJECTDIR}/main.o: main.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DCPU -DP300 -DPLATFORM_WINDOWS -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
@@ -89,6 +89,7 @@ ${OBJECTDIR}/main.o: main.c
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server.exe
 
 # Subprojects
 .clean-subprojects:

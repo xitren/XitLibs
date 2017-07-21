@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<configurationDescriptor version="97">
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="Debug_Windows" type="3" platformSpecific="true">
@@ -105,7 +105,7 @@
     </conf>
     <conf name="Release_Linux" type="3">
       <toolsSet>
-        <developmentServer>pi@10.9.91.105:22</developmentServer>
+        <developmentServer>pi@10.10.30.52:22</developmentServer>
         <platform>2</platform>
       </toolsSet>
       <dbx_gdbdebugger version="1">

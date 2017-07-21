@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="HeaderFiles"
                    displayName="Header Files"
@@ -16,7 +16,6 @@
           <itemPath>../XitLib/json/cJSON_Utils.h</itemPath>
         </logicalFolder>
         <logicalFolder name="f2" displayName="malloc" projectFiles="true">
-          <itemPath>../XitLib/malloc/dbglog.h</itemPath>
           <itemPath>../XitLib/malloc/umm_malloc.h</itemPath>
           <itemPath>../XitLib/malloc/umm_malloc_cfg.h</itemPath>
         </logicalFolder>
@@ -45,11 +44,13 @@
         <itemPath>../XitLib/PWMModule.h</itemPath>
         <itemPath>../XitLib/Packet.h</itemPath>
         <itemPath>../XitLib/StreamDataRecorder.h</itemPath>
-        <itemPath>../XitLib/UpdateModule.h</itemPath>
+        <itemPath>../XitLib/External/UpdateModule.h</itemPath>
         <itemPath>../XitLib/VideoModule.h</itemPath>
+        <itemPath>../XitLib/version.h</itemPath>
         <itemPath>../XitLib/xitlibtypes.h</itemPath>
       </logicalFolder>
       <itemPath>../XitLib/External/ExtFunctions.h</itemPath>
+      <itemPath>../XitLib/LogModule.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -73,6 +74,7 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
       <itemPath>../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a</itemPath>
+      <itemPath>../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a</itemPath>
     </logicalFolder>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
@@ -94,6 +96,8 @@
             <pElem>../XitLib/json</pElem>
             <pElem>../XitLib/malloc</pElem>
             <pElem>../XitLib/models/include</pElem>
+            <pElem>.</pElem>
+            <pElem>../Worked/External</pElem>
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
@@ -129,6 +133,8 @@
       </item>
       <item path="../XitLib/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/Handler.h" ex="false" tool="3" flavor2="0">
@@ -137,13 +143,13 @@
       </item>
       <item path="../XitLib/LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../XitLib/LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/PWMModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/Packet.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -152,8 +158,6 @@
       <item path="../XitLib/json/cJSON.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/malloc/dbglog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -186,6 +190,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -303,6 +309,8 @@
       </item>
       <item path="../XitLib/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/Handler.h" ex="false" tool="3" flavor2="0">
@@ -311,13 +319,13 @@
       </item>
       <item path="../XitLib/LibConfig.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="../XitLib/LogModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/PWMModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/Packet.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -326,8 +334,6 @@
       <item path="../XitLib/json/cJSON.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/malloc/dbglog.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/malloc/umm_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -360,6 +366,8 @@
             ex="false"
             tool="3"
             flavor2="0">
+      </item>
+      <item path="../XitLib/version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>

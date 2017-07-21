@@ -57,11 +57,12 @@ char* coap_check_ans(const char *other)
 {
     int i,j;
     coap_token_record *answer;
+        DBG_LOG_TRACE("size %d\n",array_size(AwaitedAnswersArray));
     for (i=0;i < array_size(AwaitedAnswersArray);i++)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
-        DBG_LOG_TRACE("I %d: %6s <-> %6s\n",i,
-                answer->p,answer->used);
+//        DBG_LOG_TRACE("I %d: %6s(%d) <-> %6s(%d)\n",i,
+//                answer->p,answer->p,answer->used,answer->used);
         if (!strncmp(other,answer->p,answer->len))
         {
             answer->used = 1;
@@ -717,6 +718,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     {
         #ifdef DEBUG
             DBG_LOG_DEBUG("Look for answer waiting list.\n");
+            DBG_LOG_DEBUG("ptr %d.\n",inpkt->tok_p);
         #endif
         if (cbl = coap_check_ans((inpkt->tok_p)))
         {
