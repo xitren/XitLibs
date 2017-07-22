@@ -56,17 +56,16 @@ DWORD WINAPI ThreadFunc250ms()
     {
         SampleHandler();
         Sleep(4);
-        devp300showme();
-        //printf("%d, %d, %d ,%d\n",selection[0],selection[1],selection[2],selection[3]);
+//        devp300showme();
+//        //printf("%d, %d, %d ,%d\n",selection[0],selection[1],selection[2],selection[3]);
     }
     return 0;
 }
-DWORD WINAPI ThreadFunc500ms()
+DWORD WINAPI ThreadFuncUDP()
 {
     while (1)
     {
-        //devp300showme();
-        Sleep(2);
+        UserProtocolHandler();
     }
     return 0;
 }
@@ -112,7 +111,7 @@ int main(int argc, char** argv) {
          &IDThread);              // returns thread identifier
     hThread = CreateThread(NULL, // default security attributes 
          0,                           // use default stack size 
-         (LPTHREAD_START_ROUTINE) ThreadFunc500ms, // thread function 
+         (LPTHREAD_START_ROUTINE) ThreadFuncUDP, // thread function 
          NULL,                    // no thread function argument 
          0,                       // use default creation flags 
          &IDThread);              // returns thread identifier
@@ -122,9 +121,11 @@ int main(int argc, char** argv) {
     //CommandLineInterpreter(commandUpd);
     while(1)
     {
-        UserProtocolHandler();
-//        CalculationHandler();
+        UserOperationHandler();
+        CalculationHandler();
         //umm_info(0,1);
+        //DBG_LOG_DEBUG("Executing Schedule.\n");
+//        ExecuteSchedule();
     }
     return (EXIT_SUCCESS);
 }

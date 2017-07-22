@@ -137,10 +137,6 @@ void InitHandler(DeviceTypeDef device) {
 
 int old_s[4];
 
-void SampleHandler(void) {
-    AddSample();
-}
-
 inline void ProtocolHandler(void) {
 #ifdef CPU
 #else
@@ -188,11 +184,8 @@ inline void OperationHandler(void) {
         function_update(0);
     #endif
     }
-    return;
-}
-
-void CalculationHandler(void) {
-    FreeCycle();
+    
+    ExecuteSchedule();
     return;
 }
 
@@ -241,7 +234,46 @@ void UartReceiveCompleteHandler(void) {
     return;
 }
 
+
+/* Adders --------------------------------------------------------------------*/
 void SecClockHandler(void) {
+    AddToSchedule(SecClockSheduler);
+    return;
+}
+
+void SoftPWMHandler(void) {
+    AddToSchedule(SoftPWMSheduler);
+    return;
+}
+
+void StatChangeHandler(void) {
+    AddToSchedule(StatChangeSheduler);
+    return;
+}
+
+void CalculationHandler(void) {
+    AddToSchedule(CalculationSheduler);
+    return;
+}
+void SampleHandler(void) {
+    AddToSchedule(SampleSheduler);
+}
+/*============================================================================*/
+
+/* Handlers ------------------------------------------------------------------*/
+void SampleSheduler(void) {
+    DBG_LOG_INFO("Scheduled SampleHandler.\n");
+    AddSample();
+}
+
+void CalculationSheduler(void) {
+    DBG_LOG_INFO("Scheduled CalculationHandler.\n");
+    FreeCycle();
+    return;
+}
+
+void SecClockSheduler(void) {
+    DBG_LOG_INFO("Scheduled SecClockHandler.\n");
     ClockHandler();
 #ifdef CPU
     coap_clock();
@@ -251,15 +283,18 @@ void SecClockHandler(void) {
     return;
 }
 
-void SoftPWMHandler(void) {
+void SoftPWMSheduler(void) {
+    DBG_LOG_INFO("Scheduled SoftPWMHandler.\n");
     IncPWM();
     SetLedsUnderPWM();
     return;
 }
 
-void StatChangeHandler(void) {
+void StatChangeSheduler(void) {
+    DBG_LOG_INFO("Scheduled StatChangeHandler.\n");
     ChangeLedsCode();
     return;
+/*============================================================================*/
 }
 
 int ResetReq() {

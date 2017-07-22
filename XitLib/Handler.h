@@ -76,6 +76,12 @@ int Update(ParameterList_t *TempParam);
 int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func);
 int TransferBand(const uint8_t *data, const uint32_t datalen);
 void HandlerImage(void);
+
+void SampleSheduler(void);
+void CalculationSheduler(void);
+void SecClockSheduler(void);
+void SoftPWMSheduler(void);
+void StatChangeSheduler(void);
 /*============================================================================*/
 
 #ifdef __cplusplus

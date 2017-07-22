@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
 CND_PACKAGE_NAME_Debug=EEGEvoker.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/EEGEvoker.tar
 # Release configuration
-CND_PLATFORM_Release=None-Linux
-CND_ARTIFACT_DIR_Release=dist/Release/None-Linux
+CND_PLATFORM_Release=GNU-Linux
+CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
 CND_ARTIFACT_NAME_Release=libeeg_evoker.a
-CND_ARTIFACT_PATH_Release=dist/Release/None-Linux/libeeg_evoker.a
-CND_PACKAGE_DIR_Release=dist/Release/None-Linux/package
+CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/libeeg_evoker.a
+CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
 CND_PACKAGE_NAME_Release=EEGEvoker.tar
-CND_PACKAGE_PATH_Release=dist/Release/None-Linux/package/EEGEvoker.tar
+CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/EEGEvoker.tar
 # Debug_MC configuration
 CND_PLATFORM_Debug_MC=GNU_ARM-Windows
 CND_ARTIFACT_DIR_Debug_MC=dist/Debug_MC/GNU_ARM-Windows

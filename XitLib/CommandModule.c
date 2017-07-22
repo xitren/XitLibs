@@ -14,6 +14,7 @@
 #include "VideoModule.h"
 #include "LogModule.h"
 #include "array.h"
+#include "deque.h"
 #include "umm_malloc.h"
 /*============================================================================*/                           
 
@@ -33,6 +34,7 @@ typedef struct _tagCommandTable_t
    /* declared static are initialized to 0 automatically by the         */
    /* compiler as part of standard C/C++).                              */
 static Array *CommandTableArray;
+static Deque *ScheduleTableDeque;
 /*============================================================================*/
 
 extern uint8_t bufsa[1024];
@@ -60,9 +62,12 @@ CommandFunction_t FindCommand(char *Command);
    /* interface to memory map.                                          */
 void Interface_Memory(void)
 {
+    if (deque_new(&ScheduleTableDeque) != 0)
+        return;
     if (array_new(&CommandTableArray) != 0)
         return;
     ClearCommands();
+    ClearSchedule();
     AddCommand("/RESET", "</reset>", Reset);
 //    AddCommand("/QUERY/UPDATE", "</reset>", QueryUpdate);
     AddCommand("/GET/MEMORY", "</memory>", MEMRead);
@@ -864,5 +869,38 @@ void ClearCommands(void)
 {
     /* Simply flag that there are no commands present in the table.      */
     array_remove_all_free(CommandTableArray);
+    return;
+}
+void AddToSchedule(ScheduleFunction_t ScheduleFunction)
+{
+    ScheduleFunction_t *comm;
+    comm = (ScheduleFunction_t *)umm_calloc(1,sizeof(ScheduleFunction_t));
+    *comm = ScheduleFunction;
+    if (deque_add_last(ScheduleTableDeque, (void *)comm) != 0)
+    {
+        umm_free((void *)comm);
+        return 1;
+    }
+    DBG_LOG_INFO("Schedule updated now %d. \n",deque_size(ScheduleTableDeque));
+    return;
+}
+void ClearSchedule(void)
+{
+    deque_remove_all_free(ScheduleTableDeque);
+    return;
+}
+void ExecuteSchedule(void)
+{
+    ScheduleFunction_t  *Comm;
+
+    while(deque_size(ScheduleTableDeque) > 0)
+    {
+        deque_remove_first(ScheduleTableDeque, (void**)&Comm);
+        DBG_LOG_INFO("Schedule executing, %d left. \n",
+                            deque_size(ScheduleTableDeque));
+        (*(*Comm))();
+        umm_free((void *)Comm);
+    }
+    return;
 }
 /*============================================================================*/
