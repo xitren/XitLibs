@@ -163,7 +163,7 @@ int CLOCKSet(ParameterList_t *TempParam)
     {
         for (i=1;i<TempParam->NumberofParameters;i+=2)
         {
-            sprintf((char*)buffer,"%s - %d\r\n\r",
+            snprintf((char*)buffer,STRING_SIZE,"%s - %d\r\n\r",
                     TempParam->Params[i-1].strParam,
                     (unsigned int)(TempParam->Params[i].intParam));
             AddToTransmit((char*)buffer);
@@ -403,7 +403,7 @@ int DISTRead(ParameterList_t *TempParam)
     /* this function appear to be semi-valid.                            */
     if ((TempParam))
     {
-        sprintf((char*)buffer," %d\r\n\r",(int)ReadMem(REG_Distance));
+        snprintf((char*)buffer,STRING_SIZE," %d\r\n\r",(int)ReadMem(REG_Distance));
         AddToTransmit((char*)buffer);
     }
     else
