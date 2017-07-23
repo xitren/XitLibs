@@ -38,7 +38,7 @@ void InitCfgMem(void)
   config_reg[REG_CLK_Band] = 0;
   config_reg[REG_CLK_Auto_Band] = 0;
   
-  config_reg[REG_Simple_link] = 1;
+  config_reg[REG_Simple_link] = 0;
   
   config_reg[REG_EEG_PocketSize] = 16;
   config_reg[REG_EEG_Auto_Band] = 0;

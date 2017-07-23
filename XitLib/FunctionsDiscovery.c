@@ -101,7 +101,7 @@ int QueryNodes(ParameterList_t *TempParam)
     //AddToTransmit("<NODES>\r\n\r");  // "<NODES>\r\n\r"     "{\n \"EEGBLOCK\": [\n"
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
-    if ((TempParam))
+    if ((TempParam) && (NodesArray))
     {
         if(array_size(NodesArray)==0) 
         {

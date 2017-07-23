@@ -74,6 +74,9 @@ void StatChangeHandler(void);
 int ResetReq();
 int Update(ParameterList_t *TempParam);
 int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func);
+int TransferTo(const uint8_t *data, const uint32_t datalen,
+        const char* address /* = "192.168.1.255" */,
+        const uint32_t port /* = 5683 */);
 int TransferBand(const uint8_t *data, const uint32_t datalen);
 void HandlerImage(void);
 

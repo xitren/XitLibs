@@ -65,7 +65,7 @@ DWORD WINAPI ThreadFuncUDP()
 {
     while (1)
     {
-        UserProtocolHandler();
+        UserProtocolHandlerThread();
     }
     return 0;
 }
@@ -123,6 +123,7 @@ int main(int argc, char** argv) {
     {
         UserOperationHandler();
         CalculationHandler();
+        UserProtocolHandler();
         //umm_info(0,1);
         //DBG_LOG_DEBUG("Executing Schedule.\n");
 //        ExecuteSchedule();

@@ -71,6 +71,31 @@ int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func) {
     #endif
     return -2;
 }
+int TransferTo(const uint8_t *data, const uint32_t datalen,
+        const char* address /* = "192.168.1.255" */,
+        const uint32_t port /* = 5683 */) {
+    //    transfer_time = 0;
+    //    while ((!transfer_free) && (transfer_time < TXTIMEOUT));
+    //    if (transfer_time >= TXTIMEOUT)
+    //        return -1;
+    #ifdef CPU
+        transfer_free = 1;
+        if (data[0] == 0) {
+            DBG_LOG_ERROR("Bad packet\n");
+            #ifdef DEBUG
+                coap_dumpHeader(&pkt.hdr);
+                DBG_LOG_DEBUG("Received: ");
+                coap_dump(data, datalen, true);
+                exit(0);
+            #endif
+        }
+        return TransferUDP(data, datalen, address, port);
+    #else
+        transfer_free = 0;
+        return TransferDMA(data, datalen);
+    #endif
+    return -2;
+}
 
 int TransferBand(const uint8_t *data, const uint32_t datalen) {
     transfer_time = 0;
@@ -114,6 +139,7 @@ void InitHandler(DeviceTypeDef device) {
     InitCfgMem();
     InitCfgDevType();
     DEVICE = device;
+    InitBuffer();
     ClearBuffer();
     Interface_Memory();
     rsplen = sizeof (buf);
@@ -138,21 +164,83 @@ void InitHandler(DeviceTypeDef device) {
 int old_s[4];
 
 inline void ProtocolHandler(void) {
-#ifdef CPU
-#else
-    char buffer[STRING_SIZE];
+    char ip[16];
     uint32_t cmdlent = 0;
-    if (NO_BUFFER_ERROR == ProceedReceive((char*) tbuffer, &cmdlent)) {
+    uint32_t port = 0;
+    if (NO_BUFFER_ERROR == ProceedReceive((char*)buf, &cmdlent, 
+                                                        (char*)ip, &port)) {
+        DBG_LOG_INFO("Simple link(%d) ", ReadMem(REG_Simple_link)); 
         if (ReadMem(REG_Simple_link) > 0) {
             char* tbuffer2;
-            CommandLineInterpreter((char*) &tbuffer);
+            CommandLineInterpreter((char*) &buf);
             if (0 != (tbuffer2 = ProceedTransmit(&lenght))) {
                 Transfer((uint8_t*) tbuffer2, lenght, 0);
             }
             return;
+        } 
+        else 
+        {
+            if (0 != (rc = coap_parse(&pkt, buf, cmdlent))) 
+            {
+                DBG_LOG_INFO("Bad packet(%d) ", rc);
+                DBG_LOG_DEBUG("Received %s: ", ip);
+                #ifdef DEBUG
+                    coap_dump(buf, cmdlent, true);
+                #endif
+            } 
+            else 
+            {
+                #ifdef DEBUG
+                    coap_dumpHeader(&pkt.hdr);
+                    coap_dumpOptions(&pkt.opts, pkt.numopts);
+                #endif
+                content_type = COAP_CONTENTTYPE_APPLICATION_XML;
+                coap_handle_req(&scratch_buf, &pkt, &rsppkt,
+                        CommandLineInterpreter,ip);
+                size_t rsplen = sizeof (buf);
+
+                uint32_t cmdlen;
+                char* tbuffer;
+                if (NULL != (tbuffer = ProceedTransmit(&cmdlen))) {
+                    tbuffer[cmdlen] = 0;
+                    #ifdef DEBUG
+                        DBG_LOG_INFO("%s length %d\r\n\r", tbuffer, cmdlen);
+                    #endif
+                    scratch_buf.len = 4096;
+                    if (opt_part.num == 0)
+                        coap_make_response(&scratch_buf, &rsppkt, 0,
+                            (uint8_t*) tbuffer, cmdlen,
+                            pkt.hdr.id[0], pkt.hdr.id[1],
+                            pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
+                            content_type);
+                    else
+                    {
+                        coap_make_response(&scratch_buf, &rsppkt, &opt_part,
+                            (uint8_t*) bufsa, size_parts_cur,
+                            pkt.hdr.id[0], pkt.hdr.id[1],
+                            pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
+                            content_type);
+                        opt_part.num = 0;
+                    }
+                } else {
+                    return;
+                }
+                if (0 != (rc = coap_build(buf, &rsplen, &rsppkt, NULL, NULL))) {
+                    printf("coap_build failed rc=%d\r\n\r", rc);
+                } else {
+                    #ifdef DEBUG
+                        DBG_LOG_DEBUG("Sending: ");
+                        coap_dump(buf, rsplen, true);
+                    #endif
+                    #ifdef DEBUG
+                        DBG_LOG_DEBUG("Sended to %s:%d \r\n\r",ip,port);
+                    #endif
+                    TransferTo(buf, rsplen, ip, port);
+                }
+            }
         }
+        DBG_LOG_DEBUG("End.");
     }
-#endif
     return;
 }
 inline void OperationHandler(void) {
@@ -164,26 +252,26 @@ inline void OperationHandler(void) {
         //VideoFrameHandler();
     #endif
 
-    #ifndef CPU    
-    if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) > 0)) {
-        l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize), (int*) scratch_raw);
-        if (l > 0) {
-            if ((k = Packetize((uint8_t*) scratch_raw, l * 4, 
-                BUFFER_SAMPLE_SIZE * ReadMem(REG_EEG_PocketSize) + 22)) > 0) {
-                TransferBand((uint8_t*) scratch_raw, k);
-            }
-        }
-    }
-    #else
-    #endif
-
-    if (ReadMem(REG_UPD_File) > 0) 
-    {
-        WriteMem(REG_UPD_File, 0);
-    #ifdef CPU
-        function_update(0);
-    #endif
-    }
+//    #ifndef CPU    
+//    if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) > 0)) {
+//        l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize), (int*) scratch_raw);
+//        if (l > 0) {
+//            if ((k = Packetize((uint8_t*) scratch_raw, l * 4, 
+//                BUFFER_SAMPLE_SIZE * ReadMem(REG_EEG_PocketSize) + 22)) > 0) {
+//                TransferBand((uint8_t*) scratch_raw, k);
+//            }
+//        }
+//    }
+//    #else
+//    #endif
+//
+//    if (ReadMem(REG_UPD_File) > 0) 
+//    {
+//        WriteMem(REG_UPD_File, 0);
+//    #ifdef CPU
+//        function_update(0);
+//    #endif
+//    }
     
     ExecuteSchedule();
     return;
@@ -229,7 +317,7 @@ void UartReceiveCompleteHandler(void) {
     //    sprintf((char*)buffer,"len %d\r\n\r",pstrs);
     //    AddToTransmit((char*)buffer);
 //      Transfer((uint8_t*)pstr,pstrs,0);
-    AddToReceive(pstr, pstrs);
+    AddToReceive(pstr, pstrs, 0, 0);
     SetCStatLedsUnderPWM(0, 0, 0);
     return;
 }
@@ -262,18 +350,18 @@ void SampleHandler(void) {
 
 /* Handlers ------------------------------------------------------------------*/
 void SampleSheduler(void) {
-    DBG_LOG_INFO("Scheduled SampleHandler.\n");
+//    DBG_LOG_INFO("Scheduled SampleHandler.\n");
     AddSample();
 }
 
 void CalculationSheduler(void) {
-    DBG_LOG_INFO("Scheduled CalculationHandler.\n");
+//    DBG_LOG_INFO("Scheduled CalculationHandler.\n");
     FreeCycle();
     return;
 }
 
 void SecClockSheduler(void) {
-    DBG_LOG_INFO("Scheduled SecClockHandler.\n");
+//    DBG_LOG_INFO("Scheduled SecClockHandler.\n");
     ClockHandler();
 #ifdef CPU
     coap_clock();

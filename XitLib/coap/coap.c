@@ -112,17 +112,17 @@ void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
     {
         while(buflen--)
         {
-            DBG_LOG_DEBUG("%02X%s", *buf++, (buflen > 0) ? " " : "");
+            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
         }
     }
     else
     {
-        DBG_LOG_DEBUG("Dump: ");
+        printf("Dump: ");
         while(buflen--)
         {
-            DBG_LOG_DEBUG("%02X%s", *buf++, (buflen > 0) ? " " : "");
+            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
         }
-        DBG_LOG_DEBUG("\r\n\r");
+        printf("\r\n\r");
     }
 }
 void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
@@ -131,17 +131,17 @@ void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
     {
         while(buflen--)
         {
-            DBG_LOG_DEBUG("%c%s", *buf++, (buflen > 0) ? " " : "");
+            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
         }
     }
     else
     {
-        DBG_LOG_DEBUG("Dump: ");
+        printf("Dump: ");
         while(buflen--)
         {
-            DBG_LOG_DEBUG("%c%s", *buf++, (buflen > 0) ? " " : "");
+            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
         }
-        DBG_LOG_DEBUG("\r\n\r");
+        printf("\r\n\r");
     }
 }
 #endif

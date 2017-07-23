@@ -9,6 +9,7 @@
 #include <stdlib.h>
 #include "ExtFunctions.h"
 #include "Handler.h"
+#include "LogModule.h"
 
 #ifdef CPU
     #ifdef PLATFORM_WINDOWS
@@ -77,86 +78,25 @@ int32_t ADC_read_data_c(uint32_t num);
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-void UserProtocolHandler(void) {
+void UserProtocolHandlerThread(void) {
 #ifdef CPU
     int n, rc;
     int len = sizeof (cliaddr);
+    uint8_t buf2[4096];
 
-    memset(buf, 0, sizeof (buf));
-    n = recvfrom(fd, buf, sizeof (buf), 0, (struct sockaddr *) &cliaddr, &len);
+    memset(buf2, 0, sizeof (buf2));
+    n = recvfrom(fd, buf2, sizeof (buf2), 0, (struct sockaddr *) &cliaddr, &len);
     cliaddr_hd = cliaddr;
-
-    if (n >= 4) {
-        #ifdef DEBUG
-                printf("Received by server %s: ", inet_ntoa(cliaddr.sin_addr));
-                coap_dump(buf, n, true);
-                printf("\r\n\r");
-        #endif
-        if (0 != (rc = coap_parse(&pkt, buf, n))) {
-            printf("Bad packet(%d) ", rc);
-            printf("Received %s: ", inet_ntoa(cliaddr.sin_addr));
-            #ifdef DEBUG
-                coap_dump(buf, n, true);
-            #endif
-            printf("\r\n\r");
-        } else {
-            #ifdef DEBUG
-                coap_dumpHeader(&pkt.hdr);
-                //coap_dumpOptions(&pkt.opts, pkt.numopts);
-            #endif
-            content_type = COAP_CONTENTTYPE_APPLICATION_XML;
-            coap_handle_req(&scratch_buf, &pkt, &rsppkt,
-                    CommandLineInterpreter,
-                    inet_ntoa(cliaddr.sin_addr));
-            size_t rsplen = sizeof (buf);
-
-            uint32_t cmdlen;
-            char* tbuffer;
-            if (NULL != (tbuffer = ProceedTransmit(&cmdlen))) {
-                tbuffer[cmdlen] = 0;
-                #ifdef DEBUG
-                    printf("%s length %d\r\n\r", tbuffer, cmdlen);
-                #endif
-                scratch_buf.len = 4096;
-                if (opt_part.num == 0)
-                    coap_make_response(&scratch_buf, &rsppkt, 0,
-                        (uint8_t*) tbuffer, cmdlen,
-                        pkt.hdr.id[0], pkt.hdr.id[1],
-                        pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
-                        content_type);
-                else
-                {
-                    coap_make_response(&scratch_buf, &rsppkt, &opt_part,
-                        (uint8_t*) bufsa, size_parts_cur,
-                        pkt.hdr.id[0], pkt.hdr.id[1],
-                        pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
-                        content_type);
-                    opt_part.num = 0;
-                }
-            } else {
-                return;
-            }
-
-            if (0 != (rc = coap_build(buf, &rsplen, &rsppkt, NULL, NULL))) {
-                printf("coap_build failed rc=%d\r\n\r", rc);
-            } else {
+    AddToReceive(buf2, n, inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+    DBG_LOG_INFO("Received %s: ", inet_ntoa(cliaddr.sin_addr));
     #ifdef DEBUG
-                    printf("Sending: ");
-                    coap_dump(buf, rsplen, true);
-                    printf("\r\n\r");
+        coap_dump(buf2, n, true);
     #endif
-    #ifdef DEBUG
-                    printf("Sended to %s:%d \r\n\r",
-                            inet_ntoa(cliaddr.sin_addr),
-                            ntohs(cliaddr.sin_port));
-    #endif
-                TransferUDP(buf, rsplen,
-                        inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
-            }
-        }
-    }
 #else
 #endif
+    return;
+}
+void UserProtocolHandler(void) {
     ProtocolHandler();
     return;
 }

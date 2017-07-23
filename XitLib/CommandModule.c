@@ -881,7 +881,7 @@ void AddToSchedule(ScheduleFunction_t ScheduleFunction)
         umm_free((void *)comm);
         return 1;
     }
-    DBG_LOG_INFO("Schedule updated now %d. \n",deque_size(ScheduleTableDeque));
+    //DBG_LOG_INFO("Schedule updated now %d. \n",deque_size(ScheduleTableDeque));
     return;
 }
 void ClearSchedule(void)
@@ -896,8 +896,8 @@ void ExecuteSchedule(void)
     while(deque_size(ScheduleTableDeque) > 0)
     {
         deque_remove_first(ScheduleTableDeque, (void**)&Comm);
-        DBG_LOG_INFO("Schedule executing, %d left. \n",
-                            deque_size(ScheduleTableDeque));
+//        DBG_LOG_INFO("Schedule executing, %d left. \n",
+//                            deque_size(ScheduleTableDeque));
         (*(*Comm))();
         umm_free((void *)Comm);
     }

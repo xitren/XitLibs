@@ -192,7 +192,7 @@
           </incDir>
           <preprocessorList>
             <Elem>CPU</Elem>
-            <Elem>DBG_LOG_LEVEL=0</Elem>
+            <Elem>DEBUG</Elem>
             <Elem>EXTMEMSERVER</Elem>
             <Elem>P300</Elem>
             <Elem>PLATFORM_WINDOWS</Elem>
