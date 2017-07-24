@@ -27,13 +27,13 @@ int EEGGetFile(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
 
-    if ((TempParam))
-    {
-        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-    }
-    else
-    {
-    }
+//    if ((TempParam))
+//    {
+//        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
+//    }
+//    else
+//    {
+//    }
     
     return(ret_val); 
 }
@@ -42,13 +42,13 @@ int EEGGetListFiles(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
 
-    if ((TempParam))
-    {
-        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-    }
-    else
-    {
-    }
+//    if ((TempParam))
+//    {
+//        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
+//    }
+//    else
+//    {
+//    }
     
     return(ret_val); 
 }
@@ -56,11 +56,9 @@ int EEGGetListFiles(ParameterList_t *TempParam)
 int EEGWriteInFile(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
-    int  Adress= 60;
-    int  Value=1;
-    int  i;
+    int  Adress = 60;
+    int  Value = 1;
     uint32_t res;
-    char buf[60];
    
     DBG_LOG_DEBUG("Into EEGWriteInFile.\n");
     AddToTransmit("<EEGWRITE>\r\n\r");
@@ -88,14 +86,12 @@ int EEGWriteInFile(ParameterList_t *TempParam)
 int QueryNodes(ParameterList_t *TempParam) 
 {   
     int  ret_val = 0;
-    int i,j,k=0;
-    char *strptr;
-    char strbuf[80];
+    int  i,j;
+    char strbuf[STRING_SIZE];
     function_node *node;
     function_proto *proto;
     
     memset(strbuf,0,80);
-    strptr = (char*)strbuf;
     
     DBG_LOG_DEBUG("Into QUERYNodes.\n");
     //AddToTransmit("<NODES>\r\n\r");  // "<NODES>\r\n\r"     "{\n \"EEGBLOCK\": [\n"
@@ -119,15 +115,16 @@ int QueryNodes(ParameterList_t *TempParam)
                     if( (i==array_size(NodesArray)-1) 
                             && (j==array_size(node->proto)-1) )
                     {
-                        sprintf(strptr,
+                        snprintf(strbuf,STRING_SIZE,
                             "<coap://%s%s>;if=\"controller\"\n",
                             node->ip,proto->name);
-                        AddToTransmit(strptr);
+                        AddToTransmit(strbuf);
                         break;
                     }
-                    sprintf(strptr,"<coap://%s%s>;if=\"controller\",\n",
+                    snprintf(strbuf,STRING_SIZE,
+                            "<coap://%s%s>;if=\"controller\",\n",
                                 node->ip,proto->name);
-                    AddToTransmit(strptr);
+                    AddToTransmit(strbuf);
                 }
             }
         }
@@ -146,7 +143,6 @@ int QueryNodes(ParameterList_t *TempParam)
 
 void put_node_msg(char *_ip,char *_name)
 {
-    //char _name_buf[20];
     int ip_id = -1;
     uint32_t name_ptr = 0;
     int i;
@@ -179,6 +175,7 @@ void put_node_msg(char *_ip,char *_name)
     if (ip_id < 0)
     {
         node = (function_node *)umm_calloc(1,sizeof(function_node));
+        if (node == NULL){return;}
         if (array_new(&(node->proto)) != 0)
             return;
         strncpy(node->ip,_ip,strlen(_ip));
@@ -194,6 +191,7 @@ void put_node_msg(char *_ip,char *_name)
         if ((_name[name_ptr-1] == '<') && (_name[name_ptr] == '/'))
         {
             proto = (function_proto *)umm_calloc(1,sizeof(function_proto));
+            if (proto == NULL){return;}
             proto->len = 0;
             while ((_name[name_ptr] != '>') && (name_ptr < strlen(_name)))
             {
@@ -282,7 +280,7 @@ void function_beakon(void)
     coap_buffer_t tokfb;
     
     DBG_LOG_DEBUG("Into function_beakon.\n");
-    pktlen = sizeof(buf);
+    pktlen = sizeof(scratch_raw);
     opt_path.num = COAP_OPTION_URI_PATH;
     opt_path.buf.len = strlen(path_well_core);
     opt_path.buf.p = (uint8_t*)path_well_core;
@@ -293,9 +291,9 @@ void function_beakon(void)
                        0, id_out+=5, pkt.tok_p, pkt.tok_len, 
                        COAP_METHOD_GET, 
                        COAP_CONTENTTYPE_NONE);
-    if (!(rc = coap_build(buf, &pktlen, &pkt, path_well_core_clb, 0)))
+    if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_well_core_clb, 0)))
     {
-        TransferBand((uint8_t*)buf,pktlen);
+        TransferBand((uint8_t*)scratch_raw,pktlen);
     }
     #endif
 return;

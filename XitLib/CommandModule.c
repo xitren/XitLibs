@@ -37,7 +37,6 @@ static Array *CommandTableArray;
 static Deque *ScheduleTableDeque;
 /*============================================================================*/
 
-extern uint8_t bufsa[1024];
 extern coap_option_t opt_part;
 
 /* Private function prototypes -----------------------------------------------*/
@@ -349,7 +348,7 @@ int MEMWrite(ParameterList_t *TempParam)
     int  Adress;
     int  Value;
     int  i;
-    char buf_local[60];
+    char buffer[STRING_SIZE];
 
     DBG_LOG_DEBUG("Into MEMWrite.\n");
     AddToTransmit("<MEMORY>\r\n\r");
@@ -357,32 +356,36 @@ int MEMWrite(ParameterList_t *TempParam)
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 3))
     {
-       for (i=1;i<TempParam->NumberofParameters;i+=2)
-       {
-          if (!strcmp(TempParam->Params[i-1].strParam,"address"))
-          {
-             Adress = (unsigned int)(TempParam->Params[i].intParam);
-          }
-          if (!strcmp(TempParam->Params[i-1].strParam,"value"))
-          {
-             Value = (unsigned int)(TempParam->Params[i].intParam);
-          }
-       }
-       if (Adress >= 0)
-       {
-          WriteMem(Adress,Value);
-          AddToTransmit("<WR/>\r\n\r");
-          #ifdef DEBUG
-             DBG_LOG_TRACE("Mem[%d] setted to %d.\r\n\r",Adress,Value);
-          #endif
-       }
+        for (i=1;i<TempParam->NumberofParameters;i+=2)
+        {
+            if (!strcmp(TempParam->Params[i-1].strParam,"address"))
+            {
+               Adress = (unsigned int)(TempParam->Params[i].intParam);
+            }
+            if (!strcmp(TempParam->Params[i-1].strParam,"value"))
+            {
+               Value = (unsigned int)(TempParam->Params[i].intParam);
+            }
+        }
+        if (Adress >= 0)
+        {
+            AddToTransmit("<ADDRESS>\r\n\r");
+            snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)Adress);
+            AddToTransmit((char*)buffer);
+            AddToTransmit("</ADDRESS>\r\n\r");
+            WriteMem(Adress,Value);
+            AddToTransmit("<WR/>\r\n\r");
+            #ifdef DEBUG
+                DBG_LOG_TRACE("Mem[%d] setted to %d.\r\n\r",Adress,Value);
+            #endif
+        }
     }
     else
     {
-         /* One or more of the necessary parameters are invalid.           */
-         ret_val = INVALID_PARAMETERS_ERROR;
-         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
-         DBG_LOG_WARNING("Invalid parameters.\n");
+        /* One or more of the necessary parameters are invalid.           */
+        ret_val = INVALID_PARAMETERS_ERROR;
+        AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</MEMORY>\r\n\r");
 
@@ -805,6 +808,7 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
             /* Simply add the command data to the command table and        */
             /* increment the number of supported commands.                 */
             comm = (CommandTable_t *)umm_calloc(1,sizeof(CommandTable_t));
+            if (comm == NULL){return 1;}
             comm->CommandName = CommandName;
             comm->Link = Link;
             comm->CommandFunction = CommandFunction;
@@ -817,7 +821,7 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
             DBG_LOG_INFO(comm->CommandName);
 
             /* Return success to the caller.                               */
-            ret_val                                        = 0;
+            ret_val = 0;
         }
         else
             ret_val = 1;
@@ -875,11 +879,12 @@ void AddToSchedule(ScheduleFunction_t ScheduleFunction)
 {
     ScheduleFunction_t *comm;
     comm = (ScheduleFunction_t *)umm_calloc(1,sizeof(ScheduleFunction_t));
+    if (comm == NULL){return;}
     *comm = ScheduleFunction;
     if (deque_add_last(ScheduleTableDeque, (void *)comm) != 0)
     {
         umm_free((void *)comm);
-        return 1;
+        return;
     }
     //DBG_LOG_INFO("Schedule updated now %d. \n",deque_size(ScheduleTableDeque));
     return;
@@ -896,8 +901,9 @@ void ExecuteSchedule(void)
     while(deque_size(ScheduleTableDeque) > 0)
     {
         deque_remove_first(ScheduleTableDeque, (void**)&Comm);
-//        DBG_LOG_INFO("Schedule executing, %d left. \n",
-//                            deque_size(ScheduleTableDeque));
+        if (deque_size(ScheduleTableDeque) > 2)
+            DBG_LOG_INFO("Schedule executing, %d left. \n",
+                                deque_size(ScheduleTableDeque));
         (*(*Comm))();
         umm_free((void *)Comm);
     }

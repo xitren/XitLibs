@@ -9,22 +9,14 @@
 #define PORT_BACK 5683
 
 /* Private variables ---------------------------------------------------------*/
-uint8_t buffer[STRING_SIZE];
-uint8_t buffer2[10];
-uint8_t buffer3[40];
-uint8_t tbuffer[STRING_SIZE];
-uint8_t bufsa[1024];
 uint8_t inb, rc, cmdlen = 0;
+uint8_t id_out = 0;
+uint8_t scratch_raw[4096];
+coap_rw_buffer_t scratch_buf = {scratch_raw, sizeof (scratch_raw)};
 coap_packet_t pkt;
 size_t rsplen;
 size_t pktlen;
 coap_packet_t rsppkt;
-#ifndef MC
-uint8_t buf[4096];
-#endif
-uint8_t scratch_raw[4096];
-coap_rw_buffer_t scratch_buf = {scratch_raw, sizeof (scratch_raw)};
-uint8_t id_out = 0;
 coap_option_t opt;
 coap_option_t opt_path;
 coap_option_t opt_args;
@@ -142,7 +134,7 @@ void InitHandler(DeviceTypeDef device) {
     InitBuffer();
     ClearBuffer();
     Interface_Memory();
-    rsplen = sizeof (buf);
+    rsplen = sizeof (scratch_raw);
     return;
 }
 #ifdef PLATFORM_LINUX
@@ -167,12 +159,14 @@ inline void ProtocolHandler(void) {
     char ip[16];
     uint32_t cmdlent = 0;
     uint32_t port = 0;
-    if (NO_BUFFER_ERROR == ProceedReceive((char*)buf, &cmdlent, 
+//    DBG_LOG_TRACE("Into ProtocolHandler");
+    if (NO_BUFFER_ERROR == ProceedReceive((char*)scratch_raw, &cmdlent, 
                                                         (char*)ip, &port)) {
+        DBG_LOG_DEBUG("Start to parse message.");
         DBG_LOG_INFO("Simple link(%d) ", ReadMem(REG_Simple_link)); 
         if (ReadMem(REG_Simple_link) > 0) {
             char* tbuffer2;
-            CommandLineInterpreter((char*) &buf);
+            CommandLineInterpreter((char*) &scratch_raw);
             if (0 != (tbuffer2 = ProceedTransmit(&lenght))) {
                 Transfer((uint8_t*) tbuffer2, lenght, 0);
             }
@@ -180,12 +174,12 @@ inline void ProtocolHandler(void) {
         } 
         else 
         {
-            if (0 != (rc = coap_parse(&pkt, buf, cmdlent))) 
+            if (0 != (rc = coap_parse(&pkt, scratch_raw, cmdlent))) 
             {
                 DBG_LOG_INFO("Bad packet(%d) ", rc);
                 DBG_LOG_DEBUG("Received %s: ", ip);
                 #ifdef DEBUG
-                    coap_dump(buf, cmdlent, true);
+                    coap_dump(scratch_raw, cmdlent, true);
                 #endif
             } 
             else 
@@ -197,15 +191,17 @@ inline void ProtocolHandler(void) {
                 content_type = COAP_CONTENTTYPE_APPLICATION_XML;
                 coap_handle_req(&scratch_buf, &pkt, &rsppkt,
                         CommandLineInterpreter,ip);
-                size_t rsplen = sizeof (buf);
+                size_t rsplen = sizeof (scratch_raw);
 
                 uint32_t cmdlen;
                 char* tbuffer;
+                DBG_LOG_DEBUG("type of %d\r\n\r",content_type);
                 if (NULL != (tbuffer = ProceedTransmit(&cmdlen))) {
                     tbuffer[cmdlen] = 0;
-                    #ifdef DEBUG
-                        DBG_LOG_INFO("%s length %d\r\n\r", tbuffer, cmdlen);
-                    #endif
+//                    #ifdef DEBUG
+//                        DBG_LOG_INFO("%s length %d type of %d\r\n\r", 
+//                                tbuffer, cmdlen, content_type);
+//                    #endif
                     scratch_buf.len = 4096;
                     if (opt_part.num == 0)
                         coap_make_response(&scratch_buf, &rsppkt, 0,
@@ -216,7 +212,7 @@ inline void ProtocolHandler(void) {
                     else
                     {
                         coap_make_response(&scratch_buf, &rsppkt, &opt_part,
-                            (uint8_t*) bufsa, size_parts_cur,
+                            (uint8_t*) tbuffer, size_parts_cur,
                             pkt.hdr.id[0], pkt.hdr.id[1],
                             pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
                             content_type);
@@ -225,28 +221,30 @@ inline void ProtocolHandler(void) {
                 } else {
                     return;
                 }
-                if (0 != (rc = coap_build(buf, &rsplen, &rsppkt, NULL, NULL))) {
+                if (0 != (rc = coap_build(scratch_raw, &rsplen, &rsppkt, NULL, NULL))) {
                     printf("coap_build failed rc=%d\r\n\r", rc);
                 } else {
                     #ifdef DEBUG
                         DBG_LOG_DEBUG("Sending: ");
-                        coap_dump(buf, rsplen, true);
+                        coap_dump(scratch_raw, rsplen, true);
                     #endif
                     #ifdef DEBUG
                         DBG_LOG_DEBUG("Sended to %s:%d \r\n\r",ip,port);
                     #endif
-                    TransferTo(buf, rsplen, ip, port);
+                    TransferTo(scratch_raw, rsplen, ip, port);
                 }
             }
         }
         DBG_LOG_DEBUG("End.");
     }
+//    DBG_LOG_TRACE("End ProtocolHandler");
     return;
 }
 inline void OperationHandler(void) {
     int i,j, k = 0, l = 0;
     l = GetCnt();
     char systemcmd[100];
+//    DBG_LOG_TRACE("Into OperationHandler");
 
     #ifdef PLATFORM_LINUX
         //VideoFrameHandler();
@@ -265,15 +263,18 @@ inline void OperationHandler(void) {
 //    #else
 //    #endif
 //
-//    if (ReadMem(REG_UPD_File) > 0) 
-//    {
-//        WriteMem(REG_UPD_File, 0);
-//    #ifdef CPU
-//        function_update(0);
-//    #endif
-//    }
+    if (ReadMem(REG_UPD_File) > 0) 
+    {
+        DBG_LOG_DEBUG("Update");
+        WriteMem(REG_UPD_File, 0);
+    #ifdef CPU
+        function_update(0);
+    #endif
+    }
     
+//    DBG_LOG_TRACE("ExecuteSchedule");
     ExecuteSchedule();
+//    DBG_LOG_TRACE("End OperationHandler");
     return;
 }
 
@@ -284,19 +285,8 @@ void VideoFrameHandler(void) {
 }
 #endif
 
-void UartDistanceHandler(void) {
-    uint32_t dist;
-    buffer2[4] = '\0';
-    dist = StringToUnsignedInteger((char *) (buffer2 + 1));
-    if (ReadMem(REG_Distance) != dist)
-        WriteMem(REG_Distance_Band, 1);
-    WriteMem(REG_Distance, dist);
-    return;
-}
-
-void UartProtocolHandler(void) {
-    AddToPocketReceive(buffer[0]);
-
+void UartProtocolHandler(char let) {
+    AddToPocketReceive(let);
     return;
 }
 
@@ -309,14 +299,7 @@ void UartTransferCompleteHandler(void) {
 void UartReceiveCompleteHandler(void) {
     char *pstr;
     unsigned char pstrs = 0;
-
-#ifndef CPU
-//    HAL_TIM_Base_Stop(&htim13);
-#endif
     pstr = (char*) GetPocketBuffer(&pstrs);
-    //    sprintf((char*)buffer,"len %d\r\n\r",pstrs);
-    //    AddToTransmit((char*)buffer);
-//      Transfer((uint8_t*)pstr,pstrs,0);
     AddToReceive(pstr, pstrs, 0, 0);
     SetCStatLedsUnderPWM(0, 0, 0);
     return;
@@ -372,14 +355,14 @@ void SecClockSheduler(void) {
 }
 
 void SoftPWMSheduler(void) {
-    DBG_LOG_INFO("Scheduled SoftPWMHandler.\n");
+//    DBG_LOG_INFO("Scheduled SoftPWMHandler.\n");
     IncPWM();
     SetLedsUnderPWM();
     return;
 }
 
 void StatChangeSheduler(void) {
-    DBG_LOG_INFO("Scheduled StatChangeHandler.\n");
+//    DBG_LOG_INFO("Scheduled StatChangeHandler.\n");
     ChangeLedsCode();
     return;
 /*============================================================================*/
@@ -389,15 +372,15 @@ int ResetReq() {
     int rc;
     DBG_LOG_DEBUG("Into ResetReq.\n");
     //ToDo: Make query
-    pktlen = sizeof (buf);
+    pktlen = sizeof (scratch_raw);
 #ifdef CPU
     coap_make_msg(&scratch_buf, &pkt, 0, 0, 0,
             0, 0,
             0, id_out++, 0, 0,
             COAP_METHOD_RESET,
             COAP_CONTENTTYPE_NONE);
-    if (!(rc = coap_build(buf, &pktlen, &pkt, NULL, NULL)))
-        TransferBand((uint8_t*) buf, pktlen);
+    if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, NULL, NULL)))
+        TransferBand((uint8_t*) scratch_raw, pktlen);
 #endif
     return 0;
 }

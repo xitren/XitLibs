@@ -21,7 +21,8 @@ typedef struct _tagReceiveDeque_t
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
-char inout_buffer[BUFFER_SIZE][STRING_SIZE];
+#define BUFFER_INOUT BUFFER_SIZE*STRING_SIZE
+char inout_buffer[BUFFER_INOUT];
 uint32_t TxCnt = 0;
 static Deque *ReceiveDeque;
 /*============================================================================*/
@@ -30,6 +31,7 @@ static Deque *ReceiveDeque;
 int InitBuffer()
 {
     int ret_val = NO_BUFFER_ERROR;
+    TxCnt = 0;
     if (deque_new(&ReceiveDeque) != 0)
         return BUFFER_ERROR;
     return(ret_val);
@@ -89,7 +91,7 @@ int AddToTransmit(char *str)
    int ret_val = NO_BUFFER_ERROR;
    
    DBG_LOG_TRACE("Into AddToTransmit. -%s- (%d)\n",str,TxCnt);
-   if (((((TxCnt+strlen(str))/STRING_SIZE)+1)) < BUFFER_SIZE)
+   if ( (TxCnt+strlen(str)) < BUFFER_INOUT)
    {
       strncpy(((char*)inout_buffer)+TxCnt,(const char*)str,strlen(str));
       TxCnt += strlen(str);

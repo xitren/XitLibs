@@ -8,6 +8,8 @@
 #include <stdlib.h>
 #include "version.h"
 #include "LogModule.h"
+#include "CRC16ANSI.h"
+#include "ExtFunctions.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -46,13 +48,13 @@ int QueryUpdate(ParameterList_t *TempParam)
     int ret_val = 0;
     int i,ind_i = 0,end;
     const char *ip = updateserver;
-    char path_update[50];
+    char path_update[STRING_SIZE];
     int port = 5683;
     int repeat = 2;
-    char requery[100];
+    char requery[STRING_SIZE];
     int rc;
     coap_buffer_t tokfb;
-    int pktlen = sizeof(buf);
+    int pktlen = sizeof(scratch_raw);
     int type=0;
 
     DBG_LOG_DEBUG("Into QueryUpdate.\n");
@@ -99,7 +101,7 @@ int QueryUpdate(ParameterList_t *TempParam)
         snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);  
         snprintf(path_update_clb,50,"/CALLBACK/UPDATE?type=%d",type);  
         
-        pktlen = sizeof(buf);
+        pktlen = sizeof(scratch_raw);
         opt_path.num = COAP_OPTION_URI_PATH;
         opt_path.buf.len = strlen(path_update);
         opt_path.buf.p = (uint8_t*)path_update;
@@ -114,26 +116,26 @@ int QueryUpdate(ParameterList_t *TempParam)
                            COAP_CONTENTTYPE_NONE);
         if (repeat > 0)
         {
-            snprintf(requery,100,
+            snprintf(requery,STRING_SIZE,
                     "/REQUERY/UPDATE?part=%d&end=%d&repeat=%d&ip=%s&port=%d&type=%d"
                                     ,ind_i,end,repeat-1,ip,port,type);
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_clb, requery)))
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_clb, requery)))
             {
                 //Transfer((uint8_t*)buf,pktlen,"/update");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,port);
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,port);
             }
         }
         else
         {
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_clb, NULL)))
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_clb, NULL)))
             {
                 //Transfer((uint8_t*)buf,pktlen,"/update");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,port);
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,port);
             }
         }
         #ifdef DEBUG
             DBG_LOG_DEBUG("Sending: ");
-            coap_dump(buf, pktlen, true);
+            coap_dump(scratch_raw, pktlen, true);
         #endif
         DBG_LOG_TRACE("Sended %d part query.\n",ind_i);
     }
@@ -156,9 +158,9 @@ int QueryUpdateHash(ParameterList_t *TempParam)
     int repeat = 0;
     char requery[100];
     int rc;
-    int pktlen = sizeof(buf);
-    char path_update_hash[50];
-    char path_update_hash_clb[50];
+    int pktlen = sizeof(scratch_raw);
+    char path_update_hash[STRING_SIZE];
+    char path_update_hash_clb[STRING_SIZE];
     int type;
     
     DBG_LOG_DEBUG("Into QueryUpdateHash.\n");
@@ -190,8 +192,8 @@ int QueryUpdateHash(ParameterList_t *TempParam)
             DBG_LOG_CRITICAL("No more repeats.");
             return 0;
         }
-        snprintf(path_update_hash,50,"updatehash?type=%d",type);
-        snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);    
+        snprintf(path_update_hash,STRING_SIZE,"updatehash?type=%d",type);
+        snprintf(path_update_hash_clb,STRING_SIZE,"/CALLBACK/UPDATEHASH?type=%d",type);    
         memset((uint8_t*)hashes,0,sizeof(uint16_t)*HASHES_MAX);
         opt_path.num = COAP_OPTION_URI_PATH;
         opt_path.buf.len = strlen(path_update_hash);
@@ -205,26 +207,26 @@ int QueryUpdateHash(ParameterList_t *TempParam)
                            COAP_CONTENTTYPE_NONE);
         if ((repeat-1) > 0)
         {
-            snprintf(requery,100,"/REQUERY/UPDATEHASH?repeat=%d&type=%d",repeat-1, type);
+            snprintf(requery,STRING_SIZE,"/REQUERY/UPDATEHASH?repeat=%d&type=%d",repeat-1, type);
             printf(requery,"/REQUERY/UPDATEHASH?repeat=%d&type=%d",repeat-1, type);
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_hash_clb, requery)))
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_hash_clb, requery)))
             {
         //        Transfer((uint8_t*)buf,pktlen,"/updatehash");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,5683);
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,5683);
             }
         }
         else
         {
             requery[0] = 0;
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_hash_clb, NULL)))
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_hash_clb, NULL)))
             {
         //        Transfer((uint8_t*)buf,pktlen,"/updatehash");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,5683);
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,5683);
             }
         }
         #ifdef DEBUG
             DBG_LOG_DEBUG("Sending: ");
-            coap_dump(buf, pktlen, true);
+            coap_dump(scratch_raw, pktlen, true);
         #endif
         DBG_LOG_TRACE("--//internal//-- Sended parts hash query.\n");
     }
@@ -265,10 +267,10 @@ int CallbackUpdate(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
     int  i,ind_i = 0,end,rsize;
-    char namepart[100];
-    char command[100];
-    char systemcommand[100];
-    char filename[50];
+    char namepart[STRING_SIZE];
+    char command[STRING_SIZE];
+    char systemcommand[STRING_SIZE];
+    char filename[STRING_SIZE];
     FILE *fp,*fpo;
     int type;
     
@@ -294,26 +296,26 @@ int CallbackUpdate(ParameterList_t *TempParam)
         }
         //save to file
         if (type==0) { //Updater.sh
-            strcpy(filename, "Updater.sh");
+            strncpy(filename, "Updater.sh", STRING_SIZE);
         }
         else if (type==1) { //iotbaseserverlinux.sh
-            strcpy(filename, "iotbaseserverlinux.sh");
+            strncpy(filename, "iotbaseserverlinux.sh", STRING_SIZE);
         }
         else if (type==2) { //iotdeviceeegserverlinux.sh
-            strcpy(filename, "iotdeviceeegserverlinux.sh");
+            strncpy(filename, "iotdeviceeegserverlinux.sh", STRING_SIZE);
         }
         else if (type==3) { 
-            strcpy(filename, "iotdevicemovementlinux.sh");
+            strncpy(filename, "iotdevicemovementlinux.sh", STRING_SIZE);
         }
         else if (type==4) {
-            strcpy(filename, "iotdevicecameralinux.sh");
+            strncpy(filename, "iotdevicecameralinux.sh", STRING_SIZE);
         }
         else if (type==5) {
-            strcpy(filename, "iotdevicegeneratorlinux.sh");
+            strncpy(filename, "iotdevicegeneratorlinux.sh", STRING_SIZE);
         }
-        else strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
+        else strncpy(filename, "Updater.sh", STRING_SIZE); //Wrong type? Updater.sh then
         
-        snprintf(namepart,100,"%s.p%02d",filename,ind_i);
+        snprintf(namepart,STRING_SIZE,"%s.p%02d",filename,ind_i);
         fp = fopen(namepart,"w"); // read mode
         DBG_LOG_DEBUG("Create file %s\n",namepart);
 
@@ -326,20 +328,20 @@ int CallbackUpdate(ParameterList_t *TempParam)
         //if endone then pack into monolite
         if (end)
         {
-            snprintf(command,100,"/REQUERY/UPDATE?part=%d&end=%d&repeat=3&type=%d"
+            snprintf(command,STRING_SIZE,"/REQUERY/UPDATE?part=%d&end=%d&repeat=3&type=%d"
                                                                 ,ind_i+1,end,type);
             CommandLineInterpreter(command);
         }
         else
         {
-            snprintf(namepart,100,"%s",filename);
+            snprintf(namepart,STRING_SIZE,"%s",filename);
             sprintf(systemcommand, "sudo cp %s old_%s", filename, filename);
             system(systemcommand);
             fp = fopen(namepart,"w"); // read mode
             DBG_LOG_DEBUG("Create file %s\n",namepart);
             for(i=0;i<=ind_i;i++)
             {
-                snprintf(namepart,100,"%s.p%02d",filename,i);
+                snprintf(namepart,STRING_SIZE,"%s.p%02d",filename,i);
                 fpo = fopen(namepart,"r"); // read mode
                 
                 rsize = fread(scratch_buf.p,sizeof(uint8_t),1024,fpo);
@@ -408,10 +410,10 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
 {
     int rc;
     coap_buffer_t tokfb;
-    int pktlen = sizeof(buf);
+    int pktlen = sizeof(scratch_raw);
     int ret_val = 0;
     int i,ind_i;
-    char command[100];
+    char command[STRING_SIZE];
     FILE *fp;
     int num;
     int sizefp;
@@ -419,7 +421,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
     char *ptr;
     uint16_t allhash = 0;
     uint16_t allhashserver = 0;
-    char filename[50];
+    char filename[STRING_SIZE];
     int type;
     
     DBG_LOG_DEBUG("Into CallbackUpdateHash.\n");
@@ -440,46 +442,46 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
         DBG_LOG_DEBUG("Device type***: %d\n", DEVICE);
         if (DEVICE == 0) {
             if (type==0) { //Updater.sh
-                strcpy(filename, "Updater.sh");
+                strncpy(filename, "Updater.sh", STRING_SIZE);
             }
             else if (type==1) { //iotbaseserverlinux.sh
-                strcpy(filename, "./update/iotbaseserverlinux.sh");
+                strncpy(filename, "./update/iotbaseserverlinux.sh", STRING_SIZE);
             }
             else if (type==2) { //iotdeviceeegserverlinux.sh
-                strcpy(filename, "./update/iotdeviceeegserverlinux.sh");
+                strncpy(filename, "./update/iotdeviceeegserverlinux.sh", STRING_SIZE);
             }
             else if (type==3) { 
-                strcpy(filename, "./update/iotdevicemovementlinux.sh");
+                strncpy(filename, "./update/iotdevicemovementlinux.sh", STRING_SIZE);
             }
             else if (type==4) {
-                strcpy(filename, "./update/iotdevicecameralinux.sh");
+                strncpy(filename, "./update/iotdevicecameralinux.sh", STRING_SIZE);
             }
             else if (type==5) {
-                strcpy(filename, "./update/iotdevicegeneratorlinux.sh");
+                strncpy(filename, "./update/iotdevicegeneratorlinux.sh", STRING_SIZE);
             }
-            else strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
+            else strncpy(filename, "Updater.sh", STRING_SIZE); //Wrong type? Updater.sh then
         }
         //иначе читаем из локальной папки
         else {
             if (type==0) { //Updater.sh
-                strcpy(filename, "Updater.sh");
+                strncpy(filename, "Updater.sh", STRING_SIZE);
             }
             else if (type==1) { //iotbaseserverlinux.sh
-                strcpy(filename, "iotbaseserverlinux.sh");
+                strncpy(filename, "iotbaseserverlinux.sh", STRING_SIZE);
             }
             else if (type==2) { //iotdeviceeegserverlinux.sh
-                strcpy(filename, "iotdeviceeegserverlinux.sh");
+                strncpy(filename, "iotdeviceeegserverlinux.sh", STRING_SIZE);
             }
             else if (type==3) { 
-                strcpy(filename, "iotdevicemovementlinux.sh");
+                strncpy(filename, "iotdevicemovementlinux.sh", STRING_SIZE);
             }
             else if (type==4) {
-                strcpy(filename, "iotdevicecameralinux.sh");
+                strncpy(filename, "iotdevicecameralinux.sh", STRING_SIZE);
             }
             else if (type==5) {
-                strcpy(filename, "iotdevicegeneratorlinux.sh");
+                strncpy(filename, "iotdevicegeneratorlinux.sh", STRING_SIZE);
             }
-            else strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
+            else strncpy(filename, "Updater.sh", STRING_SIZE); //Wrong type? Updater.sh then
         }
         
         DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
@@ -491,12 +493,12 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             end = 0;
             while (end == 0)
             {
-                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
+                sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
+                DBG_LOG_DEBUG("%d readed from file.\n",scratch_raw);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
 
-                allhash += CRC16ANSI(bufsa,sizefp);
+                allhash += CRC16ANSI(scratch_raw,sizefp);
                 
                 if (sizefp != size_parts)
                 {
@@ -516,7 +518,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
 //                system("sudo wget http://188.64.170.71:80/Complexmed.sh");
 //                system("sudo chmod 777 Complexmed.sh");
 //                system("sh Complexmed.sh"); 
-                snprintf(command,100,"/REQUERY/UPDATE?part=0&repeat=3&type=%d",type);
+                snprintf(command,STRING_SIZE,"/REQUERY/UPDATE?part=0&repeat=3&type=%d",type);
                 CommandLineInterpreter(command);
                 //usleep(1000000);
                 //system("sudo sh Updater.sh");
@@ -531,7 +533,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
         }
         else
         {
-            snprintf(command,100,"/REQUERY/UPDATE?part=0&repeat=3&type=%d",type);
+            snprintf(command,STRING_SIZE,"/REQUERY/UPDATE?part=0&repeat=3&type=%d",type);
             CommandLineInterpreter(command);
             //usleep(1000000);
             //system("sudo sh Updater.sh");
@@ -560,7 +562,7 @@ int TechUpdate(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
     int i;
-    char command[100];
+    char command[STRING_SIZE];
     
     DBG_LOG_DEBUG("Into TechUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
@@ -571,7 +573,7 @@ int TechUpdate(ParameterList_t *TempParam)
         {
             if (!strcmp(TempParam->Params[i-1].strParam,"filepath"))
             {
-                strcpy(updatefilepath,TempParam->Params[i].strParam);
+                strncpy(updatefilepath,TempParam->Params[i].strParam,STRING_SIZE);
             }
         }
         AddToTransmit("<TECHUPDATE>\r\n\r");
@@ -598,10 +600,10 @@ int TechUpdate(ParameterList_t *TempParam)
 void function_update(int type)
 {
     int rc;
-    int pktlen = sizeof(buf);
-    char command[100];
-    char path_update_hash[100];
-    sprintf(updatefilepath,"Updater.sh");
+    int pktlen = sizeof(scratch_raw);
+    char command[STRING_SIZE];
+    char path_update_hash[STRING_SIZE];
+    snprintf(updatefilepath,STRING_SIZE,"Updater.sh");
     //int type = 0;     // 0 - Updater.sh
                         // 1 - iotbaseserverlinux.sh
                         // 2 - iotdeviceeegserverlinux.sh
@@ -611,12 +613,12 @@ void function_update(int type)
 
     //FindUpdateServer();
     if (type==0) {
-        snprintf(path_update_hash,100,"updatehash?type=%d?filepath=%s",type,updatefilepath);
+        snprintf(path_update_hash,STRING_SIZE,"updatehash?type=%d?filepath=%s",type,updatefilepath);
     }   
     else {
-        snprintf(path_update_hash,50,"updatehash?type=%d",type);
+        snprintf(path_update_hash,STRING_SIZE,"updatehash?type=%d",type);
     }
-    snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);    
+    snprintf(path_update_hash_clb,STRING_SIZE,"/CALLBACK/UPDATEHASH?type=%d",type);    
     memset((uint8_t*)hashes,0,sizeof(uint16_t)*HASHES_MAX);
     opt_path.num = COAP_OPTION_URI_PATH;
     opt_path.buf.len = strlen(path_update_hash);
@@ -628,15 +630,15 @@ void function_update(int type)
                        0, id_out+=5, pkt.tok_p, pkt.tok_len, 
                        COAP_METHOD_GET, 
                        COAP_CONTENTTYPE_NONE);
-    snprintf(command,100,"/REQUERY/UPDATEHASH?repeat=3&type=%s",type);
-    if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_hash_clb, command)))
+    snprintf(command,STRING_SIZE,"/REQUERY/UPDATEHASH?repeat=3&type=%d",type);
+    if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_hash_clb, command)))
     {
 //        Transfer((uint8_t*)buf,pktlen,"/updatehash");
-        TransferUDP((uint8_t*)buf,pktlen,updateserver,5683);
+        TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,5683);
     }
     #ifdef DEBUG
         DBG_LOG_DEBUG("Sending: ");
-        coap_dump(buf, pktlen, true);
+        coap_dump(scratch_raw, pktlen, true);
     #endif
     DBG_LOG_DEBUG("Into END of function_update.\n");
     return;
@@ -671,31 +673,31 @@ int UpdateHash(ParameterList_t *TempParam)
             }
             if (!strcmp(TempParam->Params[i-1].strParam,"filepath"))
             {
-                strcpy(updatefilepath, TempParam->Params[i].strParam);
+                strncpy(updatefilepath, TempParam->Params[i].strParam, STRING_SIZE);
             }
         }
         
         //прочитать хэш нужного файла
         if (type==0) { //Updater.sh
-            strcpy(filename, updatefilepath);
+            strncpy(filename, updatefilepath, STRING_SIZE);
         }
         else if (type==1) { //iotbaseserverlinux.sh
-            strcpy(filename, "./update/iotbaseserverlinux.sh");
+            strncpy(filename, "./update/iotbaseserverlinux.sh", STRING_SIZE);
         }
         else if (type==2) { //iotdeviceeegserverlinux.sh
-            strcpy(filename, "./update/iotdeviceeegserverlinux.sh");
+            strncpy(filename, "./update/iotdeviceeegserverlinux.sh", STRING_SIZE);
         }
         else if (type==3) { 
-            strcpy(filename, "./update/iotdevicemovementlinux.sh");
+            strncpy(filename, "./update/iotdevicemovementlinux.sh", STRING_SIZE);
         }
         else if (type==4) {
-            strcpy(filename, "./update/iotdevicecameralinux.sh");
+            strncpy(filename, "./update/iotdevicecameralinux.sh", STRING_SIZE);
         }
         else if (type==5) {
-            strcpy(filename, "./update/iotdevicegeneratorlinux.sh");
+            strncpy(filename, "./update/iotdevicegeneratorlinux.sh", STRING_SIZE);
         }
         else 
-            strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
+            strncpy(filename, "Updater.sh", STRING_SIZE); //Wrong type? Updater.sh then
         DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
 
         fp = fopen(filename,"r"); // read mode
@@ -715,10 +717,10 @@ int UpdateHash(ParameterList_t *TempParam)
             AddToTransmit("{\n\"UPDATEHASH\": [\n");
             while (end == 0)
             {
-                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
                 DBG_LOG_TRACE("%d readed from file.\n",sizefp);
 
-                allhash += CRC16ANSI(bufsa,sizefp);
+                allhash += CRC16ANSI(scratch_raw,sizefp);
     //            snprintf(buffer,STRING_SIZE,"{\"part\":%d,\"hash\":",num);
     //            AddToTransmit(buffer);
     //            snprintf(buffer,STRING_SIZE,"0x%04X}",CRC16ANSI(bufsa,sizefp));
@@ -759,7 +761,7 @@ int Update(ParameterList_t *TempParam)
     int num;
     int sizefp;
     int end;
-    char filename[50];
+    char filename[STRING_SIZE];
     int type;
     
     #ifdef DEBUG
@@ -789,25 +791,25 @@ int Update(ParameterList_t *TempParam)
         }
         
         if (type==0) {
-            strcpy(filename, updatefilepath);
+            strncpy(filename, updatefilepath, STRING_SIZE);
         }
         else if (type==1) {
-            strcpy(filename, "./update/iotbaseserverlinux.sh");
+            strncpy(filename, "./update/iotbaseserverlinux.sh", STRING_SIZE);
         }
         else if (type==2) {
-            strcpy(filename, "./update/iotdeviceeegserverlinux.sh");
+            strncpy(filename, "./update/iotdeviceeegserverlinux.sh", STRING_SIZE);
         }
         else if (type==3) { 
-            strcpy(filename, "./update/iotdevicemovementlinux.sh");
+            strncpy(filename, "./update/iotdevicemovementlinux.sh", STRING_SIZE);
         }
         else if (type==4) {
-            strcpy(filename, "./update/iotdevicecameralinux.sh");
+            strncpy(filename, "./update/iotdevicecameralinux.sh", STRING_SIZE);
         }
         else if (type==5) {
-            strcpy(filename, "./update/iotdevicegeneratorlinux.sh");
+            strncpy(filename, "./update/iotdevicegeneratorlinux.sh", STRING_SIZE);
         }
         else 
-            strcpy(filename, "Updater.sh");
+            strncpy(filename, "Updater.sh", STRING_SIZE);
         DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
 
         fp = fopen(filename,"r"); // read mode
@@ -825,7 +827,7 @@ int Update(ParameterList_t *TempParam)
             DBG_LOG_TRACE("Part %d .\r\n\r",ind_i);
             if (ind_i == -1)
             {
-                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
                 DBG_LOG_TRACE("%d readed from file.\n",sizefp);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
@@ -839,7 +841,7 @@ int Update(ParameterList_t *TempParam)
             {
                 while (num <= ind_i)
                 {
-                    sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                    sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
                     DBG_LOG_TRACE("%d readed from file.\n",sizefp);
                     if (sizefp == 0)
                         return(INVALID_PARAMETERS_ERROR);

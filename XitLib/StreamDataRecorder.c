@@ -208,6 +208,7 @@ int GetLastBlock(ParameterList_t *TempParam)
     //time_t seconds = time(NULL);
     //struct tm* timeinfo = localtime(&seconds);
     int  ret_val = 0;
+    char buffer[STRING_SIZE];
     int i,l,k=0; //samples_nmbr
     uint32_t cnt = samples_cnt-readed_cnt;
     if ((cnt) > ReadMem(REG_EEG_PocketSize))
@@ -264,7 +265,7 @@ int GetConcreteBlock(ParameterList_t *TempParam)
     int i,l,k=0; //samples_nmbr
     int  Number;
     int  Size;
-    char buf_local[60];
+    char buffer[STRING_SIZE];
 
     
     DBG_LOG_DEBUG("Into GetConcreteBlock.\n");

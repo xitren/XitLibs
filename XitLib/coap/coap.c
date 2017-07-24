@@ -18,6 +18,7 @@ static Array *AwaitedAnswersArray;
 //static coap_token_record awaited_answers[MAXWAIT];
 //uint32_t awaited_answers_cnt = 0;
 static uint8_t part_buff[3];
+static uint8_t type_opt[3];
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
@@ -608,11 +609,11 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
 
     // safe because 1 < MAXOPT
     pkt->opts[0].num = COAP_OPTION_CONTENT_FORMAT;
-    pkt->opts[0].buf.p = scratch->p;
+    pkt->opts[0].buf.p = type_opt;
     if (scratch->len < 2)
         return COAP_ERR_BUFFER_TOO_SMALL;
-    scratch->p[0] = ((uint16_t)content_type & 0xFF00) >> 8;
-    scratch->p[1] = ((uint16_t)content_type & 0x00FF);
+    pkt->opts[0].buf.p[0] = ((uint16_t)content_type & 0xFF00) >> 8;
+    pkt->opts[0].buf.p[1] = ((uint16_t)content_type & 0x00FF);
     pkt->opts[0].buf.len = 2;
     if (opt_part){
         pkt->opts[1].num = opt_part->num;

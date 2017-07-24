@@ -117,6 +117,7 @@ int Snap(ParameterList_t *TempParam)
     int num;
     int sizefp;
     int end;
+    uint8_t bufsa[1024];
     #ifdef DEBUG
         printf("--//internal//-- Into Snap.\r\n\r");
         printf("--//internal//-- Here head Snap.\r\n\r");
