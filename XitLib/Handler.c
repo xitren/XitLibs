@@ -154,17 +154,27 @@ void InitHandler(DeviceTypeDef device) {
 #endif
 
 int old_s[4];
+union {
+        struct { uint8_t s_b1,s_b2,s_b3,s_b4; } S_un_b;
+        uint32_t S_addr;
+} translate;
 
 inline void ProtocolHandler(void) {
-    u_long Ip;
-    char* ip;
+    char ip[16];
     uint32_t cmdlent = 0;
     uint32_t port = 0;
 //    DBG_LOG_TRACE("Into ProtocolHandler");
     if (NO_BUFFER_ERROR == ProceedReceive((char*)scratch_raw, &cmdlent, 
-                                                        &Ip, &port)) {
-        ip = ;
-        DBG_LOG_DEBUG("Start to parse message.");
+                                          &(translate.S_addr), &port)) {
+        snprintf(ip,sizeof(ip),"%d.%d.%d.%d",translate.S_un_b.s_b1
+                                    ,translate.S_un_b.s_b2
+                                    ,translate.S_un_b.s_b3
+                                    ,translate.S_un_b.s_b4);
+        DBG_LOG_DEBUG("%d.%d.%d.%d",translate.S_un_b.s_b1
+                                    ,translate.S_un_b.s_b2
+                                    ,translate.S_un_b.s_b3
+                                    ,translate.S_un_b.s_b4);
+        DBG_LOG_DEBUG("Start to parse message.");        
         DBG_LOG_INFO("Simple link(%d) ", ReadMem(REG_Simple_link)); 
         if (ReadMem(REG_Simple_link) > 0) {
             char* tbuffer2;
@@ -315,21 +325,25 @@ void SecClockHandler(void) {
 }
 
 void SoftPWMHandler(void) {
-    AddToSchedule(SoftPWMSheduler);
+//    AddToSchedule(SoftPWMSheduler);
+    IncPWM();
+    SetLedsUnderPWM();
     return;
 }
 
 void StatChangeHandler(void) {
-    AddToSchedule(StatChangeSheduler);
+//    AddToSchedule(StatChangeSheduler);
+    ChangeLedsCode();
     return;
 }
 
 void CalculationHandler(void) {
-    AddToSchedule(CalculationSheduler);
+    FreeCycle();
     return;
 }
 void SampleHandler(void) {
     AddToSchedule(SampleSheduler);
+    return;
 }
 /*============================================================================*/
 
@@ -337,11 +351,6 @@ void SampleHandler(void) {
 void SampleSheduler(void) {
 //    DBG_LOG_INFO("Scheduled SampleHandler.\n");
     AddSample();
-}
-
-void CalculationSheduler(void) {
-//    DBG_LOG_INFO("Scheduled CalculationHandler.\n");
-    FreeCycle();
     return;
 }
 
@@ -355,20 +364,7 @@ void SecClockSheduler(void) {
     WriteMem(REG_CLK_Band, 1);
     return;
 }
-
-void SoftPWMSheduler(void) {
-//    DBG_LOG_INFO("Scheduled SoftPWMHandler.\n");
-    IncPWM();
-    SetLedsUnderPWM();
-    return;
-}
-
-void StatChangeSheduler(void) {
-//    DBG_LOG_INFO("Scheduled StatChangeHandler.\n");
-    ChangeLedsCode();
-    return;
 /*============================================================================*/
-}
 
 int ResetReq() {
     int rc;

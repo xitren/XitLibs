@@ -14,8 +14,7 @@ typedef struct _tagReceiveDeque_t
 {
    uint8_t              *Msg;
    uint32_t             Size;
-   char                 *Ip;
-   uint32_t             Ip_len;
+   uint32_t             Ip;
    uint32_t             Port;
 } ReceiveDeque_t;
 /*============================================================================*/
@@ -36,7 +35,7 @@ int InitBuffer()
         return BUFFER_ERROR;
     return(ret_val);
 }
-int AddToReceive(uint8_t *msg, uint32_t size, char *ip, uint32_t port)
+int AddToReceive(uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
 {
    int ret_val = NO_BUFFER_ERROR;
    ReceiveDeque_t *comm;
@@ -47,9 +46,7 @@ int AddToReceive(uint8_t *msg, uint32_t size, char *ip, uint32_t port)
         comm->Msg = (uint8_t *)umm_calloc(size,sizeof(uint8_t));
         memcpy((void *)comm->Msg,(void *)msg,size);
         comm->Size = size;
-        comm->Ip = (uint8_t *)umm_calloc(strlen(ip),sizeof(char));
-        memcpy((void *)comm->Ip,(void *)ip,strlen(ip));
-        comm->Ip_len = strlen(ip);
+        comm->Ip = ip;
         comm->Port = port;
         if (deque_add_last(ReceiveDeque, (void *)comm) != 0)
         {
@@ -63,22 +60,21 @@ int AddToReceive(uint8_t *msg, uint32_t size, char *ip, uint32_t port)
    
    return(ret_val);
 }
-int ProceedReceive(uint8_t *msg,uint32_t *size, char *ip, uint32_t *port)
+int ProceedReceive(uint8_t *msg,uint32_t *size, uint32_t *ip, uint32_t *port)
 {
     int ret_val = NO_BUFFER_ERROR;
     ReceiveDeque_t *comm;
    
     if (deque_size(ReceiveDeque) > 0)
     {
-    DBG_LOG_INFO("Receive Proceed, %d left. \n",
-                        deque_size(ReceiveDeque));
+        DBG_LOG_INFO("Receive Proceed, %d left. \n",
+                            deque_size(ReceiveDeque));
         deque_remove_first(ReceiveDeque, (void**)&comm);
         memcpy((void *)msg,(void *)comm->Msg,comm->Size);
         *size = comm->Size;
-        strncpy((void *)ip,(void *)comm->Ip,comm->Ip_len);
+        *ip = comm->Ip;
         *port = comm->Port;
         umm_free((void *)comm->Msg);
-        umm_free((void *)comm->Ip);
         umm_free((void *)comm);
     }
     else

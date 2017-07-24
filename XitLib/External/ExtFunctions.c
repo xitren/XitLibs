@@ -87,7 +87,7 @@ void UserProtocolHandlerThread(void) {
     memset(buf2, 0, sizeof (buf2));
     n = recvfrom(fd, buf2, sizeof (buf2), 0, (struct sockaddr *) &cliaddr, &len);
     cliaddr_hd = cliaddr;
-    AddToReceive(buf2, n, inet_ntoa(cliaddr.sin_addr), ntohs(cliaddr.sin_port));
+    AddToReceive(buf2, n, (uint32_t)cliaddr.sin_addr.S_un.S_addr, ntohs(cliaddr.sin_port));
     DBG_LOG_INFO("Received %s: ", inet_ntoa(cliaddr.sin_addr));
     #ifdef DEBUG
         coap_dump(buf2, n, true);
