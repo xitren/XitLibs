@@ -156,12 +156,14 @@ void InitHandler(DeviceTypeDef device) {
 int old_s[4];
 
 inline void ProtocolHandler(void) {
-    char ip[16];
+    u_long Ip;
+    char* ip;
     uint32_t cmdlent = 0;
     uint32_t port = 0;
 //    DBG_LOG_TRACE("Into ProtocolHandler");
     if (NO_BUFFER_ERROR == ProceedReceive((char*)scratch_raw, &cmdlent, 
-                                                        (char*)ip, &port)) {
+                                                        &Ip, &port)) {
+        ip = ;
         DBG_LOG_DEBUG("Start to parse message.");
         DBG_LOG_INFO("Simple link(%d) ", ReadMem(REG_Simple_link)); 
         if (ReadMem(REG_Simple_link) > 0) {
