@@ -33,22 +33,17 @@ extern "C" {
     extern struct sockaddr_in cliaddr_hd;
     extern int fd_hd;
 #endif
-extern uint8_t buffer[STRING_SIZE];
-extern uint8_t buffer2[10];
 extern uint8_t scratch_raw[4096];
 extern uint8_t id_out;
 extern coap_rw_buffer_t scratch_buf;
 extern size_t pktlen;
-extern uint8_t buffer2[10];
 extern coap_option_t opt;
 extern coap_option_t opt_path;
 extern coap_option_t opt_args;
 extern coap_packet_t pkt;
 extern coap_packet_t rsppkt;
-extern uint8_t buf[4096];
 extern uint8_t content_type;
 extern coap_option_t opt_part;
-extern uint8_t bufsa[1024];
 extern int size_parts;
 extern int size_parts_cur;
 /*============================================================================*/
@@ -65,7 +60,7 @@ void CalculationHandler(void);
     void VideoFrameDeInitHandler(void);
 #endif
 void UartDistanceHandler(void);
-void UartProtocolHandler(void);
+void UartProtocolHandler(char let);
 void UartTransferCompleteHandler(void);
 void UartReceiveCompleteHandler(void);
 void SecClockHandler(void);
@@ -74,8 +69,14 @@ void StatChangeHandler(void);
 int ResetReq();
 int Update(ParameterList_t *TempParam);
 int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func);
+int TransferTo(const uint8_t *data, const uint32_t datalen,
+        const char* address /* = "192.168.1.255" */,
+        const uint32_t port /* = 5683 */);
 int TransferBand(const uint8_t *data, const uint32_t datalen);
 void HandlerImage(void);
+
+void SampleSheduler(void);
+void SecClockSheduler(void);
 /*============================================================================*/
 
 #ifdef __cplusplus

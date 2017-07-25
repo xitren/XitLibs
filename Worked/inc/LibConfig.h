@@ -26,7 +26,7 @@ extern "C" {
 #else
     #define LOGGER_SIZE 100
     #define BUFFER_SIZE 120
-    #define STRING_SIZE 80
+    #define STRING_SIZE 100
     #define MAX_NUM_OF_PARAMETERS                      (25)  /* Denotes the max   */
                                                              /* number of         */
                                                              /* parameters a      */

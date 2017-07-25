@@ -79,7 +79,8 @@ typedef struct _tagUserCommand_t
    /* The following type definition represents the generic function     */
    /* pointer to be used by all commands that can be executed by the    */
    /* test program.                                                     */
-typedef int (*CommandFunction_t)(ParameterList_t *TempParam);
+typedef int (*CommandFunction_t)(ParameterList_t *TempParam);         
+typedef int (*ScheduleFunction_t)(void);
 /*============================================================================*/
 
 /* Public variables ----------------------------------------------------------*/
@@ -95,6 +96,9 @@ char* GetCommandLink(int N);
 int GetCommandsNumber(void);
 void ClearCommands(void);
 unsigned long StringToUnsignedInteger(char *StringInteger);
+void AddToSchedule(ScheduleFunction_t ScheduleFunction);
+void ClearSchedule(void);
+void ExecuteSchedule(void);
 /*============================================================================*/
 
 #ifdef __cplusplus

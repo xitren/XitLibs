@@ -21,6 +21,10 @@
                                                          /* buffer specified  */
                                                          /* was no            */
                                                          /* space.            */
+#define BUFFER_ERROR                               (-4)  /* Denotes that the  */
+                                                         /* buffer specified  */
+                                                         /* was no            */
+                                                         /* space.            */
 #define MEMORY_INOUT BUFFER_SIZE*STRING_SIZE+8
 /*============================================================================*/
 
@@ -29,9 +33,10 @@ extern "C" {
 #endif
   
 /* Public function prototypes ------------------------------------------------*/
+int InitBuffer();
 int AddToTransmit(char *str);
-int AddToReceive(char *str,uint8_t size);
-int ProceedReceive(char *str,uint8_t *size);
+int AddToReceive(uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port);
+int ProceedReceive(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port);
 char* ProceedTransmit(uint32_t *num);
 int ClearBuffer();
 /*============================================================================*/

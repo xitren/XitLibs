@@ -28,6 +28,7 @@
 #include "CommandModule.h"
 #include "ExtFunctions.h"
 #include "ImageVisualise.h"
+#include "version.h"
 
 char commandUpd[] = "/QUERY/UPDATE?repeat=3&type=0\0";
 
@@ -86,6 +87,8 @@ int main(int argc, char** argv) {
     EEGRecorderInit(0,250);
     printf("EEG recorder ok.\n");
     
+    printf(VERSION);
+    
     uint32_t amplitude[7] = {10000,10000,100000,1000000,100000,10000,10000};
     uint32_t frequency[7] = {10,20,10,10,30,100,5};
     
@@ -117,7 +120,7 @@ int main(int argc, char** argv) {
          &IDThread);              // returns thread identifier
     
 //    function_update();
-    //function_beakon();
+    function_beakon();
     //CommandLineInterpreter(commandUpd);
     while(1)
     {

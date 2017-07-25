@@ -111,7 +111,7 @@ int QueryNodes(ParameterList_t *TempParam)
                 array_get_at(NodesArray, i, (void**)&node);
                 for (j=0;j < array_size(node->proto);j++)
                 {
-                    array_get_at(node->proto, i, (void**)&proto);
+                    array_get_at(node->proto, j, (void**)&proto);
                     if( (i==array_size(NodesArray)-1) 
                             && (j==array_size(node->proto)-1) )
                     {
