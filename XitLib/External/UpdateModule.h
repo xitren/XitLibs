@@ -30,6 +30,8 @@ int QueryUpdateHash(ParameterList_t *TempParam);
 int Version(ParameterList_t *TempParam);
 int TechUpdate(ParameterList_t *TempParam);
 int TechStart(ParameterList_t *TempParam);
+int SetVersion(char *value);
+int SetUpdateServer(char *value);
 /*============================================================================*/
 
 #ifdef __cplusplus

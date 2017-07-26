@@ -1,4 +1,3 @@
-
 #ifdef CPU
     #ifdef PLATFORM_WINDOWS
         #pragma comment ( lib, "ws2_32.lib" )
@@ -87,7 +86,13 @@ void UserProtocolHandlerThread(void) {
     memset(buf2, 0, sizeof (buf2));
     n = recvfrom(fd, buf2, sizeof (buf2), 0, (struct sockaddr *) &cliaddr, &len);
     cliaddr_hd = cliaddr;
-    AddToReceive(buf2, n, (uint32_t)cliaddr.sin_addr.S_un.S_addr, ntohs(cliaddr.sin_port));
+    #ifdef PLATFORM_WINDOWS
+    AddToReceive(buf2, n, (uint32_t)cliaddr.sin_addr.S_un.S_addr, 
+                                                    ntohs(cliaddr.sin_port));
+    #else
+    AddToReceive(buf2, n, (uint32_t)cliaddr.sin_addr.s_addr, 
+                                                    ntohs(cliaddr.sin_port));
+    #endif
     DBG_LOG_INFO("Received %s: ", inet_ntoa(cliaddr.sin_addr));
     #ifdef DEBUG
         coap_dump(buf2, n, true);
@@ -279,5 +284,4 @@ void SetLeds(uint8_t q_green,uint8_t q_red,uint8_t q_blue)
     #endif
     return;
 }
-
 /*============================================================================*/

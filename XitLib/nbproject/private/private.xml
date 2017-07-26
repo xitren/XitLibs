@@ -81,6 +81,12 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/tests/models_test.c</file>
         </group>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/malloc/umm_malloc.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/malloc/umm_malloc.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.c</file>
+        </group>
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/DMAretransmitter.c</file>
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/malloc/umm_malloc.c</file>
@@ -95,11 +101,6 @@
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.c</file>
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/LogModule.c</file>
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
-        </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/version.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/Handler.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/FunctionsDiscovery.c</file>
         </group>
     </open-files>
 </project-private>
