@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -133,10 +133,14 @@
                      displayName="Models test main"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/ExtFunctions_models.c</itemPath>
-        <itemPath>tests/ExtFunctions_models.h</itemPath>
+        <itemPath>../Worked/External/ExtFunctions.c</itemPath>
+        <itemPath>../Worked/External/ExtFunctions.h</itemPath>
+        <itemPath>../Worked/External/UpdateModule.c</itemPath>
+        <itemPath>../Worked/External/UpdateModule.h</itemPath>
         <itemPath>tests/array_test.c</itemPath>
         <itemPath>tests/array_test.h</itemPath>
+        <itemPath>tests/hashtable_test.c</itemPath>
+        <itemPath>tests/hashtable_test.h</itemPath>
         <itemPath>tests/models_test.c</itemPath>
       </logicalFolder>
     </logicalFolder>
@@ -222,6 +226,14 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -437,10 +449,6 @@
       </item>
       <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -448,6 +456,10 @@
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/json_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -498,6 +510,14 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -713,10 +733,6 @@
       </item>
       <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -724,6 +740,10 @@
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/json_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -773,6 +793,14 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -988,10 +1016,6 @@
       </item>
       <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -999,6 +1023,10 @@
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/json_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1051,6 +1079,14 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
+      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1266,10 +1302,6 @@
       </item>
       <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -1277,6 +1309,10 @@
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/json_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1332,6 +1368,14 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1547,10 +1591,6 @@
       </item>
       <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -1558,6 +1598,10 @@
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/json_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1608,6 +1652,14 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1823,10 +1875,6 @@
       </item>
       <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -1834,6 +1882,10 @@
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/json_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1875,6 +1927,14 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
+      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -2090,10 +2150,6 @@
       </item>
       <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_models.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_models.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -2101,6 +2157,10 @@
       <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/hashtable_test.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/json_test.c" ex="false" tool="0" flavor2="0">
       </item>

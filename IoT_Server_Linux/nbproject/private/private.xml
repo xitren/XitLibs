@@ -22,9 +22,15 @@
         <group name="IoT">
             <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/VideoModule.h</file>
         </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/IoT_Server_Linux/main.c</file>
-        </group>
         <group name="Lib"/>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/version.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/Handler.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/External/ExtFunctions.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server_Linux/main.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/External/UpdateModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/CommandModule.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/FunctionsDiscovery.h</file>
+        </group>
     </open-files>
 </project-private>

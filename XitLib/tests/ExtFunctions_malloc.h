@@ -42,7 +42,6 @@ extern coap_packet_t rsppkt;
 extern uint8_t buf[4096];
 extern uint8_t content_type;
 extern coap_option_t opt_part;
-extern uint8_t bufsa[1024];
 extern int size_parts;
 extern int size_parts_cur;
 /*============================================================================*/

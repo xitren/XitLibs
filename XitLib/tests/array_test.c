@@ -870,7 +870,8 @@ TEST_C_ArrayCapacity(void)
 TEST3_GROUP_C_SETUP(void)
 {
     array_new(&v1);
-    for(int i=0;i<20; i++) {
+    int i;
+    for(i=0;i<20; i++) {
         int *v = (int*)malloc(sizeof(int));
         *v = i % 2;
         array_add(v1, (void*)v);

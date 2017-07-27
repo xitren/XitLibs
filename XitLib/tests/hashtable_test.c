@@ -1,8 +1,5 @@
-#include <time.h>
-#include <string.h>
 
-#include "hashtable.h"
-#include "CppUTest/TestHarness_c.h"
+#include "hashtable_test.h"
 
 static HashTableConf conf;
 static HashTable *table;
@@ -19,38 +16,41 @@ static size_t zero_hash(const void *k, int l, uint32_t s)
     return 0;
 }
 
-TEST_GROUP_C_SETUP(HashTableTestsConf)
+TEST_GROUP_C_SETUP1()
 {
     hashtable_conf_init(&conf);
     conf.initial_capacity = 7;
     stat = hashtable_new_conf(&conf, &table);
 };
 
-TEST_GROUP_C_TEARDOWN(HashTableTestsConf)
+TEST_GROUP_C_TEARDOWN1()
 {
     hashtable_destroy(table);
 };
 
-TEST_C(HashTableTestsConf, HashTableNew)
+TEST_C_HashTableNew()
 {
+    TEST_GROUP_C_SETUP1();
     CHECK_EQUAL_C_INT(CC_OK, stat);
     CHECK_EQUAL_C_INT(0, hashtable_size(table));
     /* power of 2 rounding */
     CHECK_EQUAL_C_INT(8, hashtable_capacity(table));
+    TEST_GROUP_C_TEARDOWN1();
 };
 
-TEST_GROUP_C_SETUP(HashTableTests)
+TEST_GROUP_C_SETUP2()
 {
     hashtable_new(&table);
 };
 
-TEST_GROUP_C_TEARDOWN(HashTableTests)
+TEST_GROUP_C_TEARDOWN2()
 {
     hashtable_destroy(table);
 };
 
-TEST_C(HashTableTests, HashTableAdd)
+TEST_C_HashTableAdd()
 {
+    TEST_GROUP_C_SETUP2();
     char *a = "value";
     char *b = "cookies";
     char *c = "m31";
@@ -64,22 +64,24 @@ TEST_C(HashTableTests, HashTableAdd)
     char *r;
     hashtable_get(table, "key", (void*) &r);
     CHECK_EQUAL_C_POINTER(r, a);
+    TEST_GROUP_C_TEARDOWN2();
 };
 
-TEST_GROUP_C_SETUP(HashTableTestsCollision)
+TEST_GROUP_C_SETUP3()
 {
     hashtable_conf_init(&conf);
     conf.hash = collision_hash;
     hashtable_new_conf(&conf, &table);
 };
 
-TEST_GROUP_C_TEARDOWN(HashTableTestsCollision)
+TEST_GROUP_C_TEARDOWN3()
 {
     hashtable_destroy(table);
 };
 
-TEST_C(HashTableTestsCollision, HashTableCollisionGet)
+TEST_C_HashTableCollisionGet()
 {
+    TEST_GROUP_C_SETUP3();
     char *a = "value";
     char *c = "m31";
 
@@ -91,10 +93,12 @@ TEST_C(HashTableTestsCollision, HashTableCollisionGet)
     char *r;
     hashtable_get(table, "randomstring", (void*) &r);
     CHECK_EQUAL_C_POINTER(r, c);
+    TEST_GROUP_C_TEARDOWN3();
 };
 
-TEST_C(HashTableTestsCollision, HashTableCollisionRemove)
+TEST_C_HashTableCollisionRemove()
 {
+    TEST_GROUP_C_SETUP3();
     char *a = "value";
     char *c = "m31";
 
@@ -107,22 +111,24 @@ TEST_C(HashTableTestsCollision, HashTableCollisionRemove)
     CHECK_EQUAL_C_INT(2, hashtable_size(table));
     void *g;
     CHECK_EQUAL_C_INT(CC_ERR_KEY_NOT_FOUND, hashtable_get(table, "randomstring", (void*) &g));
+    TEST_GROUP_C_TEARDOWN3();
 };
 
-TEST_GROUP_C_SETUP(HashTableTestsZeroHash)
+TEST_GROUP_C_SETUP4()
 {
     hashtable_conf_init(&conf);
     conf.hash = zero_hash;
     hashtable_new_conf(&conf, &table);
 };
 
-TEST_GROUP_C_TEARDOWN(HashTableTestsZeroHash)
+TEST_GROUP_C_TEARDOWN4()
 {
     hashtable_destroy(table);
 };
 
-TEST_C(HashTableTestsZeroHash, HashTableAddStringWithNullKey)
+TEST_C_HashTableAddStringWithNullKey()
 {
+    TEST_GROUP_C_SETUP4();
     char *a = "value";
     char *b = "cookies";
     char *c = "m31";
@@ -131,11 +137,13 @@ TEST_C(HashTableTestsZeroHash, HashTableAddStringWithNullKey)
     hashtable_add(table, NULL, c);
     hashtable_add(table, "randomstring", b);
     hashtable_add(table, "5", c);
+    TEST_GROUP_C_TEARDOWN4();
 };
 
 
-TEST_C(HashTableTestsZeroHash, HashTableRemoveStringWithNullKey)
+TEST_C_HashTableRemoveStringWithNullKey()
 {
+    TEST_GROUP_C_SETUP4();
     char *a = "value";
     char *b = "cookies";
     char *c = "m31";
@@ -146,11 +154,13 @@ TEST_C(HashTableTestsZeroHash, HashTableRemoveStringWithNullKey)
     hashtable_add(table, "5", c);
 
     hashtable_remove(table, "randomstring", NULL);
+    TEST_GROUP_C_TEARDOWN4();
 };
 
 
-TEST_C(HashTableTestsZeroHash, HashTableGetStringWithNullKey)
+TEST_C_HashTableGetStringWithNullKey()
 {
+    TEST_GROUP_C_SETUP4();
     char *a = "value";
     char *b = "cookies";
     char *c = "m31";
@@ -162,11 +172,13 @@ TEST_C(HashTableTestsZeroHash, HashTableGetStringWithNullKey)
 
     void *out;
     hashtable_get(table, "randomstring", &out);
+    TEST_GROUP_C_TEARDOWN4();
 };
 
 
-TEST_C(HashTableTests, HashTableRemove)
+TEST_C_HashTableRemove()
 {
+    TEST_GROUP_C_SETUP4();
     char *a = "value";
     char *b = "cookies";
     char *c = "m31";
@@ -181,11 +193,13 @@ TEST_C(HashTableTests, HashTableRemove)
 
     char *g;
     CHECK_EQUAL_C_INT(CC_ERR_KEY_NOT_FOUND, hashtable_get(table, "randomstring", (void*) &g));
+    TEST_GROUP_C_TEARDOWN4();
 };
 
 
-TEST_C(HashTableTests, HashTableRemoveAll)
+TEST_C_HashTableRemoveAll()
 {
+    TEST_GROUP_C_SETUP4();
     hashtable_add(table, "key", "value");
     hashtable_add(table, "randomkey", "randomvalue");
 
@@ -196,11 +210,13 @@ TEST_C(HashTableTests, HashTableRemoveAll)
 
     char *g;
     CHECK_EQUAL_C_INT(CC_ERR_KEY_NOT_FOUND, hashtable_get(table, "key", (void*) &g));
+    TEST_GROUP_C_TEARDOWN4();
 };
 
 
-TEST_C(HashTableTests, HashTableGet)
+TEST_C_HashTableGet()
 {
+    TEST_GROUP_C_SETUP4();
     char *val = "567";
 
     hashtable_add(table, "key", "value");
@@ -210,20 +226,23 @@ TEST_C(HashTableTests, HashTableGet)
     hashtable_get(table, "123", (void*) &ret);
 
     CHECK_EQUAL_C_STRING(val, ret);
+    TEST_GROUP_C_TEARDOWN4();
 };
 
 
-TEST_C(HashTableTests, HashTableSize)
+TEST_C_HashTableSize()
 {
+    TEST_GROUP_C_SETUP4();
     hashtable_add(table, "key", "value");
     hashtable_add(table, "randomstring", "cookies");
     hashtable_add(table, "5", "asdf");
 
     CHECK_EQUAL_C_INT(3, hashtable_size(table));
+    TEST_GROUP_C_TEARDOWN4();
 };
 
 
-TEST_GROUP_C_SETUP(HashTableTestsCapacity)
+TEST_GROUP_C_SETUP5()
 {
     hashtable_conf_init(&conf);
 
@@ -232,13 +251,14 @@ TEST_GROUP_C_SETUP(HashTableTestsCapacity)
     hashtable_new_conf(&conf, &table);
 };
 
-TEST_GROUP_C_TEARDOWN(HashTableTestsCapacity)
+TEST_GROUP_C_TEARDOWN5()
 {
     hashtable_destroy(table);
 };
 
-TEST_C(HashTableTestsCapacity, HashTableCapacity)
+TEST_C_HashTableCapacity()
 {
+    TEST_GROUP_C_SETUP5();
     hashtable_add(table, "a", NULL);
     CHECK_EQUAL_C_INT(2, hashtable_capacity(table));
 
@@ -248,11 +268,13 @@ TEST_C(HashTableTestsCapacity, HashTableCapacity)
     hashtable_add(table, "c", NULL);
     hashtable_add(table, "d", NULL);
     CHECK_EQUAL_C_INT(8, hashtable_capacity(table));
+    TEST_GROUP_C_TEARDOWN5();
 };
 
 
-TEST_C(HashTableTests, HashTableContainsKey)
+TEST_C_HashTableContainsKey()
 {
+    TEST_GROUP_C_SETUP5();
     hashtable_add(table, "key", "value");
     hashtable_add(table, "randomstring", "cookies");
     hashtable_add(table, "5", "m31");
@@ -261,6 +283,7 @@ TEST_C(HashTableTests, HashTableContainsKey)
 
     hashtable_remove(table, "key", NULL);
     CHECK_EQUAL_C_INT(0, hashtable_contains_key(table, "key"));
+    TEST_GROUP_C_TEARDOWN5();
 };
 
 int cmp_k(const void *k1, const void *k2)
@@ -277,7 +300,7 @@ int cmp_k(const void *k1, const void *k2)
     return 0;
 }
 
-TEST_GROUP_C_SETUP(HashTableTestsCompare)
+TEST_GROUP_C_SETUP6()
 {
     hashtable_conf_init(&conf);
 
@@ -288,13 +311,14 @@ TEST_GROUP_C_SETUP(HashTableTestsCompare)
     hashtable_new_conf(&conf, &table);
 };
 
-TEST_GROUP_C_TEARDOWN(HashTableTestsCompare)
+TEST_GROUP_C_TEARDOWN6()
 {
     hashtable_destroy(table);
 };
 
-TEST_C(HashTableTestsCompare, HashTableTestsMemoryChunksAsKeys)
+TEST_C_HashTableTestsMemoryChunksAsKeys()
 {
+    TEST_GROUP_C_SETUP6();
     int array1[] = {1,2,3,4,5,6,7};
     int array2[] = {34,1,4,1111,456,234,0};
     int array3[] = {0,9,8,7,6,5,4};
@@ -311,10 +335,12 @@ TEST_C(HashTableTestsCompare, HashTableTestsMemoryChunksAsKeys)
 
     CHECK_EQUAL_C_STRING("one", a);
     CHECK_EQUAL_C_STRING("three", b);
+    TEST_GROUP_C_TEARDOWN6();
 };
 
-TEST_C(HashTableTests, HashTableIterNext)
+TEST_C_HashTableIterNext()
 {
+    TEST_GROUP_C_SETUP6();
     hashtable_add(table, "one", "1");
     hashtable_add(table, "two", "2");
     hashtable_add(table, "three", "3");
@@ -355,10 +381,12 @@ TEST_C(HashTableTests, HashTableIterNext)
     CHECK_EQUAL_C_INT(1, three);
     CHECK_EQUAL_C_INT(1, four);
     CHECK_EQUAL_C_INT(1, five);
+    TEST_GROUP_C_TEARDOWN6();
 };
 
-TEST_C(HashTableTests, HashTableIterRemove)
+TEST_C_HashTableIterRemove()
 {
+    TEST_GROUP_C_SETUP6();
     char *a = "foo";
     char *b = "bar";
     char *c = "baz";
@@ -380,4 +408,5 @@ TEST_C(HashTableTests, HashTableIterRemove)
 
     CHECK_EQUAL_C_INT(2, hashtable_size(table));
     CHECK_C(!hashtable_contains_key(table, "bar"));
+    TEST_GROUP_C_TEARDOWN6();
 };

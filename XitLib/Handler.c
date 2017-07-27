@@ -12,6 +12,7 @@
 uint8_t inb, rc, cmdlen = 0;
 uint8_t id_out = 0;
 uint8_t scratch_raw[4096];
+uint8_t bufsa[4096];
 coap_rw_buffer_t scratch_buf = {scratch_raw, sizeof (scratch_raw)};
 coap_packet_t pkt;
 size_t rsplen;
@@ -224,7 +225,7 @@ inline void ProtocolHandler(void) {
                     else
                     {
                         coap_make_response(&scratch_buf, &rsppkt, &opt_part,
-                            (uint8_t*) tbuffer, size_parts_cur,
+                            (uint8_t*) bufsa, size_parts_cur,
                             pkt.hdr.id[0], pkt.hdr.id[1],
                             pkt.tok_p,pkt.tok_len, COAP_RSPCODE_CONTENT,
                             content_type);

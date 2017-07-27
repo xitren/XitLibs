@@ -157,12 +157,14 @@ void put_node_msg(char *_ip,char *_name)
             return;
     }
     else
-        for (i=0;i < array_size(NodesArray);i++)
-        {
-            array_get_at(NodesArray, i, (void**)&node);
-            array_remove_all_free(node->proto);
-        }
-        array_remove_all_free(NodesArray);
+    {
+//        for (i=0;i < array_size(NodesArray);i++)
+//        {
+//            array_get_at(NodesArray, i, (void**)&node);
+//            array_remove_all_free(node->proto);
+//        }
+//        array_remove_all_free(NodesArray);
+    }
     for (i=0;i < array_size(NodesArray);i++)
     {
         array_get_at(NodesArray, i, (void**)&node);
