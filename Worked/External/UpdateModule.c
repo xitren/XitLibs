@@ -21,10 +21,12 @@ const char *tok_update_hash="updhsh";
 const char *path_update_reqry="/REQUERY/UPDATE";
 char path_update_clb[50]="/CALLBACK/UPDATE?type=0";
 char path_update_hash_clb[50]="/CALLBACK/UPDATEHASH?type=0";
-const char *updateserver = "10.9.91.105";
+//const char *updateserver = "10.9.91.105";
+char *updateserver = "10.10.30.40";
 //const char *updateserver = "10.10.30.35";
+bool techServerFound = true;
 const char *updatefile = "Updater.sh";
-char *version = VERSION;
+char *version = "1.3";
 /*============================================================================*/
 uint32_t config_dev_type[CFG_SIZE];
 char updatefilepath[200]="Updater.sh";
@@ -52,9 +54,9 @@ int QueryUpdate(ParameterList_t *TempParam)
     char requery[100];
     int rc;
     coap_buffer_t tokfb;
-    int pktlen = sizeof(buf);
+    int pktlen = sizeof(scratch_raw);
     int type=0;
-
+    
     DBG_LOG_DEBUG("Into QueryUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
@@ -99,7 +101,7 @@ int QueryUpdate(ParameterList_t *TempParam)
         snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);  
         snprintf(path_update_clb,50,"/CALLBACK/UPDATE?type=%d",type);  
         
-        pktlen = sizeof(buf);
+        pktlen = sizeof(scratch_raw);
         opt_path.num = COAP_OPTION_URI_PATH;
         opt_path.buf.len = strlen(path_update);
         opt_path.buf.p = (uint8_t*)path_update;
@@ -117,23 +119,23 @@ int QueryUpdate(ParameterList_t *TempParam)
             snprintf(requery,100,
                     "/REQUERY/UPDATE?part=%d&end=%d&repeat=%d&ip=%s&port=%d&type=%d"
                                     ,ind_i,end,repeat-1,ip,port,type);
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_clb, requery)))
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_clb, requery)))
             {
-                //Transfer((uint8_t*)buf,pktlen,"/update");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,port);
+                //Transfer((uint8_t*)scratch_raw,pktlen,"/update");
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,port);
             }
         }
         else
         {
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_clb, NULL)))
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_clb, NULL)))
             {
-                //Transfer((uint8_t*)buf,pktlen,"/update");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,port);
+                //Transfer((uint8_t*)scratch_raw,pktlen,"/update");
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,port);
             }
         }
         #ifdef DEBUG
             DBG_LOG_DEBUG("Sending: ");
-            coap_dump(buf, pktlen, true);
+            coap_dump(scratch_raw, pktlen, true);
         #endif
         DBG_LOG_TRACE("Sended %d part query.\n",ind_i);
     }
@@ -156,7 +158,7 @@ int QueryUpdateHash(ParameterList_t *TempParam)
     int repeat = 0;
     char requery[100];
     int rc;
-    int pktlen = sizeof(buf);
+    int pktlen = sizeof(scratch_raw);
     char path_update_hash[50];
     char path_update_hash_clb[50];
     int type;
@@ -206,25 +208,25 @@ int QueryUpdateHash(ParameterList_t *TempParam)
         if ((repeat-1) > 0)
         {
             snprintf(requery,100,"/REQUERY/UPDATEHASH?repeat=%d&type=%d",repeat-1, type);
-            printf(requery,"/REQUERY/UPDATEHASH?repeat=%d&type=%d",repeat-1, type);
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_hash_clb, requery)))
+            //printf(requery,"/REQUERY/UPDATEHASH?repeat=%d&type=%d",repeat-1, type);
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_hash_clb, requery)))
             {
-        //        Transfer((uint8_t*)buf,pktlen,"/updatehash");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,5683);
+        //        Transfer((uint8_t*)scratch_raw,pktlen,"/updatehash");
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,5683);
             }
         }
         else
         {
             requery[0] = 0;
-            if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_hash_clb, NULL)))
+            if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_hash_clb, NULL)))
             {
-        //        Transfer((uint8_t*)buf,pktlen,"/updatehash");
-                TransferUDP((uint8_t*)buf,pktlen,updateserver,5683);
+        //        Transfer((uint8_t*)scratch_raw,pktlen,"/updatehash");
+                TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,5683);
             }
         }
         #ifdef DEBUG
             DBG_LOG_DEBUG("Sending: ");
-            coap_dump(buf, pktlen, true);
+            coap_dump(scratch_raw, pktlen, true);
         #endif
         DBG_LOG_TRACE("--//internal//-- Sended parts hash query.\n");
     }
@@ -257,6 +259,22 @@ int Version(ParameterList_t *TempParam)
    return(ret_val);
 }
 
+int SetVersion(char *value)
+{
+   int ret_val =0;
+   version = value; 
+   printf("VERSION: %s\n", VERSION);
+   return(ret_val);
+}
+
+int SetUpdateServer(char *value)
+{
+   int ret_val =0;
+   updateserver = value;
+   printf("updateserver ip: %s\n", updateserver);
+   techServerFound = true;
+   return(ret_val);
+}
 
    /* The following function is responsible for Giving current          */
    /* functions. This function returns zero is successful or a negative */
@@ -271,6 +289,7 @@ int CallbackUpdate(ParameterList_t *TempParam)
     char filename[50];
     FILE *fp,*fpo;
     int type;
+    uint16_t allhash = 0;
     
     DBG_LOG_DEBUG("--//internal//-- Into CallbackUpdate.\n");
     /* First check to see if the parameters required for the execution of*/
@@ -314,7 +333,7 @@ int CallbackUpdate(ParameterList_t *TempParam)
         else strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
         
         snprintf(namepart,100,"%s.p%02d",filename,ind_i);
-        fp = fopen(namepart,"w"); // read mode
+        fp = fopen(namepart,"wb"); // write mode
         DBG_LOG_DEBUG("Create file %s\n",namepart);
 
         if( fp == NULL )
@@ -322,6 +341,9 @@ int CallbackUpdate(ParameterList_t *TempParam)
            DBG_LOG_ERROR("Error while opening update the file callback_update.\n");
         }
         fwrite(scratch_buf.p,sizeof(uint8_t),scratch_buf.len,fp);
+        
+        allhash += CRC16ANSI(scratch_buf.p,scratch_buf.len);
+        printf("allhash: %X\n",allhash);
         fclose(fp);
         //if endone then pack into monolite
         if (end)
@@ -335,12 +357,12 @@ int CallbackUpdate(ParameterList_t *TempParam)
             snprintf(namepart,100,"%s",filename);
             sprintf(systemcommand, "sudo cp %s old_%s", filename, filename);
             system(systemcommand);
-            fp = fopen(namepart,"w"); // read mode
+            fp = fopen(namepart,"wb"); // read mode
             DBG_LOG_DEBUG("Create file %s\n",namepart);
             for(i=0;i<=ind_i;i++)
             {
                 snprintf(namepart,100,"%s.p%02d",filename,i);
-                fpo = fopen(namepart,"r"); // read mode
+                fpo = fopen(namepart,"rb"); // read mode
                 
                 rsize = fread(scratch_buf.p,sizeof(uint8_t),1024,fpo);
                 fwrite(scratch_buf.p,sizeof(uint8_t),rsize,fp);
@@ -408,7 +430,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
 {
     int rc;
     coap_buffer_t tokfb;
-    int pktlen = sizeof(buf);
+    int pktlen = sizeof(scratch_raw);
     int ret_val = 0;
     int i,ind_i;
     char command[100];
@@ -484,19 +506,19 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
         
         DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
         
-        fp = fopen(filename,"r"); // read mode
+        fp = fopen(filename,"rb"); // read mode
 
         if( fp != NULL )
         {
             end = 0;
             while (end == 0)
             {
-                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
                 DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
 
-                allhash += CRC16ANSI(bufsa,sizefp);
+                allhash += CRC16ANSI(scratch_raw,sizefp);
                 
                 if (sizefp != size_parts)
                 {
@@ -504,12 +526,14 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
                 }
             } 
             ptr = strstr(scratch_buf.p,"0x");
+            //printf("ptr[6] %s \n", ptr[6]);
+            if(ptr) {
             ptr[6] = 0;
             allhashserver = StringToUnsignedInteger(ptr);
             scratch_buf.p = ptr+1;
-            fclose(fp);
+            fclose(fp); 
             DBG_LOG_DEBUG("%X <> %X.\n",allhashserver,allhash);
-            if (allhashserver != allhash)
+            if (allhashserver != allhash && allhash > 0)
             {
                 //system("sudo rm Complexmedsh");
 //                system("sudo cp Complexmed.sh Complexmed_old.sh");
@@ -527,6 +551,10 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             {
                 DBG_LOG_INFO("Updates already implemented.\n");
                 //exit(0);
+            }
+            }
+            else {
+                printf("Pointer was null. Skipped\n");
             }
         }
         else
@@ -594,11 +622,22 @@ int TechUpdate(ParameterList_t *TempParam)
     return(ret_val);
 }
 
+void sendQueryNode(int type)
+{
+    char command[100];
+    #ifdef CPU
+    
+    
+    DBG_LOG_DEBUG("Into sendQueryNode.\n");
+    snprintf(command,100,"/GET/QUERYNODES?part=0");
+    CommandLineInterpreter(command);
+    #endif
+}
 
 void function_update(int type)
 {
     int rc;
-    int pktlen = sizeof(buf);
+    int pktlen = sizeof(scratch_raw);
     char command[100];
     char path_update_hash[100];
     sprintf(updatefilepath,"Updater.sh");
@@ -608,39 +647,47 @@ void function_update(int type)
                         // other - Updater.sh
     
     DBG_LOG_DEBUG("Into function_update2.\n");
-
-    //FindUpdateServer();
-    if (type==0) {
-        snprintf(path_update_hash,100,"updatehash?type=%d?filepath=%s",type,updatefilepath);
-    }   
+//    find_update_server();
+    if (techServerFound==true) {
+        //FindUpdateServer();
+        if (type==0) {
+            snprintf(path_update_hash,100,"updatehash?type=%d?filepath=%s",type,updatefilepath);
+        }   
+        else {
+            snprintf(path_update_hash,50,"updatehash?type=%d",type);
+        }
+        snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);    
+        memset((uint8_t*)hashes,0,sizeof(uint16_t)*HASHES_MAX);
+        opt_path.num = COAP_OPTION_URI_PATH;
+        opt_path.buf.len = strlen(path_update_hash);
+        opt_path.buf.p = (uint8_t*)path_update_hash;
+        pkt.tok_len = strlen(tok_update_hash);
+        memcpy(pkt.tok_p, tok_update_hash, pkt.tok_len);
+        coap_make_msg(&scratch_buf, &pkt, &opt_path, 0, 0,
+                           0, 0, 
+                           0, id_out+=5, pkt.tok_p, pkt.tok_len, 
+                           COAP_METHOD_GET, 
+                           COAP_CONTENTTYPE_NONE);
+        snprintf(command,100,"/REQUERY/UPDATEHASH?repeat=3&type=%d",type);
+        if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_hash_clb, command)))
+        {
+    //        Transfer((uint8_t*)scratch_raw,pktlen,"/updatehash");
+            TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,5683);
+        }
+        #ifdef DEBUG
+            DBG_LOG_DEBUG("Sending: ");
+            coap_dump(scratch_raw, pktlen, true);
+        #endif
+        }
     else {
-        snprintf(path_update_hash,50,"updatehash?type=%d",type);
+        printf("TechUpdateServer not found. Skipping update");
     }
-    snprintf(path_update_hash_clb,50,"/CALLBACK/UPDATEHASH?type=%d",type);    
-    memset((uint8_t*)hashes,0,sizeof(uint16_t)*HASHES_MAX);
-    opt_path.num = COAP_OPTION_URI_PATH;
-    opt_path.buf.len = strlen(path_update_hash);
-    opt_path.buf.p = (uint8_t*)path_update_hash;
-    pkt.tok_len = strlen(tok_update_hash);
-    memcpy(pkt.tok_p, tok_update_hash, pkt.tok_len);
-    coap_make_msg(&scratch_buf, &pkt, &opt_path, 0, 0,
-                       0, 0, 
-                       0, id_out+=5, pkt.tok_p, pkt.tok_len, 
-                       COAP_METHOD_GET, 
-                       COAP_CONTENTTYPE_NONE);
-    snprintf(command,100,"/REQUERY/UPDATEHASH?repeat=3&type=%s",type);
-    if (!(rc = coap_build(buf, &pktlen, &pkt, path_update_hash_clb, command)))
-    {
-//        Transfer((uint8_t*)buf,pktlen,"/updatehash");
-        TransferUDP((uint8_t*)buf,pktlen,updateserver,5683);
-    }
-    #ifdef DEBUG
-        DBG_LOG_DEBUG("Sending: ");
-        coap_dump(buf, pktlen, true);
-    #endif
     DBG_LOG_DEBUG("Into END of function_update.\n");
     return;
 }
+
+
+
 int UpdateHash(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
@@ -655,6 +702,7 @@ int UpdateHash(ParameterList_t *TempParam)
     int type;
    
     DBG_LOG_DEBUG("Into UpdateHash.\n");
+    printf("Into UpdateHash.\n");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -698,8 +746,48 @@ int UpdateHash(ParameterList_t *TempParam)
             strcpy(filename, "Updater.sh"); //Wrong type? Updater.sh then
         DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
 
-        fp = fopen(filename,"r"); // read mode
-
+        fp = fopen(filename,"rb"); // read mode
+        if( fp == NULL )
+        {
+           printf("Error while opening update the file up_hash.\r\n\r");
+           AddToTransmit("{\n\"UPDATEHASH\": [\n");
+           snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",0);
+           AddToTransmit(buffer);
+           AddToTransmit("\n]\n}\n");
+        }
+        else {
+        end = 0;
+        num = 0;
+        AddToTransmit("{\n\"UPDATEHASH\": [\n");
+        while (end == 0)
+        {
+            sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
+            printf("--//internal//-- %d readed from file.\r\n\r",sizefp);
+                
+            allhash += CRC16ANSI(scratch_raw,sizefp);
+//            snprintf(buffer,STRING_SIZE,"{\"part\":%d,\"hash\":",num);
+//            AddToTransmit(buffer);
+//            snprintf(buffer,STRING_SIZE,"0x%04X}",CRC16ANSI(scratch_raw,sizefp));
+//            AddToTransmit(buffer);
+            
+            if (sizefp == 0)
+                return(INVALID_PARAMETERS_ERROR);
+            if (sizefp != size_parts)
+            {
+                end = 1;
+                snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
+                AddToTransmit(buffer);
+            }
+//            else
+//                AddToTransmit(",\n");
+            num++;
+        } 
+        size_parts_cur = sizefp;
+        AddToTransmit("\n]\n}\n");
+        
+        fclose(fp);
+    }
+/*
         if( fp == NULL )
         {
            DBG_LOG_ERROR("Error while opening update the file up_hash.\n");
@@ -710,35 +798,37 @@ int UpdateHash(ParameterList_t *TempParam)
         }
         else 
         {
-            end = 0;
-            num = 0;
-            AddToTransmit("{\n\"UPDATEHASH\": [\n");
-            while (end == 0)
+        end = 0;
+        num = 0;
+        AddToTransmit("{\n\"UPDATEHASH\": [\n");
+        while (end == 0)
+        {
+            sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
+            DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+            printf("%d readed from file.\n",sizefp);
+
+            allhash += CRC16ANSI(scratch_raw,sizefp);
+//            snprintf(buffer,STRING_SIZE,"{\"part\":%d,\"hash\":",num);
+//            AddToTransmit(buffer);
+//            snprintf(buffer,STRING_SIZE,"0x%04X}",CRC16ANSI(scratch_raw,sizefp));
+//            AddToTransmit(buffer);
+
+            if (sizefp == 0)
+                return(INVALID_PARAMETERS_ERROR);
+            if (sizefp != size_parts)
             {
-                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+                end = 1;
+                snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
+                AddToTransmit(buffer);
+            }
+            num++;
+        } 
+        size_parts_cur = sizefp;
+        AddToTransmit("\n]\n}\n");
 
-                allhash += CRC16ANSI(bufsa,sizefp);
-    //            snprintf(buffer,STRING_SIZE,"{\"part\":%d,\"hash\":",num);
-    //            AddToTransmit(buffer);
-    //            snprintf(buffer,STRING_SIZE,"0x%04X}",CRC16ANSI(bufsa,sizefp));
-    //            AddToTransmit(buffer);
-
-                if (sizefp == 0)
-                    return(INVALID_PARAMETERS_ERROR);
-                if (sizefp != size_parts)
-                {
-                    end = 1;
-                    snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
-                    AddToTransmit(buffer);
-                }
-                num++;
-            } 
-            size_parts_cur = sizefp;
-            AddToTransmit("\n]\n}\n");
-
-            fclose(fp);
+        fclose(fp);
         }
+*/
     }
     else
     {
@@ -761,12 +851,13 @@ int Update(ParameterList_t *TempParam)
     int end;
     char filename[50];
     int type;
+    uint16_t allhash = 0;
     
     #ifdef DEBUG
         DBG_LOG_DEBUG("--//internal//-- Into Update.\r\n\r");
     #endif
     AddToTransmit("<UPDATE>\r\n\r");
-    //AddToTransmit("<CALLBACKWELLKNOWN>\r\n\r");
+    
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -810,13 +901,12 @@ int Update(ParameterList_t *TempParam)
             strcpy(filename, "Updater.sh");
         DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
 
-        fp = fopen(filename,"r"); // read mode
+        fp = fopen(filename,"rb"); // read mode
         content_type = COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM;
 
         if( fp == NULL )
         {
            printf("Error while opening update the file update.\r\n\r");
-           
         }
         else 
         {
@@ -825,22 +915,28 @@ int Update(ParameterList_t *TempParam)
             DBG_LOG_TRACE("Part %d .\r\n\r",ind_i);
             if (ind_i == -1)
             {
-                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
                 DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+                printf("%d readed from file.\n",sizefp);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
                 if (sizefp != size_parts)
                     end = 1;
+                allhash += CRC16ANSI(&opt_part,sizefp);
+                printf("allhash: %X\n",allhash);
                 make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
                 size_parts_cur = sizefp;
                 num++;
+
             }
             else
             {
                 while (num <= ind_i)
                 {
-                    sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                    sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
                     DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+                    printf("%d readed from file.\n",sizefp);
+                    
                     if (sizefp == 0)
                         return(INVALID_PARAMETERS_ERROR);
                     if (sizefp != size_parts)
@@ -850,6 +946,8 @@ int Update(ParameterList_t *TempParam)
                     num++;
                 } 
                 num--;
+                allhash += CRC16ANSI(&opt_part,sizefp);
+                printf("allhash: %X\n",allhash);
                 make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
                 size_parts_cur = sizefp;
             }

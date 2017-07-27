@@ -84,6 +84,7 @@ void UserProtocolHandlerThread(void) {
     uint8_t buf2[4096];
 
     memset(buf2, 0, sizeof (buf2));
+    DBG_LOG_INFO("recvfrom\r\n\r");
     n = recvfrom(fd, buf2, sizeof (buf2), 0, (struct sockaddr *) &cliaddr, &len);
     cliaddr_hd = cliaddr;
     #ifdef PLATFORM_WINDOWS

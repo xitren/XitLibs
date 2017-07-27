@@ -100,15 +100,6 @@ int main(int argc, char** argv) {
     uint32_t frequency[7] = {10,20,10,10,30,100,5};
     printf("Command interface setted.\n");
     
-    result = pthread_create(&thread4,
-            NULL, // default security attributes 
-            ThreadFunc48ms, // thread function 
-            &IDThread4); // returns thread identifier
-    if (result != 0) {
-        printf("Create first thread!");
-        return EXIT_FAILURE;
-    }
-    
     result = pthread_create(&thread1,
             NULL, // default security attributes 
             ThreadFunc1s, // thread function 
@@ -127,21 +118,30 @@ int main(int argc, char** argv) {
         return EXIT_FAILURE;
     }
 
-    result = pthread_create(&thread5, // default security attributes 
-            NULL, // use default stack size 
-            ThreadFuncUDP, // thread function 
-            &IDThread5); // returns thread identifier
-    if (result != 0) {
-        printf("Create second thread!");
-        return EXIT_FAILURE;
-    }
-
     result = pthread_create(&thread3, // default security attributes 
             NULL, // use default stack size 
             ThreadFunc250ms, // thread function 
             &IDThread3); // returns thread identifier
     if (result != 0) {
         printf("Create third thread!");
+        return EXIT_FAILURE;
+    }
+    
+    result = pthread_create(&thread4,
+            NULL, // default security attributes 
+            ThreadFunc48ms, // thread function 
+            &IDThread4); // returns thread identifier
+    if (result != 0) {
+        printf("Create first thread!");
+        return EXIT_FAILURE;
+    }
+
+    result = pthread_create(&thread5, // default security attributes 
+            NULL, // use default stack size 
+            ThreadFuncUDP, // thread function 
+            &IDThread5); // returns thread identifier
+    if (result != 0) {
+        printf("Create second thread!");
         return EXIT_FAILURE;
     }
     
