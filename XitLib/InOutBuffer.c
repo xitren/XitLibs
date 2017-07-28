@@ -30,6 +30,7 @@ static Deque *ReceiveDeque;
 int InitBuffer()
 {
     int ret_val = NO_BUFFER_ERROR;
+    DBG_LOG_TRACE("Into InitBuffer.\n");
     TxCnt = 0;
     if (deque_new(&ReceiveDeque) != 0)
         return BUFFER_ERROR;
@@ -40,6 +41,7 @@ int AddToReceive(uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
    int ret_val = NO_BUFFER_ERROR;
    ReceiveDeque_t *comm;
    
+    DBG_LOG_TRACE("Into AddToReceive.\n");
     if ((msg != 0) && (size > 0))
     {
         comm = (ReceiveDeque_t *)umm_calloc(1,sizeof(ReceiveDeque_t));
@@ -129,6 +131,7 @@ char* ProceedTransmit(uint32_t *num)
 int ClearBuffer()
 {
     int ret_val = NO_BUFFER_ERROR;
+    DBG_LOG_TRACE("Into ClearBuffer.\n");
     TxCnt = 0;
     return(ret_val);
 }

@@ -45,6 +45,7 @@ int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func) {
     //    while ((!transfer_free) && (transfer_time < TXTIMEOUT));
     //    if (transfer_time >= TXTIMEOUT)
     //        return -1;
+    DBG_LOG_TRACE("Into Transfer.\n");
     #ifdef CPU
         transfer_free = 1;
         if (data[0] == 0) {
@@ -71,6 +72,7 @@ int TransferTo(const uint8_t *data, const uint32_t datalen,
     //    while ((!transfer_free) && (transfer_time < TXTIMEOUT));
     //    if (transfer_time >= TXTIMEOUT)
     //        return -1;
+    DBG_LOG_TRACE("Into TransferTo.\n");
     #ifdef CPU
         transfer_free = 1;
         if (data[0] == 0) {
@@ -95,6 +97,7 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
     //    while ((!transfer_free) && (transfer_time < TXTIMEOUT));
     //    if (transfer_time >= TXTIMEOUT)
     //        return -1;
+    DBG_LOG_TRACE("Into TransferBand.\n");
     #ifdef CPU
         transfer_free = 1;
         if (data[0] == 0) {
@@ -116,6 +119,7 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
 
 void InitHandler(DeviceTypeDef device) {
     ClearLog();
+    DBG_LOG_TRACE("Into InitHandler.\n");
     DBG_LOG_INFO("Memory used by CoAP: %d Bytes\n",MEMORY_COAP);
     DBG_LOG_INFO("Memory used by CommandModule: %d Bytes\n",MEMORY_COMMAND);
     DBG_LOG_INFO("Memory used by ConfigModule: %d Bytes\n",MEMORY_CONFIG);
@@ -164,6 +168,7 @@ inline void ProtocolHandler(void) {
     char ip[16];
     uint32_t cmdlent = 0;
     uint32_t port = 0;
+    DBG_LOG_TRACE("Into ProtocolHandler.\n");
 //    DBG_LOG_TRACE("Into ProtocolHandler");
     if (NO_BUFFER_ERROR == ProceedReceive((char*)scratch_raw, &cmdlent, 
                                           &(translate.S_addr), &port)) {
@@ -257,6 +262,7 @@ inline void OperationHandler(void) {
     int i,j, k = 0, l = 0;
     l = GetCnt();
     char systemcmd[100];
+    DBG_LOG_TRACE("Into OperationHandler.\n");
 //    DBG_LOG_TRACE("Into OperationHandler");
 
     #ifdef PLATFORM_LINUX
@@ -299,11 +305,13 @@ void VideoFrameHandler(void) {
 #endif
 
 void UartProtocolHandler(char let) {
+    DBG_LOG_TRACE("Into UartProtocolHandler.\n");
     AddToPocketReceive(let);
     return;
 }
 
 void UartTransferCompleteHandler(void) {
+    DBG_LOG_TRACE("Into UartTransferCompleteHandler.\n");
     SetCStatLedsUnderPWM(0, 0, 0);
     transfer_free = 1;
     return;
@@ -312,6 +320,7 @@ void UartTransferCompleteHandler(void) {
 void UartReceiveCompleteHandler(void) {
     char *pstr;
     unsigned char pstrs = 0;
+    DBG_LOG_TRACE("Into UartReceiveCompleteHandler.\n");
     pstr = (char*) GetPocketBuffer(&pstrs);
     AddToReceive(pstr, pstrs, 0, 0);
     SetCStatLedsUnderPWM(0, 0, 0);
@@ -321,12 +330,14 @@ void UartReceiveCompleteHandler(void) {
 
 /* Adders --------------------------------------------------------------------*/
 void SecClockHandler(void) {
+    DBG_LOG_TRACE("Into SecClockHandler.\n");
     AddToSchedule(SecClockSheduler);
     return;
 }
 
 void SoftPWMHandler(void) {
 //    AddToSchedule(SoftPWMSheduler);
+    DBG_LOG_TRACE("Into SoftPWMHandler.\n");
     IncPWM();
     SetLedsUnderPWM();
     return;
@@ -334,15 +345,18 @@ void SoftPWMHandler(void) {
 
 void StatChangeHandler(void) {
 //    AddToSchedule(StatChangeSheduler);
+    DBG_LOG_TRACE("Into StatChangeHandler.\n");
     ChangeLedsCode();
     return;
 }
 
 void CalculationHandler(void) {
+    DBG_LOG_TRACE("Into CalculationHandler.\n");
     FreeCycle();
     return;
 }
 void SampleHandler(void) {
+    DBG_LOG_TRACE("Into SampleHandler.\n");
     AddToSchedule(SampleSheduler);
     return;
 }
@@ -350,12 +364,14 @@ void SampleHandler(void) {
 
 /* Handlers ------------------------------------------------------------------*/
 void SampleSheduler(void) {
+    DBG_LOG_TRACE("Into SampleSheduler.\n");
 //    DBG_LOG_INFO("Scheduled SampleHandler.\n");
     AddSample();
     return;
 }
 
 void SecClockSheduler(void) {
+    DBG_LOG_TRACE("Into SecClockSheduler.\n");
 //    DBG_LOG_INFO("Scheduled SecClockHandler.\n");
     ClockHandler();
 #ifdef CPU

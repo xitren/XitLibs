@@ -61,6 +61,7 @@ CommandFunction_t FindCommand(char *Command);
    /* interface to memory map.                                          */
 void Interface_Memory(void)
 {
+    DBG_LOG_TRACE("Into Interface_Memory.\n");
     if (deque_new(&ScheduleTableDeque) != 0)
         return;
     if (array_new(&CommandTableArray) != 0)
@@ -478,6 +479,7 @@ unsigned long StringToUnsignedInteger(char *StringInteger)
    unsigned int  Index;
    unsigned long ret_val = 0;
 
+   DBG_LOG_TRACE("Into StringToUnsignedInteger.\n");
    /* Before proceeding make sure that the parameter that was passed as */
    /* an input appears to be at least semi-valid.                       */
    if((StringInteger) && (strlen(StringInteger)))
@@ -597,6 +599,7 @@ char *StringParser(char *String)
    int   Index;
    char *ret_val = NULL;
 
+   DBG_LOG_TRACE("Into StringParser.\n");
    /* Before proceeding make sure that the string passed in appears to  */
    /* be at least semi-valid.                                           */
    if((String) && (strlen(String)))
@@ -629,12 +632,14 @@ char *StringParser(char *String)
 
 char* GetCommandLink(int N)
 {   
+    DBG_LOG_TRACE("Into GetCommandLink.\n");
     CommandTable_t *Comm;
     array_get_at(CommandTableArray, N, (void**)&Comm);
     return Comm->Link;
 }
 int GetCommandsNumber(void)
 {
+    DBG_LOG_TRACE("Into GetCommandsNumber.\n");
     return array_size(CommandTableArray);
 }
    /* This function is responsable for taking command strings and       */
@@ -654,6 +659,7 @@ int CommandParser(UserCommand_t *TempCommand, char *Input)
    char          *LastParameter;
    unsigned int   Count         = 0;
 
+    DBG_LOG_TRACE("Into CommandParser.\n");
    /* Before proceeding make sure that the passed parameters appear to  */
    /* be at least semi-valid.                                           */ 
    if((TempCommand) && (Input) && (strlen(Input)))
@@ -744,6 +750,7 @@ int CommandInterpreter(UserCommand_t *TempCommand)
    int               ret_val;
    CommandFunction_t CommandFunction;
 
+    DBG_LOG_TRACE("Into CommandInterpreter.\n");
    /* If the command is not found in the table return with an invaild   */
    /* command error                                                     */
    ret_val = INVALID_COMMAND_ERROR;
@@ -797,6 +804,7 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
     int ret_val = 0;
     CommandTable_t *comm;
 
+    DBG_LOG_TRACE("Into AddCommand.\n");
     /* First, make sure that the parameters passed to us appear to be    */
     /* semi-valid.                                                       */
     if((CommandName) && (CommandFunction))
@@ -842,6 +850,7 @@ CommandFunction_t FindCommand(char *Command)
     CommandFunction_t ret_val;
     CommandTable_t    *Comm;
 
+    DBG_LOG_TRACE("Into FindCommand.\n");
     /* First, make sure that the command specified is semi-valid.        */
     if(Command)
     {
@@ -871,12 +880,14 @@ CommandFunction_t FindCommand(char *Command)
    /* all available commands from the command table.                    */
 void ClearCommands(void)
 {
+    DBG_LOG_TRACE("Into ClearCommands.\n");
     /* Simply flag that there are no commands present in the table.      */
     array_remove_all_free(CommandTableArray);
     return;
 }
 void AddToSchedule(ScheduleFunction_t ScheduleFunction)
 {
+    DBG_LOG_TRACE("Into AddToSchedule.\n");
     ScheduleFunction_t *comm;
     comm = (ScheduleFunction_t *)umm_calloc(1,sizeof(ScheduleFunction_t));
     if (comm == NULL){return;}
@@ -891,6 +902,7 @@ void AddToSchedule(ScheduleFunction_t ScheduleFunction)
 }
 void ClearSchedule(void)
 {
+    DBG_LOG_TRACE("Into ClearSchedule.\n");
     deque_remove_all_free(ScheduleTableDeque);
     return;
 }
@@ -898,6 +910,7 @@ void ExecuteSchedule(void)
 {
     ScheduleFunction_t  *Comm;
 
+    DBG_LOG_TRACE("Into ExecuteSchedule.\n");
     while(deque_size(ScheduleTableDeque) > 0)
     {
         deque_remove_first(ScheduleTableDeque, (void**)&Comm);

@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="100">
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="97">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -32,7 +32,6 @@
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DMAretransmitter.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
-      <itemPath>ExtFunctions.c</itemPath>
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
@@ -40,7 +39,6 @@
       <itemPath>PWMModule.c</itemPath>
       <itemPath>Packet.c</itemPath>
       <itemPath>StreamDataRecorder.c</itemPath>
-      <itemPath>UpdateModule.c</itemPath>
       <itemPath>VideoModule.c</itemPath>
       <itemPath>generatorModule.c</itemPath>
     </logicalFolder>
@@ -140,6 +138,8 @@
                    kind="IMPORTANT_FILES_FOLDER">
       <itemPath>Makefile</itemPath>
     </logicalFolder>
+    <itemPath>ExtFunctions.c</itemPath>
+    <itemPath>UpdateModule.c</itemPath>
   </logicalFolder>
   <projectmakefile>Makefile</projectmakefile>
   <confs>

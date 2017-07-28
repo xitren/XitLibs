@@ -341,6 +341,7 @@ int GetConcreteBlock(ParameterList_t *TempParam)
 
 uint32_t GetDataPtrCnt(int32_t _pointer,int32_t _size,int32_t *_buffer)
 {
+    DBG_LOG_TRACE("Into GetDataPtrCnt.\n");
         int i,j,ptr=0;
         int cnt = (int)(samples_cnt - BUFFER_2ND_MAX);
 
@@ -365,6 +366,7 @@ uint32_t GetDataPtrCnt(int32_t _pointer,int32_t _size,int32_t *_buffer)
 
 void EEG_unreaded_dump(void)
 {
+    DBG_LOG_TRACE("Into EEG_unreaded_dump.\n");
     int i,j;
     printf("\r\n\r");
     for(i=(readed_cnt);i<samples_cnt;i++)
@@ -376,6 +378,7 @@ void EEG_unreaded_dump(void)
 }
 int EEGPutExtMemReq(uint32_t *data, uint32_t datalen)
 {
+    DBG_LOG_TRACE("Into EEGPutExtMemReq.\n");
 //    uint8_t *pntr = path_eeg_arg_buf;
 //    uint32_t i;
 //    int rc;
@@ -405,6 +408,7 @@ int EEGPutExtMemReq(uint32_t *data, uint32_t datalen)
 }
 void EEG_dump(const uint8_t *buf, uint32_t buflen)
 {
+    DBG_LOG_TRACE("Into EEG_dump.\n");
     uint32_t g=1;
     while(buflen--)
     {
@@ -417,6 +421,7 @@ void EEG_dump(const uint8_t *buf, uint32_t buflen)
 }
 int32_t GetMiddleADC(uint8_t _channel)
 {
+    DBG_LOG_TRACE("Into GetMiddleADC.\n");
 	int i,sum=0,cnt;
 	cnt = ADC_records[_channel][0];
 	ADC_records[_channel][0] = 0;
@@ -426,6 +431,7 @@ int32_t GetMiddleADC(uint8_t _channel)
 }
 uint8_t EEGTestInit(uint32_t _signal_amplitude[7],uint32_t _signal_frequency[7])
 {
+    DBG_LOG_TRACE("Into EEGTestInit.\n");
 	int i;
 	for(i=0;i<7;i++)
         {
@@ -436,6 +442,7 @@ uint8_t EEGTestInit(uint32_t _signal_amplitude[7],uint32_t _signal_frequency[7])
 }
 uint8_t EEGRecorderInit(uint8_t _signal_type,uint32_t _sample_frequency)
 {
+    DBG_LOG_TRACE("Into EEGRecorderInit.\n");
 	Clear();
         signal_type = _signal_type;
         sample_frequency = _sample_frequency;
@@ -443,6 +450,7 @@ uint8_t EEGRecorderInit(uint8_t _signal_type,uint32_t _sample_frequency)
 }
 uint8_t MakeEEGSample(uint8_t _channel, int32_t _value)
 {
+    DBG_LOG_TRACE("Into MakeEEGSample.\n");
     if (_channel < BUFFER_SAMPLE_SIZE)
         return 1;
     ADC_records[_channel][(uint32_t)ADC_records[_channel][0]] = _value;
@@ -451,12 +459,14 @@ uint8_t MakeEEGSample(uint8_t _channel, int32_t _value)
 }
 uint32_t AddHistoryExtId(uint32_t _extid)
 {
+    DBG_LOG_TRACE("Into AddHistoryExtId.\n");
     uint32_t ret = EEG_history[(history_cnt)%EEG_HISTORY_SIZE];
     EEG_history[(history_cnt++)%EEG_HISTORY_SIZE] = _extid;
     return ret;
 }
 void AddSample()
 {
+    DBG_LOG_TRACE("Into AddSample.\n");
 	int i;
         if (signal_type == 1)
         {
@@ -540,14 +550,17 @@ void AddSample()
 }
 uint32_t GetCnt()
 {
+    DBG_LOG_TRACE("Into GetCnt.\n");
 	return (samples_cnt-readed_cnt); 
 }
 uint32_t GetSamplesCnt()
 {
+    DBG_LOG_TRACE("Into GetSamplesCnt.\n");
 	return (samples_cnt); 
 }
 uint32_t GetDataReady(int32_t *_buffer)
 {
+    DBG_LOG_TRACE("Into GetDataReady.\n");
 	int i,j,ptr=0;
 	uint32_t cnt = (samples_cnt-readed_cnt);
         DBG_LOG_TRACE("Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
@@ -560,6 +573,7 @@ uint32_t GetDataReady(int32_t *_buffer)
 }
 uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer)
 {
+    DBG_LOG_TRACE("Into GetDataReadyCnt.\n");
 	int i,j,ptr=0;
 	uint32_t cnt = (samples_cnt-readed_cnt);
         DBG_LOG_TRACE("---- Current sample %d\n",cnt,samples_cnt,readed_cnt);
@@ -578,6 +592,7 @@ uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer)
 }
 void Clear(void)
 {
+    DBG_LOG_TRACE("Into Clear.\n");
 	int i;
 	for(i=0;i<EEG_HISTORY_SIZE;i++)
                 EEG_history[i] = 0;

@@ -106,7 +106,7 @@ void InitCfgMem(void)
   config_reg[REG_UPD_File] = 0;
   
   config_reg[REG_STREAM_REC] = 0;
-  config_reg[REG_LOG_LVL] = 7;
+  config_reg[REG_LOG_LVL] = 5;
   
   config_reg[REG_EYE_ThrH] = 0;
   config_reg[REG_EYE_ThrL] = 0;
