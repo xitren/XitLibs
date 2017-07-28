@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+﻿<?xml version="1.0" encoding="UTF-8"?>
 <configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
@@ -132,42 +132,6 @@
         <itemPath>tests/hashtable_test.c</itemPath>
         <itemPath>tests/hashtable_test.h</itemPath>
         <itemPath>tests/models_test.c</itemPath>
-      </logicalFolder>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Важные файлы"
-                   projectFiles="false"
-                   kind="IMPORTANT_FILES_FOLDER">
-      <itemPath>Makefile</itemPath>
-    </logicalFolder>
-    <logicalFolder name="TestFiles"
-                   displayName="Файлы тестов"
-                   projectFiles="false"
-                   kind="TEST_LOGICAL_FOLDER">
-      <logicalFolder name="f2"
-                     displayName="CoAP test main"
-                     projectFiles="true"
-                     kind="TEST">
-      </logicalFolder>
-      <logicalFolder name="f1"
-                     displayName="jSON test main"
-                     projectFiles="true"
-                     kind="TEST">
-      </logicalFolder>
-      <logicalFolder name="f5"
-                     displayName="Main engine test"
-                     projectFiles="true"
-                     kind="TEST">
-      </logicalFolder>
-      <logicalFolder name="f3"
-                     displayName="Malloc test main"
-                     projectFiles="true"
-                     kind="TEST">
-      </logicalFolder>
-      <logicalFolder name="f4"
-                     displayName="Models test main"
-                     projectFiles="true"
-                     kind="TEST">
       </logicalFolder>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"

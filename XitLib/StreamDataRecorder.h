@@ -45,6 +45,7 @@ int MakeEEGFromFile(char *filename);
 int WorkEEGFromFile(char *filename,StreamDataCallback_t _callback); 
 #endif
 uint32_t GetCnt();
+uint32_t GetSamplesCnt();
 uint32_t GetDataReady(int32_t *_buffer);
 //uint32_t GetDataReady(int32_t _size,int32_t *_buffer);
 uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer);

@@ -13,8 +13,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "umm_malloc.h"
-#include "ExtFunctions_malloc.h"
 
 /*
  * Simple C Test Suite
@@ -90,18 +90,28 @@ void test2() {
 }
 
 int main(int argc, char** argv) {
+    clock_t t,tl;
     printf("%%SUITE_STARTING%% malloc_test\n");
     printf("%%SUITE_STARTED%%\n");
+    t = clock();
 
     printf("%%TEST_STARTED%% Random_memory_operations (malloc_test)\n");
+    tl = clock();
     test1();
-    printf("%%TEST_FINISHED%% time=0 Random_memory_operations (malloc_test) \n");
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f Random_memory_operations (malloc_test) \n",
+                                    ((float)tl)/CLOCKS_PER_SEC);
 
-    printf("%%TEST_STARTED%% Random_memory_operations (malloc_test)\n");
-    test2();
-    printf("%%TEST_FINISHED%% time=0 Random_memory_operations (malloc_test) \n");
+//    printf("%%TEST_STARTED%% Random_memory_operations (malloc_test)\n");
+//    tl = clock();
+//    test2();
+//    tl = clock() - tl;
+//    printf("%%TEST_FINISHED%% time=%f Random_memory_operations (malloc_test) \n",
+//                                    ((float)tl)/CLOCKS_PER_SEC);
 
-    printf("%%SUITE_FINISHED%% time=0\n");
+    t = clock() - t;
+    printf("%%SUITE_FINISHED%% time=%f\n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
     return (EXIT_SUCCESS);
 }

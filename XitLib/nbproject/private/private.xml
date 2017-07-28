@@ -99,22 +99,25 @@
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/ExtFunctions_json.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/models_test.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/array_test.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/ExtFunctions_coap.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/models/src/hashtable.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/ExtFunctions_models.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/array_test.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/StreamDataRecorder.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/ExtFunctions_models.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/hashtable_test.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/coap_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/CommandModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/DistCalc.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/malloc_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/array_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/ExtFunctions_malloc.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/Handler.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/json_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/coap/coap.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/ExtFunctions_datasystem.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/Worked/External/UpdateModule.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/datasystem_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/FunctionsDiscovery.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/hashtable_test.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/Worked/External/ExtFunctions.h</file>
         </group>
     </open-files>
 </project-private>

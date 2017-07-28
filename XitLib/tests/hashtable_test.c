@@ -239,7 +239,7 @@ TEST_C_HashTableGet()
     char *ret;
     hashtable_get(table, "123", (void*) &ret);
 
-    if (!strcpy(val, ret))
+    if (strncmp(val, ret, 4) != 0)
         printf("%%TEST_FAILED%% time=0 testname=HashTableGet (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN4();
 };
@@ -354,9 +354,9 @@ TEST_C_HashTableTestsMemoryChunksAsKeys()
     hashtable_get(table, array1, (void*) &a);
     hashtable_get(table, array3, (void*) &b);
 
-    if (!strcpy("one", a))
+    if (strncmp("one", a, 4) != 0)
         printf("%%TEST_FAILED%% time=0 testname=HashTableTestsMemoryChunksAsKeys (models_test) message=Error\n");
-    if (!strcpy("three", b))
+    if (strncmp("three", b, 6) != 0)
         printf("%%TEST_FAILED%% time=0 testname=HashTableTestsMemoryChunksAsKeys (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN6();
 };

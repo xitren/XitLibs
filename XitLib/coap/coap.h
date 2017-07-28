@@ -9,6 +9,7 @@ extern "C" {
 #include <stdint.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include "array.h"
 /*============================================================================*/
 
 /* Public defines ------------------------------------------------------------*/
@@ -189,6 +190,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                                         char *_ip);
 void coap_option_nibble(uint32_t value, uint8_t *nibble);
 void coap_setup(void);
+Array *coap_get_waiting_list(void);
 void endpoint_setup(void);
 int make_part_option(coap_option_t *opt_part, uint32_t num, 
         coap_option_part_size sizep, uint8_t last);

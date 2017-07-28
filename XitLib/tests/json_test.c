@@ -13,8 +13,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "umm_malloc.h"
-#include "ExtFunctions_json.h"
 #include "cJSON.h"
 
 /* Used by some code below as an example datatype. */
@@ -282,34 +282,56 @@ void test6() {
 }
 
 int main(int argc, char** argv) {
+    clock_t t,tl;
     printf("%%SUITE_STARTING%% json_test\n");
     printf("%%SUITE_STARTED%%\n");
+    t = clock();
 
     printf("%%TEST_STARTED%% Create_Object (json_test)\n");
+    tl = clock();
     test1();
-    printf("%%TEST_FINISHED%% time=0 Create_Object (json_test) \n");
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f Create_Object (json_test) \n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
     printf("%%TEST_STARTED%% String_Array (json_test)\n");
+    tl = clock();
     test2();
-    printf("%%TEST_FINISHED%% time=0 String_Array (json_test) \n");
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f String_Array (json_test) \n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
     printf("%%TEST_STARTED%% Array_Creation (json_test)\n");
+    tl = clock();
     test3();
-    printf("%%TEST_FINISHED%% time=0 Array_Creation (json_test) \n");
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f Array_Creation (json_test) \n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
     printf("%%TEST_STARTED%% Gallery_Item (json_test)\n");
+    tl = clock();
     test4();
-    printf("%%TEST_FINISHED%% time=0 Gallery_Item (json_test) \n");
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f Gallery_Item (json_test) \n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
     printf("%%TEST_STARTED%% Array_of_Records (json_test)\n");
+    tl = clock();
     test5();
-    printf("%%TEST_FINISHED%% time=0 Array_of_Records (json_test) \n");
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f Array_of_Records (json_test) \n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
     printf("%%TEST_STARTED%% AddNumberToObject (json_test)\n");
+    tl = clock();
     test6();
-    printf("%%TEST_FINISHED%% time=0 AddNumberToObject (json_test) \n");
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f AddNumberToObject (json_test) \n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
-    printf("%%SUITE_FINISHED%% time=0\n");
+    t = clock() - t;
+    printf("%%SUITE_FINISHED%% time=%f\n",
+                                    ((float)t)/CLOCKS_PER_SEC);
 
     return (EXIT_SUCCESS);
 }

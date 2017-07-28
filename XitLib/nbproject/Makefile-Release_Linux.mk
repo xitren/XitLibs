@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
 	${OBJECTDIR}/DistCalc.o \
+	${OBJECTDIR}/ExtFunctions.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -47,6 +48,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/PWMModule.o \
 	${OBJECTDIR}/Packet.o \
 	${OBJECTDIR}/StreamDataRecorder.o \
+	${OBJECTDIR}/UpdateModule.o \
 	${OBJECTDIR}/VideoModule.o \
 	${OBJECTDIR}/coap/coap.o \
 	${OBJECTDIR}/generatorModule.o \
@@ -78,12 +80,6 @@ TESTFILES= \
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/_ext/1ba7ad3b/ExtFunctions.o \
-	${TESTDIR}/_ext/1ba7ad3b/UpdateModule.o \
-	${TESTDIR}/tests/ExtFunctions_coap.o \
-	${TESTDIR}/tests/ExtFunctions_datasystem.o \
-	${TESTDIR}/tests/ExtFunctions_json.o \
-	${TESTDIR}/tests/ExtFunctions_malloc.o \
 	${TESTDIR}/tests/array_test.o \
 	${TESTDIR}/tests/coap_test.o \
 	${TESTDIR}/tests/datasystem_test.o \
@@ -143,6 +139,11 @@ ${OBJECTDIR}/DistCalc.o: DistCalc.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
+${OBJECTDIR}/ExtFunctions.o: ExtFunctions.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c
+
 ${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c 
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -177,6 +178,11 @@ ${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
+
+${OBJECTDIR}/UpdateModule.o: UpdateModule.c 
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
 ${OBJECTDIR}/VideoModule.o: VideoModule.c 
 	${MKDIR} -p ${OBJECTDIR}
@@ -270,31 +276,25 @@ ${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/ExtFunctions_coap.o ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ExtFunctions_json.o ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
 
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/ExtFunctions_datasystem.o ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} 
 
-${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ExtFunctions_malloc.o ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} 
 
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/_ext/1ba7ad3b/ExtFunctions.o ${TESTDIR}/_ext/1ba7ad3b/UpdateModule.o ${TESTDIR}/tests/array_test.o ${TESTDIR}/tests/hashtable_test.o ${TESTDIR}/tests/models_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/array_test.o ${TESTDIR}/tests/hashtable_test.o ${TESTDIR}/tests/models_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} 
-
-
-${TESTDIR}/tests/ExtFunctions_coap.o: tests/ExtFunctions_coap.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_coap.o tests/ExtFunctions_coap.c
 
 
 ${TESTDIR}/tests/coap_test.o: tests/coap_test.c 
@@ -303,22 +303,10 @@ ${TESTDIR}/tests/coap_test.o: tests/coap_test.c
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_test.o tests/coap_test.c
 
 
-${TESTDIR}/tests/ExtFunctions_json.o: tests/ExtFunctions_json.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_json.o tests/ExtFunctions_json.c
-
-
 ${TESTDIR}/tests/json_test.o: tests/json_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_test.o tests/json_test.c
-
-
-${TESTDIR}/tests/ExtFunctions_datasystem.o: tests/ExtFunctions_datasystem.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_datasystem.o tests/ExtFunctions_datasystem.c
 
 
 ${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c 
@@ -327,28 +315,10 @@ ${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/datasystem_test.o tests/datasystem_test.c
 
 
-${TESTDIR}/tests/ExtFunctions_malloc.o: tests/ExtFunctions_malloc.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_malloc.o tests/ExtFunctions_malloc.c
-
-
 ${TESTDIR}/tests/malloc_test.o: tests/malloc_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/malloc_test.o tests/malloc_test.c
-
-
-${TESTDIR}/_ext/1ba7ad3b/ExtFunctions.o: ../Worked/External/ExtFunctions.c 
-	${MKDIR} -p ${TESTDIR}/_ext/1ba7ad3b
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/_ext/1ba7ad3b/ExtFunctions.o ../Worked/External/ExtFunctions.c
-
-
-${TESTDIR}/_ext/1ba7ad3b/UpdateModule.o: ../Worked/External/UpdateModule.c 
-	${MKDIR} -p ${TESTDIR}/_ext/1ba7ad3b
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/_ext/1ba7ad3b/UpdateModule.o ../Worked/External/UpdateModule.c
 
 
 ${TESTDIR}/tests/array_test.o: tests/array_test.c 
@@ -432,6 +402,19 @@ ${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c
 	    $(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
+	fi
+
+${OBJECTDIR}/ExtFunctions_nomain.o: ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExtFunctions.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions_nomain.o ExtFunctions.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/ExtFunctions.o ${OBJECTDIR}/ExtFunctions_nomain.o;\
 	fi
 
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 
@@ -523,6 +506,19 @@ ${OBJECTDIR}/StreamDataRecorder_nomain.o: ${OBJECTDIR}/StreamDataRecorder.o Stre
 	    $(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder_nomain.o StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/StreamDataRecorder.o ${OBJECTDIR}/StreamDataRecorder_nomain.o;\
+	fi
+
+${OBJECTDIR}/UpdateModule_nomain.o: ${OBJECTDIR}/UpdateModule.o UpdateModule.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/UpdateModule.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule_nomain.o UpdateModule.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/UpdateModule.o ${OBJECTDIR}/UpdateModule_nomain.o;\
 	fi
 
 ${OBJECTDIR}/VideoModule_nomain.o: ${OBJECTDIR}/VideoModule.o VideoModule.c 

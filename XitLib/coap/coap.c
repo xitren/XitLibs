@@ -14,7 +14,7 @@
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
-static Array *AwaitedAnswersArray;
+Array *AwaitedAnswersArray;
 //static coap_token_record awaited_answers[MAXWAIT];
 //uint32_t awaited_answers_cnt = 0;
 static uint8_t part_buff[3];
@@ -39,7 +39,7 @@ void coap_clock(void)
             umm_free((void *)removed);
             i--;
         }
-        if (!(answer->tok_wait))
+        else if (!(answer->tok_wait))
         {
             DBG_LOG_TRACE("Released %d: %6s %d\n",i,
                     answer->p,answer->used);
@@ -783,6 +783,10 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     return 0;
 }
 
+Array *coap_get_waiting_list(void)
+{
+    return AwaitedAnswersArray;
+}
 void coap_setup(void)
 {
     if (array_new(&AwaitedAnswersArray) != 0)

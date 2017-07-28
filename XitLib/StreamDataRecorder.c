@@ -542,6 +542,10 @@ uint32_t GetCnt()
 {
 	return (samples_cnt-readed_cnt); 
 }
+uint32_t GetSamplesCnt()
+{
+	return (samples_cnt); 
+}
 uint32_t GetDataReady(int32_t *_buffer)
 {
 	int i,j,ptr=0;

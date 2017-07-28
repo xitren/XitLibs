@@ -24,6 +24,7 @@
         </group>
         <group name="Lib"/>
         <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/coap/coap.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/version.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/Handler.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/External/ExtFunctions.c</file>
