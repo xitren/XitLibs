@@ -31,10 +31,13 @@ TEST_GROUP_C_TEARDOWN1()
 TEST_C_HashTableNew()
 {
     TEST_GROUP_C_SETUP1();
-    CHECK_EQUAL_C_INT(CC_OK, stat);
-    CHECK_EQUAL_C_INT(0, hashtable_size(table));
+    if (CC_OK != (stat))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableNew (models_test) message=Error\n");
+    if (0 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableNew (models_test) message=Error\n");
     /* power of 2 rounding */
-    CHECK_EQUAL_C_INT(8, hashtable_capacity(table));
+    if (8 != hashtable_capacity(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableNew (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN1();
 };
 
@@ -59,11 +62,13 @@ TEST_C_HashTableAdd()
     hashtable_add(table, "randomstring", b);
     hashtable_add(table, "5", c);
 
-    CHECK_EQUAL_C_INT(3, hashtable_size(table));
+    if (3 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableAdd (models_test) message=Error\n");
 
     char *r;
     hashtable_get(table, "key", (void*) &r);
-    CHECK_EQUAL_C_POINTER(r, a);
+    if (r != a)
+        printf("%%TEST_FAILED%% time=0 testname=HashTableAdd (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN2();
 };
 
@@ -88,11 +93,13 @@ TEST_C_HashTableCollisionGet()
     hashtable_add(table, "key", a);
     hashtable_add(table, "randomstring", c);
 
-    CHECK_EQUAL_C_INT(2, hashtable_size(table));
+    if (2 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableCollisionGet (models_test) message=Error\n");
 
     char *r;
     hashtable_get(table, "randomstring", (void*) &r);
-    CHECK_EQUAL_C_POINTER(r, c);
+    if (r != c)
+        printf("%%TEST_FAILED%% time=0 testname=HashTableCollisionGet (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN3();
 };
 
@@ -108,9 +115,11 @@ TEST_C_HashTableCollisionRemove()
 
     char *rm;
     hashtable_remove(table, "randomstring", (void*) &rm);
-    CHECK_EQUAL_C_INT(2, hashtable_size(table));
+    if (2 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableCollisionRemove (models_test) message=Error\n");
     void *g;
-    CHECK_EQUAL_C_INT(CC_ERR_KEY_NOT_FOUND, hashtable_get(table, "randomstring", (void*) &g));
+    if (CC_ERR_KEY_NOT_FOUND != hashtable_get(table, "randomstring", (void*) &g))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableCollisionRemove (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN3();
 };
 
@@ -189,10 +198,12 @@ TEST_C_HashTableRemove()
 
     char *rm;
     hashtable_remove(table, "randomstring", (void*) &rm);
-    CHECK_EQUAL_C_INT(2, hashtable_size(table));
+    if (2 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableRemove (models_test) message=Error\n");
 
     char *g;
-    CHECK_EQUAL_C_INT(CC_ERR_KEY_NOT_FOUND, hashtable_get(table, "randomstring", (void*) &g));
+    if (CC_ERR_KEY_NOT_FOUND != hashtable_get(table, "randomstring", (void*) &g))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableRemove (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN4();
 };
 
@@ -203,13 +214,16 @@ TEST_C_HashTableRemoveAll()
     hashtable_add(table, "key", "value");
     hashtable_add(table, "randomkey", "randomvalue");
 
-    CHECK_EQUAL_C_INT(2, hashtable_size(table));
+    if (2 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableRemoveAll (models_test) message=Error\n");
 
     hashtable_remove_all(table);
-    CHECK_EQUAL_C_INT(0, hashtable_size(table));
+    if (0 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableRemoveAll (models_test) message=Error\n");
 
     char *g;
-    CHECK_EQUAL_C_INT(CC_ERR_KEY_NOT_FOUND, hashtable_get(table, "key", (void*) &g));
+    if (CC_ERR_KEY_NOT_FOUND != hashtable_get(table, "key", (void*) &g))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableRemoveAll (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN4();
 };
 
@@ -225,7 +239,8 @@ TEST_C_HashTableGet()
     char *ret;
     hashtable_get(table, "123", (void*) &ret);
 
-    CHECK_EQUAL_C_STRING(val, ret);
+    if (!strcpy(val, ret))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableGet (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN4();
 };
 
@@ -237,7 +252,8 @@ TEST_C_HashTableSize()
     hashtable_add(table, "randomstring", "cookies");
     hashtable_add(table, "5", "asdf");
 
-    CHECK_EQUAL_C_INT(3, hashtable_size(table));
+    if (3 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableSize (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN4();
 };
 
@@ -260,14 +276,17 @@ TEST_C_HashTableCapacity()
 {
     TEST_GROUP_C_SETUP5();
     hashtable_add(table, "a", NULL);
-    CHECK_EQUAL_C_INT(2, hashtable_capacity(table));
+    if (2 != hashtable_capacity(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableCapacity (models_test) message=Error\n");
 
     hashtable_add(table, "b", NULL);
-    CHECK_EQUAL_C_INT(4, hashtable_capacity(table));
+    if (4 != hashtable_capacity(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableCapacity (models_test) message=Error\n");
 
     hashtable_add(table, "c", NULL);
     hashtable_add(table, "d", NULL);
-    CHECK_EQUAL_C_INT(8, hashtable_capacity(table));
+    if (8 != hashtable_capacity(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableCapacity (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN5();
 };
 
@@ -279,10 +298,12 @@ TEST_C_HashTableContainsKey()
     hashtable_add(table, "randomstring", "cookies");
     hashtable_add(table, "5", "m31");
 
-    CHECK_EQUAL_C_INT(1, hashtable_contains_key(table, "key"));
+    if (1 != hashtable_contains_key(table, "key"))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableContainsKey (models_test) message=Error\n");
 
     hashtable_remove(table, "key", NULL);
-    CHECK_EQUAL_C_INT(0, hashtable_contains_key(table, "key"));
+    if (0 != hashtable_contains_key(table, "key"))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableContainsKey (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN5();
 };
 
@@ -333,8 +354,10 @@ TEST_C_HashTableTestsMemoryChunksAsKeys()
     hashtable_get(table, array1, (void*) &a);
     hashtable_get(table, array3, (void*) &b);
 
-    CHECK_EQUAL_C_STRING("one", a);
-    CHECK_EQUAL_C_STRING("three", b);
+    if (!strcpy("one", a))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableTestsMemoryChunksAsKeys (models_test) message=Error\n");
+    if (!strcpy("three", b))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableTestsMemoryChunksAsKeys (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN6();
 };
 
@@ -376,11 +399,16 @@ TEST_C_HashTableIterNext()
             five++;
     }
 
-    CHECK_EQUAL_C_INT(1, one);
-    CHECK_EQUAL_C_INT(1, two);
-    CHECK_EQUAL_C_INT(1, three);
-    CHECK_EQUAL_C_INT(1, four);
-    CHECK_EQUAL_C_INT(1, five);
+    if (1 != one)
+        printf("%%TEST_FAILED%% time=0 testname=HashTableIterNext (models_test) message=Error\n");
+    if (1 != two)
+        printf("%%TEST_FAILED%% time=0 testname=HashTableIterNext (models_test) message=Error\n");
+    if (1 != three)
+        printf("%%TEST_FAILED%% time=0 testname=HashTableIterNext (models_test) message=Error\n");
+    if (1 != four)
+        printf("%%TEST_FAILED%% time=0 testname=HashTableIterNext (models_test) message=Error\n");
+    if (1 != five)
+        printf("%%TEST_FAILED%% time=0 testname=HashTableIterNext (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN6();
 };
 
@@ -406,7 +434,9 @@ TEST_C_HashTableIterRemove()
             hashtable_iter_remove(&iter, NULL);
     }
 
-    CHECK_EQUAL_C_INT(2, hashtable_size(table));
-    CHECK_C(!hashtable_contains_key(table, "bar"));
+    if (2 != hashtable_size(table))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableIterRemove (models_test) message=Error\n");
+    if (hashtable_contains_key(table, "bar"))
+        printf("%%TEST_FAILED%% time=0 testname=HashTableIterRemove (models_test) message=Error\n");
     TEST_GROUP_C_TEARDOWN6();
 };

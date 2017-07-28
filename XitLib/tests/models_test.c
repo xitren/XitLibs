@@ -94,53 +94,53 @@ int main(int argc, char** argv) {
     TEST_C_ArrayIterReplace();
     printf("%%TEST_FINISHED%% time=0 ArrayIterReplace (models_test) \n");
 
-    printf("%%TEST_STARTED%% ArrayZipIterNext (models_test)\n");
-    TEST_C_ArrayZipIterNext();
-    printf("%%TEST_FINISHED%% time=0 ArrayZipIterNext (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayZipIterRemove (models_test)\n");
-    TEST_C_ArrayZipIterRemove();
-    printf("%%TEST_FINISHED%% time=0 ArrayZipIterRemove (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayZipIterAdd (models_test)\n");
-    TEST_C_ArrayZipIterAdd();
-    printf("%%TEST_FINISHED%% time=0 ArrayZipIterAdd (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayZipIterReplace (models_test)\n");
-    TEST_C_ArrayZipIterReplace();
-    printf("%%TEST_FINISHED%% time=0 ArrayZipIterReplace (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayReduce (models_test)\n");
-    TEST_C_ArrayReduce();
-    printf("%%TEST_FINISHED%% time=0 ArrayReduce (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayAddAt (models_test)\n");
-    TEST_C_ArrayAddAt();
-    printf("%%TEST_FINISHED%% time=0 ArrayAddAt (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayTrimCapacity (models_test)\n");
-    TEST_C_ArrayTrimCapacity();
-    printf("%%TEST_FINISHED%% time=0 ArrayTrimCapacity (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayCapacity (models_test)\n");
-    TEST_C_ArrayCapacity();
-    printf("%%TEST_FINISHED%% time=0 ArrayCapacity (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayFilterMut1 (models_test)\n");
-    TEST_C_ArrayFilterMut1();
-    printf("%%TEST_FINISHED%% time=0 ArrayFilterMut1 (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayFilterMut2 (models_test)\n");
-    TEST_C_ArrayFilterMut2();
-    printf("%%TEST_FINISHED%% time=0 ArrayFilterMut2 (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayFilter1 (models_test)\n");
-    TEST_C_ArrayFilter1();
-    printf("%%TEST_FINISHED%% time=0 ArrayFilter1 (models_test) \n");
-
-    printf("%%TEST_STARTED%% ArrayFilter2 (models_test)\n");
-    TEST_C_ArrayFilter2();
-    printf("%%TEST_FINISHED%% time=0 ArrayFilter2 (models_test) \n");
+//    printf("%%TEST_STARTED%% ArrayZipIterNext (models_test)\n");
+//    TEST_C_ArrayZipIterNext();
+//    printf("%%TEST_FINISHED%% time=0 ArrayZipIterNext (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayZipIterRemove (models_test)\n");
+//    TEST_C_ArrayZipIterRemove();
+//    printf("%%TEST_FINISHED%% time=0 ArrayZipIterRemove (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayZipIterAdd (models_test)\n");
+//    TEST_C_ArrayZipIterAdd();
+//    printf("%%TEST_FINISHED%% time=0 ArrayZipIterAdd (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayZipIterReplace (models_test)\n");
+//    TEST_C_ArrayZipIterReplace();
+//    printf("%%TEST_FINISHED%% time=0 ArrayZipIterReplace (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayReduce (models_test)\n");
+//    TEST_C_ArrayReduce();
+//    printf("%%TEST_FINISHED%% time=0 ArrayReduce (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayAddAt (models_test)\n");
+//    TEST_C_ArrayAddAt();
+//    printf("%%TEST_FINISHED%% time=0 ArrayAddAt (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayTrimCapacity (models_test)\n");
+//    TEST_C_ArrayTrimCapacity();
+//    printf("%%TEST_FINISHED%% time=0 ArrayTrimCapacity (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayCapacity (models_test)\n");
+//    TEST_C_ArrayCapacity();
+//    printf("%%TEST_FINISHED%% time=0 ArrayCapacity (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayFilterMut1 (models_test)\n");
+//    TEST_C_ArrayFilterMut1();
+//    printf("%%TEST_FINISHED%% time=0 ArrayFilterMut1 (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayFilterMut2 (models_test)\n");
+//    TEST_C_ArrayFilterMut2();
+//    printf("%%TEST_FINISHED%% time=0 ArrayFilterMut2 (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayFilter1 (models_test)\n");
+//    TEST_C_ArrayFilter1();
+//    printf("%%TEST_FINISHED%% time=0 ArrayFilter1 (models_test) \n");
+//
+//    printf("%%TEST_STARTED%% ArrayFilter2 (models_test)\n");
+//    TEST_C_ArrayFilter2();
+//    printf("%%TEST_FINISHED%% time=0 ArrayFilter2 (models_test) \n");
 
     printf("%%SUITE_FINISHED%% time=0\n");
 

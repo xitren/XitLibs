@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configurationDescriptor version="97">
+<configurationDescriptor version="100">
   <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
     <logicalFolder name="SourceFiles"
                    displayName="Исходные файлы"
@@ -32,6 +32,7 @@
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DMAretransmitter.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
+      <itemPath>ExtFunctions.c</itemPath>
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
@@ -39,6 +40,7 @@
       <itemPath>PWMModule.c</itemPath>
       <itemPath>Packet.c</itemPath>
       <itemPath>StreamDataRecorder.c</itemPath>
+      <itemPath>UpdateModule.c</itemPath>
       <itemPath>VideoModule.c</itemPath>
       <itemPath>generatorModule.c</itemPath>
     </logicalFolder>
@@ -101,42 +103,30 @@
                      displayName="CoAP test main"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/ExtFunctions_coap.c</itemPath>
-        <itemPath>tests/ExtFunctions_coap.h</itemPath>
         <itemPath>tests/coap_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
                      displayName="jSON test main"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/ExtFunctions_json.c</itemPath>
-        <itemPath>tests/ExtFunctions_json.h</itemPath>
         <itemPath>tests/json_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f5"
                      displayName="Main engine test"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/ExtFunctions_datasystem.c</itemPath>
-        <itemPath>tests/ExtFunctions_datasystem.h</itemPath>
         <itemPath>tests/datasystem_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Malloc test main"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/ExtFunctions_malloc.c</itemPath>
-        <itemPath>tests/ExtFunctions_malloc.h</itemPath>
         <itemPath>tests/malloc_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f4"
                      displayName="Models test main"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>../Worked/External/ExtFunctions.c</itemPath>
-        <itemPath>../Worked/External/ExtFunctions.h</itemPath>
-        <itemPath>../Worked/External/UpdateModule.c</itemPath>
-        <itemPath>../Worked/External/UpdateModule.h</itemPath>
         <itemPath>tests/array_test.c</itemPath>
         <itemPath>tests/array_test.h</itemPath>
         <itemPath>tests/hashtable_test.c</itemPath>
@@ -226,14 +216,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -259,6 +241,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -289,6 +273,8 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -432,22 +418,6 @@
       <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -510,14 +480,6 @@
         <archiverTool>
         </archiverTool>
       </compileType>
-      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -543,6 +505,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -573,6 +537,8 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -717,22 +683,6 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -793,14 +743,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -826,6 +768,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -856,6 +800,8 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -999,22 +945,6 @@
       <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1079,14 +1009,6 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
-      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1112,6 +1034,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1142,6 +1066,8 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1285,22 +1211,6 @@
       <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1368,14 +1278,6 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
-      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1401,6 +1303,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1431,6 +1335,8 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1574,22 +1480,6 @@
       <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1652,14 +1542,6 @@
         <archiverTool>
         </archiverTool>
       </compileType>
-      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1685,6 +1567,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1715,6 +1599,8 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1859,22 +1745,6 @@
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
@@ -1927,14 +1797,6 @@
           <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a</output>
         </archiverTool>
       </compileType>
-      <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../Worked/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
       </item>
       <item path="222data.txt" ex="false" tool="3" flavor2="0">
@@ -1960,6 +1822,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1990,6 +1854,8 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -2133,22 +1999,6 @@
       <item path="models/src/treeset.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/treetable.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_coap.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_datasystem.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_json.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/ExtFunctions_malloc.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="tests/array_test.c" ex="false" tool="0" flavor2="0">
       </item>

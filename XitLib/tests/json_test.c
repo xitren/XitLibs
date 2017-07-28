@@ -285,29 +285,29 @@ int main(int argc, char** argv) {
     printf("%%SUITE_STARTING%% json_test\n");
     printf("%%SUITE_STARTED%%\n");
 
-    printf("%%TEST_STARTED%% test1 (json_test)\n");
+    printf("%%TEST_STARTED%% Create_Object (json_test)\n");
     test1();
-    printf("%%TEST_FINISHED%% time=0 test1 (json_test) \n");
+    printf("%%TEST_FINISHED%% time=0 Create_Object (json_test) \n");
 
-    printf("%%TEST_STARTED%% test2 (json_test)\n");
+    printf("%%TEST_STARTED%% String_Array (json_test)\n");
     test2();
-    printf("%%TEST_FINISHED%% time=0 test2 (json_test) \n");
+    printf("%%TEST_FINISHED%% time=0 String_Array (json_test) \n");
 
-    printf("%%TEST_STARTED%% test3 (json_test)\n");
+    printf("%%TEST_STARTED%% Array_Creation (json_test)\n");
     test3();
-    printf("%%TEST_FINISHED%% time=0 test3 (json_test) \n");
+    printf("%%TEST_FINISHED%% time=0 Array_Creation (json_test) \n");
 
-    printf("%%TEST_STARTED%% test4 (json_test)\n");
+    printf("%%TEST_STARTED%% Gallery_Item (json_test)\n");
     test4();
-    printf("%%TEST_FINISHED%% time=0 test4 (json_test) \n");
+    printf("%%TEST_FINISHED%% time=0 Gallery_Item (json_test) \n");
 
-    printf("%%TEST_STARTED%% test5 (json_test)\n");
+    printf("%%TEST_STARTED%% Array_of_Records (json_test)\n");
     test5();
-    printf("%%TEST_FINISHED%% time=0 test5 (json_test) \n");
+    printf("%%TEST_FINISHED%% time=0 Array_of_Records (json_test) \n");
 
-    printf("%%TEST_STARTED%% test6 (json_test)\n");
+    printf("%%TEST_STARTED%% AddNumberToObject (json_test)\n");
     test6();
-    printf("%%TEST_FINISHED%% time=0 test6 (json_test) \n");
+    printf("%%TEST_FINISHED%% time=0 AddNumberToObject (json_test) \n");
 
     printf("%%SUITE_FINISHED%% time=0\n");
 

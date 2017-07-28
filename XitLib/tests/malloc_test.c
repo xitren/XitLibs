@@ -38,7 +38,7 @@ void test1() {
 
 //   memset( umm_heap, 0, sizeof(umm_heap) );
 
-   umm_info( NULL, 1 );
+   //umm_info( NULL, 1 );
 
    for( idx=0; idx<256; ++idx )
       ptr_array[idx] = (void *)NULL;
@@ -81,7 +81,7 @@ void test1() {
 
    }
 
-   umm_info( NULL, 1 );
+//   umm_info( NULL, 1 );
 }
 
 void test2() {
@@ -93,13 +93,13 @@ int main(int argc, char** argv) {
     printf("%%SUITE_STARTING%% malloc_test\n");
     printf("%%SUITE_STARTED%%\n");
 
-    printf("%%TEST_STARTED%% test1 (malloc_test)\n");
+    printf("%%TEST_STARTED%% Random_memory_operations (malloc_test)\n");
     test1();
-    printf("%%TEST_FINISHED%% time=0 test1 (malloc_test) \n");
+    printf("%%TEST_FINISHED%% time=0 Random_memory_operations (malloc_test) \n");
 
-    printf("%%TEST_STARTED%% test2 (malloc_test)\n");
+    printf("%%TEST_STARTED%% Random_memory_operations (malloc_test)\n");
     test2();
-    printf("%%TEST_FINISHED%% time=0 test2 (malloc_test) \n");
+    printf("%%TEST_FINISHED%% time=0 Random_memory_operations (malloc_test) \n");
 
     printf("%%SUITE_FINISHED%% time=0\n");
 
