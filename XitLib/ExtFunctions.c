@@ -18,7 +18,7 @@
         #include <sys/socket.h>
         #include <netinet/in.h>
         #include <arpa/inet.h>
-        #include <fcntl.h>
+        #include <fcntl.h> 
         #include <errno.h>
         #include <unistd.h>
         #include <sys/ioctl.h>
@@ -100,6 +100,8 @@ int TransferDMA(const uint8_t *data, const uint32_t datalen) {
 int TransferUDP(const uint8_t *data, const uint32_t datalen,
         const char* address /* = "192.168.1.255" */,
         const uint32_t port /* = 5683 */) {
+    AddToReceive(data, datalen, 16777343, 5683);
+//    coap_dump(data, datalen, true);
     return 0;
 }
 

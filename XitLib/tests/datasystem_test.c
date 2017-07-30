@@ -16,6 +16,11 @@
 #include <time.h>
 #include "umm_malloc.h"
 #include "CommandModule.h"
+#include "LogModule.h"
+#include "Handler.h"
+#ifdef PLATFORM_WINDOWS
+    #include <winsock2.h>
+#endif
 
 /*
  * Simple C Test Suite
@@ -138,9 +143,97 @@ void test3() {
     return;
 }
 
+void test4() {
+    size_t i;
+    int idx;
+    int count_secs = 0;
+    int count_samples = 0;
+    ParameterList_t TempParam;
+    printf("datasystem_test test 4\n");
+    count = 0;
+    
+    TempParam.NumberofParameters = 4;
+    TempParam.Params[0].strParam = "size";
+    TempParam.Params[0].intParam = 0;
+    TempParam.Params[1].strParam = "1024";
+    TempParam.Params[1].intParam = 1024;
+    TempParam.Params[2].strParam = "type";
+    TempParam.Params[2].intParam = 0;
+    TempParam.Params[3].strParam = "1";
+    TempParam.Params[3].intParam = 1;
+    Update(&TempParam);
+    
+    scratch_buf.len = 4096;
+    if (opt_part.num == 0)
+        printf("no parts\n");
+    else
+    {
+//        coap_make_response(&scratch_buf, &rsppkt, &opt_part,
+//            (uint8_t*) bufsa, size_parts_cur,
+//            0, 0, 0, COAP_RSPCODE_CONTENT,
+//            content_type);
+        opt_part.num = 0;
+    }
+//    if (0 != (coap_build(scratch_raw, &rsplen, &rsppkt, NULL, NULL))) {
+//        printf("coap_build failed\r\n\r");
+//    } else {
+        #ifdef DEBUG
+            DBG_LOG_DEBUG("Sending: ");
+            coap_dump(bufsa, size_parts_cur, 1);
+        #endif
+//    }
+//    if (count_secs != GetClock())
+//        printf("%%TEST_FAILED%% time=0 testname=Schedule_Update_Msg (datasystem_test) message=Clock_%d!=%d\n",
+//                count_secs,GetClock());
+//    if (count_samples != GetSamplesCnt())
+//        printf("%%TEST_FAILED%% time=0 testname=Schedule_Update_Msg (datasystem_test) message=Samples_%d!=%d\n",
+//                count_samples,GetSamplesCnt());
+    return;
+}
+
+void test5() {
+    size_t i;
+    int idx;
+    int count_secs = 0;
+    int count_samples = 0;
+    ParameterList_t TempParam;
+    printf("datasystem_test test 5\n");
+    count = 0;
+    FILE *fp;
+    
+    while ((fp = fopen("iotbaseserverlinux_upd.sh","rb")) == NULL) {
+    }
+    printf("iotbaseserverlinux_upd.sh located\n");
+    fclose(fp);
+    Sleep(3000);
+    printf("iotbaseserverlinux_upd.sh deleting\n");
+    remove("iotbaseserverlinux_upd.sh");
+    return;
+}
+
+uint32_t *ThreadFuncUDP() {
+    while (1) {
+//        printf("UserProtocolHandlerThread\n");
+//        UserProtocolHandlerThread();
+    }
+    return 0;
+}
+
+uint32_t *ThreadFuncCycle() {
+    while (1) {
+        UserProtocolHandler();
+        UserOperationHandler();
+        CalculationHandler();
+    }
+    return 0;
+}
+
 int main(int argc, char** argv) {
     clock_t t,tl;
+    DWORD IDThread; 
+    HANDLE hThread; 
     
+    InitUDP();
     InitHandler(BASESTATION);
     EEGRecorderInit(0,250);
     
@@ -167,6 +260,37 @@ int main(int argc, char** argv) {
     test3();
     tl = clock() - tl;
     printf("%%TEST_FINISHED%% time=%f Schedule_Random_Work (datasystem_test) \n",
+                                    ((float)tl)/CLOCKS_PER_SEC);
+
+    printf("%%TEST_STARTED%% Schedule_Update_Msg (datasystem_test)\n");
+    tl = clock();
+    test4();
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f Schedule_Update_Msg (datasystem_test) \n",
+                                    ((float)tl)/CLOCKS_PER_SEC);
+
+    WriteMem(REG_LOG_LVL,7);
+    function_update(1);
+    hThread = CreateThread(NULL, // default security attributes 
+         0,                           // use default stack size 
+         (LPTHREAD_START_ROUTINE) ThreadFuncCycle, // thread function 
+         NULL,                    // no thread function argument 
+         0,                       // use default creation flags 
+         &IDThread);              // returns thread identifier
+    hThread = CreateThread(NULL, // default security attributes 
+         0,                           // use default stack size 
+         (LPTHREAD_START_ROUTINE) ThreadFuncUDP, // thread function 
+         NULL,                    // no thread function argument 
+         0,                       // use default creation flags 
+         &IDThread);   
+    
+    printf("%%TEST_STARTED%% Schedule_Update_File (datasystem_test)\n");
+    tl = clock();
+    test5();
+    WriteMem(REG_LOG_LVL,7);
+//    Sleep(30000);
+    tl = clock() - tl;
+    printf("%%TEST_FINISHED%% time=%f Schedule_Update_File (datasystem_test) \n",
                                     ((float)tl)/CLOCKS_PER_SEC);
 
     t = clock() - t;

@@ -81,21 +81,6 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/tests/models_test.c</file>
         </group>
-        <group name="Lib">
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/DMAretransmitter.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/malloc/umm_malloc.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/DistCalc.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/LogModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
-        </group>
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/models_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/CRC16ANSI.c</file>
@@ -122,6 +107,31 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/json_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/tests/datasystem_test.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/FunctionsDiscovery.c</file>
+        </group>
+        <group name="Lib">
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/DMAretransmitter.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/tests/models_test.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/malloc/umm_malloc.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/tests/hashtable_test.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/tests/malloc_test.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/ExtFunctions.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/tests/json_test.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/ExtFunctions.h</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/DistCalc.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/tests/datasystem_test.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/tests/array_test.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/LogModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/tests/coap_test.c</file>
         </group>
     </open-files>
 </project-private>

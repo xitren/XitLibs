@@ -205,6 +205,7 @@ inline void ProtocolHandler(void) {
                 #ifdef DEBUG
                     coap_dumpHeader(&pkt.hdr);
                     coap_dumpOptions(&pkt.opts, pkt.numopts);
+                    coap_dump(scratch_raw, cmdlent, true);
                 #endif
                 content_type = COAP_CONTENTTYPE_APPLICATION_XML;
                 coap_handle_req(&scratch_buf, &pkt, &rsppkt,

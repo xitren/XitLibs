@@ -116,10 +116,13 @@ void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
     DBG_LOG_DEBUG("Into coap_dump.\n");
     if (bare)
     {
-        while(buflen--)
+        printf("Bare.\n");
+//        DBG_LOG_DEBUG("buflen %d. %d\n",buflen, (buflen--) > 0);
+        for(;(buflen) > 0;buflen--)
         {
-            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
+            printf("%02X ",*buf++);
         }
+        printf("\r\n\r");
     }
     else
     {

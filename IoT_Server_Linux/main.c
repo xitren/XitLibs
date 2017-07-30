@@ -83,13 +83,13 @@ uint32_t *ThreadFunc250ms() {
 int main(int argc, char** argv) {
 
     uint32_t IDThread1,IDThread2,IDThread3,IDThread4,IDThread5; 
-    //void *hThread;
+    
     int result;
-    int thread1;  //, thread2, thread3;
-    int thread2;  //, thread2, thread3;
-    int thread3;  //, thread2, thread3;
-    int thread4;  //, thread2, thread3;
-    int thread5;  //, thread2, thread3;
+    int thread1;
+    int thread2; 
+    int thread3; 
+    int thread4; 
+    int thread5; 
     
     InitUDP();
     InitImageP300();
