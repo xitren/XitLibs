@@ -635,6 +635,11 @@ char* GetCommandLink(int N)
     DBG_LOG_TRACE("Into GetCommandLink.\n");
     CommandTable_t *Comm;
     array_get_at(CommandTableArray, N, (void**)&Comm);
+    if ((Comm == NULL))
+    {
+        DBG_LOG_ERROR("Comm argument is NULL\n");
+        return NULL;
+    }
     return Comm->Link;
 }
 int GetCommandsNumber(void)
@@ -807,7 +812,7 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
     DBG_LOG_TRACE("Into AddCommand.\n");
     /* First, make sure that the parameters passed to us appear to be    */
     /* semi-valid.                                                       */
-    if((CommandName) && (CommandFunction))
+    if((CommandName) && (Link) && (CommandFunction))
     {
         /* Next, make sure that we still have room in the Command Table   */
         /* to add commands.                                               */
@@ -882,6 +887,11 @@ void ClearCommands(void)
 {
     DBG_LOG_TRACE("Into ClearCommands.\n");
     /* Simply flag that there are no commands present in the table.      */
+    if ((CommandTableArray == NULL))
+    {
+        DBG_LOG_ERROR("CommandTableArray argument is NULL\n");
+        return;
+    }
     array_remove_all_free(CommandTableArray);
     return;
 }
@@ -890,7 +900,11 @@ void AddToSchedule(ScheduleFunction_t ScheduleFunction)
     DBG_LOG_TRACE("Into AddToSchedule.\n");
     ScheduleFunction_t *comm;
     comm = (ScheduleFunction_t *)umm_calloc(1,sizeof(ScheduleFunction_t));
-    if (comm == NULL){return;}
+    if ((comm == NULL))
+    {
+        DBG_LOG_ERROR("comm argument is NULL\n");
+        return;
+    }
     *comm = ScheduleFunction;
     if (deque_add_last(ScheduleTableDeque, (void *)comm) != 0)
     {
@@ -903,6 +917,11 @@ void AddToSchedule(ScheduleFunction_t ScheduleFunction)
 void ClearSchedule(void)
 {
     DBG_LOG_TRACE("Into ClearSchedule.\n");
+    if ((ScheduleTableDeque == NULL))
+    {
+        DBG_LOG_ERROR("ScheduleTableDeque argument is NULL\n");
+        return;
+    }
     deque_remove_all_free(ScheduleTableDeque);
     return;
 }
@@ -911,9 +930,19 @@ void ExecuteSchedule(void)
     ScheduleFunction_t  *Comm;
 
     DBG_LOG_TRACE("Into ExecuteSchedule.\n");
+    if ((ScheduleTableDeque == NULL))
+    {
+        DBG_LOG_ERROR("ScheduleTableDeque argument is NULL\n");
+        return;
+    }
     while(deque_size(ScheduleTableDeque) > 0)
     {
         deque_remove_first(ScheduleTableDeque, (void**)&Comm);
+        if ((Comm == NULL))
+        {
+            DBG_LOG_ERROR("Comm argument is NULL\n");
+            continue;
+        }
         if (deque_size(ScheduleTableDeque) > 2)
             DBG_LOG_INFO("Schedule executing, %d left. \n",
                                 deque_size(ScheduleTableDeque));

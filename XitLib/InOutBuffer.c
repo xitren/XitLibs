@@ -42,6 +42,11 @@ int AddToReceive(uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
    ReceiveDeque_t *comm;
    
     DBG_LOG_TRACE("Into AddToReceive.\n");
+    if ((msg == NULL))
+    {
+        DBG_LOG_ERROR("msg argument is NULL\n");
+        return 0;
+    }
     if ((msg != 0) && (size > 0))
     {
         comm = (ReceiveDeque_t *)umm_calloc(1,sizeof(ReceiveDeque_t));
@@ -67,6 +72,16 @@ int ProceedReceive(uint8_t *msg,uint32_t *size, uint32_t *ip, uint32_t *port)
     int ret_val = NO_BUFFER_ERROR;
     ReceiveDeque_t *comm;
    
+    if ((msg == NULL) || (size == NULL) || (ip == NULL) || (port == NULL))
+    {
+        DBG_LOG_ERROR("ProceedReceive argument is NULL\n");
+        return 0;
+    }
+    if ((ReceiveDeque == NULL))
+    {
+        DBG_LOG_ERROR("ReceiveDeque is NULL\n");
+        return 0;
+    }
     if (deque_size(ReceiveDeque) > 0)
     {
         DBG_LOG_INFO("Receive Proceed, %d left. \n",

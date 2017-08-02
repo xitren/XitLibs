@@ -2,6 +2,7 @@
 /* Local headers -------------------------------------------------------------*/
 #include "CRC16ANSI.h"
 #include "Packet.h"
+#include "LogModule.h"
 #include <stdio.h>
 #include <string.h>
 /*============================================================================*/
@@ -17,28 +18,38 @@ uint32_t PRxCnt = 0;
 /* Functions declaration -----------------------------------------------------*/
 int AddToPocketReceive(char str)
 {
-        if (PRxCnt < STRING_SIZE)
-              pocket_buffer[PRxCnt++] = str;
-	return 0;
+    if (PRxCnt < STRING_SIZE)
+        pocket_buffer[PRxCnt++] = str;
+    return 0;
 }
 
 int ClearPocketBuffer()
 {
-	PRxCnt = 0;
-	return 0;
+    PRxCnt = 0;
+    return 0;
 }
 
 char* GetPocketBuffer(unsigned char *size)
 {
-        *size = PRxCnt;
-	pocket_buffer[PRxCnt] = '\0';
-	PRxCnt = 0;
-	return pocket_buffer;
+    if ((size == NULL))
+    {
+        DBG_LOG_ERROR("GetPocketBuffer argument is NULL\n");
+        return 0;
+    }
+    *size = PRxCnt;
+    pocket_buffer[PRxCnt] = '\0';
+    PRxCnt = 0;
+    return pocket_buffer;
 }
 
 uint16_t Packetize(uint8_t *bytes,const uint16_t size, const uint16_t buffer_size)
 {
     int i;
+    if ((bytes == NULL))
+    {
+        DBG_LOG_ERROR("Packetize argument is NULL\n");
+        return 0;
+    }
     if (size == 0)
         return 0;
     if (buffer_size > ((size)+22))
@@ -78,6 +89,11 @@ uint16_t Packetize(uint8_t *bytes,const uint16_t size, const uint16_t buffer_siz
 }
 uint16_t DePacketize(uint8_t *bytes,const uint16_t size)
 {
+    if ((bytes == NULL))
+    {
+        DBG_LOG_ERROR("DePacketize argument is NULL\n");
+        return 0;
+    }
     if (size <= 11)
         return 0;
     uint16_t _crc = (bytes[(size)-2] << 8) + bytes[(size)-1];

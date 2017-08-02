@@ -118,6 +118,11 @@ void EEG_unreaded_dump(void);
         uint32_t history_eeg_cnt = 0;
         uint32_t history_eeg_ext[1000];
         uint32_t history_eeg_cnt_ext = 0;
+        if ((filename == NULL))
+        {
+            DBG_LOG_ERROR("MakeEEGFromFile argument is NULL\n");
+            return 0;
+        }
 
         fp = fopen(filename,"r"); // read mode
 
@@ -171,6 +176,11 @@ void EEG_unreaded_dump(void);
         uint32_t history_eeg_cnt = 0;
         uint32_t history_eeg_ext[1000];
         uint32_t history_eeg_cnt_ext = 0;
+        if ((filename == NULL))
+        {
+            DBG_LOG_ERROR("WorkEEGFromFile argument is NULL\n");
+            return 0;
+        }
 
         fp = fopen(filename,"r"); // read mode
 
@@ -211,6 +221,11 @@ int GetLastBlock(ParameterList_t *TempParam)
     char buffer[STRING_SIZE];
     int i,l,k=0; //samples_nmbr
     uint32_t cnt = samples_cnt-readed_cnt;
+    if ((TempParam == NULL))
+    {
+        DBG_LOG_ERROR("GetLastBlock argument is NULL\n");
+        return 0;
+    }
     if ((cnt) > ReadMem(REG_EEG_PocketSize))
 		cnt = ReadMem(REG_EEG_PocketSize);
     k=samples_cnt-cnt;
@@ -266,7 +281,11 @@ int GetConcreteBlock(ParameterList_t *TempParam)
     int  Number;
     int  Size;
     char buffer[STRING_SIZE];
-
+    if ((TempParam == NULL))
+    {
+        DBG_LOG_ERROR("GetConcreteBlock argument is NULL\n");
+        return 0;
+    }
     
     DBG_LOG_DEBUG("Into GetConcreteBlock.\n");
     content_type = COAP_CONTENTTYPE_APPLICATION_JSON;
@@ -342,26 +361,30 @@ int GetConcreteBlock(ParameterList_t *TempParam)
 uint32_t GetDataPtrCnt(int32_t _pointer,int32_t _size,int32_t *_buffer)
 {
     DBG_LOG_TRACE("Into GetDataPtrCnt.\n");
-        int i,j,ptr=0;
-        int cnt = (int)(samples_cnt - BUFFER_2ND_MAX);
-
-        int temp2=(int)_pointer;
-                       
-        if (cnt > temp2)
-        {
-            DBG_LOG_WARNING("Clear data query.\r\n\r");
+    if ((_buffer == NULL))
+    {
+        DBG_LOG_ERROR("GetDataPtrCnt argument is NULL\n");
         return 0;
-        }
-        if ((samples_cnt - _pointer) < _size)
-        {
-                DBG_LOG_WARNING("have data less than query.\r\n\r");
-                return 0;
-        }
-                for(i=(_pointer);(i < samples_cnt) && (ptr < (_size*BUFFER_SAMPLE_SIZE));i++)
-                    for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
-                        _buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
-        return ptr;
+    }
+    int i,j,ptr=0;
+    int cnt = (int)(samples_cnt - BUFFER_2ND_MAX);
 
+    int temp2=(int)_pointer;
+
+    if (cnt > temp2)
+    {
+        DBG_LOG_WARNING("Clear data query.\r\n\r");
+    return 0;
+    }
+    if ((samples_cnt - _pointer) < _size)
+    {
+            DBG_LOG_WARNING("have data less than query.\r\n\r");
+            return 0;
+    }
+            for(i=(_pointer);(i < samples_cnt) && (ptr < (_size*BUFFER_SAMPLE_SIZE));i++)
+                for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
+                    _buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
+    return ptr;
 }
 
 void EEG_unreaded_dump(void)
@@ -379,6 +402,11 @@ void EEG_unreaded_dump(void)
 int EEGPutExtMemReq(uint32_t *data, uint32_t datalen)
 {
     DBG_LOG_TRACE("Into EEGPutExtMemReq.\n");
+    if ((data == NULL))
+    {
+        DBG_LOG_ERROR("EEGPutExtMemReq argument is NULL\n");
+        return 0;
+    }
 //    uint8_t *pntr = path_eeg_arg_buf;
 //    uint32_t i;
 //    int rc;
@@ -410,6 +438,11 @@ void EEG_dump(const uint8_t *buf, uint32_t buflen)
 {
     DBG_LOG_TRACE("Into EEG_dump.\n");
     uint32_t g=1;
+    if ((buf == NULL))
+    {
+        DBG_LOG_ERROR("EEG_dump argument is NULL\n");
+        return;
+    }
     while(buflen--)
     {
         printf("%02X", *buf++);
@@ -422,31 +455,36 @@ void EEG_dump(const uint8_t *buf, uint32_t buflen)
 int32_t GetMiddleADC(uint8_t _channel)
 {
     DBG_LOG_TRACE("Into GetMiddleADC.\n");
-	int i,sum=0,cnt;
-	cnt = ADC_records[_channel][0];
-	ADC_records[_channel][0] = 0;
-	for(i=1;i<cnt;i++)
-		sum += ADC_records[_channel][i];
-	return sum/cnt;
+    int i,sum=0,cnt;
+    cnt = ADC_records[_channel][0];
+    ADC_records[_channel][0] = 0;
+    for(i=1;i<cnt;i++)
+            sum += ADC_records[_channel][i];
+    return sum/cnt;
 }
 uint8_t EEGTestInit(uint32_t _signal_amplitude[7],uint32_t _signal_frequency[7])
 {
     DBG_LOG_TRACE("Into EEGTestInit.\n");
-	int i;
-	for(i=0;i<7;i++)
-        {
-            signal_amplitude[i] = _signal_amplitude[i];
-            signal_frequency[i] = _signal_frequency[i];
-        }
-	return 0;
+    int i;
+    if ((_signal_amplitude == NULL) && (_signal_frequency == NULL))
+    {
+        DBG_LOG_ERROR("EEGTestInit argument is NULL\n");
+        return 0;
+    }
+    for(i=0;i<7;i++)
+    {
+        signal_amplitude[i] = _signal_amplitude[i];
+        signal_frequency[i] = _signal_frequency[i];
+    }
+    return 0;
 }
 uint8_t EEGRecorderInit(uint8_t _signal_type,uint32_t _sample_frequency)
 {
     DBG_LOG_TRACE("Into EEGRecorderInit.\n");
-	Clear();
-        signal_type = _signal_type;
-        sample_frequency = _sample_frequency;
-	return 0;
+    Clear();
+    signal_type = _signal_type;
+    sample_frequency = _sample_frequency;
+    return 0;
 }
 uint8_t MakeEEGSample(uint8_t _channel, int32_t _value)
 {
@@ -467,39 +505,39 @@ uint32_t AddHistoryExtId(uint32_t _extid)
 void AddSample()
 {
     DBG_LOG_TRACE("Into AddSample.\n");
-	int i;
-        if (signal_type == 1)
+    int i;
+    if (signal_type == 1)
+    {
+        for(i=0;i<BUFFER_SAMPLE_SIZE;i++)
         {
-            for(i=0;i<BUFFER_SAMPLE_SIZE;i++)
-            {
-            #ifdef CPU
-                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = GetMiddleADC(i);
-            #else
-                uint32_t selAD = (ReadMem(REG_ADC_ORDER) >> (i*4)) & 0x0000000F;
-                if (selAD > 7)
-                    selAD = 7;
-                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
-                        ReadMem(REG_ADC_CH1+selAD);
-            #endif
-            }
+        #ifdef CPU
+            Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = GetMiddleADC(i);
+        #else
+            uint32_t selAD = (ReadMem(REG_ADC_ORDER) >> (i*4)) & 0x0000000F;
+            if (selAD > 7)
+                selAD = 7;
+            Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
+                    ReadMem(REG_ADC_CH1+selAD);
+        #endif
         }
-        else if (signal_type == 2)
-            for(i=0;i < 4;i++)
-                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
-                        (int32_t)ReadMem(REG_ACCEL_X+i);
-        else if (signal_type == 3)
-        {
-        
-        }
-        else
-        {
-            double phase = (TwoPi*samples_cnt)/sample_frequency;
-            Data_samples[0][samples_cnt%BUFFER_2ND_MAX] = samples_cnt;
-            for(i=1;i<BUFFER_SAMPLE_SIZE;i++)
-                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] 
-                                    = (int32_t)(signal_amplitude[i-1]*
-                                             sin(signal_frequency[i-1]*phase));
-        }
+    }
+    else if (signal_type == 2)
+        for(i=0;i < 4;i++)
+            Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
+                    (int32_t)ReadMem(REG_ACCEL_X+i);
+    else if (signal_type == 3)
+    {
+
+    }
+    else
+    {
+        double phase = (TwoPi*samples_cnt)/sample_frequency;
+        Data_samples[0][samples_cnt%BUFFER_2ND_MAX] = samples_cnt;
+        for(i=1;i<BUFFER_SAMPLE_SIZE;i++)
+            Data_samples[i][samples_cnt%BUFFER_2ND_MAX] 
+                                = (int32_t)(signal_amplitude[i-1]*
+                                         sin(signal_frequency[i-1]*phase));
+    }
 
     #ifdef CPU
         if( ReadMem(REG_STREAM_REC) == 1 )
@@ -543,63 +581,73 @@ void AddSample()
             }
         }
     #endif
-        samples_cnt++;
-        if ((samples_cnt - readed_cnt) > BUFFER_2ND_MAX)
-            readed_cnt = samples_cnt - BUFFER_2ND_MAX;
-        return;
+    samples_cnt++;
+    if ((samples_cnt - readed_cnt) > BUFFER_2ND_MAX)
+        readed_cnt = samples_cnt - BUFFER_2ND_MAX;
+    return;
 }
 uint32_t GetCnt()
 {
     DBG_LOG_TRACE("Into GetCnt.\n");
-	return (samples_cnt-readed_cnt); 
+    return (samples_cnt-readed_cnt); 
 }
 uint32_t GetSamplesCnt()
 {
     DBG_LOG_TRACE("Into GetSamplesCnt.\n");
-	return (samples_cnt); 
+    return (samples_cnt); 
 }
 uint32_t GetDataReady(int32_t *_buffer)
 {
     DBG_LOG_TRACE("Into GetDataReady.\n");
-	int i,j,ptr=0;
-	uint32_t cnt = (samples_cnt-readed_cnt);
-        DBG_LOG_TRACE("Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE("--Counter not read sample %d--\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE("--End number samples in block %d--\n",cnt,samples_cnt,readed_cnt);
-	for(i=(samples_cnt-cnt);i<samples_cnt;i++)
-		for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
-			_buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
-        return ptr;
+    if ((_buffer == NULL))
+    {
+        DBG_LOG_ERROR("GetDataReady argument is NULL\n");
+        return 0;
+    }
+    int i,j,ptr=0;
+    uint32_t cnt = (samples_cnt-readed_cnt);
+    DBG_LOG_TRACE("Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
+    DBG_LOG_TRACE("--Counter not read sample %d--\n",cnt,samples_cnt,readed_cnt);
+    DBG_LOG_TRACE("--End number samples in block %d--\n",cnt,samples_cnt,readed_cnt);
+    for(i=(samples_cnt-cnt);i<samples_cnt;i++)
+            for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
+                    _buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
+    return ptr;
 }
 uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer)
 {
     DBG_LOG_TRACE("Into GetDataReadyCnt.\n");
-	int i,j,ptr=0;
-	uint32_t cnt = (samples_cnt-readed_cnt);
-        DBG_LOG_TRACE("---- Current sample %d\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE("---- Readed sample %d\n",cnt,samples_cnt,readed_cnt);
-        DBG_LOG_TRACE("---- Count no read %d\n",cnt,samples_cnt,readed_cnt);
-	if ((cnt) > _size)
-		cnt = _size;
-        if ((cnt) < _size)
-                return 0;
-        
-	for(i=(samples_cnt-cnt);i<samples_cnt;i++)
-		for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
-			_buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
-        readed_cnt = samples_cnt;
-        return ptr;
+    if ((_buffer == NULL))
+    {
+        DBG_LOG_ERROR("GetDataReadyCnt argument is NULL\n");
+        return 0;
+    }
+    int i,j,ptr=0;
+    uint32_t cnt = (samples_cnt-readed_cnt);
+    DBG_LOG_TRACE("---- Current sample %d\n",cnt,samples_cnt,readed_cnt);
+    DBG_LOG_TRACE("---- Readed sample %d\n",cnt,samples_cnt,readed_cnt);
+    DBG_LOG_TRACE("---- Count no read %d\n",cnt,samples_cnt,readed_cnt);
+    if ((cnt) > _size)
+            cnt = _size;
+    if ((cnt) < _size)
+            return 0;
+
+    for(i=(samples_cnt-cnt);i<samples_cnt;i++)
+            for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
+                    _buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
+    readed_cnt = samples_cnt;
+    return ptr;
 }
 void Clear(void)
 {
     DBG_LOG_TRACE("Into Clear.\n");
-	int i;
-	for(i=0;i<EEG_HISTORY_SIZE;i++)
-                EEG_history[i] = 0;
-	history_cnt = 0;
-	for(i=0;i<BUFFER_SAMPLE_SIZE;i++)
-		ADC_records[i][0] = 0;
-	samples_cnt = 0;
-	return;
+    int i;
+    for(i=0;i<EEG_HISTORY_SIZE;i++)
+            EEG_history[i] = 0;
+    history_cnt = 0;
+    for(i=0;i<BUFFER_SAMPLE_SIZE;i++)
+            ADC_records[i][0] = 0;
+    samples_cnt = 0;
+    return;
 }
 /*============================================================================*/

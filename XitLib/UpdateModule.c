@@ -245,35 +245,43 @@ int QueryUpdateHash(ParameterList_t *TempParam)
 
 int Version(ParameterList_t *TempParam)
 {
-   int ret_val = 0;
+    int ret_val = 0;
    
-   #ifdef DEBUG
-      printf("--//internal//-- Into Version.\r\n\r");
-   #endif
-   content_type = COAP_CONTENTTYPE_TEXT_PLAIN;
-   AddToTransmit("<VERSION>\r\n\r");
-   //здесь код программы
-   AddToTransmit(version);
-   AddToTransmit("\r\n\r</VERSION>\r\n\r");
+    DBG_LOG_DEBUG("Into Version.\n");
+    content_type = COAP_CONTENTTYPE_TEXT_PLAIN;
+    AddToTransmit("<VERSION>\r\n\r");
+    //здесь код программы
+    AddToTransmit(version);
+    AddToTransmit("\r\n\r</VERSION>\r\n\r");
 
-   return(ret_val);
+    return(ret_val);
 }
 
 int SetVersion(char *value)
 {
-   int ret_val = 0;
-   version = value; 
-   printf("VERSION: %s\n", VERSION);
-   return(ret_val);
+    int ret_val = 0;
+    if ((value == NULL))
+    {
+        DBG_LOG_ERROR("SetVersion argument is NULL\n");
+        return 0;
+    }
+    version = value; 
+    printf("VERSION: %s\n", VERSION);
+    return(ret_val);
 }
 
 int SetUpdateServer(char *value)
 {
-   int ret_val = 0;
-   updateserver = value;
-   printf("updateserver ip: %s\n", updateserver);
-   techServerFound = true;
-   return(ret_val);
+    int ret_val = 0;
+    if ((value == NULL))
+    {
+        DBG_LOG_ERROR("SetUpdateServer argument is NULL\n");
+        return 0;
+    }
+    updateserver = value;
+    printf("updateserver ip: %s\n", updateserver);
+    techServerFound = true;
+    return(ret_val);
 }
 
    /* The following function is responsible for Giving current          */

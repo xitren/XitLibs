@@ -109,9 +109,19 @@ int QueryNodes(ParameterList_t *TempParam)
             for (i=0;i < array_size(NodesArray);i++)
             {
                 array_get_at(NodesArray, i, (void**)&node);
+                if ((node == NULL))
+                {
+                    DBG_LOG_ERROR("node argument is NULL\n");
+                    continue;
+                }
                 for (j=0;j < array_size(node->proto);j++)
                 {
                     array_get_at(node->proto, j, (void**)&proto);
+                    if ((proto == NULL))
+                    {
+                        DBG_LOG_ERROR("proto argument is NULL\n");
+                        continue;
+                    }
                     if( (i==array_size(NodesArray)-1) 
                             && (j==array_size(node->proto)-1) )
                     {
@@ -151,6 +161,11 @@ void put_node_msg(char *_ip,char *_name)
     function_proto *protoi;
     
     DBG_LOG_DEBUG("Into put_node_msg.\n");
+    if ((_ip == NULL) && (_name == NULL))
+    {
+        DBG_LOG_ERROR("put_node_msg argument is NULL\n");
+        return;
+    }
     if (NodesArray == 0)
     {
         if (array_new(&NodesArray) != 0)
@@ -168,6 +183,11 @@ void put_node_msg(char *_ip,char *_name)
     for (i=0;i < array_size(NodesArray);i++)
     {
         array_get_at(NodesArray, i, (void**)&node);
+        if ((node == NULL))
+        {
+            DBG_LOG_ERROR("node argument is NULL\n");
+            continue;
+        }
         if (!strcmp(_ip,node->ip))
         {    
             ip_id = i;
@@ -204,6 +224,11 @@ void put_node_msg(char *_ip,char *_name)
             for (i=0;i < array_size(node->proto);i++)
             {
                 array_get_at(node->proto, i, (void**)&protoi);
+                if ((protoi == NULL))
+                {
+                    DBG_LOG_ERROR("protoi argument is NULL\n");
+                    continue;
+                }
                 if (!strcmp(protoi->name,proto->name))
                 {
                     break;
@@ -233,9 +258,19 @@ char* get_first_node_by_func(const char *_name)
     for (i=0;i < array_size(NodesArray);i++)
     {
         array_get_at(NodesArray, i, (void**)&node);
+        if ((node == NULL))
+        {
+            DBG_LOG_ERROR("node argument is NULL\n");
+            continue;
+        }
         for (j=0;j < array_size(node->proto);j++)
         {
             array_get_at(node->proto, i, (void**)&proto);
+            if ((proto == NULL))
+            {
+                DBG_LOG_ERROR("proto argument is NULL\n");
+                continue;
+            }
             if (strcmp(proto->name,_name))
             {
                 return node->ip;
@@ -260,9 +295,19 @@ void print_node_and_func(void)
     for (i=0;i < array_size(NodesArray);i++)
     {
         array_get_at(NodesArray, i, (void**)&node);
+        if ((proto == NULL))
+        {
+            DBG_LOG_ERROR("node argument is NULL\n");
+            continue;
+        }
         for (j=0;j < array_size(node->proto);j++)
         {
             array_get_at(node->proto, j, (void**)&proto);
+            if ((proto == NULL))
+            {
+                DBG_LOG_ERROR("proto argument is NULL\n");
+                continue;
+            }
             strptr += snprintf(strptr,
                     10000-((int)(strptr-strbuf)),
                     "<coap://%s%s>;if=\"controller\",\n",

@@ -767,6 +767,8 @@ static unsigned short int umm_assimilate_down( unsigned short int c, unsigned sh
 void umm_free( void *ptr ) {
 
    unsigned short int c;
+   
+   DBG_LOG_TRACE("%d umm_free",(int)ptr);
 
    // If we're being asked to free a NULL pointer, well that's just silly!
 
@@ -971,6 +973,8 @@ void *umm_malloc( size_t size ) {
    // Release the critical section...
    //
    UMM_CRITICAL_EXIT();
+   
+   DBG_LOG_TRACE("%d umm_malloc",(int)&UMM_DATA(cf));
 
    return( (void *)&UMM_DATA(cf) );
 }
@@ -1105,6 +1109,8 @@ void *umm_calloc( size_t num, size_t sizen ) {
    UMM_CRITICAL_EXIT();
 
    memset( (void *)&UMM_DATA(cf), 0, size);
+   
+   DBG_LOG_TRACE("%d umm_calloc",(int)&UMM_DATA(cf));
    
    return( (void *)&UMM_DATA(cf) );
 }
@@ -1263,6 +1269,8 @@ void *umm_realloc( void *ptr, size_t size ) {
    // Release the critical section...
    //
    UMM_CRITICAL_EXIT();
+   
+   DBG_LOG_TRACE("%d umm_realloc",(int)ptr);
 
    return( ptr );
 }

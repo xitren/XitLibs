@@ -23,6 +23,11 @@ int WriteToFile(char* filename);
 /* Functions declaration -----------------------------------------------------*/
 int AddToLog(const char *str, uint32_t N, int lvl)
 {
+    if ((str == NULL))
+    {
+        DBG_LOG_ERROR("AddToLog argument is NULL\n");
+        return 0;
+    }
     int ret_val = NO_LOGGER_ERROR;
     if (N > STRING_SIZE)
         N = STRING_SIZE;
@@ -61,6 +66,11 @@ int AddToLog(const char *str, uint32_t N, int lvl)
 
 char* ProceedLog(uint32_t *num)
 {
+    if ((num == NULL))
+    {
+        DBG_LOG_ERROR("ProceedLog argument is NULL\n");
+        return 0;
+    }
     char* ret_val = 0;
 
     if (LogCnt)
@@ -89,6 +99,11 @@ int ClearLog(void)
 }
 
 int WriteToFile(char* filename) {
+    if ((filename == NULL))
+    {
+        DBG_LOG_ERROR("WriteToFile argument is NULL\n");
+        return 0;
+    }
     FILE *logFile = fopen(filename, "a+"); 
     // a+ (create + append) option will allow appending which is useful in a log file
     if (logFile == NULL) {
@@ -114,6 +129,11 @@ int LOGRead(ParameterList_t *TempParam)
     uint32_t N;
 
     DBG_LOG_TRACE("Into LOGRead.\n");
+    if ((TempParam == NULL))
+    {
+        DBG_LOG_ERROR("LOGRead argument is NULL\n");
+        return 0;
+    }
     AddToTransmit("<LOG>\r\n\r");
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
