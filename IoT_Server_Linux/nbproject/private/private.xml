@@ -22,26 +22,13 @@
         <group name="IoT">
             <file>file:/C:/Users/Toshiba/Documents/Git/IoT/XitLib/VideoModule.h</file>
         </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/LogModule.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/version.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/Handler.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server_Linux/main.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/malloc/umm_malloc.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/xitlibtypes.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/CommandModule.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/External/ExtFunctions.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/coap/coap.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/StreamDataRecorder.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/LibConfig.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/External/ExtFunctions.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/External/UpdateModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/FunctionsDiscovery.h</file>
-        </group>
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/IoT_Server_Linux/main.c</file>
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/malloc/umm_malloc_cfg.h</file>
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.h</file>
+        </group>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server_Linux/main.c</file>
         </group>
     </open-files>
 </project-private>

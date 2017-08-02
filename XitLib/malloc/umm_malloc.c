@@ -1276,6 +1276,33 @@ void *umm_realloc( void *ptr, size_t size ) {
 }
 
 // ----------------------------------------------------------------------------
-
+#else
+inline void *umm_malloc( size_t size )
+{
+    void * ptr = 0;
+    ptr = malloc(size);
+    DBG_LOG_TRACE("%d umm_malloc\n",(int)ptr);
+    return ptr;
+}
+inline void *umm_calloc( size_t num, size_t sizen )
+{
+    void * ptr = 0;
+    ptr = calloc(num, sizen);
+    DBG_LOG_TRACE("%d umm_calloc\n",(int)ptr);
+    return ptr;
+}
+inline void *umm_realloc( void *ptr, size_t size )
+{
+    void * _ptr = 0;
+    _ptr = realloc(ptr, size);
+    DBG_LOG_TRACE("%d umm_realloc\n",(int)_ptr);
+    return _ptr;
+}
+inline void umm_free( void *ptr )
+{
+    DBG_LOG_TRACE("%d umm_free\n",(int)ptr);
+    free(ptr);
+    return;
+}
 #endif
 #endif

@@ -47,11 +47,12 @@
         <group name="IoT">
             <file>file:/C:/Users/xitre/Documents/Projects/IoT/IoT_Server/main.c</file>
         </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server/main.c</file>
-        </group>
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/IoT_Server/main.c</file>
+        </group>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/generatorModule.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server/main.c</file>
         </group>
     </open-files>
 </project-private>

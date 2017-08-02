@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include "umm_malloc.h"
+#include "LogModule.h"
+#include "Handler.h"
 
 /*
  * Simple C Test Suite
@@ -39,14 +41,15 @@ void test1() {
 //   memset( umm_heap, 0, sizeof(umm_heap) );
 
    //umm_info( NULL, 1 );
+    WriteMem(REG_LOG_LVL,7);
 
    for( idx=0; idx<256; ++idx )
       ptr_array[idx] = (void *)NULL;
 
-   for( idx=0; idx<6553500; ++idx ) {
+   for( idx=0; idx<65535; ++idx ) {
       i = rand()%256;
       int n,oldn;
-      n = (idx*10)/6553500;
+      n = (idx*10)/65535;
       if (n != oldn)
         printf("Completed %02d0%%\n",n);
       oldn = n;
@@ -80,6 +83,7 @@ void test1() {
       }
 
    }
+    WriteMem(REG_LOG_LVL,5);
 
 //   umm_info( NULL, 1 );
 }

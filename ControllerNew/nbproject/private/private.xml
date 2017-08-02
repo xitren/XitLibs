@@ -30,7 +30,9 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/EEG_UnitMC_Rev4/ControllerNew/Periph/tim.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/EEG_UnitMC_Rev4/ControllerNew/Periph/spi.c</file>
         </group>
-        <group name="XitLib"/>
         <group name="Lib"/>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/malloc/umm_malloc.h</file>
+        </group>
     </open-files>
 </project-private>

@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
+CND_PLATFORM=MinGW-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug_Windows
 CND_DISTDIR=dist
@@ -40,7 +40,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
 	${OBJECTDIR}/DistCalc.o \
-	${OBJECTDIR}/ExtFunctions.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -48,7 +47,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/PWMModule.o \
 	${OBJECTDIR}/Packet.o \
 	${OBJECTDIR}/StreamDataRecorder.o \
-	${OBJECTDIR}/UpdateModule.o \
 	${OBJECTDIR}/VideoModule.o \
 	${OBJECTDIR}/coap/coap.o \
 	${OBJECTDIR}/generatorModule.o \
@@ -139,11 +137,6 @@ ${OBJECTDIR}/DistCalc.o: DistCalc.c nbproject/Makefile-${CND_CONF}.mk
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
-${OBJECTDIR}/ExtFunctions.o: ExtFunctions.c nbproject/Makefile-${CND_CONF}.mk
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c
-
 ${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -178,11 +171,6 @@ ${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c nbproject/Makefile-${CND
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
-
-${OBJECTDIR}/UpdateModule.o: UpdateModule.c nbproject/Makefile-${CND_CONF}.mk
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
 
 ${OBJECTDIR}/VideoModule.o: VideoModule.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
@@ -405,19 +393,6 @@ ${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c
 	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
 	fi
 
-${OBJECTDIR}/ExtFunctions_nomain.o: ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExtFunctions.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions_nomain.o ExtFunctions.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/ExtFunctions.o ${OBJECTDIR}/ExtFunctions_nomain.o;\
-	fi
-
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/FunctionsDiscovery.o`; \
@@ -507,19 +482,6 @@ ${OBJECTDIR}/StreamDataRecorder_nomain.o: ${OBJECTDIR}/StreamDataRecorder.o Stre
 	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder_nomain.o StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/StreamDataRecorder.o ${OBJECTDIR}/StreamDataRecorder_nomain.o;\
-	fi
-
-${OBJECTDIR}/UpdateModule_nomain.o: ${OBJECTDIR}/UpdateModule.o UpdateModule.c 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/UpdateModule.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule_nomain.o UpdateModule.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/UpdateModule.o ${OBJECTDIR}/UpdateModule_nomain.o;\
 	fi
 
 ${OBJECTDIR}/VideoModule_nomain.o: ${OBJECTDIR}/VideoModule.o VideoModule.c 
