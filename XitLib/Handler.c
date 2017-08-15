@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include "Handler.h"
 #include "LogModule.h"
+#include "ExtFunctions.h"
 
 #define TXTIMEOUT 10
 #define PORT_BACK 5683
@@ -120,16 +121,16 @@ int TransferBand(const uint8_t *data, const uint32_t datalen) {
 void InitHandler(DeviceTypeDef device) {
     ClearLog();
     DBG_LOG_TRACE("Into InitHandler.\n");
-    DBG_LOG_INFO("Memory used by CoAP: %d Bytes\n",MEMORY_COAP);
-    DBG_LOG_INFO("Memory used by CommandModule: %d Bytes\n",MEMORY_COMMAND);
-    DBG_LOG_INFO("Memory used by ConfigModule: %d Bytes\n",MEMORY_CONFIG);
-    DBG_LOG_INFO("Memory used by DMAModule: %d Bytes\n",MEMORY_DMA);
-    DBG_LOG_INFO("Memory used by DiscoveryModule: %d Bytes\n",MEMORY_CORE_WELLKNOWN);
-    DBG_LOG_INFO("Memory used by InOutBuffer: %d Bytes\n",MEMORY_INOUT);
-    DBG_LOG_INFO("Memory used by StreamDataRecorder: %d Bytes\n",MEMORY_STREAM);
+    DBG_LOG_INFO("Memory used by CoAP: %d Bytes\n",(int)MEMORY_COAP);
+    DBG_LOG_INFO("Memory used by CommandModule: %d Bytes\n",(int)MEMORY_COMMAND);
+    DBG_LOG_INFO("Memory used by ConfigModule: %d Bytes\n",(int)MEMORY_CONFIG);
+    DBG_LOG_INFO("Memory used by DMAModule: %d Bytes\n",(int)MEMORY_DMA);
+    DBG_LOG_INFO("Memory used by DiscoveryModule: %d Bytes\n",(int)MEMORY_CORE_WELLKNOWN);
+    DBG_LOG_INFO("Memory used by InOutBuffer: %d Bytes\n",(int)MEMORY_INOUT);
+    DBG_LOG_INFO("Memory used by StreamDataRecorder: %d Bytes\n",(int)MEMORY_STREAM);
     DBG_LOG_INFO("========ALL=========================%d=Bytes====\n"
-                    ,MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
-                    MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM);
+                    ,(int)(MEMORY_COAP+MEMORY_COMMAND+MEMORY_CONFIG+MEMORY_DMA+
+                    MEMORY_CORE_WELLKNOWN+MEMORY_INOUT+MEMORY_STREAM));
     transfer_free = 1;
     transfer_time = 0;
     coap_setup();
@@ -144,16 +145,20 @@ void InitHandler(DeviceTypeDef device) {
 }
 #ifdef PLATFORM_LINUX
     void VideoFrameInitHandler(void) {
+/*
         open_device("/dev/video0");
         init_device();
         start_capturing();
+*/
         return;
     }
 
     void VideoFrameDeInitHandler(void) {
+/*
         stop_capturing();
         uninit_device();
         close_device();
+*/
         return;
     }
 #endif
@@ -287,6 +292,7 @@ inline void OperationHandler(void) {
     {
         DBG_LOG_DEBUG("Update");
         WriteMem(REG_UPD_File, 0);
+        updateStatus=1;
     #ifdef CPU
         function_update(0);
     #endif
@@ -332,7 +338,7 @@ void UartReceiveCompleteHandler(void) {
 /* Adders --------------------------------------------------------------------*/
 void SecClockHandler(void) {
     DBG_LOG_TRACE("Into SecClockHandler.\n");
-    AddToSchedule(SecClockSheduler);
+    AddToSchedule((ScheduleFunction_t)SecClockSheduler);
     return;
 }
 
@@ -358,7 +364,7 @@ void CalculationHandler(void) {
 }
 void SampleHandler(void) {
     DBG_LOG_TRACE("Into SampleHandler.\n");
-    AddToSchedule(SampleSheduler);
+    AddToSchedule((ScheduleFunction_t)SampleSheduler);
     return;
 }
 /*============================================================================*/

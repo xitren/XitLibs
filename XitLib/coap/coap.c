@@ -94,7 +94,7 @@ char* coap_check_ans(const char *other)
         return 0;
     }
     coap_token_record *answer;
-        DBG_LOG_TRACE("size %d\n",array_size(AwaitedAnswersArray));
+        DBG_LOG_TRACE("size %d\n",(int)array_size(AwaitedAnswersArray));
     for (i=0;i < array_size(AwaitedAnswersArray);i++)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
@@ -178,7 +178,7 @@ void coap_dumpPacket(coap_packet_t *pkt)
     }
     coap_dumpHeader(&pkt->hdr);
     coap_dumpOptions(pkt->opts, pkt->numopts);
-    DBG_LOG_DEBUG("Payload: Size of %d", pkt->payload.len);
+    DBG_LOG_DEBUG("Payload: Size of %d", (int)pkt->payload.len);
     DBG_LOG_DEBUG("\n");
 }
 void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
@@ -242,7 +242,7 @@ int coap_parseHeader(coap_header_t *hdr, const uint8_t *buf, size_t buflen)
     if ((hdr == NULL) || (buf == NULL))
     {
         DBG_LOG_ERROR("coap_parseHeader argument is NULL\n");
-        return;
+        return 0;
     }
     if (buflen < 4)
         return COAP_ERR_HEADER_TOO_SHORT;
@@ -572,7 +572,7 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     else
         *buflen = opts_len + 4;
         DBG_LOG_DEBUG("awaited_answers_cnt %d && callback %s.\n"
-                , array_size(AwaitedAnswersArray), callback);
+                , (int)array_size(AwaitedAnswersArray), callback);
     //if ((awaited_answers_cnt < MAXWAIT) && (callback))
     if (callback)
     {
@@ -580,7 +580,7 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
         if (pkt->hdr.tkl > 0)
             memcpy(answer->p,pkt->tok_p,pkt->hdr.tkl);
         #ifdef DEBUG
-            DBG_LOG_TRACE("add tkn %06s clb %s.\n",
+            DBG_LOG_TRACE("add tkn %s clb %s.\n",
                         pkt->tok_p,callback);
             if (release_cmd)
             {
@@ -650,7 +650,7 @@ int make_part_option(coap_option_t *opt_part, uint32_t num,
     opt_part->buf.len = 2;
     #ifdef DEBUG
         DBG_LOG_TRACE("Into make_part_option %02X %02X %02X Lenght %d End %d .\n",
-                part_buff[2],part_buff[1],part_buff[0],opt_part->buf.len, last);
+                part_buff[2],part_buff[1],part_buff[0],(int)opt_part->buf.len, last);
     #endif
     return 0;
 }
@@ -720,7 +720,7 @@ int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         pkt->hdr.tkl = tok_len;
         pkt->tok_len = tok_len;
         memcpy(pkt->tok_p,tok_p,tok_len);
-        DBG_LOG_TRACE("%d make_msg len\n",tok_len);
+        DBG_LOG_TRACE("%d make_msg len\n",(int)tok_len);
     }
 
     if (opt_path){
@@ -773,7 +773,7 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         pkt->hdr.tkl = tok_len;
         pkt->tok_len = tok_len;
         memcpy(pkt->tok_p,tok_p,tok_len);
-        DBG_LOG_TRACE("%d make_response len\n",tok_len);
+        DBG_LOG_TRACE("%d make_response len\n",(int)tok_len);
     }
 
     // safe because 1 < MAXOPT
@@ -892,7 +892,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     {
         #ifdef DEBUG
             DBG_LOG_DEBUG("Look for answer waiting list.\n");
-            DBG_LOG_DEBUG("ptr %d.\n",inpkt->tok_p);
+            DBG_LOG_DEBUG("ptr %d.\n",(int)inpkt->tok_p);
         #endif
         if (cbl = coap_check_ans((inpkt->tok_p)))
         {

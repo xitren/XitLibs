@@ -488,6 +488,9 @@
 //#include <stddef.h>
 //#include <stdlib.h>
 #include <stdio.h>
+#ifdef CPU
+#   include <stdlib.h>
+#endif
 #include <string.h>
 
 #include "umm_malloc.h"
@@ -497,9 +500,9 @@
 #ifndef UMM_MALLOC_CFG__DONT_BUILD
 
 #ifndef UMM_FIRST_FIT
-#  ifndef UMM_BEST_FIT
-#    define UMM_BEST_FIT
-#  endif
+#   ifndef UMM_BEST_FIT
+#       define UMM_BEST_FIT
+#   endif
 #endif
 
 #include "LogModule.h"

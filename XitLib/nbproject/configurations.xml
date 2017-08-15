@@ -32,6 +32,7 @@
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DMAretransmitter.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
+      <itemPath>ExtFunctions.c</itemPath>
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
@@ -39,6 +40,7 @@
       <itemPath>PWMModule.c</itemPath>
       <itemPath>Packet.c</itemPath>
       <itemPath>StreamDataRecorder.c</itemPath>
+      <itemPath>UpdateModule.c</itemPath>
       <itemPath>VideoModule.c</itemPath>
       <itemPath>generatorModule.c</itemPath>
     </logicalFolder>
@@ -74,6 +76,7 @@
       <itemPath>ConfigMem.h</itemPath>
       <itemPath>DMAretransmitter.h</itemPath>
       <itemPath>DistCalc.h</itemPath>
+      <itemPath>ExtFunctions.h</itemPath>
       <itemPath>FunctionsDiscovery.h</itemPath>
       <itemPath>Handler.h</itemPath>
       <itemPath>InOutBuffer.h</itemPath>
@@ -82,6 +85,7 @@
       <itemPath>PWMModule.h</itemPath>
       <itemPath>Packet.h</itemPath>
       <itemPath>StreamDataRecorder.h</itemPath>
+      <itemPath>UpdateModule.h</itemPath>
       <itemPath>generatorModule.h</itemPath>
       <itemPath>version.h</itemPath>
       <itemPath>xitlibtypes.h</itemPath>
@@ -204,6 +208,10 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -233,6 +241,10 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -464,6 +476,10 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -493,6 +509,10 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -724,6 +744,10 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -753,6 +777,10 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -986,6 +1014,10 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -1016,6 +1048,10 @@
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
@@ -1035,6 +1071,9 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f1</output>
+          <linkerLibItems>
+            <linkerLibLibItem>m</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f2">
@@ -1050,6 +1089,9 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f2</output>
+          <linkerLibItems>
+            <linkerLibLibItem>m</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f3">
@@ -1065,6 +1107,9 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f3</output>
+          <linkerLibItems>
+            <linkerLibLibItem>m</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f4">
@@ -1080,6 +1125,9 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f4</output>
+          <linkerLibItems>
+            <linkerLibLibItem>m</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f5">
@@ -1095,6 +1143,10 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f5</output>
+          <linkerLibItems>
+            <linkerLibLibItem>m</linkerLibLibItem>
+            <linkerLibLibItem>pthread</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
@@ -1251,6 +1303,10 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -1280,6 +1336,10 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1511,6 +1571,10 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -1540,6 +1604,10 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1762,6 +1830,10 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -1791,6 +1863,10 @@
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>

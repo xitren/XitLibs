@@ -1,15 +1,15 @@
 
 /* Local headers -------------------------------------------------------------*/
-#include "FunctionsDiscovery.h"
-#include "LogModule.h"
-#include "Handler.h"
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include "FunctionsDiscovery.h"
+#include "Handler.h"
 #include "generatorModule.h"
+#include "LogModule.h"
+#include "UpdateModule.h"
 #include "array.h"
 #include "umm_malloc.h"
-#include "LogModule.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -147,6 +147,51 @@ int QueryNodes(ParameterList_t *TempParam)
         AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
         DBG_LOG_WARNING("Invalid parameters.\n");
     }
+
+    return ret_val;
+}
+
+int FindUpdateServer()
+{
+    int  ret_val = 0;
+    int i,j,k=0;
+    char *strptr;
+    char strbuf[80];
+    function_node *node;
+    function_proto *proto;
+    
+    memset(strbuf,0,80);
+    strptr = (char*)strbuf;
+    
+    DBG_LOG_DEBUG("Into FindUpdateServer.\n");
+//printf("array_size(NodesArray) %d\n",array_size(NodesArray));
+        if(NodesArray==NULL) 
+        {
+            DBG_LOG_WARNING("Nodes are null.\n");
+        }
+        else 
+        {
+            
+            //printf("array_size(NodesArray) %d\n", array_size(NodesArray));
+            for (i=0;i < array_size(NodesArray);i++)
+            {
+                array_get_at(NodesArray, i, (void**)&node);
+                //printf("array_size(node->proto) %d\n", array_size(node->proto));
+                for (j=0;j < array_size(node->proto);j++)
+                {
+                    array_get_at(node->proto, j, (void**)&proto);
+                    //printf("(void**)&proto %d node->proto %d\n", proto, node->proto);
+                    if(strcmp(proto->name,"/techupdate")==0) {
+                        DBG_LOG_DEBUG("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                        DBG_LOG_DEBUG("Tech Server IP: %s\n",node->ip);
+                        DBG_LOG_DEBUG("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                        SetUpdateServer(node->ip);
+						ret_val = 1;
+                    }
+                }
+            }
+        }
+
 
     return ret_val;
 }
@@ -295,7 +340,7 @@ void print_node_and_func(void)
     for (i=0;i < array_size(NodesArray);i++)
     {
         array_get_at(NodesArray, i, (void**)&node);
-        if ((proto == NULL))
+        if ((node == NULL))
         {
             DBG_LOG_ERROR("node argument is NULL\n");
             continue;
@@ -315,7 +360,7 @@ void print_node_and_func(void)
         }     
     }
     *(strptr-2) = 0;
-    DBG_LOG_DEBUG(strbuf);
+    DBG_LOG_DEBUG((const char*)strbuf);
     DBG_LOG_DEBUG("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&\n");
     return;
 }

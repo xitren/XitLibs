@@ -92,6 +92,7 @@ void Interface_Memory(void)
     else
     {
         AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
+        AddCommand("/GET/EEG/RECORD", "</eeg/record>;if=\"neuro\"", GetRecord); 
         AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
                 GetConcreteBlock); //передача последнего блока семплов ЭЭГ
     }
@@ -831,7 +832,7 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
                 return 1;
             }
             DBG_LOG_INFO("Command added. \n");
-            DBG_LOG_INFO(comm->CommandName);
+            DBG_LOG_INFO((const char*)comm->CommandName);
 
             /* Return success to the caller.                               */
             ret_val = 0;
@@ -945,7 +946,7 @@ void ExecuteSchedule(void)
         }
         if (deque_size(ScheduleTableDeque) > 2)
             DBG_LOG_INFO("Schedule executing, %d left. \n",
-                                deque_size(ScheduleTableDeque));
+                                (int)deque_size(ScheduleTableDeque));
         (*(*Comm))();
         umm_free((void *)Comm);
     }

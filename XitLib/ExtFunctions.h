@@ -50,6 +50,8 @@ void InitUDP(void);
 int TransferUDP(const uint8_t *data, const uint32_t datalen,
         const char* address /* = "192.168.1.255" */,
         const uint32_t port /* = 5683 */);
+int TransferBroadbandUDP(const uint8_t *data, const uint32_t datalen,
+        const uint32_t port /* = 5683 */);
 void SetLeds(uint8_t q_green,uint8_t q_red,uint8_t q_blue);
 void UserOperationHandler(void);
 void UserProtocolHandler(void);

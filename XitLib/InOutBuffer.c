@@ -36,7 +36,7 @@ int InitBuffer()
         return BUFFER_ERROR;
     return(ret_val);
 }
-int AddToReceive(uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
+int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
 {
    int ret_val = NO_BUFFER_ERROR;
    ReceiveDeque_t *comm;
@@ -85,7 +85,7 @@ int ProceedReceive(uint8_t *msg,uint32_t *size, uint32_t *ip, uint32_t *port)
     if (deque_size(ReceiveDeque) > 0)
     {
         DBG_LOG_INFO("Receive Proceed, %d left. \n",
-                            deque_size(ReceiveDeque));
+                            (int)deque_size(ReceiveDeque));
         deque_remove_first(ReceiveDeque, (void**)&comm);
         memcpy((void *)msg,(void *)comm->Msg,comm->Size);
         *size = comm->Size;

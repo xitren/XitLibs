@@ -205,7 +205,7 @@ void test5() {
     }
     printf("iotbaseserverlinux_upd.sh located\n");
     fclose(fp);
-    Sleep(3000);
+    usleep(3000); 
     printf("iotbaseserverlinux_upd.sh deleting\n");
     remove("iotbaseserverlinux_upd.sh");
     return;
@@ -229,9 +229,11 @@ uint32_t *ThreadFuncCycle() {
 }
 
 int main(int argc, char** argv) {
+    uint32_t IDThread1,IDThread2; 
+    int result;
+    int thread1;
+    int thread2; 
     clock_t t,tl;
-    DWORD IDThread; 
-    HANDLE hThread; 
     
     InitUDP();
     InitHandler(BASESTATION);
@@ -270,19 +272,26 @@ int main(int argc, char** argv) {
                                     ((float)tl)/CLOCKS_PER_SEC);
 
     WriteMem(REG_LOG_LVL,7);
-    function_update(1);
-    hThread = CreateThread(NULL, // default security attributes 
-         0,                           // use default stack size 
-         (LPTHREAD_START_ROUTINE) ThreadFuncCycle, // thread function 
-         NULL,                    // no thread function argument 
-         0,                       // use default creation flags 
-         &IDThread);              // returns thread identifier
-    hThread = CreateThread(NULL, // default security attributes 
-         0,                           // use default stack size 
-         (LPTHREAD_START_ROUTINE) ThreadFuncUDP, // thread function 
-         NULL,                    // no thread function argument 
-         0,                       // use default creation flags 
-         &IDThread);   
+        WriteMem(REG_UPD_File,1);
+        updateStatus=1;
+    
+    result = pthread_create(&thread1,
+            NULL, // default security attributes 
+            ThreadFuncCycle, // thread function 
+            &IDThread1); // returns thread identifier
+    if (result != 0) {
+        printf("Create first thread!");
+        return EXIT_FAILURE;
+    }
+
+    result = pthread_create(&thread2, // default security attributes 
+            NULL, // use default stack size 
+            ThreadFuncUDP, // thread function 
+            &IDThread2); // returns thread identifier
+    if (result != 0) {
+        printf("Create second thread!");
+        return EXIT_FAILURE;
+    } 
     
     printf("%%TEST_STARTED%% Schedule_Update_File (datasystem_test)\n");
     tl = clock();

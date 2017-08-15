@@ -40,6 +40,7 @@ int QueryNodes(ParameterList_t *TempParam);
 int EEGWriteInFile(ParameterList_t *TempParam);
 int EEGGetListFiles(ParameterList_t *TempParam);
 int EEGGetFile(ParameterList_t *TempParam);
+int FindUpdateServer();
 /*============================================================================*/
 
 #ifdef __cplusplus
@@ -47,4 +48,3 @@ int EEGGetFile(ParameterList_t *TempParam);
 #endif
 
 #endif /* FUNCTIONSDISCOVERY_H */
-

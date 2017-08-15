@@ -16,6 +16,7 @@ extern "C" {
     
 /* Public types --------------------------------------------------------------*/
 DeviceTypeDef DEVICE;
+extern int updateStatus;
 /*============================================================================*/
     
 /* Public function prototypes ------------------------------------------------*/
@@ -30,13 +31,11 @@ int QueryUpdateHash(ParameterList_t *TempParam);
 int Version(ParameterList_t *TempParam);
 int TechUpdate(ParameterList_t *TempParam);
 int TechStart(ParameterList_t *TempParam);
-int SetVersion(char *value);
 int SetUpdateServer(char *value);
+void FormUpdateFile(int type, int ind_i);
 /*============================================================================*/
-
 #ifdef __cplusplus
 }
 #endif
 
 #endif /* UPDATEMODULE_H */
-

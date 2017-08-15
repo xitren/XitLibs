@@ -31,6 +31,7 @@ extern uint8_t signal_type;
 #endif
 int GetLastBlock(ParameterList_t *TempParam);
 int GetConcreteBlock(ParameterList_t *TempParam);
+int GetRecord(ParameterList_t *TempParam);
 uint32_t GetDataPtrCnt(int32_t _pointer, int32_t _size, int32_t *_buffer);
 uint32_t AddHistoryExtId(uint32_t _extid);
 void EEG_dump(const uint8_t *buf, uint32_t buflen);

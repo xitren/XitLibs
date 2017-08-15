@@ -346,7 +346,7 @@ int GetConcreteBlock(ParameterList_t *TempParam)
         }
        }
         AddToTransmit("\n ]\n}\n");
-        DBG_LOG_TRACE("Current sample - %d Block[%d] setted to %d.\n",samples_cnt);
+        DBG_LOG_TRACE("Current sample - %d.\n",samples_cnt);
     }
     else
     {
@@ -540,8 +540,9 @@ void AddSample()
     }
 
     #ifdef CPU
-        if( ReadMem(REG_STREAM_REC) == 1 )
+        if( ReadMem(REG_STREAM_REC) > 0 )
         {
+            WriteMem(REG_STREAM_REC,ReadMem(REG_STREAM_REC)-1);
             if( fp_rec == NULL )
             {
                 fp_rec = fopen("stream_rec.json","w"); // write mode
@@ -586,6 +587,102 @@ void AddSample()
         readed_cnt = samples_cnt - BUFFER_2ND_MAX;
     return;
 }
+int GetRecord(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+    int  i,ind_i = -1;
+    FILE *fp;
+    int num;
+    int sizefp;
+    int end;
+    uint16_t allhash = 0;
+    
+    #ifdef DEBUG
+        DBG_LOG_DEBUG("--//internal//-- Into GetRecord.\r\n\r");
+    #endif
+    AddToTransmit("<GETRECORD>\r\n\r");
+    
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam) && (TempParam->NumberofParameters > 1))
+    {
+        for (i=1;i<TempParam->NumberofParameters;i+=2)
+        {
+            if (!strcmp(TempParam->Params[i-1].strParam,"part"))
+            {
+                ind_i = TempParam->Params[i].intParam;
+            }
+            if (!strcmp(TempParam->Params[i-1].strParam,"size"))
+            {
+                size_parts = TempParam->Params[i].intParam;
+            }
+        }
+
+        fp = fopen("stream_rec.json","r"); // read mode
+        content_type = COAP_CONTENTTYPE_APPLICATION_JSON;
+
+        if( fp == NULL )
+        {
+           printf("Error while opening update the file update.\r\n\r");
+        }
+        else 
+        {
+            end = 0;
+            num = 0;
+            DBG_LOG_TRACE("Part %d .\r\n\r",ind_i);
+            if (ind_i == -1)
+            {
+                sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+                printf("%d readed from file.\n",sizefp);
+                if (sizefp == 0)
+                    return(INVALID_PARAMETERS_ERROR);
+                if (sizefp != size_parts)
+                    end = 1;
+                allhash += CRC16ANSI(&opt_part,sizefp);
+                printf("allhash: %X\n",allhash);
+                make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
+                size_parts_cur = sizefp;
+                num++;
+
+            }
+            else
+            {
+                while (num <= ind_i)
+                {
+                    sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                    DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+                    printf("%d readed from file.\n",sizefp);
+                    
+                    if (sizefp == 0)
+                        return(INVALID_PARAMETERS_ERROR);
+                    if (sizefp != size_parts)
+                    {
+                        end = 1;
+                    }
+                    num++;
+                } 
+                num--;
+                allhash += CRC16ANSI(&opt_part,sizefp);
+                printf("allhash: %X\n",allhash);
+                make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
+                size_parts_cur = sizefp;
+            }
+            fclose(fp);
+        }
+    }
+    else
+    {
+        /* One or more of the necessary parameters are invalid.           */
+        ret_val = INVALID_PARAMETERS_ERROR;
+        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
+        DBG_LOG_WARNING("Invalid parametest.\n");
+    }
+
+    AddToTransmit("</UPDATE>\r\n\r");
+    DBG_LOG_DEBUG("Into END of Update.\n");
+    return(ret_val);
+}
 uint32_t GetCnt()
 {
     DBG_LOG_TRACE("Into GetCnt.\n");
@@ -607,8 +704,6 @@ uint32_t GetDataReady(int32_t *_buffer)
     int i,j,ptr=0;
     uint32_t cnt = (samples_cnt-readed_cnt);
     DBG_LOG_TRACE("Out: cnt+%d+samples_cnt-%d-readed_cnt-%d-\n",cnt,samples_cnt,readed_cnt);
-    DBG_LOG_TRACE("--Counter not read sample %d--\n",cnt,samples_cnt,readed_cnt);
-    DBG_LOG_TRACE("--End number samples in block %d--\n",cnt,samples_cnt,readed_cnt);
     for(i=(samples_cnt-cnt);i<samples_cnt;i++)
             for(j=0;j<BUFFER_SAMPLE_SIZE;j++)
                     _buffer[ptr++] = Data_samples[j][i%BUFFER_2ND_MAX];
@@ -624,9 +719,9 @@ uint32_t GetDataReadyCnt(int32_t _size,int32_t *_buffer)
     }
     int i,j,ptr=0;
     uint32_t cnt = (samples_cnt-readed_cnt);
-    DBG_LOG_TRACE("---- Current sample %d\n",cnt,samples_cnt,readed_cnt);
-    DBG_LOG_TRACE("---- Readed sample %d\n",cnt,samples_cnt,readed_cnt);
-    DBG_LOG_TRACE("---- Count no read %d\n",cnt,samples_cnt,readed_cnt);
+    DBG_LOG_TRACE("---- Current sample %d\n",samples_cnt);
+    DBG_LOG_TRACE("---- Readed sample %d\n",readed_cnt);
+    DBG_LOG_TRACE("---- Count no read %d\n",cnt);
     if ((cnt) > _size)
             cnt = _size;
     if ((cnt) < _size)

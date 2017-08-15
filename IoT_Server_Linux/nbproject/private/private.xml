@@ -30,5 +30,14 @@
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server_Linux/main.c</file>
         </group>
+        <group name="XitLibs">
+            <file>file:/home/xitren/Projects/XitLibs/XitLib/LogModule.h</file>
+            <file>file:/home/xitren/Projects/XitLibs/XitLib/CommandModule.h</file>
+            <file>file:/home/xitren/Projects/XitLibs/XitLib/FunctionsDiscovery.h</file>
+            <file>file:/home/xitren/Projects/XitLibs/XitLib/LibConfig.h</file>
+            <file>file:/home/xitren/Projects/XitLibs/XitLib/Handler.h</file>
+            <file>file:/home/xitren/Projects/XitLibs/XitLib/xitlibtypes.h</file>
+            <file>file:/home/xitren/Projects/XitLibs/XitLib/InOutBuffer.h</file>
+        </group>
     </open-files>
 </project-private>
