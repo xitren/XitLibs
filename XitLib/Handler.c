@@ -173,7 +173,7 @@ inline void ProtocolHandler(void) {
     char ip[16];
     uint32_t cmdlent = 0;
     uint32_t port = 0;
-    DBG_LOG_TRACE("Into ProtocolHandler.\n");
+    //DBG_LOG_TRACE("Into ProtocolHandler.\n");
 //    DBG_LOG_TRACE("Into ProtocolHandler");
     if (NO_BUFFER_ERROR == ProceedReceive((char*)scratch_raw, &cmdlent, 
                                           &(translate.S_addr), &port)) {
@@ -268,7 +268,7 @@ inline void OperationHandler(void) {
     int i,j, k = 0, l = 0;
     l = GetCnt();
     char systemcmd[100];
-    DBG_LOG_TRACE("Into OperationHandler.\n");
+    //DBG_LOG_TRACE("Into OperationHandler.\n");
 //    DBG_LOG_TRACE("Into OperationHandler");
 
     #ifdef PLATFORM_LINUX
@@ -291,11 +291,14 @@ inline void OperationHandler(void) {
     if (ReadMem(REG_UPD_File) > 0) 
     {
         DBG_LOG_DEBUG("Update");
-        WriteMem(REG_UPD_File, 0);
-        updateStatus=1;
-    #ifdef CPU
-        function_update(0);
-    #endif
+//        if (updateStatus == -1)
+//        {
+            WriteMem(REG_UPD_File, 0);
+//            updateStatus=1;
+//        }
+        #ifdef CPU
+            function_update(0);
+        #endif
     }
     
 //    DBG_LOG_TRACE("ExecuteSchedule");
@@ -358,7 +361,7 @@ void StatChangeHandler(void) {
 }
 
 void CalculationHandler(void) {
-    DBG_LOG_TRACE("Into CalculationHandler.\n");
+    //DBG_LOG_TRACE("Into CalculationHandler.\n");
     FreeCycle();
     return;
 }

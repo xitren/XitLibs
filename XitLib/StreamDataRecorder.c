@@ -685,7 +685,7 @@ int GetRecord(ParameterList_t *TempParam)
 }
 uint32_t GetCnt()
 {
-    DBG_LOG_TRACE("Into GetCnt.\n");
+    //DBG_LOG_TRACE("Into GetCnt.\n");
     return (samples_cnt-readed_cnt); 
 }
 uint32_t GetSamplesCnt()

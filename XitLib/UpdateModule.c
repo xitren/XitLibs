@@ -35,7 +35,7 @@ char *version = "1.3";
 uint32_t config_dev_type[CFG_SIZE];
 char updatefilepath[STRING_SIZE]="./update/iotbaseserverlinux2.sh";
 /*============================================================================*/
-HashTable *table;
+HashTable *table = NULL;
 
 int updateStatus = -1;  // -1 - not started
                         //  1 - started
@@ -104,7 +104,8 @@ inline const char* GetFileName(uint32_t func) {
             switch (DEVICE)
             {
                 case 0:
-                    return updatefilepath;
+                    //return updatefilepath;
+                    return filename_1_2;
                     break;
                 case 1:
                     return filename_1_2;
@@ -137,7 +138,7 @@ inline const char* GetFileName(uint32_t func) {
 int QueryUpdate(ParameterList_t *TempParam)
 {
     int ret_val = 0;
-    int i,ind_i = 0,end;
+    int i,ind_i = 0;
     char path_update[STRING_SIZE];
     char requery[STRING_SIZE];
     char *ip;
@@ -157,10 +158,6 @@ int QueryUpdate(ParameterList_t *TempParam)
             if (!strcmp(TempParam->Params[i-1].strParam,"part"))
             {
                 ind_i = TempParam->Params[i].intParam;
-            }
-            if (!strcmp(TempParam->Params[i-1].strParam,"end"))
-            {
-                end = TempParam->Params[i].intParam;
             }
             if (!strcmp(TempParam->Params[i-1].strParam,"ip"))
             {
@@ -190,7 +187,7 @@ int QueryUpdate(ParameterList_t *TempParam)
         opt_path.num = COAP_OPTION_URI_PATH;
         opt_path.buf.len = strlen(path_update);
         opt_path.buf.p = (uint8_t*)path_update;
-        make_part_option(&opt_part,ind_i,COAP_PART_SIZE_1024,end);
+        make_part_option(&opt_part,ind_i,COAP_PART_SIZE_1024,0);
         pkt.tok_len = 6;
         snprintf(tok_update,7,"ud%04d",ind_i);
         memcpy(pkt.tok_p, tok_update, pkt.tok_len);
@@ -202,8 +199,8 @@ int QueryUpdate(ParameterList_t *TempParam)
         if (repeat > 0)
         {
             snprintf(requery,STRING_SIZE,
-                "/REQUERY/UPDATE?part=%d&end=%d&repeat=%d&ip=%s&port=%d&type=%d"
-                                    ,ind_i,end,repeat-1,ip,port,type);
+                "/REQUERY/UPDATE?part=%d&repeat=%d&ip=%s&port=%d&type=%d"
+                                    ,ind_i,repeat-1,ip,port,type);
             if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, 
                                                     path_update_clb, requery)))
             {
@@ -421,7 +418,7 @@ int CallbackUpdate(ParameterList_t *TempParam)
             char s[STRING_SIZE];
             int k = strlen(namepart)+1;
             filename2 = (char*) malloc(sizeof(char)*k); //should we free that prev malloc?
-            strncpy(filename2, namepart , k);
+            strncpy(filename2, namepart , k+1);
             array_add(value, (void*) allhash);
             array_add(value, 0);
             array_add(value, ind_i);
@@ -459,7 +456,7 @@ int CallbackUpdate(ParameterList_t *TempParam)
                 char s[STRING_SIZE];
                 int k = strlen(namepart)+1;
                 filename2 = (char*) malloc(sizeof(char)*k); //should we free that prev malloc?
-                strncpy(filename2, namepart , k);
+                strncpy(filename2, namepart , k+1);
                 array_add(value, (void*) allhash);
                 array_add(value, 0);
                 array_add(value, ind_i);
@@ -523,14 +520,14 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
         
         DBG_LOG_DEBUG("Device type***: %d\n", DEVICE);
         
-        if (DEVICE == 0) 
-        {
-            filename = GetFileName(2);
-        }
-        else 
-        {
+//        if (DEVICE == 0) 
+//        {
+//            filename = GetFileName(2);
+//        }
+//        else 
+//        {
             filename = GetFileName(1);
-        }
+//        }
         
         DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
         
@@ -571,7 +568,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
                 const char* s = GetFileName(1);
                 uint32_t i = strlen(s);
                 filename2 = (char*) malloc(sizeof(char)*i); 
-                strncpy(filename2, i , STRING_SIZE);
+                strncpy(filename2, s , i+1);
 
                 array_add(value, (void*) allhash);
                 array_add(value, 0);
@@ -609,7 +606,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             const char* s = GetFileName(1);
             uint32_t i = strlen(s);
             filename2 = (char*) malloc(sizeof(char)*i); 
-            strncpy(filename2, i , STRING_SIZE);
+            strncpy(filename2, s , i+1);
             PrintHashTable();
             array_add(value, -1);
             array_add(value, 0); 
@@ -618,6 +615,7 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
             PrintHashTable();
             //line changed!
             fileHashMatched = false;
+            //updateStatus=1;
         }
     }
     else
@@ -627,7 +625,6 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
         DBG_LOG_WARNING("Invalid parameters.\n");
     }
 
-    PrintHashTable();
     DBG_LOG_DEBUG("Into END of CallbackUpdateHash.\n");
     return(ret_val);
 }
@@ -778,8 +775,8 @@ void startUpdate()
     printf("GetFileName to s.\n");
     uint32_t i = strlen(s);
     filename2 = (char*) malloc(sizeof(char)*i); 
-    printf("strncpy.\n");
-    strncpy(filename2, s, i);
+    printf("strncpy %d .\n",i);
+    strncpy(filename2, s, i+1);
     TableEntry *entry;
     HashTableIter hti;
     //updateStatus = 1;
@@ -795,10 +792,12 @@ void startUpdate()
                 DestroyLine(entry->key);
             }
         }
+        printf("hashtable_destroy\n");
         //and destroy the table
         hashtable_destroy(table);
     }
     
+    printf("CreateHashTable\n");
     CreateHashTable();
     enum cc_stat status = array_new(&value);
     printf("Creating array with:\n");
@@ -818,20 +817,25 @@ int checkHash(char* filename)
     int result;
     Array *value;
     uint16_t hh;
+    DBG_LOG_DEBUG("Into checkHash.\n");
     if (hashtable_get(table, filename, &value) == CC_OK) 
     {
+        DBG_LOG_TRACE("array_get_at.\n");
         array_get_at(value, 0, (void*) &hh);
         if (hh == 0) 
         {
+            DBG_LOG_TRACE("result 1.\n");
             result = 1;
         }
         else 
         {
+            DBG_LOG_TRACE("result 0.\n");
             result = 0;
         }
     }
     else 
     {
+        DBG_LOG_TRACE("result -1.\n");
         result = -1;
     }
     return result;
@@ -846,8 +850,8 @@ void function_update(int type)
     char command[STRING_SIZE];
     const char *filename;
     filename = GetFileName(1);        
-    sprintf(updatefilepath,"Updater.sh");
-    size_t part = 0;
+    snprintf(updatefilepath,STRING_SIZE,"Updater.sh");
+    uint32_t part = 0;
     timeCounter = timeCounter+1;        
     DBG_LOG_DEBUG("Into function_update.\n");
     DBG_LOG_DEBUG("Into function_update. Status: %d timeCounter: %d\n", updateStatus, timeCounter);   
@@ -865,8 +869,10 @@ void function_update(int type)
             break;
         case 2:                                 //needs to be started
             PrintHashTable();
-            filename = GetFileName(1);    
+            filename = GetFileName(1);  
+            printf("GetFileName to %s.\n",filename);  
             if (checkHash(filename)) {                  //if never got a responce with hash (hash of update file == 0)
+                printf("askUpdateFileHash.\n");  
                 if (timeCounter > n) {          //and wait time for responce went off
                     askUpdateFileHash(type);    //ask for hash again
                     timeCounter = 0;            //reset clock
@@ -875,7 +881,7 @@ void function_update(int type)
             else {                              //start asking for file parts starting with 1 part
                 part = 0;
                 DBG_LOG_DEBUG("ASKING FOR PART NUMBER %d\n", part);
-                snprintf(command,100,"/REQUERY/UPDATE?part=%d&repeat=3&type=%d",part,type);
+                snprintf(command,STRING_SIZE,"/REQUERY/UPDATE?part=%d&repeat=3&type=%d",part,type);
                 DBG_LOG_DEBUG("command: %s \n",command);
                 CommandLineInterpreter(command);
                 updateStatus = 3;
@@ -890,7 +896,7 @@ void function_update(int type)
                 part = hashtable_size(table)-1;
                 DBG_LOG_DEBUG("ASKING FOR PART NUMBER %d\n", part);
                 requeryFailed = false;
-                snprintf(command,100,"/REQUERY/UPDATE?part=%d&repeat=3&type=%d",part,type);
+                snprintf(command,STRING_SIZE,"/REQUERY/UPDATE?part=%d&repeat=3&type=%d",part,type);
                 DBG_LOG_DEBUG("command: %s \n",command);
                 CommandLineInterpreter(command);
             }
@@ -902,7 +908,7 @@ void function_update(int type)
             part=findNextPart(filename);
             if (part!=-1) {
                 DBG_LOG_DEBUG("ASKING FOR PART NUMBER %d\n", part);
-                snprintf(command,100,"/REQUERY/UPDATE?part=%d&repeat=3&type=%d",part,type);
+                snprintf(command,STRING_SIZE,"/REQUERY/UPDATE?part=%d&repeat=3&type=%d",part,type);
                 DBG_LOG_DEBUG("command: %s \n",command);
                 CommandLineInterpreter(command);
             }
@@ -1280,7 +1286,7 @@ void FormUpdateFile(int type, int ind_i)
         char* filename2;
         int i = strlen(filename)+1;
         filename2 = (char*) malloc(sizeof(char)*i); 
-        strncpy(filename2, filename , i);
+        strncpy(filename2, filename , i+1);
         PrintHashTable();
 
         array_add(value, 1); 
@@ -1317,7 +1323,8 @@ void DestroyLine(char* filename) {
     DBG_LOG_INFO("Searching for line: %s\n", filename);
     if (hashtable_get(table, filename, &value) == CC_OK) {
         DBG_LOG_INFO("try to destroy array\n");
-        array_destroy_free(value);
+        array_destroy(value);
+        //array_destroy_free(value); ERROR
         DBG_LOG_INFO("array destroyed\n");
         enum cc_stat stat = hashtable_remove(table, filename, NULL);
         DBG_LOG_INFO("Freed memory from line: %s\n", filename);
@@ -1328,7 +1335,9 @@ void PrintHashTable() {
     TableEntry *entry;
     Array *value;
     ArrayIter ai;
-    char *str;
+    char *str1;
+    char *str2;
+    char *str3;
     int counter = 0;
     HashTableIter hti;
     if (table!=NULL) {
@@ -1339,12 +1348,11 @@ void PrintHashTable() {
         while (hashtable_iter_next(&hti, &entry) != CC_ITER_END) {
             value = entry->value;
             array_iter_init(&ai,value);
-            array_get_at(value, 0, (void*) &str);
-            DBG_LOG_INFO("|%7d|%20s|%11X", counter, entry->key, str);
-            array_get_at(value, 1, (void*) &str);
-            DBG_LOG_INFO("|%8d|", str);
-            array_get_at(value, 2, (void*) &str);
-            DBG_LOG_INFO("%8d|\n", str);
+            array_get_at(value, 0, (void*) &str1);
+            array_get_at(value, 1, (void*) &str2);
+            array_get_at(value, 2, (void*) &str3);
+            DBG_LOG_INFO("|%7d|%20s|%11X|%8d|%8d|\n", 
+                    counter, entry->key, str1, str2, str3);
             counter=counter+1;
         }
     }
@@ -1354,7 +1362,9 @@ int findNextPart(char* filename)
     TableEntry *entry;
     Array *value;
     ArrayIter ai;
-    char *str;
+    char *str1;
+    char *str2;
+    char *str3;
     int counter = 0;
     HashTableIter hti;
     bool found = false;
@@ -1367,17 +1377,16 @@ int findNextPart(char* filename)
             
             value = entry->value;
             array_iter_init(&ai,value);
-            array_get_at(value, 0, (void*) &str);
-            DBG_LOG_INFO("|%10d|%20s|%10X|", counter, entry->key, str);
-            array_get_at(value, 1, (void*) &str);
-            DBG_LOG_INFO("%10d|", str);
-            status = str;
-            array_get_at(value, 2, (void*) &str);
-            DBG_LOG_INFO("%10d|\n", str);
-            if (status == 0 && (str != -1)) {
+            array_get_at(value, 0, (void*) &str1);
+            array_get_at(value, 1, (void*) &str2);
+            array_get_at(value, 2, (void*) &str3);
+            DBG_LOG_INFO("|%10d|%20s|%10X|%10d|%10d|\n", 
+                    counter, entry->key, str1, str2, str3);
+            status = str2;
+            if (status == 0 && (str3 != -1)) {
                 DBG_LOG_INFO("found at: %d\n",counter);
                 found = true;
-                result = str;
+                result = str3;
             }
             
             counter=counter+1;
@@ -1391,6 +1400,7 @@ void askPartHash(int type, int part)
     int rc;
     char command[STRING_SIZE];
     char path_update_hash[STRING_SIZE];
+    size_t pktlen = sizeof(scratch_raw);
     
     DBG_LOG_INFO("Sending part hash\n");
     
@@ -1411,7 +1421,7 @@ void askPartHash(int type, int part)
     snprintf(command,STRING_SIZE,"/REQUERY/UPDATEHASH?repeat=3&type=%d",type);
     if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, path_update_hash_clb, NULL)))
     {
-        TransferUDP((uint8_t*)scratch_raw,pktlen,updateserver,5683);
+        TransferTo((uint8_t*)scratch_raw,pktlen,updateserver,5683);
     }
     #ifdef DEBUG
         DBG_LOG_DEBUG("Sending: ");
@@ -1424,6 +1434,7 @@ void askUpdateFileHash(int type)
     int rc;
     char command[STRING_SIZE];
     char path_update_hash[STRING_SIZE];
+    size_t pktlen = sizeof(scratch_raw);
     
     DBG_LOG_INFO("Searching for a new version of update file\n");
     if (type==0) {

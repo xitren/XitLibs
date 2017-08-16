@@ -215,6 +215,8 @@ uint32_t *ThreadFuncUDP() {
     while (1) {
 //        printf("UserProtocolHandlerThread\n");
 //        UserProtocolHandlerThread();
+        usleep(10000); 
+        function_update(0);
     }
     return 0;
 }
@@ -272,8 +274,9 @@ int main(int argc, char** argv) {
                                     ((float)tl)/CLOCKS_PER_SEC);
 
     WriteMem(REG_LOG_LVL,7);
-        WriteMem(REG_UPD_File,1);
-        updateStatus=1;
+    //startUpdate();
+    updateStatus=1;
+    WriteMem(REG_UPD_File,1);
     
     result = pthread_create(&thread1,
             NULL, // default security attributes 
@@ -297,7 +300,6 @@ int main(int argc, char** argv) {
     tl = clock();
     test5();
     WriteMem(REG_LOG_LVL,7);
-//    Sleep(30000);
     tl = clock() - tl;
     printf("%%TEST_FINISHED%% time=%f Schedule_Update_File (datasystem_test) \n",
                                     ((float)tl)/CLOCKS_PER_SEC);

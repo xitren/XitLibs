@@ -930,7 +930,7 @@ void ExecuteSchedule(void)
 {
     ScheduleFunction_t  *Comm;
 
-    DBG_LOG_TRACE("Into ExecuteSchedule.\n");
+    //DBG_LOG_TRACE("Into ExecuteSchedule.\n");
     if ((ScheduleTableDeque == NULL))
     {
         DBG_LOG_ERROR("ScheduleTableDeque argument is NULL\n");
