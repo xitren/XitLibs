@@ -47,6 +47,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/PWMModule.o \
 	${OBJECTDIR}/Packet.o \
 	${OBJECTDIR}/StreamDataRecorder.o \
+	${OBJECTDIR}/UpdateModule.o \
 	${OBJECTDIR}/VideoModule.o \
 	${OBJECTDIR}/coap/coap.o \
 	${OBJECTDIR}/generatorModule.o \
@@ -78,14 +79,10 @@ TESTFILES= \
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/ExtFunctions_coap.o \
-	${TESTDIR}/tests/ExtFunctions_datasystem.o \
-	${TESTDIR}/tests/ExtFunctions_json.o \
-	${TESTDIR}/tests/ExtFunctions_malloc.o \
-	${TESTDIR}/tests/ExtFunctions_models.o \
 	${TESTDIR}/tests/array_test.o \
 	${TESTDIR}/tests/coap_test.o \
 	${TESTDIR}/tests/datasystem_test.o \
+	${TESTDIR}/tests/hashtable_test.o \
 	${TESTDIR}/tests/json_test.o \
 	${TESTDIR}/tests/malloc_test.o \
 	${TESTDIR}/tests/models_test.o
@@ -116,147 +113,152 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a: ${OBJECTFILES}
 	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a ${OBJECTFILES} 
 	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
-${OBJECTDIR}/CRC16ANSI.o: nbproject/Makefile-${CND_CONF}.mk CRC16ANSI.c 
+${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 
-${OBJECTDIR}/CommandModule.o: nbproject/Makefile-${CND_CONF}.mk CommandModule.c 
+${OBJECTDIR}/CommandModule.o: CommandModule.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CommandModule.o CommandModule.c
 
-${OBJECTDIR}/ConfigMem.o: nbproject/Makefile-${CND_CONF}.mk ConfigMem.c 
+${OBJECTDIR}/ConfigMem.o: ConfigMem.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ConfigMem.o ConfigMem.c
 
-${OBJECTDIR}/DMAretransmitter.o: nbproject/Makefile-${CND_CONF}.mk DMAretransmitter.c 
+${OBJECTDIR}/DMAretransmitter.o: DMAretransmitter.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DMAretransmitter.o DMAretransmitter.c
 
-${OBJECTDIR}/DistCalc.o: nbproject/Makefile-${CND_CONF}.mk DistCalc.c 
+${OBJECTDIR}/DistCalc.o: DistCalc.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
-${OBJECTDIR}/FunctionsDiscovery.o: nbproject/Makefile-${CND_CONF}.mk FunctionsDiscovery.c 
+${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c
 
-${OBJECTDIR}/Handler.o: nbproject/Makefile-${CND_CONF}.mk Handler.c 
+${OBJECTDIR}/Handler.o: Handler.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
 
-${OBJECTDIR}/InOutBuffer.o: nbproject/Makefile-${CND_CONF}.mk InOutBuffer.c 
+${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c
 
-${OBJECTDIR}/LogModule.o: nbproject/Makefile-${CND_CONF}.mk LogModule.c 
+${OBJECTDIR}/LogModule.o: LogModule.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/LogModule.o LogModule.c
 
-${OBJECTDIR}/PWMModule.o: nbproject/Makefile-${CND_CONF}.mk PWMModule.c 
+${OBJECTDIR}/PWMModule.o: PWMModule.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
 
-${OBJECTDIR}/Packet.o: nbproject/Makefile-${CND_CONF}.mk Packet.c 
+${OBJECTDIR}/Packet.o: Packet.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
 
-${OBJECTDIR}/StreamDataRecorder.o: nbproject/Makefile-${CND_CONF}.mk StreamDataRecorder.c 
+${OBJECTDIR}/StreamDataRecorder.o: StreamDataRecorder.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder.o StreamDataRecorder.c
 
-${OBJECTDIR}/VideoModule.o: nbproject/Makefile-${CND_CONF}.mk VideoModule.c 
+${OBJECTDIR}/UpdateModule.o: UpdateModule.c nbproject/Makefile-${CND_CONF}.mk
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule.o UpdateModule.c
+
+${OBJECTDIR}/VideoModule.o: VideoModule.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/VideoModule.o VideoModule.c
 
-${OBJECTDIR}/coap/coap.o: nbproject/Makefile-${CND_CONF}.mk coap/coap.c 
+${OBJECTDIR}/coap/coap.o: coap/coap.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/coap
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/coap/coap.o coap/coap.c
 
-${OBJECTDIR}/generatorModule.o: nbproject/Makefile-${CND_CONF}.mk generatorModule.c 
+${OBJECTDIR}/generatorModule.o: generatorModule.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
 
-${OBJECTDIR}/json/cJSON.o: nbproject/Makefile-${CND_CONF}.mk json/cJSON.c 
+${OBJECTDIR}/json/cJSON.o: json/cJSON.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/json
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON.o json/cJSON.c
 
-${OBJECTDIR}/json/cJSON_Utils.o: nbproject/Makefile-${CND_CONF}.mk json/cJSON_Utils.c 
+${OBJECTDIR}/json/cJSON_Utils.o: json/cJSON_Utils.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/json
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_Utils.o json/cJSON_Utils.c
 
-${OBJECTDIR}/malloc/umm_malloc.o: nbproject/Makefile-${CND_CONF}.mk malloc/umm_malloc.c 
+${OBJECTDIR}/malloc/umm_malloc.o: malloc/umm_malloc.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/malloc
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/malloc/umm_malloc.o malloc/umm_malloc.c
 
-${OBJECTDIR}/models/src/array.o: nbproject/Makefile-${CND_CONF}.mk models/src/array.c 
+${OBJECTDIR}/models/src/array.o: models/src/array.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/array.o models/src/array.c
 
-${OBJECTDIR}/models/src/common.o: nbproject/Makefile-${CND_CONF}.mk models/src/common.c 
+${OBJECTDIR}/models/src/common.o: models/src/common.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/common.o models/src/common.c
 
-${OBJECTDIR}/models/src/deque.o: nbproject/Makefile-${CND_CONF}.mk models/src/deque.c 
+${OBJECTDIR}/models/src/deque.o: models/src/deque.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/deque.o models/src/deque.c
 
-${OBJECTDIR}/models/src/hashset.o: nbproject/Makefile-${CND_CONF}.mk models/src/hashset.c 
+${OBJECTDIR}/models/src/hashset.o: models/src/hashset.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/hashset.o models/src/hashset.c
 
-${OBJECTDIR}/models/src/hashtable.o: nbproject/Makefile-${CND_CONF}.mk models/src/hashtable.c 
+${OBJECTDIR}/models/src/hashtable.o: models/src/hashtable.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/hashtable.o models/src/hashtable.c
 
-${OBJECTDIR}/models/src/list.o: nbproject/Makefile-${CND_CONF}.mk models/src/list.c 
+${OBJECTDIR}/models/src/list.o: models/src/list.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/list.o models/src/list.c
 
-${OBJECTDIR}/models/src/queue.o: nbproject/Makefile-${CND_CONF}.mk models/src/queue.c 
+${OBJECTDIR}/models/src/queue.o: models/src/queue.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/queue.o models/src/queue.c
 
-${OBJECTDIR}/models/src/slist.o: nbproject/Makefile-${CND_CONF}.mk models/src/slist.c 
+${OBJECTDIR}/models/src/slist.o: models/src/slist.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/slist.o models/src/slist.c
 
-${OBJECTDIR}/models/src/stack.o: nbproject/Makefile-${CND_CONF}.mk models/src/stack.c 
+${OBJECTDIR}/models/src/stack.o: models/src/stack.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/stack.o models/src/stack.c
 
-${OBJECTDIR}/models/src/treeset.o: nbproject/Makefile-${CND_CONF}.mk models/src/treeset.c 
+${OBJECTDIR}/models/src/treeset.o: models/src/treeset.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/treeset.o models/src/treeset.c
 
-${OBJECTDIR}/models/src/treetable.o: nbproject/Makefile-${CND_CONF}.mk models/src/treetable.c 
+${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/models/src
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/models/src/treetable.o models/src/treetable.c
@@ -269,31 +271,25 @@ ${OBJECTDIR}/models/src/treetable.o: nbproject/Makefile-${CND_CONF}.mk models/sr
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/ExtFunctions_coap.o ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS} 
+	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/ExtFunctions_json.o ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS} 
+	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/ExtFunctions_datasystem.o ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS} 
+	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/ExtFunctions_malloc.o ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS} 
+	${LINK.c} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/ExtFunctions_models.o ${TESTDIR}/tests/array_test.o ${TESTDIR}/tests/models_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/array_test.o ${TESTDIR}/tests/hashtable_test.o ${TESTDIR}/tests/models_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c}   -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS} 
-
-
-${TESTDIR}/tests/ExtFunctions_coap.o: tests/ExtFunctions_coap.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_coap.o tests/ExtFunctions_coap.c
+	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
 
 
 ${TESTDIR}/tests/coap_test.o: tests/coap_test.c 
@@ -302,22 +298,10 @@ ${TESTDIR}/tests/coap_test.o: tests/coap_test.c
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_test.o tests/coap_test.c
 
 
-${TESTDIR}/tests/ExtFunctions_json.o: tests/ExtFunctions_json.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_json.o tests/ExtFunctions_json.c
-
-
 ${TESTDIR}/tests/json_test.o: tests/json_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_test.o tests/json_test.c
-
-
-${TESTDIR}/tests/ExtFunctions_datasystem.o: tests/ExtFunctions_datasystem.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_datasystem.o tests/ExtFunctions_datasystem.c
 
 
 ${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c 
@@ -326,28 +310,22 @@ ${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/datasystem_test.o tests/datasystem_test.c
 
 
-${TESTDIR}/tests/ExtFunctions_malloc.o: tests/ExtFunctions_malloc.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_malloc.o tests/ExtFunctions_malloc.c
-
-
 ${TESTDIR}/tests/malloc_test.o: tests/malloc_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/malloc_test.o tests/malloc_test.c
 
 
-${TESTDIR}/tests/ExtFunctions_models.o: tests/ExtFunctions_models.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/ExtFunctions_models.o tests/ExtFunctions_models.c
-
-
 ${TESTDIR}/tests/array_test.o: tests/array_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/array_test.o tests/array_test.c
+
+
+${TESTDIR}/tests/hashtable_test.o: tests/hashtable_test.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/hashtable_test.o tests/hashtable_test.c
 
 
 ${TESTDIR}/tests/models_test.o: tests/models_test.c 
@@ -510,6 +488,19 @@ ${OBJECTDIR}/StreamDataRecorder_nomain.o: ${OBJECTDIR}/StreamDataRecorder.o Stre
 	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/StreamDataRecorder_nomain.o StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/StreamDataRecorder.o ${OBJECTDIR}/StreamDataRecorder_nomain.o;\
+	fi
+
+${OBJECTDIR}/UpdateModule_nomain.o: ${OBJECTDIR}/UpdateModule.o UpdateModule.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/UpdateModule.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -DDEBUG -DMC -I../ControllerNew/Periph -I../ControllerNew/libraries/STM32F4xx_HAL_Driver/Inc -I../ControllerNew -I../ControllerNew/libraries/CMSIS/Device/ST/STM32F4xx/Include -I../ControllerNew/libraries/CMSIS/Include -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/UpdateModule_nomain.o UpdateModule.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/UpdateModule.o ${OBJECTDIR}/UpdateModule_nomain.o;\
 	fi
 
 ${OBJECTDIR}/VideoModule_nomain.o: ${OBJECTDIR}/VideoModule.o VideoModule.c 
@@ -749,7 +740,6 @@ ${OBJECTDIR}/models/src/treetable_nomain.o: ${OBJECTDIR}/models/src/treetable.o 
 # Clean Targets
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${CND_BUILDDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
 
 # Subprojects
 .clean-subprojects:

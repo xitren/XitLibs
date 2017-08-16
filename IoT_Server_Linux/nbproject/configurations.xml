@@ -41,16 +41,16 @@
         <itemPath>../XitLib/Handler.h</itemPath>
         <itemPath>../XitLib/InOutBuffer.h</itemPath>
         <itemPath>../XitLib/LibConfig.h</itemPath>
+        <itemPath>../XitLib/LogModule.h</itemPath>
         <itemPath>../XitLib/PWMModule.h</itemPath>
         <itemPath>../XitLib/Packet.h</itemPath>
         <itemPath>../XitLib/StreamDataRecorder.h</itemPath>
         <itemPath>../XitLib/External/UpdateModule.h</itemPath>
+        <itemPath>../XitLib/UpdateModule.h</itemPath>
         <itemPath>../XitLib/VideoModule.h</itemPath>
         <itemPath>../XitLib/version.h</itemPath>
         <itemPath>../XitLib/xitlibtypes.h</itemPath>
       </logicalFolder>
-      <itemPath>../XitLib/External/ExtFunctions.h</itemPath>
-      <itemPath>../XitLib/LogModule.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Resource Files"
@@ -60,7 +60,6 @@
                    displayName="Source Files"
                    projectFiles="true">
       <itemPath>../XitLib/External/ExtFunctions.c</itemPath>
-      <itemPath>../XitLib/External/UpdateModule.c</itemPath>
       <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -130,10 +129,6 @@
       </item>
       <item path="../XitLib/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="../XitLib/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -151,6 +146,8 @@
       <item path="../XitLib/Packet.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -306,10 +303,6 @@
       </item>
       <item path="../XitLib/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="../XitLib/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
@@ -327,6 +320,8 @@
       <item path="../XitLib/Packet.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="../XitLib/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/VideoModule.h" ex="false" tool="3" flavor2="0">
       </item>

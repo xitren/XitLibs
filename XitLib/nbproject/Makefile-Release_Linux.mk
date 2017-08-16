@@ -14,14 +14,14 @@ GREP=grep
 NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=arm-linux-gnueabihf-gcc
-CCC=arm-linux-gnueabihf-g++
-CXX=arm-linux-gnueabihf-g++
+CC=gcc
+CCC=g++
+CXX=g++
 FC=gfortran
-AS=arm-linux-gnueabihf-as
+AS=as
 
 # Macros
-CND_PLATFORM=GNU_RPI-Linux
+CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Release_Linux
 CND_DISTDIR=dist
