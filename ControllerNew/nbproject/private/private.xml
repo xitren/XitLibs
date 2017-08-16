@@ -34,14 +34,6 @@
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/malloc/umm_malloc.h</file>
         </group>
-        <group name="XitLibs">
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/coap/coap.h</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/CommandModule.h</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/FunctionsDiscovery.h</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/LibConfig.h</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/Handler.h</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/xitlibtypes.h</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/InOutBuffer.h</file>
-        </group>
+        <group name="XitLibs"/>
     </open-files>
 </project-private>

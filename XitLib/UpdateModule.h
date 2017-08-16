@@ -26,6 +26,8 @@ int Update(ParameterList_t *TempParam);
 int UpdateHash(ParameterList_t *TempParam);
 int CallbackUpdate(ParameterList_t *TempParam);
 int CallbackUpdateHash(ParameterList_t *TempParam);
+int PartHash(ParameterList_t *TempParam);
+int CallbackPartHash(ParameterList_t *TempParam);
 int QueryUpdate(ParameterList_t *TempParam);
 int QueryUpdateHash(ParameterList_t *TempParam);
 int Version(ParameterList_t *TempParam);

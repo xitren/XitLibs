@@ -35,7 +35,7 @@ extern "C" {
 /* Public function prototypes ------------------------------------------------*/
 int InitBuffer();
 int AddToTransmit(char *str);
-int AddToReceive(uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port);
+int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port);
 int ProceedReceive(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port);
 char* ProceedTransmit(uint32_t *num);
 int ClearBuffer();

@@ -9,6 +9,7 @@
 #include "ExtFunctions.h"
 #include "Handler.h"
 #include "LogModule.h"
+#include "CRC16ANSI.h"
 
 #ifdef CPU
     #ifdef PLATFORM_WINDOWS
@@ -101,7 +102,9 @@ int TransferUDP(const uint8_t *data, const uint32_t datalen,
         const char* address /* = "192.168.1.255" */,
         const uint32_t port /* = 5683 */) {
     AddToReceive(data, datalen, 16777343, 5683);
-//    coap_dump(data, datalen, true);
+    DBG_LOG_DEBUG("TransferUDP %d readed from file hash %04X.\n",
+            datalen,CRC16ANSI(data,datalen));
+    //coap_dump(data, datalen, true);
     return 0;
 }
 

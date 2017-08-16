@@ -216,7 +216,7 @@ int QueryUpdate(ParameterList_t *TempParam)
         }
         #ifdef DEBUG
             DBG_LOG_DEBUG("Sending: ");
-            coap_dump(scratch_raw, pktlen, true);
+            //coap_dump(scratch_raw, pktlen, true);
         #endif
         DBG_LOG_TRACE("Sended %d part query.\n",ind_i);
     }
@@ -306,7 +306,7 @@ int QueryUpdateHash(ParameterList_t *TempParam)
         }
         #ifdef DEBUG
             DBG_LOG_DEBUG("Sending: ");
-            coap_dump(scratch_raw, pktlen, true);
+            //coap_dump(scratch_raw, pktlen, true);
         #endif
         DBG_LOG_TRACE("--//internal//-- Sended parts hash query.\n");
     }
@@ -407,9 +407,10 @@ int CallbackUpdate(ParameterList_t *TempParam)
             }
             fwrite(scratch_buf.p,sizeof(uint8_t),scratch_buf.len,fp);
 
-            allhash += CRC16ANSI(scratch_buf.p,scratch_buf.len);
+            allhash = CRC16ANSI(scratch_buf.p,scratch_buf.len);
 
-            DBG_LOG_DEBUG("allhash: %X\n",allhash);
+            //coap_dump(scratch_buf.p, scratch_buf.len, true);
+            printf("%04X CRC16ANSI(%d)\n",allhash,scratch_buf.len);
             fclose(fp);
             
             //add line to table!
@@ -445,9 +446,9 @@ int CallbackUpdate(ParameterList_t *TempParam)
                 }
                 fwrite(scratch_buf.p,sizeof(uint8_t),scratch_buf.len,fp);
 
-                allhash += CRC16ANSI(scratch_buf.p,scratch_buf.len);
+                allhash = CRC16ANSI(scratch_buf.p,scratch_buf.len);
 
-                printf("allhash: %X\n",allhash);
+                printf("%04X CRC16ANSI(%d)\n",allhash,scratch_buf.len);
                 fclose(fp);
                 
                 //add line to table!
@@ -628,6 +629,123 @@ int CallbackUpdateHash(ParameterList_t *TempParam)
     DBG_LOG_DEBUG("Into END of CallbackUpdateHash.\n");
     return(ret_val);
 }
+int PartHash(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+    int  i,ind_i = -1;
+    FILE *fp;
+    int num;
+    int sizefp;
+    int end;
+    const char *filename;
+    int type;
+    uint16_t allhash = 0;
+    uint8_t partBuffer[4096];
+    char buffer[STRING_SIZE];
+    
+    #ifdef DEBUG
+        DBG_LOG_DEBUG("--//internal//-- Into PartHash.\r\n\r");
+    #endif
+    
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam) && (TempParam->NumberofParameters > 1))
+    {
+        for (i=1;i<TempParam->NumberofParameters;i+=2)
+        {
+            if (!strcmp(TempParam->Params[i-1].strParam,"part"))
+            {
+                ind_i = TempParam->Params[i].intParam;
+            }
+            if (!strcmp(TempParam->Params[i-1].strParam,"size"))
+            {
+                size_parts = TempParam->Params[i].intParam;
+            }
+            if (!strcmp(TempParam->Params[i-1].strParam,"type"))
+            {
+                type = TempParam->Params[i].intParam;
+            }
+        }
+        
+        filename = GetFileName(2);
+        DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
+
+        fp = fopen(filename,"rb"); // read mode
+        
+        if( fp == NULL )
+        {
+           DBG_LOG_DEBUG("Error while opening update file.\r\n\r");
+           AddToTransmit("{\n\"PARTHASH\": [\n");
+           snprintf(buffer,STRING_SIZE,"{\"parthash\":0x%04X}",0);
+           AddToTransmit(buffer);
+           AddToTransmit("\n]\n}\n");
+        }
+        else 
+        {
+            end = 0;
+            num = 0;
+            DBG_LOG_DEBUG("Part %d .\r\n\r",ind_i);
+            AddToTransmit("{\n\"PARTHASH\": [\n");
+            if (ind_i == -1)
+            {
+                sizefp = fread(partBuffer,sizeof(uint8_t),size_parts,fp);
+                //DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
+                if (sizefp == 0)
+                    return(INVALID_PARAMETERS_ERROR);
+                if (sizefp != size_parts) {
+                    end = 1;
+                    allhash = CRC16ANSI(&partBuffer,sizefp);
+                    DBG_LOG_DEBUG("allhash: %X\n",allhash);
+                    snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
+                    AddToTransmit(buffer);
+
+                    size_parts_cur = sizefp;
+                    DBG_LOG_DEBUG("size_parts_cur: %X\n",size_parts_cur);
+                    num++;
+                }
+            }
+            else
+            {
+                while (num <= ind_i)
+                {
+                    sizefp = fread(partBuffer,sizeof(uint8_t),size_parts,fp);
+                    DBG_LOG_DEBUG("%d:%d readed from file hash %04X.\n",
+                            num,sizefp,CRC16ANSI(partBuffer,sizefp));
+                    //coap_dump(partBuffer, sizefp, true);
+                    if (sizefp == 0)
+                        return(INVALID_PARAMETERS_ERROR);
+                    if (sizefp != size_parts)
+                    {
+                        end = 1;
+                    }
+                    num++;
+                } 
+                num--;
+                allhash = CRC16ANSI(partBuffer,sizefp);
+                printf("allhash: %X\n",allhash);
+                
+                snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
+                AddToTransmit(buffer);
+                size_parts_cur = sizefp;
+                
+                DBG_LOG_DEBUG("size_parts_cur: %X\n",size_parts_cur);
+            }
+            AddToTransmit("\n]\n}\n");
+            fclose(fp);
+        }
+    }
+    else
+    {
+        /* One or more of the necessary parameters are invalid.           */
+        ret_val = INVALID_PARAMETERS_ERROR;
+        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
+        DBG_LOG_WARNING("Invalid parametest.\n");
+    }   
+
+    //AddToTransmit("</PARTHASH>\r\n\r");
+    DBG_LOG_DEBUG("Into END of PartHash.\n");
+    return(ret_val);
+}
 int CallbackPartHash(ParameterList_t *TempParam)
 {
     int ret_val = 0;
@@ -714,7 +832,7 @@ int CallbackPartHash(ParameterList_t *TempParam)
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
-        DBG_LOG_WARNING("Invalid parametest.\n");
+        DBG_LOG_WARNING("Invalid parameters.\n");
     }
 
     DBG_LOG_DEBUG("Into END of CallbackPartHash.\n");
@@ -988,7 +1106,8 @@ int UpdateHash(ParameterList_t *TempParam)
             while (end == 0)
             {
                 sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
-                printf("--//internal//-- %d readed from file.\r\n\r",sizefp);
+                DBG_LOG_DEBUG("%d:%d readed from file hash %04X.\n",
+                            num,sizefp,CRC16ANSI(scratch_raw,sizefp));
 
                 allhash += CRC16ANSI(scratch_raw,sizefp);
                 if (sizefp == 0) 
@@ -1075,7 +1194,7 @@ int Update(ParameterList_t *TempParam)
             if (ind_i == -1)
             {
                 sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
+                //DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
                 if (sizefp != size_parts)
@@ -1092,7 +1211,9 @@ int Update(ParameterList_t *TempParam)
                 while (num <= ind_i)
                 {
                     sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                    DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
+                    DBG_LOG_DEBUG("%d:%d readed from file hash %04X.\n",
+                            num,sizefp,CRC16ANSI(bufsa,sizefp));
+                    //coap_dump(bufsa, sizefp, true);
                     if (sizefp == 0)
                         return(INVALID_PARAMETERS_ERROR);
                     if (sizefp != size_parts)
@@ -1102,7 +1223,7 @@ int Update(ParameterList_t *TempParam)
                     num++;
                 } 
                 num--;
-                allhash += CRC16ANSI(&opt_part,sizefp);
+                allhash += CRC16ANSI(bufsa,sizefp);
                 printf("allhash: %X\n",allhash);
                 make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
                 size_parts_cur = sizefp;
@@ -1121,121 +1242,6 @@ int Update(ParameterList_t *TempParam)
 
     AddToTransmit("</UPDATE>\r\n\r");
     DBG_LOG_DEBUG("Into END of Update.\n");
-    return(ret_val);
-}
-int PartHash(ParameterList_t *TempParam)
-{
-    int  ret_val = 0;
-    int  i,ind_i = -1;
-    FILE *fp;
-    int num;
-    int sizefp;
-    int end;
-    const char *filename;
-    int type;
-    uint16_t allhash = 0;
-    uint8_t partBuffer[4096];
-    char buffer[STRING_SIZE];
-    
-    #ifdef DEBUG
-        DBG_LOG_DEBUG("--//internal//-- Into PartHash.\r\n\r");
-    #endif
-    
-    /* First check to see if the parameters required for the execution of*/
-    /* this function appear to be semi-valid.                            */
-    if ((TempParam) && (TempParam->NumberofParameters > 1))
-    {
-        for (i=1;i<TempParam->NumberofParameters;i+=2)
-        {
-            if (!strcmp(TempParam->Params[i-1].strParam,"part"))
-            {
-                ind_i = TempParam->Params[i].intParam;
-            }
-            if (!strcmp(TempParam->Params[i-1].strParam,"size"))
-            {
-                size_parts = TempParam->Params[i].intParam;
-            }
-            if (!strcmp(TempParam->Params[i-1].strParam,"type"))
-            {
-                type = TempParam->Params[i].intParam;
-            }
-        }
-        
-        filename = GetFileName(2);
-        DBG_LOG_DEBUG("THE FILE NAME IS***: %s\n", filename);
-
-        fp = fopen(filename,"rb"); // read mode
-        
-        if( fp == NULL )
-        {
-           DBG_LOG_DEBUG("Error while opening update file.\r\n\r");
-           AddToTransmit("{\n\"PARTHASH\": [\n");
-           snprintf(buffer,STRING_SIZE,"{\"parthash\":0x%04X}",0);
-           AddToTransmit(buffer);
-           AddToTransmit("\n]\n}\n");
-        }
-        else 
-        {
-            end = 0;
-            num = 0;
-            DBG_LOG_DEBUG("Part %d .\r\n\r",ind_i);
-            AddToTransmit("{\n\"PARTHASH\": [\n");
-            if (ind_i == -1)
-            {
-                sizefp = fread(partBuffer,sizeof(uint8_t),size_parts,fp);
-                DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
-                if (sizefp == 0)
-                    return(INVALID_PARAMETERS_ERROR);
-                if (sizefp != size_parts) {
-                    end = 1;
-                    allhash += CRC16ANSI(&partBuffer,sizefp);
-                    DBG_LOG_DEBUG("allhash: %X\n",allhash);
-                    snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
-                    AddToTransmit(buffer);
-
-                    size_parts_cur = sizefp;
-                    DBG_LOG_DEBUG("size_parts_cur: %X\n",size_parts_cur);
-                    num++;
-                }
-            }
-            else
-            {
-                while (num <= ind_i)
-                {
-                    sizefp = fread(partBuffer,sizeof(uint8_t),size_parts,fp);
-                    DBG_LOG_DEBUG("%d readed from file.\n",sizefp);
-                    if (sizefp == 0)
-                        return(INVALID_PARAMETERS_ERROR);
-                    if (sizefp != size_parts)
-                    {
-                        end = 1;
-                    }
-                    num++;
-                } 
-                num--;
-                allhash += CRC16ANSI(&partBuffer,sizefp);
-                printf("allhash: %X\n",allhash);
-                
-                snprintf(buffer,STRING_SIZE,"{\"hash\":0x%04X}",allhash);
-                AddToTransmit(buffer);
-                size_parts_cur = sizefp;
-                
-                DBG_LOG_DEBUG("size_parts_cur: %X\n",size_parts_cur);
-            }
-            AddToTransmit("\n]\n}\n");
-            fclose(fp);
-        }
-    }
-    else
-    {
-        /* One or more of the necessary parameters are invalid.           */
-        ret_val = INVALID_PARAMETERS_ERROR;
-        //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        DBG_LOG_WARNING("Invalid parametest.\n");
-    }   
-
-    //AddToTransmit("</PARTHASH>\r\n\r");
-    DBG_LOG_DEBUG("Into END of PartHash.\n");
     return(ret_val);
 }
 void FormUpdateFile(int type, int ind_i) 
@@ -1265,7 +1271,7 @@ void FormUpdateFile(int type, int ind_i)
         for(i=0;i<=ind_i;i++)
         {
             snprintf(namepart,STRING_SIZE,"%s.p%02d",filename,i);
-            DBG_LOG_INFO("Reading from file: %s\n", namepart);
+            //DBG_LOG_INFO("Reading from file: %s\n", namepart);
             fpo = fopen(namepart,"rb"); // read mode
             if( fpo == NULL )
             {

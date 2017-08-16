@@ -8,10 +8,10 @@
 #include "CommandModule.h"
 #include "coap.h"
 #include "StreamDataRecorder.h"
-#ifndef CPU
-    #include "tim.h"
-    #include "usart.h"
-#endif
+//#ifndef CPU
+//    #include "tim.h"
+//    #include "usart.h"
+//#endif
 /*============================================================================*/
 
 #ifndef __EXTERNAL_H__

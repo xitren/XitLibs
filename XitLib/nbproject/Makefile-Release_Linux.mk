@@ -14,14 +14,14 @@ GREP=grep
 NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=gcc
-CCC=g++
-CXX=g++
+CC=arm-linux-gnueabihf-gcc
+CCC=arm-linux-gnueabihf-g++
+CXX=arm-linux-gnueabihf-g++
 FC=gfortran
-AS=as
+AS=arm-linux-gnueabihf-as
 
 # Macros
-CND_PLATFORM=GNU-Linux
+CND_PLATFORM=GNU_RPI-Linux
 CND_DLIB_EXT=so
 CND_CONF=Release_Linux
 CND_DISTDIR=dist
@@ -40,7 +40,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
 	${OBJECTDIR}/DistCalc.o \
-	${OBJECTDIR}/ExtFunctions.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -138,11 +137,6 @@ ${OBJECTDIR}/DistCalc.o: DistCalc.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
-
-${OBJECTDIR}/ExtFunctions.o: ExtFunctions.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c
 
 ${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -402,19 +396,6 @@ ${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c
 	    $(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
-	fi
-
-${OBJECTDIR}/ExtFunctions_nomain.o: ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExtFunctions.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions_nomain.o ExtFunctions.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/ExtFunctions.o ${OBJECTDIR}/ExtFunctions_nomain.o;\
 	fi
 
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 

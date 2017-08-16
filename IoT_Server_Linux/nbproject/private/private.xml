@@ -30,8 +30,6 @@
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server_Linux/main.c</file>
         </group>
-        <group name="XitLibs">
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/LogModule.h</file>
-        </group>
+        <group name="XitLibs"/>
     </open-files>
 </project-private>

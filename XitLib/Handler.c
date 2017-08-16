@@ -5,6 +5,7 @@
 #include "Handler.h"
 #include "LogModule.h"
 #include "ExtFunctions.h"
+#include "CRC16ANSI.h"
 
 #define TXTIMEOUT 10
 #define PORT_BACK 5683
@@ -207,12 +208,16 @@ inline void ProtocolHandler(void) {
             } 
             else 
             {
+                DBG_LOG_DEBUG("ProtocolHandler %d bytes hash %04X.\n",
+                    pkt.payload.len,CRC16ANSI(pkt.payload.p,pkt.payload.len));
                 #ifdef DEBUG
                     coap_dumpHeader(&pkt.hdr);
                     coap_dumpOptions(&pkt.opts, pkt.numopts);
                     coap_dump(scratch_raw, cmdlent, true);
                 #endif
                 content_type = COAP_CONTENTTYPE_APPLICATION_XML;
+                DBG_LOG_DEBUG("ProtocolHandler2 %d bytes hash %04X.\n",
+                    pkt.payload.len,CRC16ANSI(pkt.payload.p,pkt.payload.len));
                 coap_handle_req(&scratch_buf, &pkt, &rsppkt,
                         CommandLineInterpreter,ip);
                 size_t rsplen = sizeof (scratch_raw);

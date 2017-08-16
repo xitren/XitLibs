@@ -11,6 +11,8 @@
 #include "umm_malloc.h"
 #include "LogModule.h"
 #include "CommandModule.h"
+#include "CRC16ANSI.h"
+#include "Handler.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -421,7 +423,9 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
         DBG_LOG_ERROR("coap_parse argument is NULL\n");
         return 0;
     }
-    // coap_dump(buf, buflen, false);
+    coap_dump(buf, buflen, false);
+    DBG_LOG_DEBUG("coap_parse %d bytes hash %04X.\n",
+            buflen,CRC16ANSI(buf,buflen));
 
     if (0 != (rc = coap_parseHeader(&pkt->hdr, buf, buflen)))
         return rc;
@@ -431,6 +435,8 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
     pkt->numopts = MAXOPT;
     if (0 != (rc = coap_parseOptionsAndPayload(pkt->opts, &(pkt->numopts), &(pkt->payload), &pkt->hdr, buf, buflen)))
         return rc;
+    DBG_LOG_DEBUG("coap_parseOptionsAndPayload %d bytes hash %04X.\n",
+            pkt->payload.len,CRC16ANSI(pkt->payload.p,pkt->payload.len));
 //    coap_dumpOptions(opts, numopt);
     return 0;
 }
@@ -804,6 +810,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                                         char *_ip)
 {
     DBG_LOG_DEBUG("Into coap_handle_req.\n");
+        DBG_LOG_DEBUG("ProtocolHandler2-in %d bytes hash %04X.\n",
+            inpkt->payload.len,CRC16ANSI(inpkt->payload.p,inpkt->payload.len));
     if ((scratch == NULL) || (inpkt == NULL) || (outpkt == NULL) 
             || (_ip == NULL))
     {
@@ -819,6 +827,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     bufhr[0]='\0';
     if (inpkt->hdr.code < 5)
     {
+        DBG_LOG_DEBUG("ProtocolHandler3 %d bytes hash %04X.\n",
+            inpkt->payload.len,CRC16ANSI(scratch->p,inpkt->payload.len));
         if (COAP_METHOD_GET == inpkt->hdr.code)
         {
             strncat(bufhr,"/get", 4);
@@ -879,6 +889,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                     contentistext = 1;
             }
         }
+        scratch->p = scratch_raw;
+        scratch->len = inpkt->payload.len;
         if (contentistext)
         {
             strncat(bufhr, "&", 1);
@@ -886,7 +898,9 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             strncat(bufhr, (char*)inpkt->payload.p, inpkt->payload.len);
         }
         else
-            memcpy(scratch->p,inpkt->payload.p,scratch->len = inpkt->payload.len);
+            memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);
+        DBG_LOG_DEBUG("ProtocolHandler4 %d bytes hash %04X.\n",
+            scratch->len,CRC16ANSI(scratch->p,scratch->len));
     }
     else
     {
@@ -894,6 +908,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             DBG_LOG_DEBUG("Look for answer waiting list.\n");
             DBG_LOG_DEBUG("ptr %d.\n",(int)inpkt->tok_p);
         #endif
+            DBG_LOG_DEBUG("ProtocolHandler3-else %d bytes hash %04X.\n",
+                inpkt->payload.len,CRC16ANSI(inpkt->payload.p,inpkt->payload.len));
         if (cbl = coap_check_ans((inpkt->tok_p)))
         {
             strncat(bufhr, cbl, strlen(cbl));
@@ -912,6 +928,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                             ,part,end);
                 }
             }
+            scratch->p = scratch_raw;
+            scratch->len = inpkt->payload.len;
 //            if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_CONTENT_FORMAT, &count)))
 //            {
 //                for (i=0;i<count;i++)
@@ -928,7 +946,9 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
 //                strncat(bufhr, (char*)inpkt->payload.p, inpkt->payload.len);
 //            }
 //            else
-                memcpy(scratch->p,inpkt->payload.p,scratch->len = inpkt->payload.len);
+                memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);
+            DBG_LOG_DEBUG("ProtocolHandler4 %d bytes hash %04X.\n",
+                scratch->len,CRC16ANSI(scratch->p,scratch->len));
             #ifdef DEBUG
                 DBG_LOG_DEBUG("Found.\n");
             #endif

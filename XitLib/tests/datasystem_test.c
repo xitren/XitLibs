@@ -201,13 +201,13 @@ void test5() {
     count = 0;
     FILE *fp;
     
-    while ((fp = fopen("iotbaseserverlinux_upd.sh","rb")) == NULL) {
+    while ((fp = fopen("Updater.sh","rb")) == NULL) {
     }
-    printf("iotbaseserverlinux_upd.sh located\n");
+    printf("Updater.sh located\n");
     fclose(fp);
     usleep(3000); 
-    printf("iotbaseserverlinux_upd.sh deleting\n");
-    remove("iotbaseserverlinux_upd.sh");
+    printf("Updater.sh deleting\n");
+    remove("Updater.sh");
     return;
 }
 

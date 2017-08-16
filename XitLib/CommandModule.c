@@ -112,6 +112,8 @@ void Interface_Memory(void)
         AddCommand("/REQUERY/UPDATE", "</update>", QueryUpdate);
         AddCommand("/GET/TECHUPDATE", "</techupdate>", TechUpdate); 
         AddCommand("/REQUERY/UPDATEHASH", "</updatehash>", QueryUpdateHash); 
+        AddCommand("/GET/PARTHASH", "</parthash>", PartHash);
+        AddCommand("/CALLBACK/PARTHASH", "</parthash>", CallbackPartHash);
     #endif
 
     #ifdef PLATFORM_LINUX

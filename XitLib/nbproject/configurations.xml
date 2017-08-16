@@ -32,7 +32,6 @@
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DMAretransmitter.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
-      <itemPath>ExtFunctions.c</itemPath>
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
@@ -207,8 +206,6 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -414,7 +411,7 @@
     </conf>
     <conf name="Release_Windows" type="3">
       <toolsSet>
-        <compilerSet>MinGW|MinGW</compilerSet>
+        <compilerSet>GNU_mingw32|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -475,8 +472,6 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -744,8 +739,6 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
@@ -948,10 +941,9 @@
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
     </conf>
-    <conf name="Release_Linux" type="3" platformSpecific="true">
+    <conf name="Release_Linux" type="3">
       <toolsSet>
-        <compilerSet>GNU|GNU</compilerSet>
-        <platform>2</platform>
+        <compilerSet>GNU_RPI|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -1013,8 +1005,6 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1303,8 +1293,6 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
@@ -1509,7 +1497,7 @@
     </conf>
     <conf name="Release_MC" type="3">
       <toolsSet>
-        <compilerSet>None|Unknown</compilerSet>
+        <compilerSet>GNU_MC|GNU</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -1570,8 +1558,6 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1829,8 +1815,6 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
