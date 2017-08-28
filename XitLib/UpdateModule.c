@@ -59,7 +59,6 @@ const char *filename_5_2 = "./update/iotdevicegeneratorlinux.sh";
 const char* GetFileName(uint32_t func);
 /*============================================================================*/
 
-
 /* Functions declaration -----------------------------------------------------*/
 inline void InitCfgDevType(void) {
     config_dev_type[BASESTATION] = 0;

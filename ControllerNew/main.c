@@ -49,6 +49,8 @@
 
 #include "stm32f4xx_it.h"
 
+uint8_t buffer[100];
+
 /* USER CODE END Includes */
 
 /* Private variables ---------------------------------------------------------*/
@@ -207,7 +209,7 @@ void HAL_UART_RxCpltCallback(UART_HandleTypeDef *UartHandle)
   if (UartHandle->Instance == USART1)
   {
     HAL_TIM_Base_Stop(&htim13); 
-    UartProtocolHandler();
+    UartProtocolHandler(buffer[0]);
 //    HAL_UART_Transmit(&huart1, (uint8_t *) buffer, 1, 1000);
     HAL_UART_Receive_DMA(&huart1,(uint8_t*)buffer,1/*STRING_SIZE*/);
     HAL_TIM_Base_Start_IT(&htim13);

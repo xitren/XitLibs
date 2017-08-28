@@ -31,9 +31,11 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/EEG_UnitMC_Rev4/ControllerNew/Periph/spi.c</file>
         </group>
         <group name="Lib"/>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/malloc/umm_malloc.h</file>
-        </group>
         <group name="XitLibs"/>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/main.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/ExtFunctions.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/ExtFunctions.h</file>
+        </group>
     </open-files>
 </project-private>

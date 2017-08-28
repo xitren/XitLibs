@@ -85,7 +85,6 @@
         <itemPath>libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.c</itemPath>
       </logicalFolder>
       <itemPath>ExtFunctions.c</itemPath>
-      <itemPath>../XitLib/External/UpdateModule.c</itemPath>
       <itemPath>main.c</itemPath>
       <itemPath>newlib_stab.c</itemPath>
       <itemPath>startup_stm32f4xx.s</itemPath>
@@ -224,12 +223,6 @@
         <itemPath>../XitLib/jSONparser.h</itemPath>
         <itemPath>../XitLib/xitlibtypes.h</itemPath>
       </logicalFolder>
-      <itemPath>ExtFunctions.h</itemPath>
-      <itemPath>../XitLib/External/UpdateModule.h</itemPath>
-      <itemPath>main.h</itemPath>
-      <itemPath>stm32f4xx_conf.h</itemPath>
-      <itemPath>stm32f4xx_hal_conf.h</itemPath>
-      <itemPath>stm32f4xx_it.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ResourceFiles"
                    displayName="Файлы ресурсов"
@@ -361,10 +354,6 @@
       </item>
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/Handler.h" ex="false" tool="3" flavor2="0">
@@ -424,8 +413,6 @@
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Periph/ad7190.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1145,21 +1132,13 @@
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="main.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="newlib_stab.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="startup_stm32f4xx.s" ex="false" tool="4" flavor2="0">
       </item>
-      <item path="stm32f4xx_conf.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="stm32f4xx_hal_conf.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="stm32f4xx_hal_msp.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="stm32f4xx_it.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="stm32f4xx_it.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="system_stm32f4xx.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1191,6 +1170,7 @@
           </incDir>
           <commandLine>-mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16</commandLine>
           <preprocessorList>
+            <Elem>MC</Elem>
             <Elem>P300</Elem>
             <Elem>STM32F429xx</Elem>
             <Elem>USE_HAL_DRIVER</Elem>
@@ -1228,10 +1208,6 @@
       </item>
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="../XitLib/External/UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/Handler.h" ex="false" tool="3" flavor2="0">
@@ -1291,8 +1267,6 @@
       <item path="../XitLib/xitlibtypes.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Periph/ad7190.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -2012,21 +1986,13 @@
       </item>
       <item path="main.c" ex="false" tool="0" flavor2="0">
       </item>
-      <item path="main.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="newlib_stab.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="startup_stm32f4xx.s" ex="false" tool="4" flavor2="0">
       </item>
-      <item path="stm32f4xx_conf.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="stm32f4xx_hal_conf.h" ex="false" tool="3" flavor2="0">
-      </item>
       <item path="stm32f4xx_hal_msp.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="stm32f4xx_it.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="stm32f4xx_it.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="system_stm32f4xx.c" ex="false" tool="0" flavor2="0">
       </item>

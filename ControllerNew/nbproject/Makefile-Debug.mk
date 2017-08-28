@@ -35,7 +35,6 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/83d34d09/UpdateModule.o \
 	${OBJECTDIR}/ExtFunctions.o \
 	${OBJECTDIR}/Periph/ads1299.o \
 	${OBJECTDIR}/Periph/dma.o \
@@ -150,11 +149,6 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf.exe: ../CoAP/dist/D
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf.exe: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/controllernew.elf ${OBJECTFILES} ${LDLIBSOPTIONS} -Tstm32f4_flash.ld
-
-${OBJECTDIR}/_ext/83d34d09/UpdateModule.o: ../XitLib/External/UpdateModule.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DSTM32F429xx -DUSE_HAL_DRIVER -I../XitLib -IPeriph -Ilibraries/Imp/Inc -I. -Ilibraries/CMSIS/Include -Ilibraries/CMSIS/Device/ST/STM32F4xx/Include -Ilibraries/STM32F4xx_HAL_Driver/Inc -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/UpdateModule.o ../XitLib/External/UpdateModule.c
 
 ${OBJECTDIR}/ExtFunctions.o: ExtFunctions.c
 	${MKDIR} -p ${OBJECTDIR}

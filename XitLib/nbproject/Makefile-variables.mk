@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug_Windows=dist/Debug_Windows/MinGW-Windows/package
 CND_PACKAGE_NAME_Debug_Windows=XitLib.tar
 CND_PACKAGE_PATH_Debug_Windows=dist/Debug_Windows/MinGW-Windows/package/XitLib.tar
 # Release_Windows configuration
-CND_PLATFORM_Release_Windows=GNU_mingw32-Linux
-CND_ARTIFACT_DIR_Release_Windows=dist/Release_Windows/GNU_mingw32-Linux
+CND_PLATFORM_Release_Windows=MinGW-Windows
+CND_ARTIFACT_DIR_Release_Windows=dist/Release_Windows/MinGW-Windows
 CND_ARTIFACT_NAME_Release_Windows=libxitlib.a
-CND_ARTIFACT_PATH_Release_Windows=dist/Release_Windows/GNU_mingw32-Linux/libxitlib.a
-CND_PACKAGE_DIR_Release_Windows=dist/Release_Windows/GNU_mingw32-Linux/package
+CND_ARTIFACT_PATH_Release_Windows=dist/Release_Windows/MinGW-Windows/libxitlib.a
+CND_PACKAGE_DIR_Release_Windows=dist/Release_Windows/MinGW-Windows/package
 CND_PACKAGE_NAME_Release_Windows=XitLib.tar
-CND_PACKAGE_PATH_Release_Windows=dist/Release_Windows/GNU_mingw32-Linux/package/XitLib.tar
+CND_PACKAGE_PATH_Release_Windows=dist/Release_Windows/MinGW-Windows/package/XitLib.tar
 # Debug_Linux configuration
 CND_PLATFORM_Debug_Linux=GNU-Linux
 CND_ARTIFACT_DIR_Debug_Linux=dist/Debug_Linux/GNU-Linux
@@ -47,13 +47,13 @@ CND_PACKAGE_DIR_Debug_MC=dist/Debug_MC/GNU-Linux/package
 CND_PACKAGE_NAME_Debug_MC=XitLib.tar
 CND_PACKAGE_PATH_Debug_MC=dist/Debug_MC/GNU-Linux/package/XitLib.tar
 # Release_MC configuration
-CND_PLATFORM_Release_MC=GNU_MC-Linux
-CND_ARTIFACT_DIR_Release_MC=dist/Release_MC/GNU_MC-Linux
+CND_PLATFORM_Release_MC=GNU_ARM-Windows
+CND_ARTIFACT_DIR_Release_MC=dist/Release_MC/GNU_ARM-Windows
 CND_ARTIFACT_NAME_Release_MC=libxitlib.a
-CND_ARTIFACT_PATH_Release_MC=dist/Release_MC/GNU_MC-Linux/libxitlib.a
-CND_PACKAGE_DIR_Release_MC=dist/Release_MC/GNU_MC-Linux/package
+CND_ARTIFACT_PATH_Release_MC=dist/Release_MC/GNU_ARM-Windows/libxitlib.a
+CND_PACKAGE_DIR_Release_MC=dist/Release_MC/GNU_ARM-Windows/package
 CND_PACKAGE_NAME_Release_MC=XitLib.tar
-CND_PACKAGE_PATH_Release_MC=dist/Release_MC/GNU_MC-Linux/package/XitLib.tar
+CND_PACKAGE_PATH_Release_MC=dist/Release_MC/GNU_ARM-Windows/package/XitLib.tar
 # Release_Linux_EV3 configuration
 CND_PLATFORM_Release_Linux_EV3=GNU-Linux
 CND_ARTIFACT_DIR_Release_Linux_EV3=dist/Release_Linux_EV3/GNU-Linux

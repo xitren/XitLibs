@@ -50,10 +50,12 @@
         <group name="Lib">
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/IoT_Server/main.c</file>
         </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/XitLib/generatorModule.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server/main.c</file>
-        </group>
         <group name="XitLibs"/>
+        <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/Worked/External/ExtFunctions.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.h</file>
+        </group>
     </open-files>
 </project-private>

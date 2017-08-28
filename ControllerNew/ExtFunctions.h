@@ -34,7 +34,11 @@ extern size_t pktlen;
 extern uint8_t buffer2[10];
 extern uint8_t buf[4096];
 extern uint8_t content_type;
-extern uint8_t bufsa[1024];
+#ifdef CPU
+    extern uint8_t bufsa[4096];
+#else    
+    extern uint8_t bufsa[1024];
+#endif
 extern int size_parts;
 extern int size_parts_cur;
 /*============================================================================*/

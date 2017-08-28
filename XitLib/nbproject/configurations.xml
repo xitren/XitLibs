@@ -411,7 +411,7 @@
     </conf>
     <conf name="Release_Windows" type="3">
       <toolsSet>
-        <compilerSet>GNU_mingw32|GNU</compilerSet>
+        <compilerSet>MinGW|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -1497,7 +1497,7 @@
     </conf>
     <conf name="Release_MC" type="3">
       <toolsSet>
-        <compilerSet>GNU_MC|GNU</compilerSet>
+        <compilerSet>GNU_ARM|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>

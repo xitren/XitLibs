@@ -14,7 +14,11 @@
 uint8_t inb, rc, cmdlen = 0;
 uint8_t id_out = 0;
 uint8_t scratch_raw[4096];
-uint8_t bufsa[4096];
+#ifdef CPU
+    uint8_t bufsa[4096];
+#else    
+    uint8_t bufsa[1024];
+#endif
 coap_rw_buffer_t scratch_buf = {scratch_raw, sizeof (scratch_raw)};
 coap_packet_t pkt;
 size_t rsplen;

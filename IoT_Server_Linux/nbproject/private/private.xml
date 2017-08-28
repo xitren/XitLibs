@@ -27,9 +27,7 @@
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/malloc/umm_malloc_cfg.h</file>
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.h</file>
         </group>
-        <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs2/IoT_Server_Linux/main.c</file>
-        </group>
         <group name="XitLibs"/>
+        <group name="XitLib"/>
     </open-files>
 </project-private>

@@ -21,8 +21,8 @@ FC=gfortran
 AS=arm-none-eabi-as
 
 # Macros
-CND_PLATFORM=GNU_MC-Linux
-CND_DLIB_EXT=so
+CND_PLATFORM=GNU_ARM-Windows
+CND_DLIB_EXT=dll
 CND_CONF=Release_MC
 CND_DISTDIR=dist
 CND_BUILDDIR=build
