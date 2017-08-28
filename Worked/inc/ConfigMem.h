@@ -6,7 +6,7 @@
 /*============================================================================*/
 
 /* Public defines ------------------------------------------------------------*/
-#define CFG_SIZE 0x60
+#define CFG_SIZE 0x70
 #define MEMORY_CONFIG 4*CFG_SIZE
 /*============================================================================*/
 
@@ -127,7 +127,14 @@ typedef enum
   REG_ADC_REG19          =       0x00000059, //REG_ADS_CH5SET
   REG_ADC_REG20          =       0x0000005A, //REG_ADS_CH6SET
   REG_ADC_REG21          =       0x0000005B, //REG_ADS_CH7SET
-  REG_ADC_REG22          =       0x0000005C  //REG_ADS_CH8SET
+  REG_ADC_REG22          =       0x0000005C, //REG_ADS_CH8SET
+          
+  REG_POS_X              =       0x0000005D,
+  REG_POS_Y              =       0x0000005E, 
+  REG_POS_Z              =       0x0000005F, 
+  REG_POS_Alpha          =       0x00000060,
+  REG_POS_Beta           =       0x00000061,
+  REG_POS_Gamma          =       0x00000062
 } RegDef;
 /*============================================================================*/
 
