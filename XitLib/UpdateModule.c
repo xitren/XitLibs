@@ -134,7 +134,7 @@ inline const char* GetFileName(uint32_t func) {
     return NULL;
 }
 
-#ifdef CPU
+//#ifdef CPU
 int QueryUpdate(ParameterList_t *TempParam)
 {
     int ret_val = 0;
@@ -1472,5 +1472,5 @@ void askUpdateFileHash(int type)
     #endif
     return;
 }
-#endif
+//#endif
 /*============================================================================*/

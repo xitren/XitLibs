@@ -2,7 +2,7 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <data xmlns="http://www.netbeans.org/ns/make-project-private/1">
         <activeConfTypeElem>3</activeConfTypeElem>
-        <activeConfIndexElem>3</activeConfIndexElem>
+        <activeConfIndexElem>5</activeConfIndexElem>
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
@@ -135,25 +135,6 @@
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.c</file>
             <file>file:/C:/Users/xitre/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
         </group>
-        <group name="XitLibs">
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/StreamDataRecorder.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/tests/datasystem_test.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/InOutBuffer.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/coap/coap.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/models/src/hashtable.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/UpdateModule.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/models/src/array.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/tests/array_test.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/CommandModule.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/PWMModule.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/Handler.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/FunctionsDiscovery.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/VideoModule.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/DistCalc.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/malloc/umm_malloc.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/ExtFunctions.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/CRC16ANSI.c</file>
-            <file>file:/home/xitren/Projects/XitLibs/XitLib/ExtFunctions.h</file>
-        </group>
+        <group name="XitLibs"/>
     </open-files>
 </project-private>

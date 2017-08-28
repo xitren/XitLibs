@@ -35,7 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o \
+	${OBJECTDIR}/_ext/8209c8dc/ExtFunctions.o \
 	${OBJECTDIR}/main.o
 
 
@@ -69,10 +69,10 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o: ../XitLib/External/ExtFunctions.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/83d34d09
+${OBJECTDIR}/_ext/8209c8dc/ExtFunctions.o: ../../../Downloads/ExtFunctions.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/8209c8dc
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/83d34d09/ExtFunctions.o ../XitLib/External/ExtFunctions.c
+	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/8209c8dc/ExtFunctions.o ../../../Downloads/ExtFunctions.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}

@@ -59,7 +59,7 @@
     <logicalFolder name="SourceFiles"
                    displayName="Source Files"
                    projectFiles="true">
-      <itemPath>../XitLib/External/ExtFunctions.c</itemPath>
+      <itemPath>../../../Downloads/ExtFunctions.c</itemPath>
       <itemPath>main.c</itemPath>
     </logicalFolder>
     <logicalFolder name="TestFiles"
@@ -115,6 +115,8 @@
           </linkerLibItems>
         </linkerTool>
       </compileType>
+      <item path="../../../Downloads/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
@@ -126,8 +128,6 @@
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -289,6 +289,8 @@
           </makeArtifact>
         </requiredProjects>
       </compileType>
+      <item path="../../../Downloads/ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="../EEG_Evoker/ImageVisualise.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
@@ -300,8 +302,6 @@
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
