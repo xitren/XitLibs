@@ -35,7 +35,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 
 # Object Files
 OBJECTFILES= \
-	${OBJECTDIR}/_ext/8209c8dc/ExtFunctions.o \
+	${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o \
 	${OBJECTDIR}/main.o
 
 
@@ -67,10 +67,10 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
 	${LINK.c} -o ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux ${OBJECTFILES} ${LDLIBSOPTIONS}
 
-${OBJECTDIR}/_ext/8209c8dc/ExtFunctions.o: ../../../Downloads/ExtFunctions.c
-	${MKDIR} -p ${OBJECTDIR}/_ext/8209c8dc
+${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o: ../Worked/External/ExtFunctions.c
+	${MKDIR} -p ${OBJECTDIR}/_ext/1ba7ad3b
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/8209c8dc/ExtFunctions.o ../../../Downloads/ExtFunctions.c
+	$(COMPILE.c) -g -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o ../Worked/External/ExtFunctions.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}

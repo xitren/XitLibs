@@ -15,6 +15,7 @@ extern "C" {
 
 int VIDEOThread(ParameterList_t *TempParam);
 int Snap(ParameterList_t *TempParam);
+int GetSnap(ParameterList_t *TempParam);
 int Light(ParameterList_t *TempParam);
 int lamp();
 

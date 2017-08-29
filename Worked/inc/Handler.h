@@ -34,7 +34,11 @@ extern "C" {
     extern int fd_hd;
 #endif
 extern uint8_t scratch_raw[4096];
-extern uint8_t bufsa[4096];
+#ifdef CPU
+    extern uint8_t bufsa[4096];
+#else    
+    extern uint8_t bufsa[1024];
+#endif
 extern uint8_t id_out;
 extern coap_rw_buffer_t scratch_buf;
 extern size_t pktlen;

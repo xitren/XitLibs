@@ -30,6 +30,7 @@
 #include "coap.h"
 #include "Handler.h"
 #include "CommandModule.h"
+#include "version.h"
 
 #define PORT 5683
 
@@ -71,7 +72,7 @@ uint32_t *ThreadFuncUDP() {
 uint32_t *ThreadFunc250ms() {
     while (1) {
         //printf("Create third thread!");
-        AddSample();
+        SampleHandler();
         usleep(4000); //250
     }
     return 0;
@@ -92,13 +93,19 @@ int main(int argc, char** argv) {
     int thread5; 
     
     InitUDP();
+    printf("UDP ok.\n");
     InitImageP300();
-    InitHandler(BASESTATION);
+    printf("Imager ok.\n");
+    InitHandler(EEG);
+    printf("Init XitLib ok.\n");
     EEGRecorderInit(0,250);
+    printf("EEG recorder ok.\n");
+    
+    printf(VERSION);
     
     uint32_t amplitude[7] = {10000,10000,100000,1000000,100000,10000,10000};
     uint32_t frequency[7] = {10,20,10,10,30,100,5};
-    printf("Command interface setted.\n");
+    EEGTestInit(amplitude,frequency);
     
     result = pthread_create(&thread1,
             NULL, // default security attributes 
@@ -144,6 +151,8 @@ int main(int argc, char** argv) {
         printf("Create second thread!");
         return EXIT_FAILURE;
     }
+    
+    WriteMem(REG_LOG_LVL,8);
     
     function_beakon();
     //function_update();

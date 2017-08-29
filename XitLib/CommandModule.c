@@ -101,7 +101,8 @@ void Interface_Memory(void)
     AddCommand("/GET/STOPGENERATOR", "</stopgenerator>;if=\"generator\"", 
             StopGenerator); //выключение программы чтения файла на расберри
     #ifdef CPU
-        AddCommand("/GET/SNAP", "</snap>;if=\"video\"", Snap);
+        AddCommand("/GET/SNAP", "</snap/take>;if=\"video\"", Snap);
+        AddCommand("/GET/GETSNAP", "</snap/file>;if=\"video\"", GetSnap);
         AddCommand("/GET/LIGHT", "</light>;if=\"lamp\"", Light);
         AddCommand("/GET/VIDEOTHREAD", "</videothread>;if=\"video\"", VIDEOThread);
         AddCommand("/GET/VERSION", "</version>", Version);

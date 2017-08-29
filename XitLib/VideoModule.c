@@ -21,6 +21,7 @@
 #include "CommandModule.h"
 #include "coap.h"
 #include "Handler.h"
+#include "LogModule.h"
 /*============================================================================*/
 
 /* Private defines -----------------------------------------------------------*/
@@ -112,18 +113,45 @@ int lamp()
 int Snap(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
+    
+    #ifdef DEBUG
+        printf("--//internal//-- Into Snap.\r\n\r");
+        printf("--//internal//-- Here head Snap.\r\n\r");
+    #endif
+
+    AddToTransmit("<SNAP>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+//    if ((TempParam))
+//    {
+        printf("Send query snap pre.jpg\r\n\r");
+        #ifdef PI
+            system("sudo raspistill -w 480 -h 320 -q 20 -o snap.jpg");
+            printf("Send query snap.jpg\r\n\r");
+        #endif
+//    }
+
+    AddToTransmit("</SNAP>\r\n\r");
+    #ifdef DEBUG
+        printf("--//internal//-- Into END of Snap.\r\n\r");
+    #endif
+    return(ret_val);
+}
+int GetSnap(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
     int  i,ind_i = -1;
     FILE *fp;
     int num;
     int sizefp;
     int end;
-    uint8_t bufsa[1024];
+    uint16_t allhash = 0;
+    
     #ifdef DEBUG
-        printf("--//internal//-- Into Snap.\r\n\r");
-        printf("--//internal//-- Here head Snap.\r\n\r");
+        DBG_LOG_DEBUG("--//internal//-- Into GetSnap.\r\n\r");
     #endif
-    size_parts = 1024;
-    AddToTransmit("<SNAP>\r\n\r");
+    AddToTransmit("<GETSNAP>\r\n\r");
+    
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -140,90 +168,69 @@ int Snap(ParameterList_t *TempParam)
             }
         }
 
-        printf("Send query snap pre.jpg\r\n\r");
-        #ifdef PI
-        if (ind_i == 0)
-        {
-            system("sudo raspistill -w 480 -h 320 -q 20 -o snap.jpg");
-            printf("Send query snap.jpg\r\n\r");
-        }
-        #endif
         fp = fopen("snap.jpg","rb"); // read mode
         content_type = COAP_CONTENTTYPE_IMAGE_JPEG;
+
         if( fp == NULL )
         {
-           printf("Error no file snap.jpg\r\n\r");
-           return(INVALID_PARAMETERS_ERROR);
+           printf("Error while opening file update.\r\n\r");
         }
-        fseek ( fp , 0 , SEEK_SET );
-        
-        fseek (fp , 0 , SEEK_END);
-        int lSize = ftell (fp);
-        rewind (fp);
-
-        end = 0;
-        num = 0;
-        
-        #ifdef DEBUG
-            printf("--//internal//-- Part %d .\r\n\r",ind_i);
-            printf("--//internal//-- File size %d .\r\n\r",lSize);
-        #endif
-        if (ind_i == -1)
+        else 
         {
-            sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-            #ifdef DEBUG
-                printf("--//internal//-- %d readed from file of %d.\r\n\r",sizefp,size_parts);
-            #endif
-            if (sizefp == 0)
-                return(INVALID_PARAMETERS_ERROR);
-            if (sizefp != size_parts)
-                end = 1;
-            make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
-            size_parts_cur = sizefp;
-            num++;
-        }
-        else
-        {
-            fseek ( fp , ind_i*size_parts , SEEK_SET );
-            #ifdef DEBUG
-                printf("--//internal//-- from %d to %d readed from file of %d.\r\n\r"
-                        ,ind_i*size_parts,(ind_i+1)*size_parts-1,lSize);
-            #endif
-//            while (num <= ind_i)
-//            {
+            end = 0;
+            num = 0;
+            DBG_LOG_TRACE("Part %d .\r\n\r",ind_i);
+            if (ind_i == -1)
+            {
                 sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
-                #ifdef DEBUG
-                    printf("--//internal//-- %d readed from file of %d.\r\n\r",sizefp,size_parts);
-                #endif
+                DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+                printf("%d readed from file.\n",sizefp);
                 if (sizefp == 0)
                     return(INVALID_PARAMETERS_ERROR);
                 if (sizefp != size_parts)
-                {
                     end = 1;
-                }
-                num+=1 + ind_i;
-//            } 
-            num--;
-            make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
-            size_parts_cur = sizefp;
+                allhash += CRC16ANSI(&opt_part,sizefp);
+                printf("allhash: %X\n",allhash);
+                make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
+                size_parts_cur = sizefp;
+                num++;
+
+            }
+            else
+            {
+                while (num <= ind_i)
+                {
+                    sizefp = fread(bufsa,sizeof(uint8_t),size_parts,fp);
+                    DBG_LOG_TRACE("%d readed from file.\n",sizefp);
+                    printf("%d readed from file.\n",sizefp);
+                    
+                    if (sizefp == 0)
+                        return(INVALID_PARAMETERS_ERROR);
+                    if (sizefp != size_parts)
+                    {
+                        end = 1;
+                    }
+                    num++;
+                } 
+                num--;
+                allhash += CRC16ANSI(&opt_part,sizefp);
+                printf("allhash: %X\n",allhash);
+                make_part_option(&opt_part,num,COAP_PART_SIZE_1024,end);
+                size_parts_cur = sizefp;
+            }
+            fclose(fp);
         }
-        fclose(fp);
     }
     else
     {
         /* One or more of the necessary parameters are invalid.           */
         ret_val = INVALID_PARAMETERS_ERROR;
         //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
-        #ifdef DEBUG
-            printf("--//internal//--  Invalid parametest.\r\n\r");
-        #endif
+        DBG_LOG_WARNING("Invalid parametest.\n");
     }
-    //AddToTransmit("</CALLBACKWELLKNOWN>\r\n\r");
 
-    AddToTransmit("</SNAP>\r\n\r");
-    #ifdef DEBUG
-        printf("--//internal//-- Into END of Snap.\r\n\r");
-    #endif
+    AddToTransmit("</GETSNAP>\r\n\r");
+    DBG_LOG_DEBUG("Into END of GetSnap.\n");
     return(ret_val);
 }
 
