@@ -101,8 +101,8 @@ void Interface_Memory(void)
     AddCommand("/GET/STOPGENERATOR", "</stopgenerator>;if=\"generator\"", 
             StopGenerator); //выключение программы чтения файла на расберри
     #ifdef CPU
-        AddCommand("/GET/SNAP", "</snap/take>;if=\"video\"", Snap);
-        AddCommand("/GET/GETSNAP", "</snap/file>;if=\"video\"", GetSnap);
+        AddCommand("/GET/SNAP/FILE", "</snap/take>;if=\"video\"", Snap);
+        AddCommand("/GET/SNAP/TAKE", "</snap/file>;if=\"video\"", GetSnap);
         AddCommand("/GET/LIGHT", "</light>;if=\"lamp\"", Light);
         AddCommand("/GET/VIDEOTHREAD", "</videothread>;if=\"video\"", VIDEOThread);
         AddCommand("/GET/VERSION", "</version>", Version);
@@ -834,6 +834,7 @@ int AddCommand(char *CommandName, char *Link, CommandFunction_t CommandFunction)
                 umm_free((void *)comm);
                 return 1;
             }
+            DBG_LOG_INFO("%s\n",CommandName);
             DBG_LOG_INFO("Command added. \n");
             DBG_LOG_INFO((const char*)comm->CommandName);
 

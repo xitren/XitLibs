@@ -37,6 +37,7 @@
         <itemPath>../XitLib/ConfigMem.h</itemPath>
         <itemPath>../XitLib/DMAretransmitter.h</itemPath>
         <itemPath>../XitLib/DistCalc.h</itemPath>
+        <itemPath>../Worked/External/ExtFunctions.h</itemPath>
         <itemPath>../XitLib/FunctionsDiscovery.h</itemPath>
         <itemPath>../XitLib/Handler.h</itemPath>
         <itemPath>../XitLib/InOutBuffer.h</itemPath>
@@ -45,7 +46,6 @@
         <itemPath>../XitLib/PWMModule.h</itemPath>
         <itemPath>../XitLib/Packet.h</itemPath>
         <itemPath>../XitLib/StreamDataRecorder.h</itemPath>
-        <itemPath>../XitLib/External/UpdateModule.h</itemPath>
         <itemPath>../XitLib/UpdateModule.h</itemPath>
         <itemPath>../XitLib/VideoModule.h</itemPath>
         <itemPath>../XitLib/version.h</itemPath>
@@ -119,6 +119,8 @@
       </item>
       <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -128,8 +130,6 @@
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -293,6 +293,8 @@
       </item>
       <item path="../Worked/External/ExtFunctions.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="../Worked/External/ExtFunctions.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="../XitLib/CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -302,8 +304,6 @@
       <item path="../XitLib/DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/DistCalc.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="../XitLib/External/UpdateModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="../XitLib/FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>

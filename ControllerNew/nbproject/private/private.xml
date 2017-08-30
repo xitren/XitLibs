@@ -34,6 +34,7 @@
         <group name="XitLibs"/>
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/main.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/libraries/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/ExtFunctions.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/ControllerNew/ExtFunctions.h</file>
         </group>

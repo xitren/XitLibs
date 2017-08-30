@@ -1,4 +1,4 @@
-#Tue Aug 29 21:37:30 MSK 2017
+#Wed Aug 30 17:59:06 MSK 2017
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\jsonparser.h=c1492678563921
 c\:\\users\\toshiba\\documents\\git\\iot\\coap\\nbproject\\package-debug.bash=c1492682106051
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug_mc\\gnu_arm-windows\\crc16ansi.o.d=c1492678563733
@@ -21,7 +21,7 @@ d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs2\\iot_server_linux\\nb
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\tests\\file_cvep_test.c=c1492678564023
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug\\mingw-windows\\videomodule.o.d=c1492678563710
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs2\\xitlib\\dmaretransmitter.h=c1500990572309
-d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\eeg_evoker\\dist\\release\\gnu-linux\\libeeg_evoker.a=c1503914574735
+d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\eeg_evoker\\dist\\release\\gnu-linux\\libeeg_evoker.a=c1504032354428
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\iot_server_linux\\dist\\debug\\gnu-linux\\updateyr.sh=c1503914574960
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\222data.txt=c1492678562742
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug\\mingw-windows\\streamdatarecorder.o.d=c1492678563709
@@ -37,10 +37,11 @@ d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs2\\iot_server_linux\\nb
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\iot_server_linux\\build\\debug\\gnu-linux\\_ext\\8209c8dc\\extfunctions.o.d=c1503914574959
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\xitlibtypes.h=c1492678564026
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\xitlib\\inoutbuffer.h=c1503914575086
+d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\worked\\external\\extfunctions.h=c1504103794000
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\functionsdiscovery.h=c1492678563262
 c\:\\users\\toshiba\\documents\\git\\iot\\eeg_evoker\\nbproject\\makefile-impl.mk=c1492682102361
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug_windows\\mingw-windows\\configmem.o.d=c1492678977351
-d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\worked\\external\\extfunctions.c=c1503915157895
+d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\worked\\external\\extfunctions.c=c1504103794000
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\streamdatarecorder.h=c1492706294092
 c\:\\users\\toshiba\\documents\\git\\iot\\eeg_evoker\\nbproject\\package-release_mc.bash=c1492678559511
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\functionsdiscovery.c=c1492706600971
@@ -137,7 +138,7 @@ d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\xitlib\\models\\inclu
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs2\\xitlib\\streamdatarecorder.h=c1500990572394
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\tests\\ext_mem_test.c=c1492678563944
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\xitlib\\models\\include\\list.h=c1503914575115
-d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\iot_server_linux\\dist\\debug\\gnu-linux\\iot_server_linux=c1503914574962
+d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\iot_server_linux\\dist\\debug\\gnu-linux\\iot_server_linux=c1504104862969
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs2\\xitlib\\models\\include\\queue.h=c1500990572917
 c\:\\users\\toshiba\\documents\\git\\iot\\iot_server_linux\\nbproject\\makefile-impl.mk=c1492682186241
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\makefile=c1492678563652
@@ -266,7 +267,7 @@ c\:\\users\\toshiba\\documents\\git\\iot\\iot_server_linux\\nbproject\\makefile-
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug_linux\\cygwin-windows\\packet.o.d=c1492678563728
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\nbproject\\package-release_windows.bash=c1492682096852
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug_windows\\mingw-windows\\dmaretransmitter.o.d=c1492678977354
-d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\iot_server_linux\\main.c=c1504031845309
+d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\iot_server_linux\\main.c=c1504103794000
 d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\xitlib\\models\\include\\stack.h=c1503914575115
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug_linux\\cygwin-windows\\crc16ansi.o.d=c1492678563714
 VERSION=1.3
@@ -276,7 +277,7 @@ c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug_windows\\mingw-wi
 c\:\\users\\toshiba\\documents\\git\\iot\\iot_server_linux\\makefile=c1492678559967
 c\:\\users\\toshiba\\documents\\git\\iot\\eeg_evoker\\p300v5.h=c1492678559554
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\tests\\dma_test.c=c1492678563943
-d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\xitlib\\dist\\release_linux\\gnu-linux\\libxitlib.a=c1504031031545
+d\:\\users\\gusev_a\\documents\\netbeansprojects\\xitlibs\\xitlib\\dist\\release_linux\\gnu-linux\\libxitlib.a=c1504104635036
 c\:\\users\\toshiba\\documents\\git\\iot\\eeg_evoker\\p300v5.c=c1492678559554
 c\:\\users\\toshiba\\documents\\git\\iot\\eeg_evoker\\cvepv4_types.h=c1492678559430
 c\:\\users\\toshiba\\documents\\git\\iot\\xitlib\\build\\debug\\mingw-windows\\configmem.o.d=c1492678563704
