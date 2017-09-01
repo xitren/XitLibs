@@ -29,13 +29,7 @@
         </group>
         <group name="XitLibs"/>
         <group name="XitLib">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/IoT_Server_Linux/main.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/Worked/External/ExtFunctions.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.h</file>
         </group>
     </open-files>
 </project-private>

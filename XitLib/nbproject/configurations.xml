@@ -417,7 +417,7 @@
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
           <incDir>
             <pElem>../EEG_Evoker</pElem>
             <pElem>.</pElem>
@@ -949,7 +949,7 @@
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
           <incDir>
             <pElem>../EEG_Evoker</pElem>
             <pElem>.</pElem>
@@ -1503,7 +1503,7 @@
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
           <incDir>
             <pElem>../EEG_Evoker</pElem>
             <pElem>.</pElem>

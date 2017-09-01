@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=None-Linux
+CND_PLATFORM=GNU-Linux
 CND_DLIB_EXT=so
 CND_CONF=Release
 CND_DISTDIR=dist
@@ -53,7 +53,7 @@ FFLAGS=
 ASFLAGS=
 
 # Link Libraries and Options
-LDLIBSOPTIONS=../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a ../CoAP/dist/Release/None-Linux/libcoap.a
+LDLIBSOPTIONS=../EEG_Evoker/dist/Release/GNU-Linux/libeeg_evoker.a ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a ../CoAP/dist/Release/GNU-Linux/libcoap.a
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
@@ -63,7 +63,7 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../EEG_Evoker/dist/
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../XitLib/dist/Release_Linux/GNU-Linux/libxitlib.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../CoAP/dist/Release/None-Linux/libcoap.a
+${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ../CoAP/dist/Release/GNU-Linux/libcoap.a
 
 ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
@@ -72,12 +72,12 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o: ../Worked/External/ExtFunctions.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/1ba7ad3b
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o ../Worked/External/ExtFunctions.c
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o ../Worked/External/ExtFunctions.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -O2 -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 # Subprojects
 .build-subprojects:

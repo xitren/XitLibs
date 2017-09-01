@@ -86,6 +86,7 @@
       </toolsSet>
       <compileType>
         <cTool>
+          <developmentMode>6</developmentMode>
           <standard>3</standard>
           <incDir>
             <pElem>../EEG_Evoker</pElem>
@@ -206,6 +207,24 @@
         <cTool>
           <developmentMode>5</developmentMode>
           <standard>3</standard>
+          <incDir>
+            <pElem>../EEG_Evoker</pElem>
+            <pElem>../XitLib</pElem>
+            <pElem>../XitLib/External</pElem>
+            <pElem>../XitLib/coap</pElem>
+            <pElem>../XitLib/json</pElem>
+            <pElem>../XitLib/malloc</pElem>
+            <pElem>../XitLib/models/include</pElem>
+            <pElem>.</pElem>
+            <pElem>../Worked/External</pElem>
+          </incDir>
+          <preprocessorList>
+            <Elem>CPU</Elem>
+            <Elem>DEBUG</Elem>
+            <Elem>EXTMEMSERVER</Elem>
+            <Elem>P300</Elem>
+            <Elem>PLATFORM_LINUX</Elem>
+          </preprocessorList>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>

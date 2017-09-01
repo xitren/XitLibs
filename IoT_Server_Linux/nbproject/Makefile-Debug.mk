@@ -70,12 +70,12 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/iot_server_linux: ${OBJECTFILES}
 ${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o: ../Worked/External/ExtFunctions.c
 	${MKDIR} -p ${OBJECTDIR}/_ext/1ba7ad3b
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o ../Worked/External/ExtFunctions.c
+	$(COMPILE.c) -O3 -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/_ext/1ba7ad3b/ExtFunctions.o ../Worked/External/ExtFunctions.c
 
 ${OBJECTDIR}/main.o: main.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -g -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
+	$(COMPILE.c) -O3 -DCPU -DDEBUG -DEXTMEMSERVER -DP300 -DPLATFORM_LINUX -I../EEG_Evoker -I../XitLib -I../XitLib/External -I../XitLib/coap -I../XitLib/json -I../XitLib/malloc -I../XitLib/models/include -I. -I../Worked/External -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/main.o main.c
 
 # Subprojects
 .build-subprojects:
