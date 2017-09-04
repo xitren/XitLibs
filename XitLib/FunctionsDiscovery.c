@@ -1,3 +1,12 @@
+// ----------------------------------------------------------------------------
+//
+// FunctionsDiscovery.c - REST API for .WELL-KNOWN/CORE
+//
+// ----------------------------------------------------------------------------
+//
+// A.Gusev 04.09.2017 - Original
+//
+// ----------------------------------------------------------------------------
 
 /* Local headers -------------------------------------------------------------*/
 #include <stdio.h>
@@ -26,14 +35,6 @@ const char *path_well_core_clb="/CALLBACK/.WELL-KNOWN/CORE";
 int EEGGetFile(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
-
-//    if ((TempParam))
-//    {
-//        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-//    }
-//    else
-//    {
-//    }
     
     return(ret_val); 
 }
@@ -41,14 +42,6 @@ int EEGGetFile(ParameterList_t *TempParam)
 int EEGGetListFiles(ParameterList_t *TempParam)
 {
     int  ret_val = 0;
-
-//    if ((TempParam))
-//    {
-//        content_type = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-//    }
-//    else
-//    {
-//    }
     
     return(ret_val); 
 }
@@ -94,7 +87,6 @@ int QueryNodes(ParameterList_t *TempParam)
     memset(strbuf,0,80);
     
     DBG_LOG_DEBUG("Into QUERYNodes.\n");
-    //AddToTransmit("<NODES>\r\n\r");  // "<NODES>\r\n\r"     "{\n \"EEGBLOCK\": [\n"
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (NodesArray))
@@ -164,33 +156,32 @@ int FindUpdateServer()
     strptr = (char*)strbuf;
     
     DBG_LOG_DEBUG("Into FindUpdateServer.\n");
-//printf("array_size(NodesArray) %d\n",array_size(NodesArray));
-        if(NodesArray==NULL) 
+    if(NodesArray==NULL) 
+    {
+        DBG_LOG_WARNING("Nodes are null.\n");
+    }
+    else 
+    {
+
+        //printf("array_size(NodesArray) %d\n", array_size(NodesArray));
+        for (i=0;i < array_size(NodesArray);i++)
         {
-            DBG_LOG_WARNING("Nodes are null.\n");
-        }
-        else 
-        {
-            
-            //printf("array_size(NodesArray) %d\n", array_size(NodesArray));
-            for (i=0;i < array_size(NodesArray);i++)
+            array_get_at(NodesArray, i, (void**)&node);
+            //printf("array_size(node->proto) %d\n", array_size(node->proto));
+            for (j=0;j < array_size(node->proto);j++)
             {
-                array_get_at(NodesArray, i, (void**)&node);
-                //printf("array_size(node->proto) %d\n", array_size(node->proto));
-                for (j=0;j < array_size(node->proto);j++)
-                {
-                    array_get_at(node->proto, j, (void**)&proto);
-                    //printf("(void**)&proto %d node->proto %d\n", proto, node->proto);
-                    if(strcmp(proto->name,"/techupdate")==0) {
-                        DBG_LOG_DEBUG("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                        DBG_LOG_DEBUG("Tech Server IP: %s\n",node->ip);
-                        DBG_LOG_DEBUG("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
-                        SetUpdateServer(node->ip);
-						ret_val = 1;
-                    }
+                array_get_at(node->proto, j, (void**)&proto);
+                //printf("(void**)&proto %d node->proto %d\n", proto, node->proto);
+                if(strcmp(proto->name,"/techupdate")==0) {
+                    DBG_LOG_DEBUG("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                    DBG_LOG_DEBUG("Tech Server IP: %s\n",node->ip);
+                    DBG_LOG_DEBUG("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n");
+                    SetUpdateServer(node->ip);
+                                            ret_val = 1;
                 }
             }
         }
+    }
 
 
     return ret_val;
@@ -218,12 +209,6 @@ void put_node_msg(char *_ip,char *_name)
     }
     else
     {
-//        for (i=0;i < array_size(NodesArray);i++)
-//        {
-//            array_get_at(NodesArray, i, (void**)&node);
-//            array_remove_all_free(node->proto);
-//        }
-//        array_remove_all_free(NodesArray);
     }
     for (i=0;i < array_size(NodesArray);i++)
     {

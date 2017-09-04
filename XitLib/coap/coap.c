@@ -1,3 +1,12 @@
+// ----------------------------------------------------------------------------
+//
+// coap.c - REST api for embedded systems (microcontrollers)
+//
+// ----------------------------------------------------------------------------
+//
+// A.Gusev 04.09.2017 - Original
+//
+// ----------------------------------------------------------------------------
 
 /* Local headers -------------------------------------------------------------*/
 #include <stdio.h>
@@ -100,8 +109,6 @@ char* coap_check_ans(const char *other)
     for (i=0;i < array_size(AwaitedAnswersArray);i++)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
-//        DBG_LOG_TRACE("I %d: %6s(%d) <-> %6s(%d)\n",i,
-//                answer->p,answer->p,answer->used,answer->used);
         if (answer == NULL)
         {
             DBG_LOG_ERROR("answer is NULL\n");
@@ -194,7 +201,6 @@ void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
     if (bare)
     {
         printf("Bare.\n");
-//        DBG_LOG_DEBUG("buflen %d. %d\n",buflen, (buflen--) > 0);
         for(;(buflen) > 0;buflen--)
         {
             printf("%02X ",*buf++);
@@ -357,11 +363,9 @@ int coap_parseOption(coap_option_t *option, uint16_t *running_delta,
     if ((p + 1 + len) > (*buf + buflen))
         return COAP_ERR_OPTION_TOO_BIG;
 
-    //printf("option num=%d\r\n\r", delta + *running_delta);
     option->num = delta + *running_delta;
     option->buf.p = p+1;
     option->buf.len = len;
-    //coap_dump(p+1, len, false);
 
     // advance buf
     *buf = p + 1 + len;
@@ -429,7 +433,6 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
 
     if (0 != (rc = coap_parseHeader(&pkt->hdr, buf, buflen)))
         return rc;
-//    coap_dumpHeader(&hdr);
     if (0 != (rc = coap_parseToken(pkt->tok_p, &pkt->tok_len, &pkt->hdr, buf, buflen)))
         return rc;
     pkt->numopts = MAXOPT;
@@ -437,7 +440,6 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
         return rc;
     DBG_LOG_DEBUG("coap_parseOptionsAndPayload %d bytes hash %04X.\n",
             pkt->payload.len,CRC16ANSI(pkt->payload.p,pkt->payload.len));
-//    coap_dumpOptions(opts, numopt);
     return 0;
 }
 
@@ -579,7 +581,6 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
         *buflen = opts_len + 4;
         DBG_LOG_DEBUG("awaited_answers_cnt %d && callback %s.\n"
                 , (int)array_size(AwaitedAnswersArray), callback);
-    //if ((awaited_answers_cnt < MAXWAIT) && (callback))
     if (callback)
     {
         answer = (coap_token_record *)umm_calloc(1,sizeof(coap_token_record));
@@ -648,7 +649,6 @@ int make_part_option(coap_option_t *opt_part, uint32_t num,
         value = (num << 4) + sizep;
     else
         value = (num << 4) + sizep + 8;
-//    part_buff[2] = (uint8_t)(value >> 16);
     part_buff[0] = (uint8_t)(value >> 8);
     part_buff[1] = (uint8_t)(value);
     opt_part->num = COAP_OPTION_BLOCK2;
@@ -746,7 +746,6 @@ int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         pkt->opts[pkt->numopts].buf.p = opt_part->buf.p;
         pkt->opts[pkt->numopts].buf.len = opt_part->buf.len;
         pkt->numopts++;
-        //printf("%02X %02X %02X \n",opt_part->buf.p[0],opt_part->buf.p[1],opt_part->buf.p[2]);
     }
     pkt->payload.p = content;
     pkt->payload.len = content_len;
@@ -802,8 +801,7 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
 }
 
 char bufhr[200];
-// FIXME, if this looked in the table at the path before the method then
-// it could more easily return 405 errors
+
 int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, 
                                         coap_packet_t *outpkt,
                                         ParserCallback_t callback_function,
@@ -930,25 +928,9 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             }
             scratch->p = scratch_raw;
             scratch->len = inpkt->payload.len;
-//            if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_CONTENT_FORMAT, &count)))
-//            {
-//                for (i=0;i<count;i++)
-//                {
-//                    if ((((opt[i].buf.p[0]) << 8)+(opt[i].buf.p[1])) 
-//                            == COAP_CONTENTTYPE_TEXT_PLAIN)
-//                        contentistext = 1;
-//                }
-//            }
-//            if (contentistext)
-//            {
-//                strncat(bufhr, "&", 1);
-//                strncat(bufhr, "value=", 6);
-//                strncat(bufhr, (char*)inpkt->payload.p, inpkt->payload.len);
-//            }
-//            else
-                memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);
+            memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);
             DBG_LOG_DEBUG("ProtocolHandler4 %d bytes hash %04X.\n",
-                scratch->len,CRC16ANSI(scratch->p,scratch->len));
+                            scratch->len,CRC16ANSI(scratch->p,scratch->len));
             #ifdef DEBUG
                 DBG_LOG_DEBUG("Found.\n");
             #endif

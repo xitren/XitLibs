@@ -1,3 +1,13 @@
+// ----------------------------------------------------------------------------
+//
+// CommandModule.c - Implements a command module with link API and shedule
+//                   deque
+//
+// ----------------------------------------------------------------------------
+//
+// A.Gusev 04.09.2017 - Original
+//
+// ----------------------------------------------------------------------------
 
 /* Local headers -------------------------------------------------------------*/
 #include <string.h>
@@ -69,7 +79,6 @@ void Interface_Memory(void)
     ClearCommands();
     ClearSchedule();
     AddCommand("/RESET", "</reset>", Reset);
-//    AddCommand("/QUERY/UPDATE", "</reset>", QueryUpdate);
     AddCommand("/GET/MEMORY", "</memory>", MEMRead);
     AddCommand("/PUT/MEMORY", "</memory>", MEMWrite);
     AddCommand("/GET/LOG", "</log>", LOGRead);
@@ -94,12 +103,12 @@ void Interface_Memory(void)
         AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
         AddCommand("/GET/EEG/RECORD", "</eeg/record>;if=\"neuro\"", GetRecord); 
         AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
-                GetConcreteBlock); //передача последнего блока семплов ЭЭГ
+                GetConcreteBlock);
     }
     AddCommand("/GET/RUNGENERATOR", "</rungenerator>;if=\"generator\"", 
-            RunGenerator); //запуск программы чтения файла на расберри
+            RunGenerator);
     AddCommand("/GET/STOPGENERATOR", "</stopgenerator>;if=\"generator\"", 
-            StopGenerator); //выключение программы чтения файла на расберри
+            StopGenerator);
     #ifdef CPU
         AddCommand("/GET/SNAP/FILE", "</snap/take>;if=\"video\"", Snap);
         AddCommand("/GET/SNAP/TAKE", "</snap/file>;if=\"video\"", GetSnap);
@@ -118,10 +127,6 @@ void Interface_Memory(void)
     #endif
 
     #ifdef PLATFORM_LINUX
-/*
-        AddCommand("/GET/VIDEOLINE", VIDEOLNRead);
-        printf("\t/GET/VIDEOLINE\r\n\r");
-*/
     #endif
    
 }
@@ -138,7 +143,7 @@ int Reset(ParameterList_t *TempParam)
         #ifdef CPU
             exit(0);
         #else
-            HAL_NVIC_SystemReset();
+            //HAL_NVIC_SystemReset();
         #endif
     }
     else
@@ -866,14 +871,11 @@ CommandFunction_t FindCommand(char *Command)
     {
         /* Now loop through each element in the table to see if there is  */
         /* a match.                                                       */
-        
-//        printf("find\n");
         for(Index=0,ret_val=NULL;
                 ((Index<array_size(CommandTableArray)) && (!ret_val));
                   Index++)
         {
             array_get_at(CommandTableArray, Index, (void**)&Comm);
-//            printf("%d of %d\n",Index,array_size(CommandTableArray));
             if((strlen(Comm->CommandName) == strlen(Command)) 
                    && (memcmp(Command, Comm->CommandName, 
                               strlen(Comm->CommandName)) == 0))
@@ -916,7 +918,6 @@ void AddToSchedule(ScheduleFunction_t ScheduleFunction)
         umm_free((void *)comm);
         return;
     }
-    //DBG_LOG_INFO("Schedule updated now %d. \n",deque_size(ScheduleTableDeque));
     return;
 }
 void ClearSchedule(void)
@@ -934,7 +935,6 @@ void ExecuteSchedule(void)
 {
     ScheduleFunction_t  *Comm;
 
-    //DBG_LOG_TRACE("Into ExecuteSchedule.\n");
     if ((ScheduleTableDeque == NULL))
     {
         DBG_LOG_ERROR("ScheduleTableDeque argument is NULL\n");

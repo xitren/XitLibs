@@ -1,3 +1,12 @@
+// ----------------------------------------------------------------------------
+//
+// LogModule.c - File and in meory logger with 7 levels
+//
+// ----------------------------------------------------------------------------
+//
+// A.Gusev 04.09.2017 - Original
+//
+// ----------------------------------------------------------------------------
 
 /* Local headers -------------------------------------------------------------*/
 #include <time.h>
@@ -139,7 +148,6 @@ int LOGRead(ParameterList_t *TempParam)
     /* this function appear to be semi-valid.                            */
     if ((TempParam))
     {
-//        WriteToFile(def_filename);
         log = ProceedLog(&N);
         DBG_LOG_TRACE("N=%d.\n",N);
         log[N] = 0;
