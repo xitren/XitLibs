@@ -84,7 +84,7 @@ int main(int argc, char** argv) {
     printf("Imager ok.\n");
     InitHandler(EEG);
     printf("Init XitLib ok.\n");
-    EEGRecorderInit(0,250);
+    EEGRecorderInit(1,250);
     printf("EEG recorder ok.\n");
     
     printf(VERSION);

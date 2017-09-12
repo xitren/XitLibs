@@ -52,6 +52,7 @@
         </group>
         <group name="XitLibs"/>
         <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/Worked/External/ExtFunctions.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/IoT_Server/main.c</file>
         </group>
     </open-files>

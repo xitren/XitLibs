@@ -200,7 +200,7 @@ void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
     }
     if (bare)
     {
-        printf("Bare.\n");
+        printf("Bare.\n"); 
         for(;(buflen) > 0;buflen--)
         {
             printf("%02X ",*buf++);
@@ -864,6 +864,23 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             {
                 strncat(bufhr,"&", 1);
                 strncat(bufhr,(char const *)opt[i].buf.p, opt[i].buf.len);
+            }
+        }
+        if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_OBSERVE, &count)))
+        {
+            for (i=0;i<count;i++)
+            {
+                strncat(bufhr,"&observe=", 9);
+                if (opt[i].buf.len == 0)
+                {
+                    strncat(bufhr,"enabled", 7);
+                }
+                else
+                    for (j=0;j<opt[i].buf.len;j++)
+                    {
+                        sprintf((bufhr+strlen(bufhr)),"%02X"
+                                ,(uint8_t)((opt[i].buf.p[j])));
+                    }
             }
         }
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_BLOCK2, &count)))

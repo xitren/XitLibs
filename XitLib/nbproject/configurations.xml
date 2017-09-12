@@ -1525,7 +1525,7 @@
           <developmentMode>5</developmentMode>
         </ccTool>
         <fortranCompilerTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
         </fortranCompilerTool>
         <asmTool>
           <developmentMode>5</developmentMode>

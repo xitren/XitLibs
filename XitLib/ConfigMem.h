@@ -122,24 +122,27 @@ typedef enum
   REG_Imp_CH4            =       0x00000050,
   REG_Imp_CH5            =       0x00000051,
   REG_Imp_CH6            =       0x00000052,
-  REG_Imp_CH7            =       0x00000053,
+  REG_Imp_CH7            =       0x00000053,  
+  REG_Imp_CH8            =       0x00000054,
+  REG_Imp_CH9            =       0x00000055,          
+  REG_Imp_CH10           =       0x00000056, 
           
-  REG_ADC_ORDER          =       0x00000054,
-  REG_ADC_REG15          =       0x00000055, //REG_ADS_CH1SET
-  REG_ADC_REG16          =       0x00000056, //REG_ADS_CH2SET
-  REG_ADC_REG17          =       0x00000057, //REG_ADS_CH3SET
-  REG_ADC_REG18          =       0x00000058, //REG_ADS_CH4SET
-  REG_ADC_REG19          =       0x00000059, //REG_ADS_CH5SET
-  REG_ADC_REG20          =       0x0000005A, //REG_ADS_CH6SET
-  REG_ADC_REG21          =       0x0000005B, //REG_ADS_CH7SET
-  REG_ADC_REG22          =       0x0000005C, //REG_ADS_CH8SET
+  REG_ADC_ORDER          =       0x00000057,
+  REG_ADC_REG15          =       0x00000058, //REG_ADS_CH1SET
+  REG_ADC_REG16          =       0x00000059, //REG_ADS_CH2SET
+  REG_ADC_REG17          =       0x0000005A, //REG_ADS_CH3SET
+  REG_ADC_REG18          =       0x0000005B, //REG_ADS_CH4SET
+  REG_ADC_REG19          =       0x0000005C, //REG_ADS_CH5SET
+  REG_ADC_REG20          =       0x0000005D, //REG_ADS_CH6SET
+  REG_ADC_REG21          =       0x0000005E, //REG_ADS_CH7SET
+  REG_ADC_REG22          =       0x0000005F, //REG_ADS_CH8SET
           
-  REG_POS_X              =       0x0000005D,
-  REG_POS_Y              =       0x0000005E, 
-  REG_POS_Z              =       0x0000005F, 
-  REG_POS_Alpha          =       0x00000060,
-  REG_POS_Beta           =       0x00000061,
-  REG_POS_Gamma          =       0x00000062
+  REG_POS_X              =       0x00000060,
+  REG_POS_Y              =       0x00000061, 
+  REG_POS_Z              =       0x00000062, 
+  REG_POS_Alpha          =       0x00000063,
+  REG_POS_Beta           =       0x00000064,
+  REG_POS_Gamma          =       0x00000065
 } RegDef;
 /*============================================================================*/
 

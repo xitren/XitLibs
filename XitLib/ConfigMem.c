@@ -110,6 +110,9 @@ void InitCfgMem(void)
   config_reg[REG_Imp_CH5] = 0;
   config_reg[REG_Imp_CH6] = 0;
   config_reg[REG_Imp_CH7] = 0;
+  config_reg[REG_Imp_CH8] = 0;
+  config_reg[REG_Imp_CH9] = 0;
+  config_reg[REG_Imp_CH10] = 0;
   
   config_reg[REG_EEG_File] = 0;
   config_reg[REG_UPD_File] = 0;
