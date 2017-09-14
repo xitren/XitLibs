@@ -1290,6 +1290,7 @@ inline void *umm_malloc( size_t size )
 inline void *umm_calloc( size_t num, size_t sizen )
 {
     void * ptr = 0;
+    DBG_LOG_TRACE("before umm_calloc\n",(int)ptr);
     ptr = calloc(num, sizen);
     DBG_LOG_TRACE("%d umm_calloc\n",(int)ptr);
     return ptr;

@@ -30,13 +30,17 @@
 #include "ImageVisualise.h"
 #include "version.h"
 
+CRITICAL_SECTION CriticalSection; 
+
 char commandUpd[] = "/QUERY/UPDATE?repeat=3&type=0\0";
 
 DWORD WINAPI ThreadFunc1s()
 {
     while (1)
     {
+        EnterCriticalSection(&CriticalSection); 
         SecClockHandler();
+        LeaveCriticalSection(&CriticalSection);
         Sleep(1000);
     }
     return 0;
@@ -45,8 +49,10 @@ DWORD WINAPI ThreadFunc10s()
 {
     while (1)
     {
-//        function_beakon();
+        EnterCriticalSection(&CriticalSection); 
+        function_beakon();
         //function_update();
+        LeaveCriticalSection(&CriticalSection);
         Sleep(10000);
     }
     return 0;
@@ -55,7 +61,9 @@ DWORD WINAPI ThreadFunc250ms()
 {
     while (1)
     {
+        EnterCriticalSection(&CriticalSection); 
         SampleHandler();
+        LeaveCriticalSection(&CriticalSection);
         Sleep(4);
 //        devp300showme();
 //        //printf("%d, %d, %d ,%d\n",selection[0],selection[1],selection[2],selection[3]);
@@ -67,6 +75,8 @@ DWORD WINAPI ThreadFuncUDP()
     while (1)
     {
         UserProtocolHandlerThread();
+//        EnterCriticalSection(&CriticalSection); 
+//        LeaveCriticalSection(&CriticalSection);
     }
     return 0;
 }
@@ -86,8 +96,12 @@ int main(int argc, char** argv) {
     printf("Init XitLib ok.\n");
     EEGRecorderInit(1,250);
     printf("EEG recorder ok.\n");
+    WriteMem(REG_LOG_LVL,5);
     
     printf(VERSION);
+    if (!InitializeCriticalSectionAndSpinCount(&CriticalSection, 
+        0x00000400) ) 
+        return 0;
     
     uint32_t amplitude[7] = {10000,10000,100000,1000000,100000,10000,10000};
     uint32_t frequency[7] = {10,20,10,10,30,100,5};
@@ -120,13 +134,15 @@ int main(int argc, char** argv) {
          &IDThread);              // returns thread identifier
     
 //    function_update();
-    function_beakon();
+//    function_beakon();
     //CommandLineInterpreter(commandUpd);
     while(1)
     {
+        EnterCriticalSection(&CriticalSection); 
         UserOperationHandler();
         CalculationHandler();
         UserProtocolHandler();
+        LeaveCriticalSection(&CriticalSection);
         //umm_info(0,1);
         //DBG_LOG_DEBUG("Executing Schedule.\n");
 //        ExecuteSchedule();

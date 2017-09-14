@@ -110,11 +110,14 @@
         </group>
         <group name="XitLibs"/>
         <group name="XitLib">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/LogModule.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/models/src/array.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Packet.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>

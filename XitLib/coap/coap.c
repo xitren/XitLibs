@@ -805,7 +805,7 @@ char bufhr[200];
 int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, 
                                         coap_packet_t *outpkt,
                                         ParserCallback_t callback_function,
-                                        char *_ip)
+                                        char *_ip,uint32_t port)
 {
     DBG_LOG_DEBUG("Into coap_handle_req.\n");
         DBG_LOG_DEBUG("ProtocolHandler2-in %d bytes hash %04X.\n",
@@ -858,6 +858,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
         strncat(bufhr,"?", 1);
         strncat(bufhr,"ip=", 3);
         strncat(bufhr,_ip, strlen(_ip));
+        strncat(bufhr,"&port=", 6);
+        sprintf((bufhr+strlen(bufhr)),"%d",port);
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_URI_QUERY, &count)))
         {
             for (i=0;i<count;i++)

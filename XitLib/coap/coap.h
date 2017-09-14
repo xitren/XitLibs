@@ -194,7 +194,7 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
 int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, 
                                         coap_packet_t *outpkt,
                                         ParserCallback_t callback_function,
-                                        char *_ip);
+                                        char *_ip,uint32_t port);
 void coap_option_nibble(uint32_t value, uint8_t *nibble);
 void coap_setup(void);
 Array *coap_get_waiting_list(void);

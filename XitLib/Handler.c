@@ -236,7 +236,7 @@ inline void ProtocolHandler(void) {
                 DBG_LOG_DEBUG("ProtocolHandler2 %d bytes hash %04X.\n",
                     pkt.payload.len,CRC16ANSI(pkt.payload.p,pkt.payload.len));
                 coap_handle_req(&scratch_buf, &pkt, &rsppkt,
-                        CommandLineInterpreter,ip);
+                        CommandLineInterpreter,ip,port);
                 size_t rsplen = sizeof (scratch_raw);
 
                 uint32_t cmdlen;

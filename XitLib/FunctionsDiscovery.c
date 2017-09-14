@@ -210,6 +210,7 @@ void put_node_msg(char *_ip,char *_name)
     else
     {
     }
+    DBG_LOG_ERROR("before find\n");
     for (i=0;i < array_size(NodesArray);i++)
     {
         array_get_at(NodesArray, i, (void**)&node);
@@ -224,6 +225,7 @@ void put_node_msg(char *_ip,char *_name)
             break;
         }        
     }
+    DBG_LOG_ERROR("after find\n");
     if (ip_id < 0)
     {
         node = (function_node *)umm_calloc(1,sizeof(function_node));
@@ -355,8 +357,22 @@ void function_beakon(void)
     int rc,i;
     #ifdef CPU
     coap_buffer_t tokfb;
+    function_node *node;
     
     DBG_LOG_DEBUG("Into function_beakon.\n");
+    if (NodesArray != 0)
+    {
+        for (i=0;i < array_size(NodesArray);i++)
+        {
+            DBG_LOG_DEBUG("array_get_at.\n");
+            array_get_at(NodesArray, i, (void**)&node);
+            DBG_LOG_DEBUG("array_remove_all_free.\n");
+            array_remove_all_free(node->proto);
+        }
+        DBG_LOG_DEBUG("array_remove_all_free.\n");
+        array_remove_all_free(NodesArray);
+        DBG_LOG_DEBUG("pktlen.\n");
+    }
     pktlen = sizeof(scratch_raw);
     opt_path.num = COAP_OPTION_URI_PATH;
     opt_path.buf.len = strlen(path_well_core);
