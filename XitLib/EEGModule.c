@@ -373,7 +373,8 @@ void SendEEGSamples() {
     
     char *buffer[10];
     char buffer2[1024]="";
-    char message[2048]="";
+    char message[4096]="";
+    size_t data_len=0;
     
     if(subscribers!=NULL) {
     
@@ -389,20 +390,21 @@ void SendEEGSamples() {
             
             root = cJSON_CreateObject();
             datablock = cJSON_CreateArray();
-            snprintf(buffer2,STRING_SIZE,"{\"DATABLOCK\": [\n");
+            data_len += snprintf(buffer2,STRING_SIZE,"{\"DATABLOCK\": [\n");
             strcat(message,buffer2);
-            for (int n =0; n<(l/8); n++) {
+            int n;
+            for (n =0; n<(l/8); n++) {
                 
                 
-                snprintf(buffer2,STRING_SIZE,"   {\"data\": [%d, %d, %d, %d, %d, %d, %d]}",((int*)scratch_raw)[n*8+0],((int*)scratch_raw)[n*8+1],((int*)scratch_raw)[n*8+2],((int*)scratch_raw)[n*8+3],((int*)scratch_raw)[n*8+4],((int*)scratch_raw)[n*8+5],((int*)scratch_raw)[n*8+6]);
+                data_len += snprintf(buffer2,STRING_SIZE,"   {\"sample\": %d, \"data\": [%d, %d, %d, %d, %d, %d, %d]}",n,((int*)scratch_raw)[n*8+0],((int*)scratch_raw)[n*8+1],((int*)scratch_raw)[n*8+2],((int*)scratch_raw)[n*8+3],((int*)scratch_raw)[n*8+4],((int*)scratch_raw)[n*8+5],((int*)scratch_raw)[n*8+6]);
                 //printf("buffer2 %s\n", buffer2);
                 strcat(message,buffer2);
                 if (n!=(l/8)-1) {
-                   snprintf(buffer2,STRING_SIZE,",\n");
+                   data_len += snprintf(buffer2,STRING_SIZE,",\n");
                    strcat(message,buffer2);
                 }
                 else {
-                   snprintf(buffer2,STRING_SIZE,"\n ]\n}");
+                   data_len += snprintf(buffer2,STRING_SIZE,"\n ]\n}");
                    strcat(message,buffer2);
                 }
  
@@ -412,7 +414,7 @@ void SendEEGSamples() {
 
             }
 
-            SendToSubsribers(message);
+            SendToSubsribers(message, data_len);
             
         }
             
@@ -433,7 +435,7 @@ int CheckEEGStatus() {
 }
     
 
-void SendToSubsribers(char *data) {
+void SendToSubsribers(char *data,size_t data_len) {
     ArrayIter ai;
     array_iter_init(&ai, subscribers);
     size_t size;
@@ -453,14 +455,14 @@ void SendToSubsribers(char *data) {
             array_get_at(array, 0, (void*) &str);
             array_get_at(array, 1, (void*) &port);
             array_get_at(array, 2, (void*) &token);
-            sendEEGNews(port, str, token, data);
+            sendEEGNews(port, str, token, data, data_len);
         }
     }
 }
 
-void sendEEGNews(int port, char *address, char *token, uint8_t *data) {
+void sendEEGNews(int port, char *address, char *token, uint8_t *data,size_t data_len) {
     int rc;
-    char command[100];
+    uint8_t observer_data[3];
     //char message[1000];
     
     //printf("Sending message to 40\n");
@@ -509,22 +511,28 @@ void sendEEGNews(int port, char *address, char *token, uint8_t *data) {
     pkt.tok_len = 2;
     memcpy(pkt.tok_p, token, pkt.tok_len);
     
+    coap_option_t opt_obs;
+    ((uint16_t*)observer_data)[0] = GetClock();
+    opt_obs.num = 6;
+    opt_obs.buf.p = (uint8_t *)observer_data;
+    opt_obs.buf.len = 2;
+            
     coap_make_response(&scratch_buf, &pkt,
-        0,  (uint8_t*)data, strlen(data), 
+        &opt_obs,  (uint8_t*)data, data_len, 
         0, id_out+=5, pkt.tok_p, pkt.tok_len, 
         COAP_RSPCODE_CONTENT, COAP_CONTENTTYPE_APPLICATION_JSON);
     
     pktlen = 4096;
+    scratch_buf.len = 4096;
 
 /*
     printf("patlen= %d\n",pktlen);
 */
 
-
-    if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, NULL, NULL)))
+    if (!(rc = coap_build(scratch_raw, &scratch_buf.len, &pkt, NULL, NULL)))
     {
         printf("Transfering.\n");
-        TransferUDP((uint8_t*)scratch_raw,pktlen,address,port);
+        TransferUDP((uint8_t*)scratch_raw,scratch_buf.len,address,port);
     }
     else { 
         printf("Don't want to build message.\n");
@@ -535,7 +543,7 @@ void sendEEGNews(int port, char *address, char *token, uint8_t *data) {
 //        printf();
     #ifdef DEBUG
         DBG_LOG_DEBUG("Sending: ");
-        coap_dump(scratch_raw, pktlen, true);
+        coap_dump(scratch_raw, scratch_buf.len, true);
     #endif
     //updateStatus = 2;
     return;

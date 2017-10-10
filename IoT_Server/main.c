@@ -105,6 +105,8 @@ int main(int argc, char** argv) {
         0x00000400) ) 
         return 0;
     
+    AddCommand("/GET/SUBSCRIBEEEGFILE", "</subscribeeegfile>", SubscribeEEGFile); 
+        
     uint32_t amplitude[7] = {10000,10000,100000,1000000,100000,10000,10000};
     uint32_t frequency[7] = {10,20,10,10,30,100,5};
     
