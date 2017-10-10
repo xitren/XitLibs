@@ -32,6 +32,7 @@
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DMAretransmitter.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
+      <itemPath>EEGModule.c</itemPath>
       <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
@@ -206,6 +207,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -473,6 +476,8 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
@@ -739,6 +744,8 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
@@ -943,7 +950,7 @@
     </conf>
     <conf name="Release_Linux" type="3">
       <toolsSet>
-        <compilerSet>GNU|GNU</compilerSet>
+        <compilerSet>Cygwin|Cygwin</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -1005,6 +1012,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1293,6 +1302,8 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
@@ -1559,6 +1570,8 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
@@ -1815,6 +1828,8 @@
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>

@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DMAretransmitter.o \
 	${OBJECTDIR}/DistCalc.o \
+	${OBJECTDIR}/EEGModule.o \
 	${OBJECTDIR}/FunctionsDiscovery.o \
 	${OBJECTDIR}/Handler.o \
 	${OBJECTDIR}/InOutBuffer.o \
@@ -137,6 +138,11 @@ ${OBJECTDIR}/DistCalc.o: DistCalc.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
+
+${OBJECTDIR}/EEGModule.o: EEGModule.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EEGModule.o EEGModule.c
 
 ${OBJECTDIR}/FunctionsDiscovery.o: FunctionsDiscovery.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -396,6 +402,19 @@ ${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c
 	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc_nomain.o DistCalc.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
+	fi
+
+${OBJECTDIR}/EEGModule_nomain.o: ${OBJECTDIR}/EEGModule.o EEGModule.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/EEGModule.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/EEGModule_nomain.o EEGModule.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/EEGModule.o ${OBJECTDIR}/EEGModule_nomain.o;\
 	fi
 
 ${OBJECTDIR}/FunctionsDiscovery_nomain.o: ${OBJECTDIR}/FunctionsDiscovery.o FunctionsDiscovery.c 

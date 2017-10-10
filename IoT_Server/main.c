@@ -28,6 +28,7 @@
 #include "CommandModule.h"
 #include "ExtFunctions.h"
 #include "ImageVisualise.h"
+#include "EEGModule.h"
 #include "version.h"
 
 CRITICAL_SECTION CriticalSection; 
@@ -63,6 +64,7 @@ DWORD WINAPI ThreadFunc250ms()
     {
         EnterCriticalSection(&CriticalSection); 
         SampleHandler();
+        SendEEGSamples();
         LeaveCriticalSection(&CriticalSection);
         Sleep(4);
 //        devp300showme();
