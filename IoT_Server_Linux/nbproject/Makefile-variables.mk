@@ -15,13 +15,13 @@ CND_PACKAGE_DIR_Debug=dist/Debug/GNU-Linux/package
 CND_PACKAGE_NAME_Debug=iotserverlinux.tar
 CND_PACKAGE_PATH_Debug=dist/Debug/GNU-Linux/package/iotserverlinux.tar
 # Release configuration
-CND_PLATFORM_Release=GNU-Linux
-CND_ARTIFACT_DIR_Release=dist/Release/GNU-Linux
+CND_PLATFORM_Release=None-Linux
+CND_ARTIFACT_DIR_Release=dist/Release/None-Linux
 CND_ARTIFACT_NAME_Release=iot_server_linux
-CND_ARTIFACT_PATH_Release=dist/Release/GNU-Linux/iot_server_linux
-CND_PACKAGE_DIR_Release=dist/Release/GNU-Linux/package
+CND_ARTIFACT_PATH_Release=dist/Release/None-Linux/iot_server_linux
+CND_PACKAGE_DIR_Release=dist/Release/None-Linux/package
 CND_PACKAGE_NAME_Release=iotserverlinux.tar
-CND_PACKAGE_PATH_Release=dist/Release/GNU-Linux/package/iotserverlinux.tar
+CND_PACKAGE_PATH_Release=dist/Release/None-Linux/package/iotserverlinux.tar
 #
 # include compiler specific variables
 #
