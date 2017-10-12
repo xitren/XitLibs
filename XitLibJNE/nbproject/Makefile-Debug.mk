@@ -18,10 +18,10 @@ CC=gcc
 CCC=g++
 CXX=g++
 FC=gfortran
-AS=ld
+AS=as
 
 # Macros
-CND_PLATFORM=MinGW_32-Windows
+CND_PLATFORM=Cygwin-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug
 CND_DISTDIR=dist
@@ -39,7 +39,7 @@ OBJECTFILES= \
 
 
 # C Compiler Flags
-CFLAGS=-m32 -fPIC
+CFLAGS=-m64 -fPIC
 
 # CC Compiler Flags
 CCFLAGS=

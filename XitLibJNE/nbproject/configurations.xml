@@ -31,7 +31,7 @@
   <confs>
     <conf name="Debug" type="2">
       <toolsSet>
-        <compilerSet>MinGW_32|MinGW</compilerSet>
+        <compilerSet>Cygwin|Cygwin</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
         <prependToolCollectionPath>false</prependToolCollectionPath>
@@ -39,7 +39,7 @@
       <compileType>
         <cTool>
           <developmentMode>5</developmentMode>
-          <architecture>1</architecture>
+          <architecture>2</architecture>
           <standard>3</standard>
           <commandlineTool>gcc</commandlineTool>
           <incDir>

@@ -7,13 +7,13 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug configuration
-CND_PLATFORM_Debug=MinGW_32-Windows
-CND_ARTIFACT_DIR_Debug=dist/Debug/MinGW_32-Windows
+CND_PLATFORM_Debug=Cygwin-Windows
+CND_ARTIFACT_DIR_Debug=dist/Debug/Cygwin-Windows
 CND_ARTIFACT_NAME_Debug=libXitLibJNE.dll
-CND_ARTIFACT_PATH_Debug=dist/Debug/MinGW_32-Windows/libXitLibJNE.dll
-CND_PACKAGE_DIR_Debug=dist/Debug/MinGW_32-Windows/package
+CND_ARTIFACT_PATH_Debug=dist/Debug/Cygwin-Windows/libXitLibJNE.dll
+CND_PACKAGE_DIR_Debug=dist/Debug/Cygwin-Windows/package
 CND_PACKAGE_NAME_Debug=libXitLibJNE.dll.tar
-CND_PACKAGE_PATH_Debug=dist/Debug/MinGW_32-Windows/package/libXitLibJNE.dll.tar
+CND_PACKAGE_PATH_Debug=dist/Debug/Cygwin-Windows/package/libXitLibJNE.dll.tar
 # Release configuration
 CND_PLATFORM_Release=Cygwin-Windows
 CND_ARTIFACT_DIR_Release=dist/Release/Cygwin-Windows
