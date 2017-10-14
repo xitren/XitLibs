@@ -82,9 +82,6 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/tests/models_test.c</file>
         </group>
         <group name="XitLibs"/>
-        <group name="Lib">
-            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/EEGModule.c</file>
-        </group>
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/VideoModule.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.c</file>
@@ -98,6 +95,12 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Packet.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/coap/coap.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
+        </group>
+        <group name="Lib">
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/Handler.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/coap/coap.h</file>
         </group>
     </open-files>
 </project-private>
