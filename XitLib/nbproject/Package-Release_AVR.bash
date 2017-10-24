@@ -6,8 +6,8 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=MinGW-Windows
-CND_CONF=Debug_Windows
+CND_PLATFORM=WinAVR-Windows
+CND_CONF=Release_AVR
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 CND_DLIB_EXT=dll

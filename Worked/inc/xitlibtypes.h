@@ -10,7 +10,10 @@
 
 /* Public types --------------------------------------------------------------*/
 typedef unsigned char     uint8_t;
-typedef unsigned short  uint16_t;
+#ifdef AVR
+#else
+    typedef unsigned short  uint16_t;
+#endif
 #ifdef PLATFORM_LINUX
     typedef unsigned int  uint32_t;
 #else

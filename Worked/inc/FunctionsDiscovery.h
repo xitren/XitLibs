@@ -1,3 +1,8 @@
+// ----------------------------------------------------------------------------
+//
+// FunctionsDiscovery.h - REST API for .WELL-KNOWN/CORE
+//
+// ----------------------------------------------------------------------------
 
 #ifndef FUNCTIONSDISCOVERY_H
 #define FUNCTIONSDISCOVERY_H

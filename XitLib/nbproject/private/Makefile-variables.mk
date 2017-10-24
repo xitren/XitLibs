@@ -10,3 +10,4 @@
 # Debug_MC configuration
 # Release_MC configuration
 # Release_Linux_EV3 configuration
+# Release_AVR configuration

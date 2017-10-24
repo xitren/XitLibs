@@ -14,14 +14,14 @@ GREP=grep
 NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=gcc
-CCC=g++
-CXX=g++
+CC=avr-gcc
+CCC=avr-g++.exe
+CXX=avr-g++.exe
 FC=gfortran
-AS=as
+AS=avr-ld
 
 # Macros
-CND_PLATFORM=MinGW-Windows
+CND_PLATFORM=WinAVR-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Release_Windows
 CND_DISTDIR=dist
@@ -52,8 +52,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/VideoModule.o \
 	${OBJECTDIR}/coap/coap.o \
 	${OBJECTDIR}/generatorModule.o \
-	${OBJECTDIR}/json/cJSON.o \
-	${OBJECTDIR}/json/cJSON_Utils.o \
 	${OBJECTDIR}/malloc/umm_malloc.o \
 	${OBJECTDIR}/models/src/array.o \
 	${OBJECTDIR}/models/src/common.o \
@@ -198,16 +196,6 @@ ${OBJECTDIR}/generatorModule.o: generatorModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
-
-${OBJECTDIR}/json/cJSON.o: json/cJSON.c
-	${MKDIR} -p ${OBJECTDIR}/json
-	${RM} "$@.d"
-	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON.o json/cJSON.c
-
-${OBJECTDIR}/json/cJSON_Utils.o: json/cJSON_Utils.c
-	${MKDIR} -p ${OBJECTDIR}/json
-	${RM} "$@.d"
-	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_Utils.o json/cJSON_Utils.c
 
 ${OBJECTDIR}/malloc/umm_malloc.o: malloc/umm_malloc.c
 	${MKDIR} -p ${OBJECTDIR}/malloc
@@ -558,32 +546,6 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule_nomain.o generatorModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/generatorModule.o ${OBJECTDIR}/generatorModule_nomain.o;\
-	fi
-
-${OBJECTDIR}/json/cJSON_nomain.o: ${OBJECTDIR}/json/cJSON.o json/cJSON.c 
-	${MKDIR} -p ${OBJECTDIR}/json
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/json/cJSON.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_nomain.o json/cJSON.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/json/cJSON.o ${OBJECTDIR}/json/cJSON_nomain.o;\
-	fi
-
-${OBJECTDIR}/json/cJSON_Utils_nomain.o: ${OBJECTDIR}/json/cJSON_Utils.o json/cJSON_Utils.c 
-	${MKDIR} -p ${OBJECTDIR}/json
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/json/cJSON_Utils.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_Utils_nomain.o json/cJSON_Utils.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/json/cJSON_Utils.o ${OBJECTDIR}/json/cJSON_Utils_nomain.o;\
 	fi
 
 ${OBJECTDIR}/malloc/umm_malloc_nomain.o: ${OBJECTDIR}/malloc/umm_malloc.o malloc/umm_malloc.c 

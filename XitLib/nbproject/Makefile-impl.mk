@@ -31,7 +31,7 @@ DEFAULTCONF=Debug_Windows
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug_Windows Release_Windows Debug_Linux Release_Linux Debug_MC Release_MC Release_Linux_EV3 
+ALLCONFS=Debug_Windows Release_Windows Debug_Linux Release_Linux Debug_MC Release_MC Release_Linux_EV3 Release_AVR 
 
 
 # build

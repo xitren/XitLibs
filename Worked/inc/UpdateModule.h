@@ -1,3 +1,8 @@
+// ----------------------------------------------------------------------------
+//
+// UpdateModule.h - API to download update file, check and implement data.
+//
+// ----------------------------------------------------------------------------
 
 #ifndef UPDATEMODULE_H
 #define UPDATEMODULE_H

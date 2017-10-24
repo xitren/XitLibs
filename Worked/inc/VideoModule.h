@@ -1,3 +1,8 @@
+// ----------------------------------------------------------------------------
+//
+// VideoModule.h - API to video.
+//
+// ----------------------------------------------------------------------------
 
 /* Global headers ------------------------------------------------------------*/
 #include <stdio.h>
@@ -15,6 +20,7 @@ extern "C" {
 
 int VIDEOThread(ParameterList_t *TempParam);
 int Snap(ParameterList_t *TempParam);
+int GetSnap(ParameterList_t *TempParam);
 int Light(ParameterList_t *TempParam);
 int lamp();
 
