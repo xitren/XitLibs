@@ -11,7 +11,7 @@ extern "C" {
     #define LOGGER_SIZE 8
     #define BUFFER_SIZE 10
     #define STRING_SIZE 40
-    #define MAX_NUM_OF_PARAMETERS                      (25)  /* Denotes the max   */
+    #define MAX_NUM_OF_PARAMETERS                      (10)  /* Denotes the max   */
                                                              /* number of         */
                                                              /* parameters a      */
                                                              /* command can have. */

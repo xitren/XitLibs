@@ -132,6 +132,11 @@ void InitCfgMem(void)
   config_reg[REG_EYE_X2] = 0;
   config_reg[REG_EYE_Y1] = 0;
   config_reg[REG_EYE_Y2] = 0;
+          
+  config_reg[REG_NANOPZ_MOTOR] = 0;
+  config_reg[REG_NANOPZ_SPEED] = 0;
+  config_reg[REG_NANOPZ_TIME_MS] = 0;
+  config_reg[REG_NANOPZ_STEPS] = 0;
   return;
 }
 inline void WriteMem(uint32_t _adr, uint32_t _val)

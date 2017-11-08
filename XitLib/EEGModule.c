@@ -63,9 +63,6 @@ int SubscribeEEGFile(ParameterList_t *TempParam)
     
     int port = 5683;
     
-    
-    
-   
     if ((TempParam) && (TempParam->NumberofParameters > 1))
     {  
         for (i=1;i<TempParam->NumberofParameters;i+=2)
