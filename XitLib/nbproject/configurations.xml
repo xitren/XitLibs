@@ -85,6 +85,7 @@
       <itemPath>StreamDataRecorder.h</itemPath>
       <itemPath>UpdateModule.h</itemPath>
       <itemPath>generatorModule.h</itemPath>
+      <itemPath>user_conf_check.h</itemPath>
       <itemPath>version.h</itemPath>
       <itemPath>xitlibtypes.h</itemPath>
     </logicalFolder>
@@ -401,6 +402,8 @@
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
@@ -666,6 +669,8 @@
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
@@ -928,6 +933,8 @@
       <item path="tests/malloc_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1210,6 +1217,8 @@
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
@@ -1479,6 +1488,8 @@
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
@@ -1743,6 +1754,8 @@
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="xitlibtypes.h" ex="false" tool="3" flavor2="0">
@@ -1997,6 +2010,8 @@
       <item path="tests/malloc_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -2259,6 +2274,8 @@
       <item path="tests/malloc_test.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/models_test.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="user_conf_check.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="version.h" ex="false" tool="3" flavor2="0">
       </item>

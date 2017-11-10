@@ -81,8 +81,8 @@
 // NOTE WELL that these macros MUST be allowed to nest, because umm_free() is
 // called from within umm_malloc()
 
-#define UMM_CRITICAL_ENTRY()
-#define UMM_CRITICAL_EXIT()
+#define UMM_CRITICAL_ENTRY() AcquireCriticalResource();
+#define UMM_CRITICAL_EXIT() ReleaseCriticalResource();
 
 
 

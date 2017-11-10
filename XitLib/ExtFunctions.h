@@ -56,6 +56,9 @@ void SetLeds(uint8_t q_green,uint8_t q_red,uint8_t q_blue);
 void UserOperationHandler(void);
 void UserProtocolHandler(void);
 void UserProtocolHandlerThread(void);
+//Multithreading
+void AcquireCriticalResource(void);
+void ReleaseCriticalResource(void);
 /*============================================================================*/
 
 #ifdef __cplusplus

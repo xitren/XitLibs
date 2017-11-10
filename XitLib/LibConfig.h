@@ -34,7 +34,7 @@ extern "C" {
     #define PROTO_MAX 40
     #define NODE_MAX 15
     #define BUFFER_1ST_MAX 65 //power of 2 +1
-    #define BUFFER_2ND_MAX 1024 //power of 2 
+    #define BUFFER_2ND_MAX 512 //power of 2 
     #define BUFFER_3ST_MAX 255
     #define BUFFER_SAMPLE_SIZE 8
     #define EEG_HISTORY_SIZE 32 //power of 2

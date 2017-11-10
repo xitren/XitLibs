@@ -491,6 +491,7 @@
 #ifdef CPU
 #   include <stdlib.h>
 #endif
+#include "ExtFunctions.h"
 #include <string.h>
 
 #include "umm_malloc.h"
@@ -1283,29 +1284,37 @@ void *umm_realloc( void *ptr, size_t size ) {
 inline void *umm_malloc( size_t size )
 {
     void * ptr = 0;
+    AcquireCriticalResource();
     ptr = malloc(size);
     DBG_LOG_TRACE("%d umm_malloc\n",(int)ptr);
+    ReleaseCriticalResource();
     return ptr;
 }
 inline void *umm_calloc( size_t num, size_t sizen )
 {
     void * ptr = 0;
+    AcquireCriticalResource();
     DBG_LOG_TRACE("before umm_calloc\n",(int)ptr);
     ptr = calloc(num, sizen);
     DBG_LOG_TRACE("%d umm_calloc\n",(int)ptr);
+    ReleaseCriticalResource();
     return ptr;
 }
 inline void *umm_realloc( void *ptr, size_t size )
 {
     void * _ptr = 0;
+    AcquireCriticalResource();
     _ptr = realloc(ptr, size);
     DBG_LOG_TRACE("%d umm_realloc\n",(int)_ptr);
+    ReleaseCriticalResource();
     return _ptr;
 }
 inline void umm_free( void *ptr )
 {
+    AcquireCriticalResource();
     DBG_LOG_TRACE("%d umm_free\n",(int)ptr);
     free(ptr);
+    ReleaseCriticalResource();
     return;
 }
 #endif
