@@ -1497,7 +1497,7 @@
     </conf>
     <conf name="Release_MC" type="3">
       <toolsSet>
-        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <compilerSet>GNU-ARM|Cygwin</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -2020,7 +2020,7 @@
     </conf>
     <conf name="Release_AVR" type="3">
       <toolsSet>
-        <compilerSet>WinAVR|WinAVR</compilerSet>
+        <compilerSet>AVR|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -2037,6 +2037,7 @@
             <pElem>models</pElem>
             <pElem>External</pElem>
           </incDir>
+          <commandLine>-mmcu=atmega2560 -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics</commandLine>
           <preprocessorList>
             <Elem>AVR</Elem>
             <Elem>MC</Elem>

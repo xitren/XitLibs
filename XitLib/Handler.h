@@ -38,11 +38,19 @@ extern "C" {
     extern struct sockaddr_in cliaddr_hd;
     extern int fd_hd;
 #endif
-extern uint8_t scratch_raw[4096];
+#ifdef AVR  
+    extern uint8_t scratch_raw[COAP_SIZE];
+#else  
+    extern uint8_t scratch_raw[COAP_SIZE];
+#endif
 #ifdef CPU
-    extern uint8_t bufsa[4096];
-#else    
-    extern uint8_t bufsa[1024];
+    extern uint8_t bufsa[COAP_SIZE];
+#else  
+    #ifdef AVR  
+        extern uint8_t bufsa[COAP_SIZE];
+    #else  
+        extern uint8_t bufsa[COAP_SIZE];
+    #endif
 #endif
 extern uint8_t id_out;
 extern coap_rw_buffer_t scratch_buf;

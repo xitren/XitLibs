@@ -15,13 +15,13 @@ NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
 CC=avr-gcc
-CCC=avr-g++.exe
-CXX=avr-g++.exe
+CCC=avr-g++
+CXX=avr-g++
 FC=gfortran
 AS=avr-ld
 
 # Macros
-CND_PLATFORM=WinAVR-Windows
+CND_PLATFORM=AVR-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Release_AVR
 CND_DISTDIR=dist
@@ -87,7 +87,7 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/models_test.o
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=-mmcu=atmega2560 -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics
 
 # CC Compiler Flags
 CCFLAGS=

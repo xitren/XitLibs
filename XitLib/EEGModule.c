@@ -41,6 +41,7 @@ int EEGStatus = 0;      // 0 - haven't started
                         // 2 - started
 
 //Handle subscription request
+#ifndef AVR
 int SubscribeEEGFile(ParameterList_t *TempParam)
 {
     
@@ -181,6 +182,7 @@ int SubscribeEEGFile(ParameterList_t *TempParam)
     }
    return(ret_val);
 }
+#endif
 
 void PrintSubscribers() {
     ArrayIter ai;

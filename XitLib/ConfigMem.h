@@ -151,7 +151,17 @@ typedef enum
   REG_NANOPZ_MOTOR       =       0x0000006A, 
   REG_NANOPZ_SPEED       =       0x0000006B,
   REG_NANOPZ_TIME_MS     =       0x0000006C,
-  REG_NANOPZ_STEPS       =       0x0000006D
+  REG_NANOPZ_STEPS       =       0x0000006D,
+          
+  REG_IMG_1              =       0x0000006E, 
+  REG_IMG_2              =       0x0000006F, 
+  REG_IMG_3              =       0x00000070,
+  REG_IMG_4              =       0x00000071,
+  REG_IMG_5              =       0x00000072,
+  REG_IMG_6              =       0x00000073,
+  REG_IMG_7              =       0x00000074,
+  REG_IMG_8              =       0x00000075,
+  REG_SHOW_INTERNAL      =       0x00000076
 } RegDef;
 /*============================================================================*/
 

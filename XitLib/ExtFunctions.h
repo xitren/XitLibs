@@ -28,7 +28,11 @@ extern "C" {
 #endif
 extern uint8_t buffer[STRING_SIZE];
 extern uint8_t buffer2[10];
-extern uint8_t scratch_raw[4096];
+#ifdef AVR  
+    extern uint8_t scratch_raw[COAP_SIZE];
+#else  
+    extern uint8_t scratch_raw[COAP_SIZE];
+#endif
 extern uint8_t id_out;
 extern coap_rw_buffer_t scratch_buf;
 extern size_t pktlen;
@@ -38,7 +42,11 @@ extern coap_option_t opt_path;
 extern coap_option_t opt_args;
 extern coap_packet_t pkt;
 extern coap_packet_t rsppkt;
-extern uint8_t buf[4096];
+#ifdef AVR  
+    extern uint8_t buf[COAP_SIZE];
+#else  
+    extern uint8_t buf[COAP_SIZE];
+#endif
 extern uint8_t content_type;
 extern coap_option_t opt_part;
 extern int size_parts;

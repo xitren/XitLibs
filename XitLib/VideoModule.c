@@ -59,7 +59,9 @@
 /*============================================================================*/
     
 /* Private variables ---------------------------------------------------------*/
+#ifdef CPU
 uint8_t          *image_buffer_rows[WIDTH];
+#endif
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
@@ -881,7 +883,6 @@ int VIDEOThread(ParameterList_t *TempParam)
                     exit(EXIT_FAILURE);
             }
     }
-#endif
 int VIDEOLNRead(ParameterList_t *TempParam)
 {
    int  ret_val = 0;
@@ -937,4 +938,5 @@ int VIDEOLNRead(ParameterList_t *TempParam)
 
    return(ret_val);
 }
+#endif
 /*============================================================================*/

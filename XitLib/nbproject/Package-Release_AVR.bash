@@ -6,7 +6,7 @@
 
 # Macros
 TOP=`pwd`
-CND_PLATFORM=WinAVR-Windows
+CND_PLATFORM=AVR-Windows
 CND_CONF=Release_AVR
 CND_DISTDIR=dist
 CND_BUILDDIR=build

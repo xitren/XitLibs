@@ -137,6 +137,16 @@ void InitCfgMem(void)
   config_reg[REG_NANOPZ_SPEED] = 0;
   config_reg[REG_NANOPZ_TIME_MS] = 0;
   config_reg[REG_NANOPZ_STEPS] = 0;
+  
+  config_reg[REG_IMG_1] = 0x00008000;
+  config_reg[REG_IMG_2] = 0x0000C000;
+  config_reg[REG_IMG_3] = 0x0000E000;
+  config_reg[REG_IMG_4] = 0x0000E000;
+  config_reg[REG_IMG_5] = 0x00007600;
+  config_reg[REG_IMG_6] = 0x00003E00;
+  config_reg[REG_IMG_7] = 0x00001C00;
+  config_reg[REG_IMG_8] = 0x00000800;
+  config_reg[REG_SHOW_INTERNAL] = 0x00000001;
   return;
 }
 inline void WriteMem(uint32_t _adr, uint32_t _val)

@@ -8,22 +8,43 @@ extern "C" {
 
 /* Public defines ------------------------------------------------------------*/
 #ifdef MC
-    #define LOGGER_SIZE 8
-    #define BUFFER_SIZE 10
-    #define STRING_SIZE 40
-    #define MAX_NUM_OF_PARAMETERS                      (10)  /* Denotes the max   */
-                                                             /* number of         */
-                                                             /* parameters a      */
-                                                             /* command can have. */
-    #define PROTO_MAX 15
-    #define NODE_MAX 3
-    #define BUFFER_1ST_MAX 3 //power of 2 +1
-    #define BUFFER_2ND_MAX 64 //power of 2 
-    #define BUFFER_3ST_MAX 255
-    #define BUFFER_SAMPLE_SIZE 8
-    #define EEG_HISTORY_SIZE 32 //power of 2
-    #define EXT_EEG_MAX_COUNT 1
+    #ifdef AVR
+        #define COAP_SIZE 32
+        #define LOGGER_SIZE 3
+        #define BUFFER_SIZE 3
+        #define STRING_SIZE 20
+        #define MAX_NUM_OF_PARAMETERS                      (3)  /* Denotes the max   */
+                                                                 /* number of         */
+                                                                 /* parameters a      */
+                                                                 /* command can have. */
+        #define PROTO_MAX 2
+        #define NODE_MAX 1
+        #define BUFFER_1ST_MAX 3 //power of 2 +1
+        #define BUFFER_2ND_MAX 1 //power of 2 
+        #define BUFFER_3ST_MAX 2
+        #define BUFFER_SAMPLE_SIZE 8
+        #define EEG_HISTORY_SIZE 2 //power of 2
+        #define EXT_EEG_MAX_COUNT 1
+    #else
+        #define COAP_SIZE 1024
+        #define LOGGER_SIZE 8
+        #define BUFFER_SIZE 10
+        #define STRING_SIZE 40
+        #define MAX_NUM_OF_PARAMETERS                      (10)  /* Denotes the max   */
+                                                                 /* number of         */
+                                                                 /* parameters a      */
+                                                                 /* command can have. */
+        #define PROTO_MAX 15
+        #define NODE_MAX 3
+        #define BUFFER_1ST_MAX 3 //power of 2 +1
+        #define BUFFER_2ND_MAX 64 //power of 2 
+        #define BUFFER_3ST_MAX 255
+        #define BUFFER_SAMPLE_SIZE 8
+        #define EEG_HISTORY_SIZE 32 //power of 2
+        #define EXT_EEG_MAX_COUNT 1
+    #endif
 #else
+    #define COAP_SIZE 4096
     #define LOGGER_SIZE 100
     #define BUFFER_SIZE 120
     #define STRING_SIZE 100

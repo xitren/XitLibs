@@ -34,7 +34,7 @@ uint32_t signal_amplitude[BUFFER_SAMPLE_SIZE-1] =
                                     {10000,10000,10000,10000,10000,10000,10000};
 uint32_t signal_frequency[BUFFER_SAMPLE_SIZE-1] = {10,10,10,10,10,10,10};
 uint8_t signal_type = 0;
-uint8_t path_eeg_arg_buf[5000];
+//uint8_t path_eeg_arg_buf[5000];
 FILE *fp_rec;
 uint32_t rec_cnt = 0;
 /*============================================================================*/
@@ -615,6 +615,7 @@ int GetRecord(ParameterList_t *TempParam)
     #endif
     AddToTransmit("<GETRECORD>\r\n\r");
     
+    #ifndef MC
     /* First check to see if the parameters required for the execution of*/
     /* this function appear to be semi-valid.                            */
     if ((TempParam) && (TempParam->NumberofParameters > 1))
@@ -691,6 +692,7 @@ int GetRecord(ParameterList_t *TempParam)
         //AddToTransmit("<INVALID_PARAMETERS_ERROR>\r\n\r");
         DBG_LOG_WARNING("Invalid parametest.\n");
     }
+    #endif
 
     AddToTransmit("</UPDATE>\r\n\r");
     DBG_LOG_DEBUG("Into END of Update.\n");
