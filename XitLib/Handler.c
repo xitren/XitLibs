@@ -200,8 +200,13 @@ union {
         uint32_t S_addr;
 } translate;
 
+typedef union { unsigned char bytes4[4];
+                uint32_t ui32; } converter;
+              
 inline void ProtocolHandler(void) {
     char ip[16];
+    uint8_t i;
+    converter reader;
     uint32_t cmdlent = 0;
     uint32_t port = 0;
     //DBG_LOG_TRACE("Into ProtocolHandler.\n");
@@ -230,11 +235,28 @@ inline void ProtocolHandler(void) {
         {
             if (0 != (rc = coap_parse(&pkt, scratch_raw, cmdlent))) 
             {
-                DBG_LOG_INFO("Bad packet(%d) ", rc);
-                DBG_LOG_DEBUG("Received %s: ", ip);
-                #ifdef DEBUG
-                    coap_dump(scratch_raw, cmdlent, true);
-                #endif
+                if( (scratch_raw[0] == 0x50) 
+                        && (scratch_raw[1] == 0x0A) 
+                        && (scratch_raw[2] == 0x01) )
+                {
+                    for (i=0;i < 8;i++)
+                    {
+                        reader.bytes4[3] = 0x00;
+                        reader.bytes4[2] = scratch_raw[3+(i*3)];
+                        reader.bytes4[1] = scratch_raw[3+(i*3+1)];
+                        reader.bytes4[0] = scratch_raw[3+(i*3+2)];
+                        WriteMem(REG_IMG_1+i,reader.ui32);
+                    }
+                    TransferTo("image setted", 12, "0.0.0.0", 0);
+                }
+                else
+                {
+                    DBG_LOG_INFO("Bad packet(%d) ", rc);
+                    DBG_LOG_DEBUG("Received %s: ", ip);
+                    #ifdef DEBUG
+                        coap_dump(scratch_raw, cmdlent, true);
+                    #endif
+                }
             } 
             else 
             {
@@ -419,9 +441,9 @@ void SecClockSheduler(void) {
     DBG_LOG_TRACE("Into SecClockSheduler.\n");
 //    DBG_LOG_INFO("Scheduled SecClockHandler.\n");
     ClockHandler();
-#ifdef CPU
-    coap_clock();
-#endif
+    #ifdef CPU
+        coap_clock();
+    #endif
     transfer_time++;
     WriteMem(REG_CLK_Band, 1);
     return;
@@ -433,15 +455,15 @@ int ResetReq() {
     DBG_LOG_DEBUG("Into ResetReq.\n");
     //ToDo: Make query
     pktlen = sizeof (scratch_raw);
-#ifdef CPU
-    coap_make_msg(&scratch_buf, &pkt, 0, 0, 0,
-            0, 0,
-            0, id_out++, 0, 0,
-            COAP_METHOD_RESET,
-            COAP_CONTENTTYPE_NONE);
-    if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, NULL, NULL)))
-        TransferBand((uint8_t*) scratch_raw, pktlen);
-#endif
+    #ifdef CPU
+        coap_make_msg(&scratch_buf, &pkt, 0, 0, 0,
+                0, 0,
+                0, id_out++, 0, 0,
+                COAP_METHOD_RESET,
+                COAP_CONTENTTYPE_NONE);
+        if (!(rc = coap_build(scratch_raw, &pktlen, &pkt, NULL, NULL)))
+            TransferBand((uint8_t*) scratch_raw, pktlen);
+    #endif
     return 0;
 }
 /*============================================================================*/
