@@ -17,14 +17,17 @@
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
+#ifdef AVR
 static DMAoccure_t DMATable[DMA_MAX];
 uint32_t DMA_samples_cnt = 0;
 uint32_t DMA_readed_cnt = 0;
+#endif
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
 uint8_t DMAGetNext(uint8_t *stat,uint8_t _in)
 {
+#ifndef AVR
     if (DMA_readed_cnt != DMA_samples_cnt)
         *stat = 1;
     else
@@ -53,19 +56,24 @@ uint8_t DMAGetNext(uint8_t *stat,uint8_t _in)
     }
     else
         *stat = 0;
+#endif
     return 0;
 }
 void DMAAddSample(DMAoccure_t *_other)
 {
+#ifndef AVR
     DMATable[(DMA_samples_cnt++)%DMA_MAX] = *_other;
     if ((DMA_samples_cnt - DMA_readed_cnt) > DMA_MAX)
         DMA_readed_cnt = DMA_samples_cnt - DMA_MAX;
+#endif
     return;
 }
 void DMAClear(void)
 {
+#ifndef AVR
     DMA_samples_cnt = 0;
     DMA_readed_cnt = 0;
+#endif
     return;
 }
 /*============================================================================*/

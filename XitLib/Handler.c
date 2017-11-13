@@ -26,20 +26,8 @@
 /* Private variables ---------------------------------------------------------*/
 uint8_t inb, rc, cmdlen = 0;
 uint8_t id_out = 0;
-#ifdef AVR
-    uint8_t scratch_raw[COAP_SIZE];
-#else    
-    uint8_t scratch_raw[COAP_SIZE];
-#endif
-#ifdef CPU
-    uint8_t bufsa[COAP_SIZE];
-#else    
-    #ifdef AVR
-        uint8_t bufsa[COAP_SIZE];
-    #else    
-        uint8_t bufsa[COAP_SIZE];
-    #endif
-#endif
+uint8_t scratch_raw[COAP_SIZE];
+uint8_t bufsa[COAP_SIZE];
 coap_rw_buffer_t scratch_buf = {scratch_raw, sizeof (scratch_raw)};
 coap_packet_t pkt;
 size_t rsplen;
@@ -49,13 +37,8 @@ coap_option_t opt;
 coap_option_t opt_path;
 coap_option_t opt_args;
 coap_option_t opt_part;
-#ifdef AVR
-    int size_parts = COAP_SIZE;
-    int size_parts_cur = COAP_SIZE;
-#else    
-    int size_parts = 1024;
-    int size_parts_cur = 1024;
-#endif
+int size_parts = COAP_SIZE;
+int size_parts_cur = COAP_SIZE;
 uint32_t lenght = 0;
 uint8_t transfer_free = 1;
 uint32_t transfer_time = 0;

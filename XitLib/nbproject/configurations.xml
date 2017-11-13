@@ -2040,6 +2040,7 @@
           <commandLine>-mmcu=atmega2560 -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics</commandLine>
           <preprocessorList>
             <Elem>AVR</Elem>
+            <Elem>DEBUG</Elem>
             <Elem>MC</Elem>
           </preprocessorList>
         </cTool>
@@ -2053,6 +2054,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_avr.a</output>
         </archiverTool>
       </compileType>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">

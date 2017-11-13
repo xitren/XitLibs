@@ -65,7 +65,7 @@
 // ----------------------------------------------------------------------------
 // Size of the heap in bytes
 #ifdef AVR
-#define UMM_MALLOC_CFG__HEAP_SIZE 1024
+#define UMM_MALLOC_CFG__HEAP_SIZE 128
 #else
 #define UMM_MALLOC_CFG__HEAP_SIZE 8192
 #endif
