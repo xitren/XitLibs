@@ -12,7 +12,7 @@ extern "C" {
         #define COAP_SIZE 32
         #define LOGGER_SIZE 3
         #define BUFFER_SIZE 3
-        #define STRING_SIZE 20
+        #define STRING_SIZE 40
         #define MAX_NUM_OF_PARAMETERS                      (3)  /* Denotes the max   */
                                                                  /* number of         */
                                                                  /* parameters a      */

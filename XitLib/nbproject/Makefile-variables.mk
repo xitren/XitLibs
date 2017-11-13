@@ -7,13 +7,13 @@ CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
 # Debug_Windows configuration
-CND_PLATFORM_Debug_Windows=MinGW-Windows
-CND_ARTIFACT_DIR_Debug_Windows=dist/Debug_Windows/MinGW-Windows
+CND_PLATFORM_Debug_Windows=Cygwin-Windows
+CND_ARTIFACT_DIR_Debug_Windows=dist/Debug_Windows/Cygwin-Windows
 CND_ARTIFACT_NAME_Debug_Windows=libxitlib.a
-CND_ARTIFACT_PATH_Debug_Windows=dist/Debug_Windows/MinGW-Windows/libxitlib.a
-CND_PACKAGE_DIR_Debug_Windows=dist/Debug_Windows/MinGW-Windows/package
+CND_ARTIFACT_PATH_Debug_Windows=dist/Debug_Windows/Cygwin-Windows/libxitlib.a
+CND_PACKAGE_DIR_Debug_Windows=dist/Debug_Windows/Cygwin-Windows/package
 CND_PACKAGE_NAME_Debug_Windows=XitLib.tar
-CND_PACKAGE_PATH_Debug_Windows=dist/Debug_Windows/MinGW-Windows/package/XitLib.tar
+CND_PACKAGE_PATH_Debug_Windows=dist/Debug_Windows/Cygwin-Windows/package/XitLib.tar
 # Release_Windows configuration
 CND_PLATFORM_Release_Windows=WinAVR-Windows
 CND_ARTIFACT_DIR_Release_Windows=dist/Release_Windows/WinAVR-Windows
@@ -65,8 +65,8 @@ CND_PACKAGE_PATH_Release_Linux_EV3=dist/Release_Linux_EV3/GNU-Linux/package/XitL
 # Release_AVR configuration
 CND_PLATFORM_Release_AVR=AVR-Windows
 CND_ARTIFACT_DIR_Release_AVR=dist/Release_AVR/AVR-Windows
-CND_ARTIFACT_NAME_Release_AVR=libxitlib.a
-CND_ARTIFACT_PATH_Release_AVR=dist/Release_AVR/AVR-Windows/libxitlib.a
+CND_ARTIFACT_NAME_Release_AVR=libxitlib_avr.a
+CND_ARTIFACT_PATH_Release_AVR=dist/Release_AVR/AVR-Windows/libxitlib_avr.a
 CND_PACKAGE_DIR_Release_AVR=dist/Release_AVR/AVR-Windows/package
 CND_PACKAGE_NAME_Release_AVR=XitLib.tar
 CND_PACKAGE_PATH_Release_AVR=dist/Release_AVR/AVR-Windows/package/XitLib.tar

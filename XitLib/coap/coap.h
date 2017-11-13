@@ -19,10 +19,10 @@ extern "C" {
 /*============================================================================*/
 
 /* Public defines ------------------------------------------------------------*/
-#define MAXOPT 16
+#define MAXOPT 5
 #define MAXWAIT 2000
 #define MAXWAITTIME 10
-#define MAXRELEASESTR 60
+#define MAXRELEASESTR 40
 #define MEMORY_COAP 7
 /*============================================================================*/
 

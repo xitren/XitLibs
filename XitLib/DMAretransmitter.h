@@ -18,7 +18,7 @@ extern "C" {
 #endif
 
 /* Public defines ------------------------------------------------------------*/
-#define DMA_VECTOR 10
+#define DMA_VECTOR 2
 #define DMA_MAX 2
 #define MEMORY_DMA sizeof(DMAoccure_t)*DMA_MAX+8
 /*============================================================================*/
