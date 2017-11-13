@@ -151,6 +151,13 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/VideoModule.c</file>
         </group>
         <group name="BCI@">
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/xitlibtypes.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/PWMModule.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/LibConfig.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/EEGModule.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.h</file>
+            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
         </group>
     </open-files>

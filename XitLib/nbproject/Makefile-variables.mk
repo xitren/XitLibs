@@ -49,8 +49,8 @@ CND_PACKAGE_PATH_Debug_MC=dist/Debug_MC/GNU-Linux/package/XitLib.tar
 # Release_MC configuration
 CND_PLATFORM_Release_MC=GNU_ARM-Windows
 CND_ARTIFACT_DIR_Release_MC=dist/Release_MC/GNU_ARM-Windows
-CND_ARTIFACT_NAME_Release_MC=libxitlib.a
-CND_ARTIFACT_PATH_Release_MC=dist/Release_MC/GNU_ARM-Windows/libxitlib.a
+CND_ARTIFACT_NAME_Release_MC=libxitlib_cortexm4.a
+CND_ARTIFACT_PATH_Release_MC=dist/Release_MC/GNU_ARM-Windows/libxitlib_cortexm4.a
 CND_PACKAGE_DIR_Release_MC=dist/Release_MC/GNU_ARM-Windows/package
 CND_PACKAGE_NAME_Release_MC=XitLib.tar
 CND_PACKAGE_PATH_Release_MC=dist/Release_MC/GNU_ARM-Windows/package/XitLib.tar

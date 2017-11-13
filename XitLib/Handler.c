@@ -333,15 +333,6 @@ inline void OperationHandler(void) {
     #endif
 
     #ifndef CPU    
-    if ((ReadMem(REG_EEG_PocketSize) <= l) && (ReadMem(REG_EEG_Auto_Band) > 0)) {
-        l = GetDataReadyCnt(ReadMem(REG_EEG_PocketSize), (int*) scratch_raw);
-        if (l > 0) {
-            if ((k = Packetize((uint8_t*) scratch_raw, l * 4, 
-                BUFFER_SAMPLE_SIZE * ReadMem(REG_EEG_PocketSize) + 22)) > 0) {
-                TransferBand((uint8_t*) scratch_raw, k);
-            }
-        }
-    }
     #else
     #endif
 

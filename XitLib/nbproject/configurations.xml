@@ -1531,6 +1531,8 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a</output>
+          <runRanlib>false</runRanlib>
         </archiverTool>
       </compileType>
       <item path="220data.txt" ex="false" tool="3" flavor2="0">
