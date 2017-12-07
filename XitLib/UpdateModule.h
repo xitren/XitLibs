@@ -39,7 +39,6 @@ int Version(ParameterList_t *TempParam);
 int TechUpdate(ParameterList_t *TempParam);
 int TechStart(ParameterList_t *TempParam);
 int SetUpdateServer(char *value);
-void FormUpdateFile(int type, int ind_i);
 /*============================================================================*/
 #ifdef __cplusplus
 }

@@ -8,6 +8,8 @@
         <itemPath>coap/coap.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2" displayName="json" projectFiles="true">
+        <itemPath>json/cJSON.c</itemPath>
+        <itemPath>json/cJSON_Utils.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1" displayName="malloc" projectFiles="true">
         <itemPath>malloc/umm_malloc.c</itemPath>
@@ -330,7 +332,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -411,7 +417,7 @@
     </conf>
     <conf name="Release_Windows" type="3">
       <toolsSet>
-        <compilerSet>WinAVR|WinAVR</compilerSet>
+        <compilerSet>default</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -597,7 +603,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -862,7 +872,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1145,7 +1159,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1416,7 +1434,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1684,7 +1706,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1941,7 +1967,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -2208,7 +2238,11 @@
       </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="json/cJSON.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="json/cJSON_Utils.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="json/cJSON_Utils.h" ex="false" tool="3" flavor2="0">
       </item>

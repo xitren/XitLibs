@@ -21,7 +21,7 @@ FC=gfortran
 AS=as
 
 # Macros
-CND_PLATFORM=Cygwin-Windows
+CND_PLATFORM=MinGW-Windows
 CND_DLIB_EXT=dll
 CND_CONF=Debug_Windows
 CND_DISTDIR=dist
@@ -52,6 +52,8 @@ OBJECTFILES= \
 	${OBJECTDIR}/VideoModule.o \
 	${OBJECTDIR}/coap/coap.o \
 	${OBJECTDIR}/generatorModule.o \
+	${OBJECTDIR}/json/cJSON.o \
+	${OBJECTDIR}/json/cJSON_Utils.o \
 	${OBJECTDIR}/malloc/umm_malloc.o \
 	${OBJECTDIR}/models/src/array.o \
 	${OBJECTDIR}/models/src/common.o \
@@ -196,6 +198,16 @@ ${OBJECTDIR}/generatorModule.o: generatorModule.c nbproject/Makefile-${CND_CONF}
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule.o generatorModule.c
+
+${OBJECTDIR}/json/cJSON.o: json/cJSON.c nbproject/Makefile-${CND_CONF}.mk
+	${MKDIR} -p ${OBJECTDIR}/json
+	${RM} "$@.d"
+	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON.o json/cJSON.c
+
+${OBJECTDIR}/json/cJSON_Utils.o: json/cJSON_Utils.c nbproject/Makefile-${CND_CONF}.mk
+	${MKDIR} -p ${OBJECTDIR}/json
+	${RM} "$@.d"
+	$(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_Utils.o json/cJSON_Utils.c
 
 ${OBJECTDIR}/malloc/umm_malloc.o: malloc/umm_malloc.c nbproject/Makefile-${CND_CONF}.mk
 	${MKDIR} -p ${OBJECTDIR}/malloc
@@ -547,6 +559,32 @@ ${OBJECTDIR}/generatorModule_nomain.o: ${OBJECTDIR}/generatorModule.o generatorM
 	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/generatorModule_nomain.o generatorModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/generatorModule.o ${OBJECTDIR}/generatorModule_nomain.o;\
+	fi
+
+${OBJECTDIR}/json/cJSON_nomain.o: ${OBJECTDIR}/json/cJSON.o json/cJSON.c 
+	${MKDIR} -p ${OBJECTDIR}/json
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/json/cJSON.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_nomain.o json/cJSON.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/json/cJSON.o ${OBJECTDIR}/json/cJSON_nomain.o;\
+	fi
+
+${OBJECTDIR}/json/cJSON_Utils_nomain.o: ${OBJECTDIR}/json/cJSON_Utils.o json/cJSON_Utils.c 
+	${MKDIR} -p ${OBJECTDIR}/json
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/json/cJSON_Utils.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -g -Werror -DCPU -DDEBUG -DPLATFORM_WINDOWS -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/json/cJSON_Utils_nomain.o json/cJSON_Utils.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/json/cJSON_Utils.o ${OBJECTDIR}/json/cJSON_Utils_nomain.o;\
 	fi
 
 ${OBJECTDIR}/malloc/umm_malloc_nomain.o: ${OBJECTDIR}/malloc/umm_malloc.o malloc/umm_malloc.c 

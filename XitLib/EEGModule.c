@@ -41,7 +41,7 @@ int EEGStatus = 0;      // 0 - haven't started
                         // 2 - started
 
 //Handle subscription request
-#ifndef AVR
+#ifndef MC
 int SubscribeEEGFile(ParameterList_t *TempParam)
 {
     

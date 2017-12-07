@@ -332,33 +332,34 @@ int QueryUpdateHash(ParameterList_t *TempParam)
 }
 int Version(ParameterList_t *TempParam)
 {
-   int ret_val = 0;
-   
-   #ifdef DEBUG
-      printf("--//internal//-- Into Version.\r\n\r");
-   #endif
-   content_type = COAP_CONTENTTYPE_TEXT_PLAIN;
-   AddToTransmit("<VERSION>\r\n\r");
-   AddToTransmit(version);
-   AddToTransmit("\r\n\r</VERSION>\r\n\r");
+    int ret_val = 0;
 
-   return(ret_val);
+    #ifdef DEBUG
+       printf("--//internal//-- Into Version.\r\n\r");
+    #endif
+    content_type = COAP_CONTENTTYPE_TEXT_PLAIN;
+    AddToTransmit("<VERSION>\r\n\r");
+    AddToTransmit(version);
+    AddToTransmit("\r\n\r</VERSION>\r\n\r");
+
+    return(ret_val);
 }
 int SetVersion(char *value)
 {
-   int ret_val = 0;
-   version = value; 
-   printf("VERSION: %s\n", VERSION);
-   return(ret_val);
+    int ret_val = 0;
+    version = value; 
+    printf("VERSION: %s\n", VERSION);
+    return(ret_val);
 }
 int SetUpdateServer(char *value)
 {
-   int ret_val = 0;
-   updateserver = value;
-   printf("updateserver ip: %s\n", updateserver);
-   techServerFound = true;
-   return(ret_val);
+    int ret_val = 0;
+    updateserver = value;
+    printf("updateserver ip: %s\n", updateserver);
+    techServerFound = true;
+    return(ret_val);
 }
+
    /* The following function is responsible for Giving current          */
    /* functions. This function returns zero is successful or a negative */
    /* return value if there was an error.                               */
@@ -370,7 +371,7 @@ int CallbackUpdate(ParameterList_t *TempParam)
     char command[STRING_SIZE];
     char systemcommand[STRING_SIZE];
     const char *filename;
-    FILE *fp,*fpo;
+    FILE *fpo;
     Array *value;
     int type;
     uint16_t allhash = 0;
@@ -407,21 +408,10 @@ int CallbackUpdate(ParameterList_t *TempParam)
         if (hashtable_get(table, namepart, &value) != CC_OK) 
         {
             printf("NEW ANSWER: \n");
-            fp = fopen(namepart,"wb"); // write mode
-            DBG_LOG_DEBUG("Create file %s\n",namepart);
-
-            if( fp == NULL )
-            {
-               DBG_LOG_ERROR("Error while opening update the file callback_update.\n");
-            }
-            fwrite(scratch_buf.p,sizeof(uint8_t),scratch_buf.len,fp);
-
-            allhash = CRC16ANSI(scratch_buf.p,scratch_buf.len);
-
-            //coap_dump(scratch_buf.p, scratch_buf.len, true);
-            printf("%04X CRC16ANSI(%d)\n",allhash,scratch_buf.len);
-            fclose(fp);
             
+            WriteBlock(namepart);
+            allhash = CRC16ANSI(scratch_buf.p,scratch_buf.len);
+            printf("%04X CRC16ANSI(%d)\n",allhash,scratch_buf.len);
             //add line to table!
             enum cc_stat status = array_new(&value);
             char* filename2;
@@ -445,20 +435,11 @@ int CallbackUpdate(ParameterList_t *TempParam)
         {
             array_get_at(value, 1, (void*) &str);
             if (str != 1) {
+                
                 printf("FILE STATUS IS: %d\n", str);
-                fp = fopen(namepart,"wb"); // write mode
-                DBG_LOG_DEBUG("Create file %s\n",namepart);
-
-                if( fp == NULL )
-                {
-                   DBG_LOG_ERROR("Error while opening update the file callback_update.\n");
-                }
-                fwrite(scratch_buf.p,sizeof(uint8_t),scratch_buf.len,fp);
-
+                WriteBlock(namepart);
                 allhash = CRC16ANSI(scratch_buf.p,scratch_buf.len);
-
                 printf("%04X CRC16ANSI(%d)\n",allhash,scratch_buf.len);
-                fclose(fp);
                 
                 //add line to table!
                 enum cc_stat status = array_new(&value);
@@ -1117,7 +1098,6 @@ int UpdateHash(ParameterList_t *TempParam)
                 sizefp = fread(scratch_raw,sizeof(uint8_t),size_parts,fp);
                 DBG_LOG_DEBUG("%d:%d readed from file hash %04X.\n",
                             num,sizefp,CRC16ANSI(scratch_raw,sizefp));
-
                 allhash += CRC16ANSI(scratch_raw,sizefp);
                 if (sizefp == 0) 
                 {
@@ -1253,79 +1233,7 @@ int Update(ParameterList_t *TempParam)
     DBG_LOG_DEBUG("Into END of Update.\n");
     return(ret_val);
 }
-void FormUpdateFile(int type, int ind_i) 
-{
-    const char *filename;
-    char namepart[STRING_SIZE];
-    Array *value;
-    int  ret_val = 0;
-    int  i;
-    FILE *fp, *fpo;
-    int rsize;
-    char systemcommand[STRING_SIZE];
-    printf("Into FormUpdateFile\n");
-    printf("Files: %d\n", ind_i);
-    filename = GetFileName(1);
-    snprintf(namepart,STRING_SIZE,"%s",filename);
-    sprintf(systemcommand, "sudo cp %s old_%s", filename, filename);
-    system(systemcommand);
-    DBG_LOG_DEBUG("Deleting previouse file\n");
-    sprintf(systemcommand, "sudo rm Updater.sh");
-    system(systemcommand);
 
-    fp = fopen(namepart,"wb"); // read mode
-    if (fp != NULL) {
-        DBG_LOG_DEBUG("Create file %s\n",namepart);
-        printf("Create file %s\n",namepart);
-        for(i=0;i<=ind_i;i++)
-        {
-            snprintf(namepart,STRING_SIZE,"%s.p%02d",filename,i);
-            //DBG_LOG_INFO("Reading from file: %s\n", namepart);
-            fpo = fopen(namepart,"rb"); // read mode
-            if( fpo == NULL )
-            {
-               DBG_LOG_ERROR("Error while opening the file: %s (callback_update).\n",namepart);
-               printf("Error while opening the file: %s (callback_update).\n",namepart);
-            }
-            else {
-                rsize = fread(scratch_buf.p,sizeof(uint8_t),1024,fpo);
-                fwrite(scratch_buf.p,sizeof(uint8_t),rsize,fp);
-
-                fclose(fpo);
-                remove(namepart);
-            }
-        }
-        fclose(fp);
-
-        enum cc_stat status = array_new(&value);
-        char* filename2;
-        int i = strlen(filename)+1;
-        filename2 = (char*) malloc(sizeof(char)*i); 
-        strncpy(filename2, filename , i+1);
-        PrintHashTable();
-
-        array_add(value, 1); 
-        array_add(value, -1);
-        array_add(value, -1);
-        hashtable_add(table, filename2, (void*) value);
-        PrintHashTable();
-
-        if (type==0) { //Updater.sh
-            DBG_LOG_DEBUG("Execute file\n");
-        }
-        else {
-            DBG_LOG_DEBUG("Execute file\n");
-        }
-
-        DBG_LOG_INFO("Shut down server\n");
-        exit(0);
-    }
-    else 
-    {
-        DBG_LOG_ERROR("Error while opening file %s\n",namepart);
-    }
-    return;
-}
 int CreateHashTable()
 {
     int  ret_val = 0;
