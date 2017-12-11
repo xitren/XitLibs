@@ -1519,7 +1519,7 @@
     </conf>
     <conf name="Release_MC" type="3">
       <toolsSet>
-        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <compilerSet>GNU-ARM|Cygwin</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
