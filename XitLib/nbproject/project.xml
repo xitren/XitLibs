@@ -8,29 +8,15 @@
             <cpp-extensions/>
             <header-extensions>h</header-extensions>
             <sourceEncoding>UTF-8</sourceEncoding>
-            <make-dep-projects>
-                <make-dep-project>../CoAP</make-dep-project>
-            </make-dep-projects>
+            <make-dep-projects/>
             <sourceRootList/>
             <confList>
-                <confElem>
-                    <name>Debug_Windows</name>
-                    <type>3</type>
-                </confElem>
                 <confElem>
                     <name>Release_Windows</name>
                     <type>3</type>
                 </confElem>
                 <confElem>
-                    <name>Debug_Linux</name>
-                    <type>3</type>
-                </confElem>
-                <confElem>
                     <name>Release_Linux</name>
-                    <type>3</type>
-                </confElem>
-                <confElem>
-                    <name>Debug_MC</name>
                     <type>3</type>
                 </confElem>
                 <confElem>
@@ -43,6 +29,10 @@
                 </confElem>
                 <confElem>
                     <name>Release_AVR</name>
+                    <type>3</type>
+                </confElem>
+                <confElem>
+                    <name>Release_RTOS</name>
                     <type>3</type>
                 </confElem>
             </confList>

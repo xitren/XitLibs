@@ -6,14 +6,6 @@
 CND_BASEDIR=`pwd`
 CND_BUILDDIR=build
 CND_DISTDIR=dist
-# Debug_Windows configuration
-CND_PLATFORM_Debug_Windows=Cygwin-Windows
-CND_ARTIFACT_DIR_Debug_Windows=dist/Debug_Windows/Cygwin-Windows
-CND_ARTIFACT_NAME_Debug_Windows=libxitlib.a
-CND_ARTIFACT_PATH_Debug_Windows=dist/Debug_Windows/Cygwin-Windows/libxitlib.a
-CND_PACKAGE_DIR_Debug_Windows=dist/Debug_Windows/Cygwin-Windows/package
-CND_PACKAGE_NAME_Debug_Windows=XitLib.tar
-CND_PACKAGE_PATH_Debug_Windows=dist/Debug_Windows/Cygwin-Windows/package/XitLib.tar
 # Release_Windows configuration
 CND_PLATFORM_Release_Windows=Cygwin-Windows
 CND_ARTIFACT_DIR_Release_Windows=dist/Release_Windows/Cygwin-Windows
@@ -22,14 +14,6 @@ CND_ARTIFACT_PATH_Release_Windows=dist/Release_Windows/Cygwin-Windows/libxitlib.
 CND_PACKAGE_DIR_Release_Windows=dist/Release_Windows/Cygwin-Windows/package
 CND_PACKAGE_NAME_Release_Windows=XitLib.tar
 CND_PACKAGE_PATH_Release_Windows=dist/Release_Windows/Cygwin-Windows/package/XitLib.tar
-# Debug_Linux configuration
-CND_PLATFORM_Debug_Linux=GNU-Linux
-CND_ARTIFACT_DIR_Debug_Linux=dist/Debug_Linux/GNU-Linux
-CND_ARTIFACT_NAME_Debug_Linux=libxitlib.a
-CND_ARTIFACT_PATH_Debug_Linux=dist/Debug_Linux/GNU-Linux/libxitlib.a
-CND_PACKAGE_DIR_Debug_Linux=dist/Debug_Linux/GNU-Linux/package
-CND_PACKAGE_NAME_Debug_Linux=XitLib.tar
-CND_PACKAGE_PATH_Debug_Linux=dist/Debug_Linux/GNU-Linux/package/XitLib.tar
 # Release_Linux configuration
 CND_PLATFORM_Release_Linux=GNU-Linux
 CND_ARTIFACT_DIR_Release_Linux=dist/Release_Linux/GNU-Linux
@@ -38,14 +22,6 @@ CND_ARTIFACT_PATH_Release_Linux=dist/Release_Linux/GNU-Linux/libxitlib.a
 CND_PACKAGE_DIR_Release_Linux=dist/Release_Linux/GNU-Linux/package
 CND_PACKAGE_NAME_Release_Linux=XitLib.tar
 CND_PACKAGE_PATH_Release_Linux=dist/Release_Linux/GNU-Linux/package/XitLib.tar
-# Debug_MC configuration
-CND_PLATFORM_Debug_MC=GNU-Linux
-CND_ARTIFACT_DIR_Debug_MC=dist/Debug_MC/GNU-Linux
-CND_ARTIFACT_NAME_Debug_MC=libxitlib.a
-CND_ARTIFACT_PATH_Debug_MC=dist/Debug_MC/GNU-Linux/libxitlib.a
-CND_PACKAGE_DIR_Debug_MC=dist/Debug_MC/GNU-Linux/package
-CND_PACKAGE_NAME_Debug_MC=XitLib.tar
-CND_PACKAGE_PATH_Debug_MC=dist/Debug_MC/GNU-Linux/package/XitLib.tar
 # Release_MC configuration
 CND_PLATFORM_Release_MC=GNU-ARM-Windows
 CND_ARTIFACT_DIR_Release_MC=dist/Release_MC/GNU-ARM-Windows
@@ -70,6 +46,14 @@ CND_ARTIFACT_PATH_Release_AVR=dist/Release_AVR/AVR-Windows/libxitlib_avr.a
 CND_PACKAGE_DIR_Release_AVR=dist/Release_AVR/AVR-Windows/package
 CND_PACKAGE_NAME_Release_AVR=XitLib.tar
 CND_PACKAGE_PATH_Release_AVR=dist/Release_AVR/AVR-Windows/package/XitLib.tar
+# Release_RTOS configuration
+CND_PLATFORM_Release_RTOS=GNU-ARM-Windows
+CND_ARTIFACT_DIR_Release_RTOS=dist/Release_RTOS/GNU-ARM-Windows
+CND_ARTIFACT_NAME_Release_RTOS=libxitlib_cortexm4_rtos.a
+CND_ARTIFACT_PATH_Release_RTOS=dist/Release_RTOS/GNU-ARM-Windows/libxitlib_cortexm4_rtos.a
+CND_PACKAGE_DIR_Release_RTOS=dist/Release_RTOS/GNU-ARM-Windows/package
+CND_PACKAGE_NAME_Release_RTOS=XitLib.tar
+CND_PACKAGE_PATH_Release_RTOS=dist/Release_RTOS/GNU-ARM-Windows/package/XitLib.tar
 #
 # include compiler specific variables
 #

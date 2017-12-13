@@ -511,6 +511,47 @@
 // ----------------------------------------------------------------------------
 
 #ifndef CPU
+#ifdef RTOS
+//#include "portable.h"
+inline void *umm_malloc( size_t size )
+{
+    void * ptr = 0;
+    AcquireCriticalResource();
+    ptr = pvPortMalloc(size);
+    DBG_LOG_TRACE("%d umm_malloc\n",(int)ptr);
+    ReleaseCriticalResource();
+    return ptr;
+}
+inline void *umm_calloc( size_t num, size_t sizen )
+{
+    void * ptr = 0;
+    AcquireCriticalResource();
+    DBG_LOG_TRACE("before umm_calloc\n",(int)ptr);
+    ptr = pvPortMalloc(sizen);
+    memset( ptr, num, sizen);
+    DBG_LOG_TRACE("%d umm_calloc\n",(int)ptr);
+    ReleaseCriticalResource();
+    return ptr;
+}
+inline void *umm_realloc( void *ptr, size_t size )
+{
+    void * _ptr = 0;
+    AcquireCriticalResource();
+    vPortFree(ptr);
+    _ptr = pvPortMalloc(size);
+    DBG_LOG_TRACE("%d umm_realloc\n",(int)_ptr);
+    ReleaseCriticalResource();
+    return _ptr;
+}
+inline void umm_free( void *ptr )
+{
+    AcquireCriticalResource();
+    DBG_LOG_TRACE("%d umm_free\n",(int)ptr);
+    vPortFree(ptr);
+    ReleaseCriticalResource();
+    return;
+}
+#else
 UMM_H_ATTPACKPRE typedef struct umm_ptr_t {
    unsigned short int next;
    unsigned short int prev;
@@ -1278,7 +1319,7 @@ void *umm_realloc( void *ptr, size_t size ) {
 
    return( ptr );
 }
-
+#endif
 // ----------------------------------------------------------------------------
 #else
 inline void *umm_malloc( size_t size )

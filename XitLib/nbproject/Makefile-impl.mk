@@ -27,11 +27,11 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 PROJECTNAME=XitLib
 
 # Active Configuration
-DEFAULTCONF=Debug_Windows
+DEFAULTCONF=Release_Windows
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug_Windows Release_Windows Debug_Linux Release_Linux Debug_MC Release_MC Release_Linux_EV3 Release_AVR 
+ALLCONFS=Release_Windows Release_Linux Release_MC Release_Linux_EV3 Release_AVR Release_RTOS 
 
 
 # build

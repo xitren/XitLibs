@@ -9,12 +9,7 @@
 
 // ----------------------------------------------------------------------------
 
-#ifdef CPU
-void *umm_malloc( size_t size );
-void *umm_calloc( size_t num, size_t sizen );
-void *umm_realloc( void *ptr, size_t size );
-void umm_free( void *ptr );
-#else
+#ifndef CPU
 typedef struct UMM_HEAP_INFO_t {
    unsigned short int totalEntries;
    unsigned short int usedEntries;
@@ -33,12 +28,12 @@ extern char   __umm_heap_end[];
 extern size_t __umm_heap_size;
 
 void *umm_info( void *ptr, int force );
+#endif 
 
 void *umm_malloc( size_t size );
 void *umm_calloc( size_t num, size_t sizen );
 void *umm_realloc( void *ptr, size_t size );
 void umm_free( void *ptr );
-#endif 
 
 // ----------------------------------------------------------------------------
 
