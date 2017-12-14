@@ -9,7 +9,7 @@
 
 // ----------------------------------------------------------------------------
 
-#ifndef CPU
+#if !defined(CPU) && !defined(RTOS)
 typedef struct UMM_HEAP_INFO_t {
    unsigned short int totalEntries;
    unsigned short int usedEntries;

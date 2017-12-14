@@ -175,9 +175,15 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/UpdateModule.h</file>
         </group>
         <group name="Yuuko">
-            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/ConfigMem.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/ConfigMem.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/user_conf_check.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/include/array.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/LibConfig.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/models/src/array.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/xitlibtypes.h</file>
         </group>
     </open-files>

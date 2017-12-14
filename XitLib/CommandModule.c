@@ -85,30 +85,25 @@ void Interface_Memory(void)
     AddCommand("/GET/.WELL-KNOWN/CORE", "</.well-known/core>", WELLKnown);
     AddCommand("/CALLBACK/.WELL-KNOWN/CORE", "</.well-known/core>", 
                                                         CallbackWELLKnown);
-    AddCommand("/PUT/CLOCK", "</clock>", CLOCKSet);
-    AddCommand("/GET/CLOCK", "</clock>", CLOCKGet);
-    AddCommand("/GET/CALCULATE/CYCLES/FREE", "</calculate/cycles/free>", 
-                                                        CALCFREECYCLESGet);
-    AddCommand("/GET/CALCULATE/CYCLES/MAX", "</calculate/cycles/max>", 
-                                                        CALCMAXCYCLESGet);
-    AddCommand("/GET/CALCULATE/CYCLES/PERCENT", "</calculate/cycles/percent>", 
-                                                        CALCPERCENTCYCLESGet); 
-    AddCommand("/GET/QUERYNODES", "</querynodes>;if=\"dev_n\"", QueryNodes);
-    if (signal_type == 2) 
-    {
-        AddCommand("/GET/MOVEMENT", "</movement>;if=\"accel\"", GetLastBlock);
-    }
-    else
-    {
-        AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
-        AddCommand("/GET/EEG/RECORD", "</eeg/record>;if=\"neuro\"", GetRecord); 
-        AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
-                GetConcreteBlock);
-    }
-    AddCommand("/GET/RUNGENERATOR", "</rungenerator>;if=\"generator\"", 
-            RunGenerator);
-    AddCommand("/GET/STOPGENERATOR", "</stopgenerator>;if=\"generator\"", 
-            StopGenerator);
+//    AddCommand("/PUT/CLOCK", "</clock>", CLOCKSet);
+//    AddCommand("/GET/CLOCK", "</clock>", CLOCKGet);
+//    AddCommand("/GET/CALCULATE/CYCLES/FREE", "</calculate/cycles/free>", 
+//                                                        CALCFREECYCLESGet);
+//    AddCommand("/GET/CALCULATE/CYCLES/MAX", "</calculate/cycles/max>", 
+//                                                        CALCMAXCYCLESGet);
+//    AddCommand("/GET/CALCULATE/CYCLES/PERCENT", "</calculate/cycles/percent>", 
+//                                                        CALCPERCENTCYCLESGet); 
+//    if (signal_type == 2) 
+//    {
+//        AddCommand("/GET/MOVEMENT", "</movement>;if=\"accel\"", GetLastBlock);
+//    }
+//    else
+//    {
+//        AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
+//        AddCommand("/GET/EEG/RECORD", "</eeg/record>;if=\"neuro\"", GetRecord); 
+//        AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
+//                GetConcreteBlock);
+//    }
     #ifdef CPU
         AddCommand("/GET/SNAP/FILE", "</snap/take>;if=\"video\"", Snap);
         AddCommand("/GET/SNAP/TAKE", "</snap/file>;if=\"video\"", GetSnap);
@@ -126,9 +121,15 @@ void Interface_Memory(void)
         AddCommand("/CALLBACK/PARTHASH", "</parthash>", CallbackPartHash);
     #endif
 
-    #ifdef PLATFORM_LINUX
+    #ifndef RTOS
+    AddCommand("/GET/RUNGENERATOR", "</rungenerator>;if=\"generator\"", 
+            RunGenerator);
+    AddCommand("/GET/STOPGENERATOR", "</stopgenerator>;if=\"generator\"", 
+            StopGenerator);
+    AddCommand("/GET/QUERYNODES", "</querynodes>;if=\"dev_n\"", QueryNodes);
     #endif
    
+    return;
 }
 int Reset(ParameterList_t *TempParam)
 {
@@ -899,7 +900,7 @@ void ClearCommands(void)
         DBG_LOG_ERROR("CommandTableArray argument is NULL\n");
         return;
     }
-    array_remove_all_free(CommandTableArray);
+    array_remove_all(CommandTableArray);
     return;
 }
 void AddToSchedule(ScheduleFunction_t ScheduleFunction)
