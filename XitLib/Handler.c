@@ -88,23 +88,11 @@ int TransferTo(const uint8_t *data, const uint32_t datalen,
     //    if (transfer_time >= TXTIMEOUT)
     //        return -1;
     DBG_LOG_TRACE("Into TransferTo.\n");
-    #ifdef CPU
-        transfer_free = 1;
-        if (data[0] == 0) {
-            DBG_LOG_ERROR("Bad packet\n");
-            #ifdef DEBUG
-                coap_dumpHeader(&pkt.hdr);
-                DBG_LOG_DEBUG("Received: ");
-                coap_dump(data, datalen, true);
-                exit(0);
-            #endif
-        }
-        return TransferUDP(data, datalen, address, port);
-    #else
-        transfer_free = 0;
-        return TransferDMA(data, datalen);
-    #endif
-    return -2;
+//        transfer_free = 1;
+    if (data[0] == 0) {
+        DBG_LOG_ERROR("Bad packet\n");
+    }
+    return TransferUDP(data, datalen, address, port);
 }
 
 int TransferBand(const uint8_t *data, const uint32_t datalen) {
