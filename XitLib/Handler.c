@@ -241,6 +241,9 @@ inline void ProtocolHandler(void) {
                 content_type = COAP_CONTENTTYPE_APPLICATION_XML;
                 DBG_LOG_DEBUG("ProtocolHandler2 %d bytes hash %04X.\n",
                     pkt.payload.len,CRC16ANSI(pkt.payload.p,pkt.payload.len));
+                #ifdef DEBUG
+                    DBG_LOG_DEBUG("coap_handle_req %s:%d \r\n\r",ip,port);
+                #endif
                 coap_handle_req(&scratch_buf, &pkt, &rsppkt,
                         CommandLineInterpreter,ip,port);
                 size_t rsplen = sizeof (scratch_raw);

@@ -106,13 +106,13 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../../XitLibWorking/libxitlib_x86_win.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
-	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a ${OBJECTFILES} 
-	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib.a
+../../XitLibWorking/libxitlib_x86_win.a: ${OBJECTFILES}
+	${MKDIR} -p ../../XitLibWorking
+	${RM} ../../XitLibWorking/libxitlib_x86_win.a
+	${AR} -rv ../../XitLibWorking/libxitlib_x86_win.a ${OBJECTFILES} 
+	$(RANLIB) ../../XitLibWorking/libxitlib_x86_win.a
 
 ${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c
 	${MKDIR} -p ${OBJECTDIR}

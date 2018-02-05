@@ -23,14 +23,21 @@
 #include "common.h"
 #include "cJSON.h"
 
-uint16_t hashes[HASHES_MAX];
-/*
-uint32_t hashes_cnt = 0;
-*/
+struct ips {
+   char         ip[15];
+   uint32_t     port;
+   char         tok_p[6];
+   uint8_t      tok_len;
+}; 
+
+//union ip_data {
+//   ips          formal;
+//   char         byte[25];
+//};
 
 const char *tok_eeg_obs="eegobs";
 
-Array *subscribers; //array of subscribed id's
+Array *subscribers = 0; //array of subscribed id's
 FILE *mf; //the file from which we are going to read EEG
 /*
 Array *data;
@@ -44,172 +51,83 @@ int EEGStatus = 0;      // 0 - haven't started
 #ifndef MC
 int SubscribeEEGFile(ParameterList_t *TempParam)
 {
-    
     #ifdef DEBUG
         printf("--//internal//-- Into SubscribeEEGFile.\r\n\r");
     #endif
+    if (subscribers == 0)
+        if (array_new(&subscribers) != 0)
+            return;
+    
     int ret_val = 0;
-    
-    Array *array;
-    
     int i = 0;
-    char ip[20];
-    char *line;
-    char *token;
-    
-    ArrayIter ai;
-    array_iter_init(&ai, subscribers);
-    char *str;
-    void *next;
-    
-    int port = 5683;
+    struct ips *ip = (struct ips *) malloc(sizeof(struct ips));
     
     if ((TempParam) && (TempParam->NumberofParameters > 1))
     {  
         for (i=1;i<TempParam->NumberofParameters;i+=2)
         {
-            
             if (!strcmp(TempParam->Params[i-1].strParam,"ip"))
             {
-                strcpy(ip,TempParam->Params[i].strParam);
+                strcpy(ip->ip,TempParam->Params[i].strParam);
             }
             if (!strcmp(TempParam->Params[i-1].strParam,"port"))
             {
-                port = TempParam->Params[i].intParam;
-                printf("Port was sent.\n");
+                ip->port = TempParam->Params[i].intParam;
             }
         }
-        printf("pkt.tok_p: %X port: %d ip: %s\n", pkt.tok_p, port, ip);
+        ip->tok_len = pkt.tok_len;
+        for (i = pkt.tok_len;i < 6;i++)
+            pkt.tok_p[i] = 0;
+        memcpy(ip->tok_p,pkt.tok_p,6);
+        printf("pkt.tok_p: %02X%02X%02X%02X%02X%02X port: %d ip: %s\n",  
+        (uint8_t)ip->tok_p[0], (uint8_t)ip->tok_p[1], (uint8_t)ip->tok_p[2],
+        (uint8_t)ip->tok_p[3], (uint8_t)ip->tok_p[4], (uint8_t)ip->tok_p[5],
+        ip->port, ip->ip);
         
         content_type = COAP_CONTENTTYPE_TEXT_PLAIN;
 
         AddToTransmit("<SUBSCRIPTION RESPONSE>\r\n\r");
-        if (subscribers==NULL) {
-            enum cc_stat status = array_new(&subscribers);
-            if (status != CC_ERR_ALLOC) {
-                AddToTransmit("Subscription to EEG file update data confirmed. Added IP to subscribers:\n");
-                AddToTransmit(ip);
-                
-                int i = strlen(ip)+1;
-                line = (char*) malloc(sizeof(char)*i);
-                strncpy(line, ip, i);
-                
-                
-                Array *subscriber;
-                array_new(&subscriber);
-                array_add(subscriber,line);
-                array_add(subscriber,port);
-                
-                i = strlen(pkt.tok_p)+1;
-
-                //token = (char*) malloc(sizeof(char)*i);
-
-                token = pkt.tok_p;
-                strncpy(token, pkt.tok_p, i);
-                
-                //printf("pkt.tok_p: %s token: %s\n", pkt.tok_p, token);
-                printf("pkt.tok_p: %X token: %X\n", pkt.tok_p, token);
-                
-                
-                
-                array_add(subscriber,token);
-                
-                array_add(subscribers, subscriber);
-                printf("New list of subscribers:\r\n\r");
-                PrintSubscribers();
-            }
-            else {
-                AddToTransmit("Subscription to EEG file failed (can't create array)");
-            }
+        //check
+                                                       
+        int Index;
+        for(Index=0;Index < array_size(subscribers);Index++)
+        {
+            struct ips *element;
+            array_get_at(subscribers, Index, (void**)&element);
+            if(     (memcmp(element->ip, ip->ip, 15) == 0) 
+                    && (element->port == ip->port) 
+                    && (memcmp(element->tok_p, ip->tok_p, 6) == 0))
+                break;
         }
-        else {
-            int a=0;
-            while (array_iter_next(&ai, &next) != CC_ITER_END) {
-                //array_get_at(subscribers, next, (void*) &str);
-
-                //printf("1\n");
-                size_t iter = array_iter_index(&ai);
-                //printf("2\n");
-                array_get_at(subscribers, iter, (void*) &array);
-                //printf("3\n");
-
-                array_get_at(array, 0, (void*) &str);
-                printf("\n\n\n\n %s \n\n\n\n", str);
-                printf("Cheking:\n");
-                a++;
-                printf("a++ : %d str: %s ip: %s\n",a,str,ip);
-                if (strcmp(str,ip)==0) {                  //if such an ip is already in the list do not add
-                    AddToTransmit(ip);
-                    AddToTransmit(" already subscribed.");
-                }
-                else { 
-                    AddToTransmit("Subscription to EEG file update data confirmed. Added IP to subscribers:\n");
-                    AddToTransmit(ip);
-                    
-                    int i = strlen(ip)+1;
-                    line = (char*) malloc(sizeof(char)*i);
-                    strncpy(line, ip, i);
-
-
-                    Array *subscriber;
-                    array_new(&subscriber);
-                    array_add(subscriber,line);
-                    array_add(subscriber,port);
-
-                    i = strlen(pkt.tok_p)+1;
-
-                    //token = (char*) malloc(sizeof(char)*i);
-
-                    token = pkt.tok_p;
-                    strncpy(token, pkt.tok_p, i);
-
-                    //printf("pkt.tok_p: %s token: %s\n", pkt.tok_p, token);
-                    printf("pkt.tok_p: %X token: %X\n", pkt.tok_p, token);
-
-
-
-                    array_add(subscriber,token);
-
-                    array_add(subscribers, subscriber);
-                
-                    printf("New list of subscribers:\r\n\r");
-                    PrintSubscribers();
-                }
-                printf("%s\r\n\r", str);
-            }
+        if (Index >= array_size(subscribers)) 
+        {
+            AddToTransmit("Subscription to EEG file update data confirmed. Added IP to subscribers:\n");
+            AddToTransmit(ip);
+            array_add(subscribers,ip);
+            printf("New list of subscribers:\r\n\r");
+            PrintSubscribers();
+        }
+        else
+        {
+            AddToTransmit(" already subscribed.");
         }
         AddToTransmit("\r\n\r</SUBSCRIPTION RESPONSE>\r\n\r");  
     }
-   return(ret_val);
+    return(ret_val);
 }
 #endif
 
 void PrintSubscribers() {
-    ArrayIter ai;
-    array_iter_init(&ai, subscribers);
-    size_t size;
-    
-    Array *array;
-    
-    char *str;
-    void *next;
-    //printf("0\n");
-    if (subscribers!=NULL) {
-        while (array_iter_next(&ai, &next) != CC_ITER_END) {
-            //array_get_at(subscribers, next, (void*) &str);
-            
-            //printf("1\n");
-            size_t iter = array_iter_index(&ai);
-            //printf("2\n");
-            array_get_at(subscribers, iter, (void*) &array);
-            //printf("3\n");
-            
-            array_get_at(array, 0, (void*) &str);
-            printf("ip: %s ", str);
-            array_get_at(array, 1, (void*) &size);
-            printf("port: %d ", size);
-            array_get_at(array, 2, (void*) &str);
-            printf("token: %X\r\n\r", str);
+    if (subscribers != 0) {                                  
+        int Index;
+        for(Index=0;Index < array_size(subscribers);Index++)
+        {
+            struct ips *element;
+            array_get_at(subscribers, Index, (void**)&element);
+            printf("pkt.tok_p: %02X%02X%02X%02X%02X%02X port: %d ip: %s\n", 
+                    (uint8_t)element->tok_p[0], (uint8_t)element->tok_p[1], (uint8_t)element->tok_p[2],
+                    (uint8_t)element->tok_p[3], (uint8_t)element->tok_p[4], (uint8_t)element->tok_p[5],
+                    element->port, element->ip);
         }
     }
 }
@@ -447,68 +365,33 @@ void SendToSubsribers(char *data,size_t data_len) {
     char *token; //token
     
     //for each subscriber send new part
-    if (subscribers!=NULL) {
-        while (array_iter_next(&ai, &next) != CC_ITER_END) {
-            size_t iter = array_iter_index(&ai);
-            array_get_at(subscribers, iter, (void*) &array);
-            array_get_at(array, 0, (void*) &str);
-            array_get_at(array, 1, (void*) &port);
-            array_get_at(array, 2, (void*) &token);
-            sendEEGNews(port, str, token, data, data_len);
+    if (subscribers!=NULL) {                            
+        int Index;
+        for(Index=0;Index < array_size(subscribers);Index++)
+        {
+            struct ips *element;
+            array_get_at(subscribers, Index, (void**)&element);
+            printf("pkt.tok_p: %02X%02X%02X%02X%02X%02X port: %d ip: %s\n", 
+                    (uint8_t)element->tok_p[0], (uint8_t)element->tok_p[1], (uint8_t)element->tok_p[2],
+                    (uint8_t)element->tok_p[3], (uint8_t)element->tok_p[4], (uint8_t)element->tok_p[5],
+                    element->port, element->ip);
+            sendEEGNews(element->port, element->ip, element->tok_p, element->tok_len, 
+                                                            data, data_len);
         }
     }
 }
 
-void sendEEGNews(int port, char *address, char *token, uint8_t *data,size_t data_len) {
+void sendEEGNews(int port, char *address, char *token, uint8_t token_len, 
+                                            uint8_t *data, size_t data_len) {
     int rc;
     uint8_t observer_data[3];
-    //char message[1000];
     
-    //printf("Sending message to 40\n");
-    //snprintf(message,1000,data);
+    printf("Message id: %s token: %02X%02X%02X%02X%02X%02X port=%d \n", address,
+    (uint8_t)token[0], (uint8_t)token[1], (uint8_t)token[2],
+    (uint8_t)token[3], (uint8_t)token[4], (uint8_t)token[5], port);
     
-    
-/*
-    char *token;
-*/
-    size_t tok_len;
-    
-    ArrayIter ai;
-    array_iter_init(&ai, subscribers);
-    int size;
-    
-    Array *array;
-    
-    char *str;
-    void *next;
-/*
-    //printf("0\n");
-    if (subscribers!=NULL) {
-        while (array_iter_next(&ai, &next) != CC_ITER_END) {
-            //array_get_at(subscribers, next, (void*) &str);
-            
-            //printf("1\n");
-            size_t iter = array_iter_index(&ai);
-            //printf("2\n");
-            array_get_at(subscribers, iter, (void*) &array);
-            //printf("3\n");
-            
-            array_get_at(array, 0, (void*) &str);
-            //printf("%s\r\n\r", str);
-            array_get_at(array, 1, (void*) &size);
-            //printf("%d\r\n\r", size);
-            port = size;
-            array_get_at(array, 2, (void*) &str);
-            //printf("%X\r\n\r", str);
-            token = str;
-        }
-    }
-*/
-    
-    printf("Message id: %s token: %X port=%d \n", address, token, port);
-    
-    pkt.tok_len = 2;
-    memcpy(pkt.tok_p, token, pkt.tok_len);
+    pkt.tok_len = token_len;
+    memcpy(pkt.tok_p, token, 6);
     
     coap_option_t opt_obs;
     ((uint16_t*)observer_data)[0] = GetClock();
@@ -524,26 +407,19 @@ void sendEEGNews(int port, char *address, char *token, uint8_t *data,size_t data
     pktlen = 4096;
     scratch_buf.len = 4096;
 
-/*
-    printf("patlen= %d\n",pktlen);
-*/
-
-    if (!(rc = coap_build(scratch_raw, &scratch_buf.len, &pkt, NULL, NULL)))
+    coap_dumpPacket(&pkt);
+    if (!(rc = coap_build(scratch_buf.p, &scratch_buf.len, &pkt, NULL, NULL)))
     {
         printf("Transfering.\n");
-        TransferUDP((uint8_t*)scratch_raw,scratch_buf.len,address,port);
+        TransferUDP((uint8_t*)scratch_buf.p,scratch_buf.len,address,port);
     }
     else { 
         printf("Don't want to build message.\n");
         printf("returned %d \n", rc); 
     }
-        
-        
-//        printf();
     #ifdef DEBUG
         DBG_LOG_DEBUG("Sending: ");
-        coap_dump(scratch_raw, scratch_buf.len, true);
+        coap_dump(scratch_buf.p, scratch_buf.len, true);
     #endif
-    //updateStatus = 2;
     return;
 }

@@ -59,11 +59,15 @@ int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
     if ((msg != 0) && (size > 0))
     {
         comm = (ReceiveDeque_t *)umm_calloc(1,sizeof(ReceiveDeque_t));
+        DBG_LOG_TRACE("ReceiveDeque_t allocated.\n");
         comm->Msg = (uint8_t *)umm_calloc(size,sizeof(uint8_t));
+        DBG_LOG_TRACE("Msg allocated %d.\n",size);
         memcpy((void *)comm->Msg,(void *)msg,size);
+        DBG_LOG_TRACE("Memcpy completed.\n");
         comm->Size = size;
         comm->Ip = ip;
         comm->Port = port;
+        DBG_LOG_TRACE("Parameters setted.\n");
         if (deque_add_last(ReceiveDeque, (void *)comm) != 0)
         {
             umm_free((void *)comm);

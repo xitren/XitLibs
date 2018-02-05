@@ -85,25 +85,25 @@ void Interface_Memory(void)
     AddCommand("/GET/.WELL-KNOWN/CORE", "</.well-known/core>", WELLKnown);
     AddCommand("/CALLBACK/.WELL-KNOWN/CORE", "</.well-known/core>", 
                                                         CallbackWELLKnown);
-//    AddCommand("/PUT/CLOCK", "</clock>", CLOCKSet);
-//    AddCommand("/GET/CLOCK", "</clock>", CLOCKGet);
-//    AddCommand("/GET/CALCULATE/CYCLES/FREE", "</calculate/cycles/free>", 
-//                                                        CALCFREECYCLESGet);
-//    AddCommand("/GET/CALCULATE/CYCLES/MAX", "</calculate/cycles/max>", 
-//                                                        CALCMAXCYCLESGet);
-//    AddCommand("/GET/CALCULATE/CYCLES/PERCENT", "</calculate/cycles/percent>", 
-//                                                        CALCPERCENTCYCLESGet); 
-//    if (signal_type == 2) 
-//    {
-//        AddCommand("/GET/MOVEMENT", "</movement>;if=\"accel\"", GetLastBlock);
-//    }
-//    else
-//    {
-//        AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
-//        AddCommand("/GET/EEG/RECORD", "</eeg/record>;if=\"neuro\"", GetRecord); 
-//        AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
-//                GetConcreteBlock);
-//    }
+    AddCommand("/PUT/CLOCK", "</clock>", CLOCKSet);
+    AddCommand("/GET/CLOCK", "</clock>", CLOCKGet);
+    AddCommand("/GET/CALCULATE/CYCLES/FREE", "</calculate/cycles/free>", 
+                                                        CALCFREECYCLESGet);
+    AddCommand("/GET/CALCULATE/CYCLES/MAX", "</calculate/cycles/max>", 
+                                                        CALCMAXCYCLESGet);
+    AddCommand("/GET/CALCULATE/CYCLES/PERCENT", "</calculate/cycles/percent>", 
+                                                        CALCPERCENTCYCLESGet); 
+    if (signal_type == 2) 
+    {
+        AddCommand("/GET/MOVEMENT", "</movement>;if=\"accel\"", GetLastBlock);
+    }
+    else
+    {
+        AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
+        AddCommand("/GET/EEG/RECORD", "</eeg/record>;if=\"neuro\"", GetRecord); 
+        AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
+                GetConcreteBlock);
+    }
     #ifdef CPU
         AddCommand("/GET/SNAP/FILE", "</snap/take>;if=\"video\"", Snap);
         AddCommand("/GET/SNAP/TAKE", "</snap/file>;if=\"video\"", GetSnap);

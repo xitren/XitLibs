@@ -106,12 +106,13 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ../../XitLibWorking/libxitlib_cortexm4.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a
-	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a ${OBJECTFILES} 
+../../XitLibWorking/libxitlib_cortexm4.a: ${OBJECTFILES}
+	${MKDIR} -p ../../XitLibWorking
+	${RM} ../../XitLibWorking/libxitlib_cortexm4.a
+	${AR} -rv ../../XitLibWorking/libxitlib_cortexm4.a ${OBJECTFILES} 
+	$(RANLIB) ../../XitLibWorking/libxitlib_cortexm4.a
 
 ${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c
 	${MKDIR} -p ${OBJECTDIR}
