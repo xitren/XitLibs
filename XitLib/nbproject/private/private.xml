@@ -122,18 +122,6 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CRC16ANSI.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/Handler.c</file>
         </group>
-        <group name="INEUM">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ConfigMem.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/xitlibtypes.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/ExtFunctions.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/InOutBuffer.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/StreamDataRecorder.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/LibConfig.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/DMAretransmitter.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/user_conf_check.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/CommandModule.h</file>
-        </group>
         <group name="XitLib">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/XitLibs/XitLib/FunctionsDiscovery.c</file>
@@ -189,5 +177,6 @@
         <group name="Encephalon">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/Handler.c</file>
         </group>
+        <group name="INEUM"/>
     </open-files>
 </project-private>
