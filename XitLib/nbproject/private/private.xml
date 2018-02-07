@@ -174,9 +174,6 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/xitlibtypes.h</file>
         </group>
-        <group name="Encephalon">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/Handler.c</file>
-        </group>
         <group name="INEUM">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/EEGModule.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/FunctionsDiscovery.c</file>
@@ -190,5 +187,6 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/ExtFunctions.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/CommandModule.c</file>
         </group>
+        <group name="Encephalon"/>
     </open-files>
 </project-private>
