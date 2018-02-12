@@ -187,6 +187,8 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/ExtFunctions.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/CommandModule.c</file>
         </group>
-        <group name="Encephalon"/>
+        <group name="Encephalon">
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/CommandModule.c</file>
+        </group>
     </open-files>
 </project-private>

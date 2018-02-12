@@ -328,14 +328,14 @@ int MEMRead(ParameterList_t *TempParam)
         }
         if (Adress >= 0)
         {
-            AddToTransmit(" <ADDRESS>\r\n\r");
-            snprintf((char*)buffer,sizeof(buffer),"  %d\r\n\r",(int)Adress);
+            AddToTransmit(" <ADDRESS>");
+            snprintf((char*)buffer,sizeof(buffer),"%d",(int)Adress);
             AddToTransmit((char*)buffer);
-            AddToTransmit(" </ADDRESS>\r\n\r");
-            AddToTransmit(" <VALUE>\r\n\r");
-            snprintf((char*)buffer,sizeof(buffer),"  %d\r\n\r",(int)ReadMem(Adress));
+            AddToTransmit("</ADDRESS>\r\n\r");
+            AddToTransmit(" <VALUE>");
+            snprintf((char*)buffer,sizeof(buffer),"%d",(int)ReadMem(Adress));
             AddToTransmit((char*)buffer);
-            AddToTransmit(" <VALUE>\r\n\r");
+            AddToTransmit("<VALUE>\r\n\r");
         }
     }
     else
@@ -380,8 +380,8 @@ int MEMWrite(ParameterList_t *TempParam)
         }
         if (Adress >= 0)
         {
-            AddToTransmit("<ADDRESS>\r\n\r");
-            snprintf((char*)buffer,sizeof(buffer)," %d\r\n\r",(int)Adress);
+            AddToTransmit("<ADDRESS>");
+            snprintf((char*)buffer,sizeof(buffer),"%d",(int)Adress);
             AddToTransmit((char*)buffer);
             AddToTransmit("</ADDRESS>\r\n\r");
             WriteMem(Adress,Value);
