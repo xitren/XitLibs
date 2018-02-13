@@ -61,8 +61,8 @@ uint16_t Packetize(uint8_t *bytes,const uint16_t size, const uint16_t buffer_siz
     }
     if (size == 0)
         return 0;
-    if (buffer_size > ((size)+22))
-        return 0;
+//    if (buffer_size < ((size)+22))
+//        return 0;
     for (i=(size-1);i >= 3;i-=4)
     {
         bytes[i+9] = bytes[i-3];
@@ -106,8 +106,8 @@ uint16_t PacketizeInfo(uint8_t *bytes,const uint16_t size, const uint16_t buffer
     }
     if (size == 0)
         return 0;
-    if (buffer_size > ((size)+7))
-        return 0;
+//    if (buffer_size < ((size)+7))
+//        return 0;
     for (i=size;i >= 0;i--)
     {
         bytes[i+5] = bytes[i];
