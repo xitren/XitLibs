@@ -96,6 +96,32 @@ uint16_t Packetize(uint8_t *bytes,const uint16_t size, const uint16_t buffer_siz
     bytes[(size)+21] = (crc)&255;
     return (size)+22;
 }
+uint16_t PacketizeInfo(uint8_t *bytes,const uint16_t size, const uint16_t buffer_size)
+{
+    int i;
+    if ((bytes == NULL))
+    {
+        DBG_LOG_ERROR("Packetize argument is NULL\n");
+        return 0;
+    }
+    if (size == 0)
+        return 0;
+    if (buffer_size > ((size)+7))
+        return 0;
+    for (i=size;i >= 0;i--)
+    {
+        bytes[i+5] = bytes[i];
+    }
+    bytes[0] = 1;
+    bytes[1] = 28;
+    bytes[2] = 64;
+    bytes[3] = ((size)/256)&255;
+    bytes[4] = (size)&255;
+    uint16_t crc = CRC16ANSI(bytes,(size)+5); 
+    bytes[(size)+5] = ((crc)/256)&255;
+    bytes[(size)+6] = (crc)&255;
+    return (size)+7;
+}
 uint16_t DePacketize(uint8_t *bytes,const uint16_t size)
 {
     if ((bytes == NULL))

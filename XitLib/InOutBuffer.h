@@ -31,6 +31,7 @@
                                                          /* was no            */
                                                          /* space.            */
 #define MEMORY_INOUT BUFFER_SIZE*STRING_SIZE+8
+#define BUFFER_INOUT BUFFER_SIZE*STRING_SIZE
 /*============================================================================*/
 
 #ifdef __cplusplus

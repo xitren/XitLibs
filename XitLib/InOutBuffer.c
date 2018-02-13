@@ -29,7 +29,6 @@ typedef struct _tagReceiveDeque_t
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
-#define BUFFER_INOUT BUFFER_SIZE*STRING_SIZE
 char inout_buffer[BUFFER_INOUT];
 uint32_t TxCnt = 0;
 static Deque *ReceiveDeque;
