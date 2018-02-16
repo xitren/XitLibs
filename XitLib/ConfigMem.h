@@ -161,7 +161,40 @@ typedef enum
   REG_IMG_6              =       0x00000073,
   REG_IMG_7              =       0x00000074,
   REG_IMG_8              =       0x00000075,
-  REG_SHOW_INTERNAL      =       0x00000076
+  REG_SHOW_INTERNAL      =       0x00000076,
+          
+  REG_IMP_STATE                 =       0x00000077,
+  REG_IMP_STRAP1_ACTIVE_Z       =       0x00000078,
+  REG_IMP_STRAP1_REACTIVE_Z     =       0x00000079,
+  REG_IMP_STRAP1_TOTAL_Z        =       0x0000007A,
+  REG_IMP_STRAP2_ACTIVE_Z       =       0x0000007B,
+  REG_IMP_STRAP2_REACTIVE_Z     =       0x0000007C,
+  REG_IMP_ECG_ACTIVE_Z          =       0x0000007D,
+  REG_IMP_ECG_REACTIVE_Z        =       0x0000007E,
+  REG_IMP_ECG_TOTAL_Z           =       0x0000007F,
+  REG_IMP_EMG_ACTIVE_Z          =       0x00000080,
+  REG_IMP_EMG_REACTIVE_Z        =       0x00000081,
+  REG_IMP_EMG_TOTAL_Z           =       0x00000082,
+  REG_IMP_TEMP_CHIP             =       0x00000083,
+  REG_IMP_GAINFACTOR            =       0x00000084,
+  REG_IMP_PHASE_SYSTEM          =       0x00000085,
+  REG_IMP_RCAL_MAGNITUDE        =       0x00000086,
+  REG_IMP_A                     =       0x00000087,
+  REG_IMP_B                     =       0x00000088,
+          
+  REG_AFE_MUX_STATE      =       0x00000089,
+  REG_AFE_MUX_LSB        =       0x0000008A,
+  REG_AFE_MUX_MSB        =       0x0000008B,
+  REG_AFE_GPIO_STATE     =       0x0000008C,
+  REG_SHOW_INTERNAL1     =       0x0000008D,
+  REG_SHOW_INTERNAL2     =       0x0000008E,
+  REG_SHOW_INTERNAL3     =       0x0000008F,
+  REG_SHOW_INTERNAL4     =       0x00000090,
+  REG_SHOW_INTERNAL5     =       0x00000091,
+          
+  REG_IMP_MODE           =       0x00000092,
+  REG_AFE_MODE           =       0x00000093,
+  REG_SHOW_MODE          =       0x00000094
 } RegDef;
 /*============================================================================*/
 
