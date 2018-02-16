@@ -335,7 +335,7 @@ int MEMRead(ParameterList_t *TempParam)
             AddToTransmit(" <VALUE>");
             snprintf((char*)buffer,sizeof(buffer),"%d",(int)ReadMem(Adress));
             AddToTransmit((char*)buffer);
-            AddToTransmit("<VALUE>\r\n\r");
+            AddToTransmit("</VALUE>\r\n\r");
         }
     }
     else
