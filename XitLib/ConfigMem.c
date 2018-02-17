@@ -147,6 +147,39 @@ void InitCfgMem(void)
   config_reg[REG_IMG_7] = 0x00001C00;
   config_reg[REG_IMG_8] = 0x00000800;
   config_reg[REG_SHOW_INTERNAL] = 0x00000001;
+  
+  config_reg[REG_IMP_STATE] = 0x00000000;
+  config_reg[REG_IMP_STRAP1_ACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_STRAP1_REACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_STRAP1_TOTAL_Z] = 0x00000000;
+  config_reg[REG_IMP_STRAP2_ACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_STRAP2_REACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_ECG_ACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_ECG_REACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_ECG_TOTAL_Z] = 0x00000000;
+  config_reg[REG_IMP_EMG_ACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_EMG_REACTIVE_Z] = 0x00000000;
+  config_reg[REG_IMP_EMG_TOTAL_Z] = 0x00000000;
+  config_reg[REG_IMP_TEMP_CHIP] = 0x00000000;
+  config_reg[REG_IMP_GAINFACTOR] = 0x00000000;
+  config_reg[REG_IMP_PHASE_SYSTEM] = 0x00000000;
+  config_reg[REG_IMP_RCAL_MAGNITUDE] = 0x00000000;
+  config_reg[REG_IMP_A] = 0x00000000;
+  config_reg[REG_IMP_B] = 0x00000000;
+  
+  config_reg[REG_AFE_MUX_STATE] = 0x00000000;
+  config_reg[REG_AFE_MUX_LSB] = 0x00000000;
+  config_reg[REG_AFE_MUX_MSB] = 0x00000000;
+  config_reg[REG_AFE_GPIO_STATE] = 0x00000000;
+  config_reg[REG_SHOW_INTERNAL1] = 0x00000000;
+  config_reg[REG_SHOW_INTERNAL2] = 0x00000000;
+  config_reg[REG_SHOW_INTERNAL3] = 0x00000000;
+  config_reg[REG_SHOW_INTERNAL4] = 0x00000000;
+  config_reg[REG_SHOW_INTERNAL5] = 0x00000000;
+  
+  config_reg[REG_IMP_MODE] = 0x00000000;
+  config_reg[REG_AFE_MODE] = 0x00000000;
+  config_reg[REG_SHOW_MODE] = 0x00000000;
   return;
 }
 inline void WriteMem(uint32_t _adr, uint32_t _val)

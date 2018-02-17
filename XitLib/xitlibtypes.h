@@ -48,7 +48,8 @@ typedef enum
   EEG                    =       0x00000001,
   MOVEMENT               =       0x00000002,
   CAMERA                 =       0x00000003,
-  GENERATOR              =       0x00000004          
+  GENERATOR              =       0x00000004,
+  POLYGRAPH              =       0x00000005          
 } DeviceTypeDef;
 /*============================================================================*/
 

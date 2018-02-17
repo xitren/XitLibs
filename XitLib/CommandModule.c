@@ -63,6 +63,7 @@ int CLOCKGet(ParameterList_t *TempParam);
 int CALCFREECYCLESGet(ParameterList_t *TempParam);
 int CALCMAXCYCLESGet(ParameterList_t *TempParam);
 int CALCPERCENTCYCLESGet(ParameterList_t *TempParam);
+int DEVICEGet(ParameterList_t *TempParam);
 CommandFunction_t FindCommand(char *Command);
 /*============================================================================*/
     
@@ -78,6 +79,7 @@ void Interface_Memory(void)
         return;
     ClearCommands();
     ClearSchedule();
+    AddCommand("/DEVICE", "</device>", DEVICEGet);
     AddCommand("/RESET", "</reset>", Reset);
     AddCommand("/GET/MEMORY", "</memory>", MEMRead);
     AddCommand("/PUT/MEMORY", "</memory>", MEMWrite);
@@ -197,6 +199,23 @@ int CLOCKSet(ParameterList_t *TempParam)
         DBG_LOG_WARNING("Invalid parameters.\n");
     }
     AddToTransmit("</CLOCKSET>\r\n\r");
+
+    return(ret_val);
+}
+int DEVICEGet(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+    char buffer[STRING_SIZE];
+
+    DBG_LOG_DEBUG("Into DEVICEGet.\n");
+    AddToTransmit("<DEVICE>");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.*/
+    if (DEVICE == EEG)
+        AddToTransmit("EEG");
+    else if (DEVICE == POLYGRAPH)
+        AddToTransmit("POLYGRAPH");
+    AddToTransmit("</DEVICE>\r\n\r");
 
     return(ret_val);
 }
