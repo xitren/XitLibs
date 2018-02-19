@@ -26,10 +26,10 @@ extern "C" {
         #define EEG_HISTORY_SIZE 2 //power of 2
         #define EXT_EEG_MAX_COUNT 1
     #else
-        #define COAP_SIZE 32
+        #define COAP_SIZE 2048
         #define LOGGER_SIZE 30
         #define BUFFER_SIZE 30
-        #define STRING_SIZE 60
+        #define STRING_SIZE 80
         #define MAX_NUM_OF_PARAMETERS                      (10)  /* Denotes the max   */
                                                                  /* number of         */
                                                                  /* parameters a      */

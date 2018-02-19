@@ -276,8 +276,9 @@ inline void ProtocolHandler(void) {
                 } else {
                     return;
                 }
+                rsplen = sizeof (scratch_raw);
                 if (0 != (rc = coap_build(scratch_raw, &rsplen, &rsppkt, NULL, NULL))) {
-                    printf("coap_build failed rc=%d\r\n\r", rc);
+                    printf("coap_build failed rc=%d/%d\r\n\r", rc, rsplen);
                 } else {
                     #ifdef DEBUG
                         DBG_LOG_DEBUG("Sending: ");
