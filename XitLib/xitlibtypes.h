@@ -49,7 +49,8 @@ typedef enum
   MOVEMENT               =       0x00000002,
   CAMERA                 =       0x00000003,
   GENERATOR              =       0x00000004,
-  POLYGRAPH              =       0x00000005          
+  POLYGRAPH              =       0x00000005,
+  ROBOT                  =       0x00000006              
 } DeviceTypeDef;
 /*============================================================================*/
 

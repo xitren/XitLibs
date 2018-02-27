@@ -215,6 +215,8 @@ int DEVICEGet(ParameterList_t *TempParam)
         AddToTransmit("EEG");
     else if (DEVICE == POLYGRAPH)
         AddToTransmit("POLYGRAPH");
+    else if (DEVICE == ROBOT)
+        AddToTransmit("ROBOT");
     AddToTransmit("</DEVICE>\r\n\r");
 
     return(ret_val);

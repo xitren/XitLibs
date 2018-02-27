@@ -14,11 +14,11 @@ GREP=grep
 NM=nm
 CCADMIN=CCadmin
 RANLIB=ranlib
-CC=gcc
+CC=arm-none-eabi-gcc
 CCC=g++
 CXX=g++
 FC=gfortran
-AS=as
+AS=arm-none-eabi-ld
 
 # Macros
 CND_PLATFORM=GNU-ARM-Windows
