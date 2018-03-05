@@ -31,8 +31,12 @@ uint32_t samples_cnt = 0;
 uint32_t readed_cnt = 0;
 uint32_t sample_frequency = 250;
 uint32_t signal_amplitude[BUFFER_SAMPLE_SIZE-1] = 
-                                    {10000,10000,10000,10000,10000,10000,10000};
-uint32_t signal_frequency[BUFFER_SAMPLE_SIZE-1] = {10,10,10,10,10,10,10};
+                                    {10,100,1000,10000,1000,100,10};
+uint32_t noise_amplitude[BUFFER_SAMPLE_SIZE-1] = 
+                                    {100,100,100,100,100,100,100};
+uint32_t power_amplitude[BUFFER_SAMPLE_SIZE-1] = 
+                                    {100,1000,10000,1000,1000,1000,1000};
+uint32_t signal_frequency[BUFFER_SAMPLE_SIZE-1] = {10,20,30,40,50,60,70};
 uint8_t signal_type = 0;
 //uint8_t path_eeg_arg_buf[5000];
 FILE *fp_rec;
@@ -548,8 +552,13 @@ void AddSample()
         Data_samples[0][samples_cnt%BUFFER_2ND_MAX] = samples_cnt;
         for(i=1;i<BUFFER_SAMPLE_SIZE;i++)
             Data_samples[i][samples_cnt%BUFFER_2ND_MAX] 
-                                = (int32_t)(signal_amplitude[i-1]*
-                                         sin(signal_frequency[i-1]*phase));
+                                = ((int32_t)
+                                    (signal_amplitude[i-1]*
+                                         sin(signal_frequency[i-1]*phase)) +
+                                    (int32_t)
+                                    (power_amplitude[i-1]*sin(0.5*phase)) +
+                                    (int32_t)
+                                    ((rand()*noise_amplitude[i-1])/RAND_MAX) );
     }
 
     #ifdef CPU
