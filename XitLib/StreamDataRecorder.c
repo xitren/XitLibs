@@ -549,8 +549,9 @@ void AddSample()
     else
     {
         double phase = (TwoPi*samples_cnt)/sample_frequency;
-        Data_samples[0][samples_cnt%BUFFER_2ND_MAX] = samples_cnt;
-        for(i=1;i<BUFFER_SAMPLE_SIZE;i++)
+        Data_samples[0][samples_cnt%BUFFER_2ND_MAX] = ReadMem(REG_ADC_CH1);
+        Data_samples[1][samples_cnt%BUFFER_2ND_MAX] = ReadMem(REG_ADC_CH2);
+        for(i=2;i<BUFFER_SAMPLE_SIZE;i++)
             Data_samples[i][samples_cnt%BUFFER_2ND_MAX] 
                                 = ((int32_t)
                                     (signal_amplitude[i-1]*

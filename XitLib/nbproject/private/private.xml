@@ -174,7 +174,6 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/xitlibtypes.h</file>
         </group>
-        <group name="INEUM"/>
         <group name="Encephalon">
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/Handler.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/xitlibtypes.h</file>
@@ -182,6 +181,14 @@
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/ConfigMem.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/StreamDataRecorder.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/CRC16ANSI.c</file>
+        </group>
+        <group name="INEUM">
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/Packet.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/CommandModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/UpdateModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/InOutBuffer.c</file>
         </group>
     </open-files>
 </project-private>
