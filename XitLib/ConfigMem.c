@@ -180,6 +180,17 @@ void InitCfgMem(void)
   config_reg[REG_IMP_MODE] = 0x00000000;
   config_reg[REG_AFE_MODE] = 0x00000000;
   config_reg[REG_SHOW_MODE] = 0x00000000;
+  
+  
+  config_reg[REG_BOT_STAT] = 0x00000000;
+  config_reg[REG_BOT_BATTERY] = 0x00000000;
+  config_reg[REG_BOT_RED] = 0x00000000;
+  config_reg[REG_BOT_RED_M] = 0x00000000;
+  config_reg[REG_BOT_IR] = 0x00000000;
+  config_reg[REG_BOT_IR_M] = 0x00000000;
+  config_reg[REG_BOT_SPO2] = 0x00000000;
+  config_reg[REG_BOT_PROXIMITY] = 0x00000000;
+  config_reg[REG_BOT_RATIO] = 0x00000000;
   return;
 }
 inline void WriteMem(uint32_t _adr, uint32_t _val)

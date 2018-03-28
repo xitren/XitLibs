@@ -194,7 +194,17 @@ typedef enum
           
   REG_IMP_MODE           =       0x00000092,
   REG_AFE_MODE           =       0x00000093,
-  REG_SHOW_MODE          =       0x00000094
+  REG_SHOW_MODE          =       0x00000094,
+          
+  REG_BOT_STAT           =       0x00000095,
+  REG_BOT_BATTERY        =       0x00000096,
+  REG_BOT_RED            =       0x00000097,
+  REG_BOT_RED_M          =       0x00000098,
+  REG_BOT_IR             =       0x00000099,
+  REG_BOT_IR_M           =       0x0000009A,
+  REG_BOT_SPO2           =       0x0000009B,
+  REG_BOT_PROXIMITY      =       0x0000009C,
+  REG_BOT_RATIO          =       0x0000009D
 } RegDef;
 /*============================================================================*/
 
