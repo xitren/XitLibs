@@ -92,7 +92,7 @@ void InitCfgMem(void)
   config_reg[REG_ADC_REG21] = 0;
   config_reg[REG_ADC_REG22] = 0;
   
-  config_reg[REG_ADC_ORDER] = 0x76543210;
+  config_reg[REG_ADC_ORDER] = 0x76543298;
   
   config_reg[REG_ADC_CH1] = 0;
   config_reg[REG_ADC_CH2] = 0;
@@ -102,6 +102,9 @@ void InitCfgMem(void)
   config_reg[REG_ADC_CH6] = 0;
   config_reg[REG_ADC_CH7] = 0;
   config_reg[REG_ADC_CH8] = 0;
+  config_reg[REG_ADC_CHA] = 0;
+  config_reg[REG_ADC_CHB] = 0;
+  config_reg[REG_ADC_CHC] = 0;
   
   config_reg[REG_Imp_CH1] = 0;
   config_reg[REG_Imp_CH2] = 0;

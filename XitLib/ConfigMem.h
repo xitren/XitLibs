@@ -204,7 +204,11 @@ typedef enum
   REG_BOT_IR_M           =       0x0000009A,
   REG_BOT_SPO2           =       0x0000009B,
   REG_BOT_PROXIMITY      =       0x0000009C,
-  REG_BOT_RATIO          =       0x0000009D
+  REG_BOT_RATIO          =       0x0000009D,
+          
+  REG_ADC_CHA            =       0x0000009E,
+  REG_ADC_CHB            =       0x0000009F,
+  REG_ADC_CHC            =       0x000000A0
 } RegDef;
 /*============================================================================*/
 

@@ -22,6 +22,7 @@ extern "C" {
 /* Public types --------------------------------------------------------------*/
 DeviceTypeDef DEVICE;
 extern int updateStatus;
+extern char *version;
 /*============================================================================*/
     
 /* Public function prototypes ------------------------------------------------*/

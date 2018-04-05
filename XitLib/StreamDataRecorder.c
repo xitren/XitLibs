@@ -529,12 +529,20 @@ void AddSample()
 //            Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = GetMiddleADC(i);
 //        #else
             uint32_t selAD = (ReadMem(REG_ADC_ORDER) >> (i*4)) & 0x0000000F;
-            if (selAD > 7)
-                selAD = 7;
-//            printf("%d\n",selAD);
-//            printf("%X\n",REG_ADC_CH1+selAD);
-            Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
-                    ReadMem(REG_ADC_CH1+selAD);
+            if (selAD < 8) 
+            {
+                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
+                        ReadMem(REG_ADC_CH1+selAD);
+            }
+            else if (selAD < 11)
+            {
+                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
+                        ReadMem(REG_ADC_CHA+selAD);
+            }
+            else
+            {
+                Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 0;
+            }
 //        #endif
         }
     }

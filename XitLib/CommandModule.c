@@ -95,6 +95,7 @@ void Interface_Memory(void)
                                                         CALCMAXCYCLESGet);
     AddCommand("/GET/CALCULATE/CYCLES/PERCENT", "</calculate/cycles/percent>", 
                                                         CALCPERCENTCYCLESGet); 
+    AddCommand("/GET/VERSION", "</version>", Version);
     if (signal_type == 2) 
     {
         AddCommand("/GET/MOVEMENT", "</movement>;if=\"accel\"", GetLastBlock);
@@ -111,7 +112,6 @@ void Interface_Memory(void)
         AddCommand("/GET/SNAP/TAKE", "</snap/file>;if=\"video\"", GetSnap);
         AddCommand("/GET/LIGHT", "</light>;if=\"lamp\"", Light);
         AddCommand("/GET/VIDEOTHREAD", "</videothread>;if=\"video\"", VIDEOThread);
-        AddCommand("/GET/VERSION", "</version>", Version);
         AddCommand("/GET/UPDATE", "</update>", Update);
         AddCommand("/GET/UPDATEHASH", "</updatehash>", UpdateHash);
         AddCommand("/CALLBACK/UPDATE", "</update>", CallbackUpdate);
