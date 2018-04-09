@@ -536,6 +536,7 @@ void AddSample()
             }
             else if (selAD < 11)
             {
+                selAD -= 8;
                 Data_samples[i][samples_cnt%BUFFER_2ND_MAX] = 
                         ReadMem(REG_ADC_CHA+selAD);
             }
