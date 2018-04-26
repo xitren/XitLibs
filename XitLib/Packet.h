@@ -19,6 +19,7 @@ extern "C" {
 
 /* Public function prototypes ------------------------------------------------*/
 uint16_t Packetize(uint8_t *bytes,const uint16_t size, const uint16_t buffer_size);
+uint16_t PacketizeInfo(uint8_t *bytes,const uint16_t size, const uint16_t buffer_size);
 uint16_t DePacketize(uint8_t *bytes,const uint16_t size);
 int AddToPocketReceive(char str);
 int ClearPocketBuffer(void);
