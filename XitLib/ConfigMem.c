@@ -194,6 +194,13 @@ void InitCfgMem(void)
   config_reg[REG_BOT_SPO2] = 0x00000000;
   config_reg[REG_BOT_PROXIMITY] = 0x00000000;
   config_reg[REG_BOT_RATIO] = 0x00000000;
+  
+  config_reg[REG_SHOW_TARG_NUM] = 4;
+  config_reg[REG_SHOW_TARG_REP] = 20;
+  config_reg[REG_SHOW_STIM_NUM] = 16;
+  config_reg[REG_SHOW_STIM_LEN] = 400;
+  config_reg[REG_SHOW_BTW_STIM] = 500;
+  config_reg[REG_SHOW_BFR_TARG] = 2000;
   return;
 }
 inline void WriteMem(uint32_t _adr, uint32_t _val)
