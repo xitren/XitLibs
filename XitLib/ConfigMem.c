@@ -201,6 +201,8 @@ void InitCfgMem(void)
   config_reg[REG_SHOW_STIM_LEN] = 400;
   config_reg[REG_SHOW_BTW_STIM] = 500;
   config_reg[REG_SHOW_BFR_TARG] = 2000;
+  
+  config_reg[REG_CRC] = 0;
   return;
 }
 inline void WriteMem(uint32_t _adr, uint32_t _val)
@@ -208,6 +210,7 @@ inline void WriteMem(uint32_t _adr, uint32_t _val)
   if (_adr < CFG_SIZE)
   {
     config_reg[_adr] = _val;
+    config_reg[REG_CRC] = CRC16ANSI((uint8_t *)config_reg, MEMORY_CONFIG);
   }
   else
     DBG_LOG_WARNING("Memory address greater than CFG");

@@ -707,7 +707,7 @@
     </conf>
     <conf name="Release_MC" type="3">
       <toolsSet>
-        <compilerSet>GNU_ARM|MinGW</compilerSet>
+        <compilerSet>GNU-ARM|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>
@@ -1510,7 +1510,7 @@
     </conf>
     <conf name="Release_RTOS" type="3">
       <toolsSet>
-        <compilerSet>GNU-ARM|Cygwin</compilerSet>
+        <compilerSet>GNU-ARM|MinGW</compilerSet>
         <dependencyChecking>true</dependencyChecking>
         <rebuildPropChanged>false</rebuildPropChanged>
       </toolsSet>

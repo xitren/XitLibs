@@ -26,6 +26,8 @@ extern char *version;
 /*============================================================================*/
     
 /* Public function prototypes ------------------------------------------------*/
+int SetVersion(char *value);
+char* GetVersion();
 void InitCfgDevType(void);
 void function_update(int type);
 int Update(ParameterList_t *TempParam);

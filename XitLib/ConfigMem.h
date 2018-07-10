@@ -210,12 +210,14 @@ typedef enum
   REG_ADC_CHB            =       0x0000009F,
   REG_ADC_CHC            =       0x000000A0,
           
-  REG_SHOW_TARG_NUM            =       0x000000A1,
-  REG_SHOW_TARG_REP            =       0x000000A2,
-  REG_SHOW_STIM_NUM            =       0x000000A3,
-  REG_SHOW_STIM_LEN            =       0x000000A4,
-  REG_SHOW_BTW_STIM            =       0x000000A5,
-  REG_SHOW_BFR_TARG            =       0x000000A6
+  REG_SHOW_TARG_NUM      =       0x000000A1,
+  REG_SHOW_TARG_REP      =       0x000000A2,
+  REG_SHOW_STIM_NUM      =       0x000000A3,
+  REG_SHOW_STIM_LEN      =       0x000000A4,
+  REG_SHOW_BTW_STIM      =       0x000000A5,
+  REG_SHOW_BFR_TARG      =       0x000000A6,
+          
+  REG_CRC                =       0x000000A7
 } RegDef;
 /*============================================================================*/
 

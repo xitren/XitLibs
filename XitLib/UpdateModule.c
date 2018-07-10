@@ -351,6 +351,10 @@ int SetVersion(char *value)
     printf("VERSION: %s\n", VERSION);
     return(ret_val);
 }
+char* GetVersion()
+{
+    return(version);
+}
 int SetUpdateServer(char *value)
 {
     int ret_val = 0;
