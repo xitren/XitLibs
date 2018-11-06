@@ -13,13 +13,11 @@
 #include "ConfigMem.h"
 #include "InOutBuffer.h"
 #include "CommandModule.h"
-#include "DMAretransmitter.h"
 #include "Packet.h"
 #include "DistCalc.h"
 #include "coap.h"
 #include "StreamDataRecorder.h"
 #include "FunctionsDiscovery.h"
-#include "UpdateModule.h"
 #ifndef CPU
 //    #include "tim.h"
 //    #include "usart.h"
@@ -67,6 +65,7 @@ extern int size_parts_cur;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
+void Interface_Memory(void);
 void InitHandler(DeviceTypeDef device);
 void SampleHandler(void);
 void ProtocolHandler(void);

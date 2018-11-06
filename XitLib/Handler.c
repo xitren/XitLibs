@@ -23,6 +23,26 @@
 #define PORT_BACK 5683
 /*============================================================================*/
 
+extern coap_option_t opt_part;
+
+/* Private function prototypes -----------------------------------------------*/
+char *StringParser(char *String);
+int CommandParser(UserCommand_t *TempCommand, char *Input);
+int CommandInterpreter(UserCommand_t *TempCommand);
+int Reset(ParameterList_t *TempParam);
+int MEMRead(ParameterList_t *TempParam);
+int MEMWrite(ParameterList_t *TempParam);
+int DISTRead(ParameterList_t *TempParam);
+int DISTWrite(ParameterList_t *TempParam);
+int CLOCKSet(ParameterList_t *TempParam);
+int CLOCKGet(ParameterList_t *TempParam);
+int CALCFREECYCLESGet(ParameterList_t *TempParam);
+int CALCMAXCYCLESGet(ParameterList_t *TempParam);
+int CALCPERCENTCYCLESGet(ParameterList_t *TempParam);
+int DEVICEGet(ParameterList_t *TempParam);
+CommandFunction_t FindCommand(char *Command);
+/*============================================================================*/
+
 /* Private variables ---------------------------------------------------------*/
 uint8_t inb, rc, cmdlen = 0;
 uint8_t id_out = 0;
@@ -55,6 +75,216 @@ const char *path_dist = "/distance";
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
+void Interface_Memory(void)
+{
+    DBG_LOG_TRACE("Into Interface_Memory.\n");
+    ClearCommands();
+    ClearSchedule();
+    AddCommand(global_link[0], global_link[2], MEMRead);
+    AddCommand(global_link[1], global_link[2], MEMWrite);
+    AddCommand("/DEVICE", "</device>", DEVICEGet);
+    AddCommand("/RESET", "</reset>", Reset);
+    AddCommand("/GET/LOG", "</log>", LOGRead);
+    AddCommand("/GET/.WELL-KNOWN/CORE", "</.well-known/core>", WELLKnown);
+    AddCommand("/CALLBACK/.WELL-KNOWN/CORE", "</.well-known/core>", 
+                                                        CallbackWELLKnown);
+    AddCommand("/PUT/CLOCK", "</clock>", CLOCKSet);
+    AddCommand("/GET/CLOCK", "</clock>", CLOCKGet);
+    AddCommand("/GET/CALCULATE/CYCLES/FREE", "</calculate/cycles/free>", 
+                                                        CALCFREECYCLESGet);
+    AddCommand("/GET/CALCULATE/CYCLES/MAX", "</calculate/cycles/max>", 
+                                                        CALCMAXCYCLESGet);
+    AddCommand("/GET/CALCULATE/CYCLES/PERCENT", "</calculate/cycles/percent>", 
+                                                        CALCPERCENTCYCLESGet); 
+    AddCommand("/GET/VERSION", "</version>", Version);
+    if (signal_type == 2) 
+    {
+        AddCommand("/GET/MOVEMENT", "</movement>;if=\"accel\"", GetLastBlock);
+    }
+    else
+    {
+        AddCommand("/GET/EEG", "</eeg>;if=\"neuro\"", GetLastBlock); 
+        AddCommand("/GET/EEG/RECORD", "</eeg/record>;if=\"neuro\"", GetRecord); 
+        AddCommand("/GET/EEGCONCRETEBLOCK", "</eegconcreteblock>;if=\"neuro\"", 
+                GetConcreteBlock);
+    }
+    #ifdef CPU
+        AddCommand("/GET/SNAP/FILE", "</snap/take>;if=\"video\"", Snap);
+        AddCommand("/GET/SNAP/TAKE", "</snap/file>;if=\"video\"", GetSnap);
+        AddCommand("/GET/LIGHT", "</light>;if=\"lamp\"", Light);
+        AddCommand("/GET/VIDEOTHREAD", "</videothread>;if=\"video\"", VIDEOThread);
+        AddCommand("/GET/UPDATE", "</update>", Update);
+        AddCommand("/GET/UPDATEHASH", "</updatehash>", UpdateHash);
+        AddCommand("/CALLBACK/UPDATE", "</update>", CallbackUpdate);
+        AddCommand("/CALLBACK/UPDATEHASH", "</updatehash>", CallbackUpdateHash);
+        AddCommand("/REQUERY/UPDATE", "</update>", QueryUpdate);
+        AddCommand("/GET/TECHUPDATE", "</techupdate>", TechUpdate); 
+        AddCommand("/REQUERY/UPDATEHASH", "</updatehash>", QueryUpdateHash); 
+        AddCommand("/GET/PARTHASH", "</parthash>", PartHash);
+        AddCommand("/CALLBACK/PARTHASH", "</parthash>", CallbackPartHash);
+    #endif
+
+    #ifndef RTOS
+    AddCommand("/GET/RUNGENERATOR", "</rungenerator>;if=\"generator\"", 
+            RunGenerator);
+    AddCommand("/GET/STOPGENERATOR", "</stopgenerator>;if=\"generator\"", 
+            StopGenerator);
+    AddCommand("/GET/QUERYNODES", "</querynodes>;if=\"dev_n\"", QueryNodes);
+    #endif
+   
+    return;
+}
+int Reset(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+
+    DBG_LOG_DEBUG("Into Reset.\n");
+    AddToTransmit("<RESET>\r\n\r");
+    if ((TempParam))
+    {
+        #ifdef CPU
+            exit(0);
+        #else
+            HAL_NVIC_SystemReset();
+        #endif
+    }
+    else
+    {
+        ret_val = INVALID_PARAMETERS_ERROR;
+        AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
+        DBG_LOG_WARNING("Invalid parameters.\n");
+    }
+    AddToTransmit("</RESET>\r\n\r");
+    return(ret_val);
+}
+int CLOCKSet(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+    int  Clock = -1;
+    int i;
+    char buffer[STRING_SIZE];
+    DBG_LOG_DEBUG("Into CLOCKSet.\n");
+    AddToTransmit("<CLOCKSET>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam) && (TempParam->NumberofParameters > 1))
+    {
+        for (i=1;i<TempParam->NumberofParameters;i+=2)
+        {
+            snprintf((char*)buffer,STRING_SIZE,"%s - %d\r\n\r",
+                    TempParam->Params[i-1].strParam,
+                    (unsigned int)(TempParam->Params[i].intParam));
+            AddToTransmit((char*)buffer);
+            if (!strcmp(TempParam->Params[i-1].strParam,"clock"))
+            {
+                 Clock = (unsigned int)(TempParam->Params[i].intParam);
+            }
+        }
+        if (Clock >= 0)
+        {
+            SetClock(Clock);
+            AddToTransmit(" <SET/>\r\n\r");
+            DBG_LOG_WARNING("Invalid clock parameter.\n");
+        }
+    }
+    else
+    {
+        /* One or more of the necessary parameters are invalid.           */
+        ret_val = INVALID_PARAMETERS_ERROR;
+        AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
+        DBG_LOG_WARNING("Invalid parameters.\n");
+    }
+    AddToTransmit("</CLOCKSET>\r\n\r");
+    return(ret_val);
+}
+int DEVICEGet(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+    DBG_LOG_DEBUG("Into DEVICEGet.\n");
+    AddToTransmit("<DEVICE>");
+    if (DEVICE == EEG)
+        AddToTransmit("EEG");
+    else if (DEVICE == POLYGRAPH)
+        AddToTransmit("POLYGRAPH");
+    else if (DEVICE == ROBOT)
+        AddToTransmit("ROBOT");
+    AddToTransmit("</DEVICE>\r\n\r");
+    return(ret_val);
+}
+
+   /* The following function is responsible for reading data that was   */
+   /* stored in memory.  The function reads a fixed number of bytes.    */
+   /* This function returns zero if successful                          */
+   /* and a negative value if an error occurred.                        */
+int DISTRead(ParameterList_t *TempParam)
+{
+    int  ret_val = 0;
+    char buffer[STRING_SIZE];
+
+    DBG_LOG_DEBUG("Into DISTRead.\n");
+    AddToTransmit("<DISTANCE>\r\n\r");
+    /* First check to see if the parameters required for the execution of*/
+    /* this function appear to be semi-valid.                            */
+    if ((TempParam))
+    {
+        snprintf((char*)buffer,STRING_SIZE," %d\r\n\r",(int)ReadMem(REG_Distance));
+        AddToTransmit((char*)buffer);
+    }
+    else
+    {
+        /* One or more of the necessary parameters are invalid.           */
+        ret_val = INVALID_PARAMETERS_ERROR;
+        AddToTransmit("<INVALID_PARAMETERS_ERROR/>\r\n\r");
+        DBG_LOG_WARNING("Invalid parameters.\n");
+    }
+    AddToTransmit("</DISTANCE>\r\n\r");
+
+    return(ret_val);
+}
+
+
+   /* The following function is responsible for parsing user input      */
+   /* and call appropriate command function.                            */
+int CommandLineInterpreter(char *Command)
+{
+    int     		Result = !EXIT_CODE;
+    uint8_t      	ret_val = 0;
+    UserCommand_t 	TempCommand;
+    char                buf_local[60];
+
+    DBG_LOG_DEBUG("Into CommandLineInterpreter.\n");
+    DBG_LOG_DEBUG("> %s\n",Command);
+    /* The string input by the user contains a value, now run the string */
+    /* through the Command Parser.                                       */
+    if(CommandParser(&TempCommand, Command) >= 0)
+    {
+        /* The Command was successfully parsed run the Command.           */
+        Result = CommandInterpreter(&TempCommand);
+        switch(Result)
+        {
+            case INVALID_COMMAND_ERROR:
+                DBG_LOG_WARNING("Invalid command.\n");
+                ret_val = 0;
+                break;
+            case FUNCTION_ERROR:
+                DBG_LOG_WARNING("Invalid function.\n");
+                ret_val = 0;
+                break;
+            case EXIT_CODE:
+                break;
+            default:
+                ret_val = 1;
+                break;
+        }
+    }
+    else
+    {
+        DBG_LOG_WARNING("INVALID_COMMAND_ERROR.\n");
+    }
+
+    DBG_LOG_DEBUG("Into END of CommandLineInterpreter.\n");
+    return(ret_val);
+}
 int Transfer(const uint8_t *data, const uint32_t datalen, const char *_func) {
     //    transfer_time = 0;
     //    while ((!transfer_free) && (transfer_time < TXTIMEOUT));

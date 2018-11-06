@@ -8,6 +8,62 @@
 #ifndef __FUNCPARAMS_H__
 #define __FUNCPARAMS_H__
 
+/* Public defines ------------------------------------------------------------*/
+#define NO_COMMAND_ERROR                           (-1)  /* Denotes that no   */
+                                                         /* command was       */
+                                                         /* specified to the  */
+                                                         /* parser.           */
+#define INVALID_COMMAND_ERROR                      (-2)  /* Denotes that the  */
+                                                         /* Command does not  */
+                                                         /* exist for         */
+                                                         /* processing.       */                                
+#define EXIT_CODE                                  (-3)  /* Denotes that the  */
+                                                         /* Command specified */
+                                                         /* was the Exit      */
+                                                         /* Command.          */
+#define FUNCTION_ERROR                             (-4)  /* Denotes that an   */
+                                                         /* error occurred in */
+                                                         /* execution of the  */
+                                                         /* Command Function. */
+#define TO_MANY_PARAMS                             (-5)  /* Denotes that there*/
+                                                         /* are more          */
+                                                         /* parameters then   */
+                                                         /* will fit in the   */
+                                                         /* UserCommand.      */
+#define INVALID_PARAMETERS_ERROR                   (-6)  /* Denotes that an   */
+                                                         /* error occurred due*/
+                                                         /* to the fact that  */
+                                                         /* one or more of the*/
+                                                         /* required          */
+                                                         /* parameters were   */
+                                                         /* invalid.          */
+#define UNABLE_TO_INITIALIZE_STACK                 (-7)  /* Denotes that an   */
+                                                         /* error occurred    */
+                                                         /* while Initializing*/
+                                                         /* the Bluetooth     */
+                                                         /* Protocol Stack.   */
+#define INVALID_STACK_ID_ERROR                     (-8)  /* Denotes that an   */
+                                                         /* occurred due to   */
+                                                         /* attempted         */
+                                                         /* execution of a    */
+                                                         /* Command when a    */
+                                                         /* Bluetooth Protocol*/
+                                                         /* Stack has not been*/
+                                                         /* opened.           */
+#define UNABLE_TO_REGISTER_SERVER                  (-9)  /* Denotes that an   */
+                                                         /* error occurred    */
+                                                         /* when trying to    */
+                                                         /* create a Serial   */
+                                                         /* Port Server.      */
+#define EXIT_MODE                                  (-10) /* Flags exit from   */
+                                                         /* any Mode.         */
+#define MAX_SUPPORTED_COMMANDS                     (36)  /* Denotes the       */
+                                                         /* maximum number of */
+                                                         /* User Commands that*/
+                                                         /* are supported by  */
+                                                         /* this application. */
+/*============================================================================*/
+
 /* Public types --------------------------------------------------------------*/
 typedef unsigned char     uint8_t;
 #ifdef AVR
@@ -19,9 +75,6 @@ typedef unsigned char     uint8_t;
 #else
     //typedef unsigned long  uint32_t;
 #endif
-/*============================================================================*/
-
-/* Public defines ------------------------------------------------------------*/
 /*============================================================================*/
 
 /* Public types --------------------------------------------------------------*/
@@ -54,4 +107,6 @@ typedef enum
 } DeviceTypeDef;
 /*============================================================================*/
 
+/* Public defines ------------------------------------------------------------*/
+/*============================================================================*/
 #endif

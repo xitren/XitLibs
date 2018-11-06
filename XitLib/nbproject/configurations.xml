@@ -16,6 +16,7 @@
       </logicalFolder>
       <logicalFolder name="f3" displayName="models" projectFiles="true">
         <itemPath>models/src/array.c</itemPath>
+        <itemPath>models/src/circularbuffer.c</itemPath>
         <itemPath>models/src/common.c</itemPath>
         <itemPath>models/src/deque.c</itemPath>
         <itemPath>models/src/hashset.c</itemPath>
@@ -30,19 +31,14 @@
       <itemPath>CRC16ANSI.c</itemPath>
       <itemPath>CommandModule.c</itemPath>
       <itemPath>ConfigMem.c</itemPath>
-      <itemPath>DMAretransmitter.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
-      <itemPath>EEGModule.c</itemPath>
-      <itemPath>FunctionsDiscovery.c</itemPath>
       <itemPath>Handler.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
       <itemPath>LogModule.c</itemPath>
       <itemPath>PWMModule.c</itemPath>
       <itemPath>Packet.c</itemPath>
+      <itemPath>Schedule.c</itemPath>
       <itemPath>StreamDataRecorder.c</itemPath>
-      <itemPath>UpdateModule.c</itemPath>
-      <itemPath>VideoModule.c</itemPath>
-      <itemPath>generatorModule.c</itemPath>
     </logicalFolder>
     <logicalFolder name="HeaderFiles"
                    displayName="Файлы заголовков"
@@ -203,19 +199,13 @@
       </item>
       <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -241,15 +231,13 @@
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Schedule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="VideoModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -331,8 +319,6 @@
           <commandLine>-lwsock32 -lws2_32</commandLine>
         </linkerTool>
       </folder>
-      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
@@ -372,6 +358,8 @@
       <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/circularbuffer.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -475,19 +463,13 @@
       </item>
       <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -513,15 +495,13 @@
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Schedule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -618,8 +598,6 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
@@ -659,6 +637,8 @@
       <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/circularbuffer.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -762,19 +742,13 @@
       </item>
       <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -800,15 +774,13 @@
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Schedule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -889,8 +861,6 @@
           <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
-      <item path="generatorModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
@@ -930,6 +900,8 @@
       <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/circularbuffer.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1023,19 +995,13 @@
       </item>
       <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EEGModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1061,15 +1027,13 @@
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Schedule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="0">
-      </item>
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1150,8 +1114,6 @@
           <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
-      <item path="generatorModule.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
@@ -1191,6 +1153,8 @@
       <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="models/src/array.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="models/src/circularbuffer.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/common.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1294,19 +1258,13 @@
       </item>
       <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="DistCalc.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EEGModule.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1332,15 +1290,13 @@
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Schedule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1421,8 +1377,6 @@
           <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
-      <item path="generatorModule.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="json/cJSON.c" ex="false" tool="0" flavor2="0">
@@ -1462,6 +1416,8 @@
       <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="models/src/array.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="models/src/circularbuffer.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/common.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1567,19 +1523,13 @@
       </item>
       <item path="ConfigMem.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="DMAretransmitter.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="DMAretransmitter.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="DistCalc.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="EEGModule.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="FunctionsDiscovery.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1605,15 +1555,13 @@
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Schedule.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="StreamDataRecorder.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="UpdateModule.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="UpdateModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="VideoModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="coap/coap.c" ex="false" tool="0" flavor2="9">
       </item>
@@ -1694,8 +1642,6 @@
           <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
-      <item path="generatorModule.c" ex="false" tool="0" flavor2="9">
-      </item>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="json/cJSON.c" ex="false" tool="0" flavor2="9">
@@ -1735,6 +1681,8 @@
       <item path="models/include/treetable.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="models/src/array.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="models/src/circularbuffer.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="models/src/common.c" ex="false" tool="0" flavor2="9">
       </item>

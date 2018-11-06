@@ -699,7 +699,6 @@ int parse_part_option(const coap_buffer_t *opt_part,uint8_t *end)
     #endif
     return value;
 }
-//Add make_msg
 int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt, 
         coap_option_t *opt_path, coap_option_t *opt_args, coap_option_t *opt_part, 
         const uint8_t *content, size_t content_len, 
@@ -827,26 +826,26 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     {
         DBG_LOG_DEBUG("ProtocolHandler3 %d bytes hash %04X.\n",
             inpkt->payload.len,CRC16ANSI(scratch->p,inpkt->payload.len));
-        if (COAP_METHOD_GET == inpkt->hdr.code)
-        {
-            strncat(bufhr,"/get", 4);
-        }
-        else if (COAP_METHOD_PUT == inpkt->hdr.code)
-        {
-            strncat(bufhr,"/put", 4);
-        }
-        else if (COAP_METHOD_POST == inpkt->hdr.code)
-        {
-            strncat(bufhr,"/post", 4);
-        }
-        else if (COAP_METHOD_DELETE == inpkt->hdr.code)
-        {
-            strncat(bufhr,"/delete", 7);
-        }
-        else if (COAP_METHOD_RESET == inpkt->hdr.code)
-        {
-            strncat(bufhr,"/reset", 7);
-        }
+//        if (COAP_METHOD_GET == inpkt->hdr.code)
+//        {
+//            strncat(bufhr,"/get", 4);
+//        }
+//        else if (COAP_METHOD_PUT == inpkt->hdr.code)
+//        {
+//            strncat(bufhr,"/put", 4);
+//        }
+//        else if (COAP_METHOD_POST == inpkt->hdr.code)
+//        {
+//            strncat(bufhr,"/post", 4);
+//        }
+//        else if (COAP_METHOD_DELETE == inpkt->hdr.code)
+//        {
+//            strncat(bufhr,"/delete", 7);
+//        }
+//        else if (COAP_METHOD_RESET == inpkt->hdr.code)
+//        {
+//            strncat(bufhr,"/reset", 7);
+//        }
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_URI_PATH, &count)))
         {
             for (i=0;i<count;i++)

@@ -82,19 +82,7 @@ uint16_t Packetize(uint8_t *bytes,const uint16_t size, const uint16_t buffer_siz
     uint16_t crc = CRC16ANSI(bytes,(size)+9); 
     bytes[(size)+9] = ((crc)/256)&255;
     bytes[(size)+10] = (crc)&255;
-    bytes[(size)+11] = 1;
-    bytes[(size)+12] = 28;
-    bytes[(size)+13] = 64;
-    bytes[(size)+14] = 0;
-    bytes[(size)+15] = 0;
-    bytes[(size)+16] = 0;
-    bytes[(size)+17] = 0;
-    bytes[(size)+18] = 0;
-    bytes[(size)+19] = 0;
-    crc = CRC16ANSI(bytes+(size)+11,9); 
-    bytes[(size)+20] = ((crc)/256)&255;
-    bytes[(size)+21] = (crc)&255;
-    return (size)+22;
+    return (size)+11;
 }
 uint16_t PacketizeInfo(uint8_t *bytes,const uint16_t size, const uint16_t buffer_size)
 {

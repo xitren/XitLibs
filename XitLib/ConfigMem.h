@@ -219,12 +219,17 @@ typedef enum
           
   REG_CRC                =       0x000000A7
 } RegDef;
+const char* global_link_memory[2] = {
+    "/MEMORY", "</memory>"
+};
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
 void InitCfgMem(void);
 void WriteMem(uint32_t _adr, uint32_t _val);
 uint32_t ReadMem(uint32_t _adr);
+int MemoryCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam, 
+                                    uint8_t *data, uint32_t *data_size);
 /*============================================================================*/
 
 #ifdef __cplusplus

@@ -82,15 +82,10 @@ extern "C" {
 #endif
   
 /* Public function prototypes ------------------------------------------------*/
-extern char buf_glob[STRING_SIZE];
-extern uint32_t size_glob;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
 int AddToLog(const char *str, uint32_t N, int lvl);
-char* ProceedLog(uint32_t *num);
-int ClearLog(void);
-int LOGRead(ParameterList_t *TempParam);
 /*============================================================================*/
 
 #ifdef __cplusplus

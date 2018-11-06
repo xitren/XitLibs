@@ -10,9 +10,9 @@
 
 /* Local headers -------------------------------------------------------------*/
 #include "CRC16ANSI.h"
+#include "LogModule.h"
 /*============================================================================*/
 
-#ifndef AVR
 /* Private constants ---------------------------------------------------------*/
 const uint16_t CRC16ANSIoTBL[256] = {
 
@@ -51,20 +51,17 @@ const uint16_t CRC16ANSIoTBL[256] = {
   };
 /*============================================================================*/
  
-#endif
 /* Functions declaration -----------------------------------------------------*/
 uint16_t CRC16ANSI(uint8_t *DATA, uint16_t N)
 {
-#ifdef AVR
-    return 0;
-#else
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     uint16_t CRC_MB = 0xFFFF;
     while (N--)
     {
       CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (*DATA++)];
     }
     return CRC_MB;
-#endif
 }
 /*============================================================================*/
 

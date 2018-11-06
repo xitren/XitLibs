@@ -16,7 +16,6 @@
 #include <string.h>
 #include <time.h>  //вызов функции asctime()
 #include <math.h>
-#include "Handler.h"
 #include "DistCalc.h"
 #include "LogModule.h"
 /*============================================================================*/
