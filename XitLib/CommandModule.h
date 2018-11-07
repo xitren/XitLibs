@@ -39,7 +39,8 @@ typedef enum
 {
   Media_XML            =       0x00000000,
   Media_TEXT           =       0x00000001,
-  Media_BYTE           =       0x00000002
+  Media_BYTE           =       0x00000002,
+  Media_JSON           =       0x00000003
 } MediaTypeDef;
 /*============================================================================*/
 

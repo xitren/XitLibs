@@ -16,6 +16,9 @@
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
+const char* global_link_memory[2] = {
+    "/MEMORY", "</memory>"
+};
 uint32_t config_reg[CFG_SIZE];
 static const uint32_t crc_table[CFG_SIZE] = {
    0x17B7BE43,0x77073096,0xEE0E612C,0x990951BA,0x076DC419,0x706AF48F,0xE963A535,
@@ -69,6 +72,8 @@ int MemoryCommand_RESET(uint8_t MediaType, ParameterList_t *TempParam,
 /* Functions declaration -----------------------------------------------------*/
 void InitCfgMem(void)
 {
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     config_reg[REG_Led_Ch_T1] = 1;
     config_reg[REG_Led_Ch_T2] = 2;
     config_reg[REG_Led_Ch_T3] = 3;

@@ -21,7 +21,6 @@ extern "C" {
 #endif
 
 /* Public types --------------------------------------------------------------*/
-typedef int (*StreamDataCallback_t)(int *vector,uint32_t _tsize);
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
@@ -30,10 +29,13 @@ enum cc_stat circularbuffer_new(CircularBuffer_t* st, uint32_t _item_size,
 enum cc_stat circularbuffer_push(CircularBuffer_t* st, void *item);
 enum cc_stat circularbuffer_pull(CircularBuffer_t* st, void *item);
 enum cc_stat circularbuffer_remove_all(CircularBuffer_t* st);
+enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, size_t index, void *item);
+size_t circularbuffer_get_last_index(CircularBuffer_t* st);
+size_t circularbuffer_get_first_index(CircularBuffer_t* st);
+size_t circularbuffer_unreaded_items_size(CircularBuffer_t* st);
 /*============================================================================*/
 
 /* Public defines ------------------------------------------------------------*/
-#define CIRCULAR_BUFFER_SIZE 3000
 /*============================================================================*/
     
 /* Private structures --------------------------------------------------------*/

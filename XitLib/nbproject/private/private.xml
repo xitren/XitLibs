@@ -174,22 +174,6 @@
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/malloc/umm_malloc.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/XitLibs/XitLib/xitlibtypes.h</file>
         </group>
-        <group name="Encephalon">
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/StreamDataRecorder.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/LibConfig.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/UpdateModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/CRC16ANSI.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/LogModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/ConfigMem.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/ConfigMem.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/xitlibtypes.h</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/Packet.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/CommandModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/Handler.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/EEGModule.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/tests/array_test.c</file>
-            <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/CommandModule.h</file>
-        </group>
         <group name="INEUM">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/models/include/treeset.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/LibConfig.h</file>
@@ -225,6 +209,22 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/PWMModule.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/InOutBuffer.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLib/CommandModule.h</file>
+        </group>
+        <group name="Encephalon">
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/StreamDataRecorder.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/models/src/circularbuffer.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/CRC16ANSI.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/models/include/common.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/ConfigMem.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/DistCalc.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/CommandModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/models/include/circularbuffer.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/DistCalc.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/ConfigMem.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/models/src/array.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLib/xitlibtypes.h</file>
         </group>
     </open-files>
 </project-private>

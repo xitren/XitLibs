@@ -36,6 +36,12 @@ int CalculationPercentCycles_GET(uint8_t MediaType,
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
+const char* global_link_syncro[][2] = {
+    {"/CLOCK", "</clock>"},
+    {"/CALCULATION/CYCLES/FREE", "</calculation/cycles/free>"},
+    {"/CALCULATION/CYCLES/MAX", "</calculation/cycles/max>"},
+    {"/CALCULATION/CYCLES/PERCENT", "</calculation/cycles/percent>"}
+};
 uint32_t now_clock = 0;
 uint32_t free_cycles = 0;
 uint32_t max_free_cycles = 1;
@@ -177,7 +183,56 @@ inline int ClockCommand_PUT(uint8_t MediaType,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
+    return(ret_val);
+}
 
+inline int ClockCommand_RESET(uint8_t MediaType, 
+        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int ret_val = 0;
+    int Value = -1;
+    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    {
+        if ( (ret_val >= 0) )
+        {
+            SetClock(0);
+            switch (MediaType)
+            {
+                case Media_XML:
+                    (*data_size) = snprintf(
+                            (char*)data, *data_size,
+                            "<CLOCK>\r\n\r "
+                            "%d"
+                            "</CLOCK>\r\n\r",
+                            (int)GetClock()
+                    );
+                    break;
+                case Media_TEXT:
+                    (*data_size) = snprintf(
+                            (char*)data, *data_size,
+                            "%d", (int)GetClock()
+                    );
+                    break;
+                case Media_BYTE:
+                    Value = (int)GetClock();
+                    memcpy((void*)data,(void*)&Value,4);
+                    (*data_size) = 4;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    else
+    {
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*)data, *data_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+        );
+    }
     return(ret_val);
 }
 
@@ -194,6 +249,9 @@ int ClockCommand(uint8_t Method, uint8_t MediaType,
             break;
         case Method_PUT:
             ret_val = ClockCommand_PUT(MediaType,TempParam,data,data_size);
+            break;
+        case Method_RESET:
+            ret_val = ClockCommand_RESET(MediaType,TempParam,data,data_size);
             break;
         default:
             ret_val = INVALID_PARAMETERS_ERROR;
@@ -321,6 +379,53 @@ inline int CalculationMaxCycles_GET(uint8_t MediaType,
 
     return(ret_val);
 }
+inline int CalculationMaxCycles_RESET(uint8_t MediaType, 
+        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int ret_val = 0;
+    int Value = -1;
+    if ((TempParam))
+    {
+        max_free_cycles = 1;
+        switch (MediaType)
+        {
+            case Media_XML:
+                (*data_size) = snprintf(
+                        (char*)data, *data_size,
+                        "<MAXCYCLES>\r\n\r "
+                        "%d"
+                        "</MAXCYCLES>\r\n\r",
+                        (int)GetMaxCycle()
+                );
+                break;
+            case Media_TEXT:
+                (*data_size) = snprintf(
+                        (char*)data, *data_size,
+                        "%d", (int)GetMaxCycle()
+                );
+                break;
+            case Media_BYTE:
+                Value = (int)GetMaxCycle();
+                memcpy((void*)data,(void*)&Value,4);
+                (*data_size) = 4;
+                break;
+            default:
+                break;
+        }
+    }
+    else
+    {
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*)data, *data_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+        );
+    }
+
+    return(ret_val);
+}
 
 int CalculationMaxCycles(uint8_t Method, uint8_t MediaType, 
         ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
@@ -332,6 +437,9 @@ int CalculationMaxCycles(uint8_t Method, uint8_t MediaType,
     {
         case Method_GET:
             ret_val = CalculationMaxCycles_GET(MediaType,TempParam,data,data_size);
+            break;
+        case Method_RESET:
+            ret_val = CalculationMaxCycles_RESET(MediaType,TempParam,data,data_size);
             break;
         default:
             ret_val = INVALID_PARAMETERS_ERROR;
