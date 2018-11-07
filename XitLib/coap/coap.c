@@ -82,7 +82,7 @@ void coap_clock(void)
             }
             if ( (!(answer->used)) && (answer->release[0] != 0) )
             {
-                CommandLineInterpreter(answer->release);
+//                CommandLineInterpreter(answer->release);
             }
             array_remove_at(AwaitedAnswersArray, i, (void **)&removed);
             if (removed == NULL)
@@ -888,13 +888,13 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
 //        scratch->len = inpkt->payload.len;
         scratch->len = 4096;
     }
-    FindCommand(bufhr)(
-            inpkt->hdr.code,
-            mediatype,
-            &params,
-            inpkt->payload.p,
-            scratch->len
-    );
+//    FindCommand(bufhr)(
+//            inpkt->hdr.code,
+//            mediatype,
+//            &params,
+//            inpkt->payload.p,
+//            scratch->len
+//    );
     return 0;
 }
 

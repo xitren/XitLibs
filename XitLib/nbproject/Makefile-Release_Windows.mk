@@ -40,7 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/CommandModule.o \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DistCalc.o \
-	${OBJECTDIR}/Handler.o \
+	${OBJECTDIR}/ExtFunctions.o \
 	${OBJECTDIR}/InOutBuffer.o \
 	${OBJECTDIR}/LogModule.o \
 	${OBJECTDIR}/PWMModule.o \
@@ -68,24 +68,22 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f2 \
+	${TESTDIR}/TestFiles/f6 \
 	${TESTDIR}/TestFiles/f1 \
-	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f4
 
 # Test Object Files
 TESTOBJECTFILES= \
 	${TESTDIR}/tests/array_test.o \
-	${TESTDIR}/tests/coap_test.o \
-	${TESTDIR}/tests/datasystem_test.o \
+	${TESTDIR}/tests/cfgmemtest.o \
 	${TESTDIR}/tests/hashtable_test.o \
 	${TESTDIR}/tests/json_test.o \
 	${TESTDIR}/tests/malloc_test.o \
 	${TESTDIR}/tests/models_test.o
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=-specs=nano.specs -specs=nosys.specs -lm
 
 # CC Compiler Flags
 CCFLAGS=
@@ -135,10 +133,10 @@ ${OBJECTDIR}/DistCalc.o: DistCalc.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/DistCalc.o DistCalc.c
 
-${OBJECTDIR}/Handler.o: Handler.c
+${OBJECTDIR}/ExtFunctions.o: ExtFunctions.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
-	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler.o Handler.c
+	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c
 
 ${OBJECTDIR}/InOutBuffer.o: InOutBuffer.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -252,17 +250,13 @@ ${OBJECTDIR}/models/src/treetable.o: models/src/treetable.c
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
-${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/coap_test.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/cfgmemtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   
+	${LINK.c} -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS}   -lm -lnosys 
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/json_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
-
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/datasystem_test.o ${OBJECTFILES:%.o=%_nomain.o}
-	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}  -lwsock32 -lws2_32 
 
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/malloc_test.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
@@ -273,22 +267,16 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/array_test.o ${TESTDIR}/tests/hashtabl
 	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
 
 
-${TESTDIR}/tests/coap_test.o: tests/coap_test.c 
+${TESTDIR}/tests/cfgmemtest.o: tests/cfgmemtest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_test.o tests/coap_test.c
+	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/cfgmemtest.o tests/cfgmemtest.c
 
 
 ${TESTDIR}/tests/json_test.o: tests/json_test.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/json_test.o tests/json_test.c
-
-
-${TESTDIR}/tests/datasystem_test.o: tests/datasystem_test.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/datasystem_test.o tests/datasystem_test.c
 
 
 ${TESTDIR}/tests/malloc_test.o: tests/malloc_test.c 
@@ -380,17 +368,17 @@ ${OBJECTDIR}/DistCalc_nomain.o: ${OBJECTDIR}/DistCalc.o DistCalc.c
 	    ${CP} ${OBJECTDIR}/DistCalc.o ${OBJECTDIR}/DistCalc_nomain.o;\
 	fi
 
-${OBJECTDIR}/Handler_nomain.o: ${OBJECTDIR}/Handler.o Handler.c 
+${OBJECTDIR}/ExtFunctions_nomain.o: ${OBJECTDIR}/ExtFunctions.o ExtFunctions.c 
 	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/Handler.o`; \
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/ExtFunctions.o`; \
 	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Handler_nomain.o Handler.c;\
+	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPLATFORM_WINDOWS -D__USE_W32_SOCKETS -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/ExtFunctions_nomain.o ExtFunctions.c;\
 	else  \
-	    ${CP} ${OBJECTDIR}/Handler.o ${OBJECTDIR}/Handler_nomain.o;\
+	    ${CP} ${OBJECTDIR}/ExtFunctions.o ${OBJECTDIR}/ExtFunctions_nomain.o;\
 	fi
 
 ${OBJECTDIR}/InOutBuffer_nomain.o: ${OBJECTDIR}/InOutBuffer.o InOutBuffer.c 
@@ -670,9 +658,8 @@ ${OBJECTDIR}/models/src/treetable_nomain.o: ${OBJECTDIR}/models/src/treetable.o 
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
-	    ${TESTDIR}/TestFiles/f2 || true; \
+	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
-	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	else  \

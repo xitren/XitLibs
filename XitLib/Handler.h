@@ -13,11 +13,9 @@
 #include "ConfigMem.h"
 #include "InOutBuffer.h"
 #include "CommandModule.h"
-#include "Packet.h"
 #include "DistCalc.h"
 #include "coap.h"
 #include "StreamDataRecorder.h"
-#include "FunctionsDiscovery.h"
 #ifndef CPU
 //    #include "tim.h"
 //    #include "usart.h"

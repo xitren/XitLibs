@@ -84,8 +84,8 @@ void test1() {
     printf("coap_test test 1\n");
     count1 = 0;
     count2 = 0;
-    AddCommand("/RELEASE1", "</RELEASE1>", release1);
-    AddCommand("/RELEASE2", "</RELEASE2>", release2);
+//    AddCommand("/RELEASE1", "</RELEASE1>", release1);
+//    AddCommand("/RELEASE2", "</RELEASE2>", release2);
     AwaitedAnswersArray = coap_get_waiting_list();
     
 //    for( idx=0; idx<6553500; ++idx ) {

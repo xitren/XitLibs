@@ -26,7 +26,7 @@ typedef struct _tagReceiveDeque_t
    uint32_t             Ip;
    uint32_t             Port;
 } ReceiveDeque_t;
-typedef struct _tagReceiveDeque_t
+typedef struct _tagTransmiteDeque_t
 {
    uint8_t              *Msg;
    uint32_t             Size;
@@ -191,12 +191,12 @@ int ClearBuffer()
     DBG_LOG_TRACE("Into ClearBuffer.\n");
     if ((ReceiveDeque == NULL))
     {
-        return;
+        return BUFFER_ERROR;
     }
     deque_remove_all_free(ReceiveDeque);
     if ((TransmiteDeque == NULL))
     {
-        return;
+        return BUFFER_ERROR;
     }
     deque_remove_all_free(TransmiteDeque);
     return(ret_val);

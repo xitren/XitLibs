@@ -82,6 +82,8 @@ extern "C" {
 #endif
   
 /* Public function prototypes ------------------------------------------------*/
+extern char buf_glob[200];
+extern uint32_t size_glob;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/

@@ -33,7 +33,7 @@
       <itemPath>CommandModule.c</itemPath>
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
-      <itemPath>Handler.c</itemPath>
+      <itemPath>ExtFunctions.c</itemPath>
       <itemPath>InOutBuffer.c</itemPath>
       <itemPath>LogModule.c</itemPath>
       <itemPath>PWMModule.c</itemPath>
@@ -98,23 +98,17 @@
                    displayName="Файлы тестов"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
-      <logicalFolder name="f2"
-                     displayName="CoAP test main"
+      <logicalFolder name="f6"
+                     displayName="Configuration memory test"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/coap_test.c</itemPath>
+        <itemPath>tests/cfgmemtest.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
                      displayName="jSON test main"
                      projectFiles="true"
                      kind="TEST">
         <itemPath>tests/json_test.c</itemPath>
-      </logicalFolder>
-      <logicalFolder name="f5"
-                     displayName="Main engine test"
-                     projectFiles="true"
-                     kind="TEST">
-        <itemPath>tests/datasystem_test.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Malloc test main"
@@ -161,6 +155,7 @@
             <pElem>models</pElem>
             <pElem>External</pElem>
           </incDir>
+          <commandLine>-specs=nano.specs -specs=nosys.specs -lm</commandLine>
           <preprocessorList>
             <Elem>CPU</Elem>
             <Elem>DEBUG</Elem>
@@ -207,11 +202,11 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Handler.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Handler.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -258,21 +253,6 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
       <folder path="TestFiles/f3">
         <cTool>
           <incDir>
@@ -303,7 +283,7 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f5">
+      <folder path="TestFiles/f6">
         <cTool>
           <incDir>
             <pElem>.</pElem>
@@ -315,8 +295,11 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-          <commandLine>-lwsock32 -lws2_32</commandLine>
+          <output>${TESTDIR}/TestFiles/f6</output>
+          <linkerLibItems>
+            <linkerLibLibItem>m</linkerLibLibItem>
+            <linkerLibLibItem>nosys</linkerLibLibItem>
+          </linkerLibItems>
         </linkerTool>
       </folder>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
@@ -385,9 +368,7 @@
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/cfgmemtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -471,11 +452,11 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Handler.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Handler.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -525,24 +506,6 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-          <linkerLibItems>
-            <linkerLibLibItem>m</linkerLibLibItem>
-          </linkerLibItems>
-        </linkerTool>
-      </folder>
       <folder path="TestFiles/f3">
         <cTool>
           <incDir>
@@ -579,7 +542,7 @@
           </linkerLibItems>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f5">
+      <folder path="TestFiles/f6">
         <cTool>
           <incDir>
             <pElem>.</pElem>
@@ -591,11 +554,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
-          <linkerLibItems>
-            <linkerLibLibItem>m</linkerLibLibItem>
-            <linkerLibLibItem>pthread</linkerLibLibItem>
-          </linkerLibItems>
+          <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
@@ -664,9 +623,7 @@
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/cfgmemtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -750,11 +707,11 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Handler.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Handler.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -801,21 +758,6 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
       <folder path="TestFiles/f3">
         <cTool>
           <incDir>
@@ -846,7 +788,7 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f5">
+      <folder path="TestFiles/f6">
         <cTool>
           <incDir>
             <pElem>.</pElem>
@@ -858,7 +800,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
+          <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
@@ -927,9 +869,7 @@
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/cfgmemtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1003,11 +943,11 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Handler.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Handler.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1054,21 +994,6 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
       <folder path="TestFiles/f3">
         <cTool>
           <incDir>
@@ -1099,7 +1024,7 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f5">
+      <folder path="TestFiles/f6">
         <cTool>
           <incDir>
             <pElem>.</pElem>
@@ -1111,7 +1036,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
+          <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
@@ -1180,9 +1105,7 @@
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/cfgmemtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1266,11 +1189,11 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Handler.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Handler.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1317,21 +1240,6 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
       <folder path="TestFiles/f3">
         <cTool>
           <incDir>
@@ -1362,7 +1270,7 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f5">
+      <folder path="TestFiles/f6">
         <cTool>
           <incDir>
             <pElem>.</pElem>
@@ -1374,7 +1282,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
+          <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
@@ -1443,9 +1351,7 @@
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/cfgmemtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -1531,11 +1437,11 @@
       </item>
       <item path="DistCalc.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="ExtFunctions.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="ExtFunctions.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="FunctionsDiscovery.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Handler.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Handler.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1582,21 +1488,6 @@
           <output>${TESTDIR}/TestFiles/f1</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f2">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
-        <ccTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </ccTool>
-        <linkerTool>
-          <output>${TESTDIR}/TestFiles/f2</output>
-        </linkerTool>
-      </folder>
       <folder path="TestFiles/f3">
         <cTool>
           <incDir>
@@ -1627,7 +1518,7 @@
           <output>${TESTDIR}/TestFiles/f4</output>
         </linkerTool>
       </folder>
-      <folder path="TestFiles/f5">
+      <folder path="TestFiles/f6">
         <cTool>
           <incDir>
             <pElem>.</pElem>
@@ -1639,7 +1530,7 @@
           </incDir>
         </ccTool>
         <linkerTool>
-          <output>${TESTDIR}/TestFiles/f5</output>
+          <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
       <item path="generatorModule.h" ex="false" tool="3" flavor2="0">
@@ -1708,9 +1599,7 @@
       </item>
       <item path="tests/array_test.h" ex="false" tool="3" flavor2="0">
       </item>
-      <item path="tests/coap_test.c" ex="false" tool="0" flavor2="0">
-      </item>
-      <item path="tests/datasystem_test.c" ex="false" tool="0" flavor2="0">
+      <item path="tests/cfgmemtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/hashtable_test.c" ex="false" tool="0" flavor2="0">
       </item>

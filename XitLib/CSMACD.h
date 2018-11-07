@@ -101,7 +101,7 @@ typedef struct _tagCSMACDController_t
 } CSMACDController_t;  
 
 void csma_clock_cycle(CSMACDController_t *controller);
-void csma_init(CSMACDController_t *controller);
+void csma_init(CSMACDController_t *controller, ByteSender_t func);
 uint16_t csma_main_cycle(CSMACDController_t *controller,
                             uint8_t *id, uint8_t *data);
 int csma_receiver(CSMACDController_t *controller, uint8_t byte);

@@ -16,7 +16,6 @@
 #include <time.h>
 #include "umm_malloc.h"
 #include "ExtFunctions.h"
-#include "UpdateModule.h"
 #include "array_test.h"
 #include "hashtable_test.h"
 

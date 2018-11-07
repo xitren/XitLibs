@@ -20,11 +20,11 @@
   THE SOFTWARE.
 */
 
-#include "circularbuffer.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "LogModule.h"
+#include "circularbuffer.h"
 
 /* Functions declaration -----------------------------------------------------*/
 enum cc_stat circularbuffer_new(CircularBuffer_t* st, uint32_t _item_size,

@@ -14,6 +14,7 @@
 #include <stdlib.h>
 #include "DistCalc.h"
 #include "LogModule.h"
+#include "CommandModule.h"
 /*============================================================================*/
 
 /* Private defines -----------------------------------------------------------*/

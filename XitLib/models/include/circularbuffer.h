@@ -19,6 +19,18 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
+    
+/* Private structures --------------------------------------------------------*/
+typedef struct _tagCircularBuffer_t
+{
+   uint8_t*             Storage;
+   uint32_t             StorageSize;
+   uint32_t             ItemSize;
+   uint32_t             Head;
+   uint32_t             Tail;
+   uint32_t             SwapVal;
+} CircularBuffer_t;
+/*============================================================================*/
 
 /* Public types --------------------------------------------------------------*/
 /*============================================================================*/
@@ -36,18 +48,6 @@ size_t circularbuffer_unreaded_items_size(CircularBuffer_t* st);
 /*============================================================================*/
 
 /* Public defines ------------------------------------------------------------*/
-/*============================================================================*/
-    
-/* Private structures --------------------------------------------------------*/
-typedef struct _tagCircularBuffer_t
-{
-   uint8_t*             Storage;
-   uint32_t             StorageSize;
-   uint32_t             ItemSize;
-   uint32_t             Head;
-   uint32_t             Tail;
-   uint32_t             SwapVal;
-} CircularBuffer_t;
 /*============================================================================*/
 
 #ifdef __cplusplus

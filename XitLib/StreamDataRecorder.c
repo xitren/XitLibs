@@ -10,7 +10,6 @@
 // ----------------------------------------------------------------------------
 
 /* Local headers -------------------------------------------------------------*/
-#include "StreamDataRecorder.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -18,6 +17,10 @@
 #include <math.h>
 #include "DistCalc.h"
 #include "LogModule.h"
+#include "CommandModule.h"
+#include "StreamDataRecorder.h"
+#include "circularbuffer.h"
+#include "ConfigMem.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -26,9 +29,9 @@ const char* global_link_streamer[][2] = {
     {"/STREAMDATARECORDER/CURRENT", "</streamdatarecorder/current>"},
     {"/STREAMDATARECORDER/LAST", "</streamdatarecorder/last>"}
 };
-static CircularBuffer_t buffer;
+CircularBuffer_t buffer;
 static uint32_t sample_frequency = 250;
-static uint32_t sample_size = 8;
+uint32_t sample_size = 8;
 static uint32_t signal_amplitude[BUFFER_SAMPLE_SIZE-1] = 
                                     {10,100,1000,10000,1000,100,10};
 static uint32_t noise_amplitude[BUFFER_SAMPLE_SIZE-1] = 
@@ -94,14 +97,14 @@ void AddSample(void)
                                                             / sample_frequency;
         Data_sample[0] = ReadMem(REG_ADC_CHA);
         Data_sample[1] = ReadMem(REG_ADC_CHB);
-        for(i=2;i<BUFFER_SAMPLE_SIZE;i++)
-            Data_sample[i] = ((int32_t)
-                                    (signal_amplitude[i-1]*
-                                         sin(signal_frequency[i-1]*phase)) +
-                                    (int32_t)
-                                    (power_amplitude[i-1]*sin(0.5*phase)) +
-                                    (int32_t)
-                                    ((rand()*noise_amplitude[i-1])/RAND_MAX) );
+//        for(i=2;i<BUFFER_SAMPLE_SIZE;i++)
+//            Data_sample[i] = ((int32_t)
+//                                    (signal_amplitude[i-1]*
+//                                         sin(signal_frequency[i-1]*phase)) +
+//                                    (int32_t)
+//                                    (power_amplitude[i-1]*sin(0.5*phase)) +
+//                                    (int32_t)
+//                                    ((rand()*noise_amplitude[i-1])/RAND_MAX) );
     }
     circularbuffer_push(&buffer,(void *)Data_sample);
     return;
@@ -110,7 +113,7 @@ void ClearStreamRecorder(void)
 {
     circularbuffer_remove_all(&buffer);
 }
-int StreamRecorderCommand_GET(uint8_t MediaType, 
+inline int StreamRecorderCommand_GET(uint8_t MediaType, 
         ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
@@ -475,7 +478,7 @@ int StreamRecorderCommand_GET(uint8_t MediaType,
     }
     return(ret_val);
 }
-int StreamRecorderCommand_RESET(uint8_t MediaType, 
+inline int StreamRecorderCommand_RESET(uint8_t MediaType, 
         ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
