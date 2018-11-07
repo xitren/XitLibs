@@ -29,6 +29,7 @@
         <itemPath>models/src/treetable.c</itemPath>
       </logicalFolder>
       <itemPath>CRC16ANSI.c</itemPath>
+      <itemPath>CSMACD.c</itemPath>
       <itemPath>CommandModule.c</itemPath>
       <itemPath>ConfigMem.c</itemPath>
       <itemPath>DistCalc.c</itemPath>
@@ -36,7 +37,6 @@
       <itemPath>InOutBuffer.c</itemPath>
       <itemPath>LogModule.c</itemPath>
       <itemPath>PWMModule.c</itemPath>
-      <itemPath>Packet.c</itemPath>
       <itemPath>Schedule.c</itemPath>
       <itemPath>StreamDataRecorder.c</itemPath>
     </logicalFolder>
@@ -191,6 +191,8 @@
       </item>
       <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CSMACD.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="CommandModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -226,8 +228,6 @@
       <item path="PWMModule.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Packet.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -455,6 +455,8 @@
       </item>
       <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CSMACD.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -490,8 +492,6 @@
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Packet.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -734,6 +734,8 @@
       </item>
       <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CSMACD.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -769,8 +771,6 @@
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Packet.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -987,6 +987,8 @@
       </item>
       <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CSMACD.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -1022,8 +1024,6 @@
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Packet.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1250,6 +1250,8 @@
       </item>
       <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CSMACD.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -1285,8 +1287,6 @@
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Packet.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>
@@ -1515,6 +1515,8 @@
       </item>
       <item path="CRC16ANSI.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="CSMACD.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="CommandModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="CommandModule.h" ex="false" tool="3" flavor2="0">
@@ -1550,8 +1552,6 @@
       <item path="PWMModule.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="PWMModule.h" ex="false" tool="3" flavor2="0">
-      </item>
-      <item path="Packet.c" ex="false" tool="0" flavor2="9">
       </item>
       <item path="Packet.h" ex="false" tool="3" flavor2="0">
       </item>

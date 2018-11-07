@@ -36,6 +36,7 @@ OBJECTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}
 # Object Files
 OBJECTFILES= \
 	${OBJECTDIR}/CRC16ANSI.o \
+	${OBJECTDIR}/CSMACD.o \
 	${OBJECTDIR}/CommandModule.o \
 	${OBJECTDIR}/ConfigMem.o \
 	${OBJECTDIR}/DistCalc.o \
@@ -43,7 +44,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/InOutBuffer.o \
 	${OBJECTDIR}/LogModule.o \
 	${OBJECTDIR}/PWMModule.o \
-	${OBJECTDIR}/Packet.o \
 	${OBJECTDIR}/Schedule.o \
 	${OBJECTDIR}/StreamDataRecorder.o \
 	${OBJECTDIR}/coap/coap.o \
@@ -115,6 +115,11 @@ ${OBJECTDIR}/CRC16ANSI.o: CRC16ANSI.c
 	${RM} "$@.d"
 	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 
+${OBJECTDIR}/CSMACD.o: CSMACD.c
+	${MKDIR} -p ${OBJECTDIR}
+	${RM} "$@.d"
+	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CSMACD.o CSMACD.c
+
 ${OBJECTDIR}/CommandModule.o: CommandModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
@@ -149,11 +154,6 @@ ${OBJECTDIR}/PWMModule.o: PWMModule.c
 	${MKDIR} -p ${OBJECTDIR}
 	${RM} "$@.d"
 	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule.o PWMModule.c
-
-${OBJECTDIR}/Packet.o: Packet.c
-	${MKDIR} -p ${OBJECTDIR}
-	${RM} "$@.d"
-	$(COMPILE.c) -O3 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet.o Packet.c
 
 ${OBJECTDIR}/Schedule.o: Schedule.c
 	${MKDIR} -p ${OBJECTDIR}
@@ -328,6 +328,19 @@ ${OBJECTDIR}/CRC16ANSI_nomain.o: ${OBJECTDIR}/CRC16ANSI.o CRC16ANSI.c
 	    ${CP} ${OBJECTDIR}/CRC16ANSI.o ${OBJECTDIR}/CRC16ANSI_nomain.o;\
 	fi
 
+${OBJECTDIR}/CSMACD_nomain.o: ${OBJECTDIR}/CSMACD.o CSMACD.c 
+	${MKDIR} -p ${OBJECTDIR}
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/CSMACD.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/CSMACD_nomain.o CSMACD.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/CSMACD.o ${OBJECTDIR}/CSMACD_nomain.o;\
+	fi
+
 ${OBJECTDIR}/CommandModule_nomain.o: ${OBJECTDIR}/CommandModule.o CommandModule.c 
 	${MKDIR} -p ${OBJECTDIR}
 	@NMOUTPUT=`${NM} ${OBJECTDIR}/CommandModule.o`; \
@@ -417,19 +430,6 @@ ${OBJECTDIR}/PWMModule_nomain.o: ${OBJECTDIR}/PWMModule.o PWMModule.c
 	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/PWMModule_nomain.o PWMModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/PWMModule.o ${OBJECTDIR}/PWMModule_nomain.o;\
-	fi
-
-${OBJECTDIR}/Packet_nomain.o: ${OBJECTDIR}/Packet.o Packet.c 
-	${MKDIR} -p ${OBJECTDIR}
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/Packet.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O3 -DCPU -DDEBUG -DPI -DPLATFORM_LINUX -I../EEG_Evoker -I. -Imodels/include -Icoap -Ijson -Imalloc -Imodels -IExternal -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/Packet_nomain.o Packet.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/Packet.o ${OBJECTDIR}/Packet_nomain.o;\
 	fi
 
 ${OBJECTDIR}/Schedule_nomain.o: ${OBJECTDIR}/Schedule.o Schedule.c 

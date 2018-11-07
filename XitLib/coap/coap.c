@@ -799,53 +799,43 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
     return 0;
 }
 
-char bufhr[200];
-
+static char bufhr[100];
 int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, 
                                         coap_packet_t *outpkt,
                                         ParserCallback_t callback_function,
                                         char *_ip,uint32_t port)
 {
     DBG_LOG_DEBUG("Into coap_handle_req.\n");
-        DBG_LOG_DEBUG("ProtocolHandler2-in %d bytes hash %04X.\n",
-            inpkt->payload.len,CRC16ANSI(inpkt->payload.p,inpkt->payload.len));
+    DBG_LOG_DEBUG("ProtocolHandler2-in %d bytes hash %04X.\n",
+        inpkt->payload.len,CRC16ANSI(inpkt->payload.p,inpkt->payload.len));
     if ((scratch == NULL) || (inpkt == NULL) || (outpkt == NULL) 
             || (_ip == NULL))
     {
         DBG_LOG_ERROR("coap_make_response argument is NULL\n");
         return 0;
     }
+    ParameterList_t params;
+    memset(&params,0,sizeof(ParameterList_t));
     const coap_option_t *opt;
     uint8_t count;
     uint8_t contentistext = 0;
-    int i,j,k;
-    char* cbl;
-    uint32_t lenght = 0;
-    bufhr[0]='\0';
+    uint32_t methodpermission = 0;
+    uint32_t mediatype = 0;
+    int i;
     if (inpkt->hdr.code < 5)
     {
         DBG_LOG_DEBUG("ProtocolHandler3 %d bytes hash %04X.\n",
             inpkt->payload.len,CRC16ANSI(scratch->p,inpkt->payload.len));
-//        if (COAP_METHOD_GET == inpkt->hdr.code)
-//        {
-//            strncat(bufhr,"/get", 4);
-//        }
-//        else if (COAP_METHOD_PUT == inpkt->hdr.code)
-//        {
-//            strncat(bufhr,"/put", 4);
-//        }
-//        else if (COAP_METHOD_POST == inpkt->hdr.code)
-//        {
-//            strncat(bufhr,"/post", 4);
-//        }
-//        else if (COAP_METHOD_DELETE == inpkt->hdr.code)
-//        {
-//            strncat(bufhr,"/delete", 7);
-//        }
-//        else if (COAP_METHOD_RESET == inpkt->hdr.code)
-//        {
-//            strncat(bufhr,"/reset", 7);
-//        }
+        if (COAP_METHOD_GET == inpkt->hdr.code)
+            methodpermission = Method_GET;
+        else if (COAP_METHOD_PUT == inpkt->hdr.code)
+            methodpermission = Method_PUT;
+        else if (COAP_METHOD_POST == inpkt->hdr.code)
+            methodpermission = Method_POST;
+        else if (COAP_METHOD_DELETE == inpkt->hdr.code)
+            methodpermission = Method_DELETE;
+        else if (COAP_METHOD_RESET == inpkt->hdr.code)
+            methodpermission = Method_RESET;
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_URI_PATH, &count)))
         {
             for (i=0;i<count;i++)
@@ -854,34 +844,18 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 strncat(bufhr,(char const *)opt[i].buf.p, opt[i].buf.len);
             }
         }
-        strncat(bufhr,"?", 1);
-        strncat(bufhr,"ip=", 3);
-        strncat(bufhr,_ip, strlen(_ip));
-        strncat(bufhr,"&port=", 6);
-        sprintf((bufhr+strlen(bufhr)),"%d",port);
-        if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_URI_QUERY, &count)))
-        {
-            for (i=0;i<count;i++)
-            {
-                strncat(bufhr,"&", 1);
-                strncat(bufhr,(char const *)opt[i].buf.p, opt[i].buf.len);
-            }
-        }
+        conv_uint32_bytes_t converter;
+        scanf("%d.%d.%d.%d", &(converter.ui8[0]),
+                                &(converter.ui8[1]),
+                                &(converter.ui8[2]),
+                                &(converter.ui8[3]));
+        add_parameter(&params,"ip",converter.ui32);
+        add_parameter(&params,"port",port);
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_OBSERVE, &count)))
         {
             for (i=0;i<count;i++)
             {
-                strncat(bufhr,"&observe=", 9);
-                if (opt[i].buf.len == 0)
-                {
-                    strncat(bufhr,"enabled", 7);
-                }
-                else
-                    for (j=0;j<opt[i].buf.len;j++)
-                    {
-                        sprintf((bufhr+strlen(bufhr)),"%02X"
-                                ,(uint8_t)((opt[i].buf.p[j])));
-                    }
+                add_parameter(&params,"observe",1);
             }
         }
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_BLOCK2, &count)))
@@ -890,89 +864,37 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             uint16_t part;
             for (i=0;i<count;i++)
             {
-                strncat(bufhr,"&part=", 6);
                 part = parse_part_option(&opt[i].buf,&end);
-                sprintf((bufhr+strlen(bufhr)),"%d&end=%d"
-                        ,part,end);
+                add_parameter(&params,"part",part);
+                add_parameter(&params,"end",end);
             }
         }
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_CONTENT_FORMAT, &count)))
         {
             for (i=0;i<count;i++)
             {
-                if ((((opt[i].buf.p[0]) << 8)+(opt[i].buf.p[1])) 
-                        == COAP_CONTENTTYPE_TEXT_PLAIN)
-                    contentistext = 1;
+                uint8_t media_option = (((opt[i].buf.p[0]) << 8)+(opt[i].buf.p[1]));
+                if ( media_option == COAP_CONTENTTYPE_TEXT_PLAIN )
+                    mediatype = Media_TEXT;
+                else if ( media_option == COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM )
+                    mediatype = Media_BYTE;
+                else if ( media_option == COAP_CONTENTTYPE_APPLICATION_XML )
+                    mediatype = Media_XML;
+                else if ( media_option == COAP_CONTENTTYPE_APPLICATION_JSON )
+                    mediatype = Media_JSON;
             }
         }
-        scratch->p = scratch_raw;
-        scratch->len = inpkt->payload.len;
-        if (contentistext)
-        {
-            strncat(bufhr, "&", 1);
-            strncat(bufhr, "value=", 6);
-            strncat(bufhr, (char*)inpkt->payload.p, inpkt->payload.len);
-        }
-        else
-            memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);
-        DBG_LOG_DEBUG("ProtocolHandler4 %d bytes hash %04X.\n",
-            scratch->len,CRC16ANSI(scratch->p,scratch->len));
-    }
-    else
-    {
-        #ifdef DEBUG
-            DBG_LOG_DEBUG("Look for answer waiting list.\n");
-            DBG_LOG_DEBUG("ptr %d.\n",(int)inpkt->tok_p);
-        #endif
-            DBG_LOG_DEBUG("ProtocolHandler3-else %d bytes hash %04X.\n",
-                inpkt->payload.len,CRC16ANSI(inpkt->payload.p,inpkt->payload.len));
-        if (cbl = coap_check_ans((inpkt->tok_p)))
-        {
-            strncat(bufhr, cbl, strlen(cbl));
-            strncat(bufhr,"?", 1);
-            strncat(bufhr,"ip=", 3);
-            strncat(bufhr,_ip, strlen(_ip));
-            if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_BLOCK2, &count)))
-            {
-                uint8_t end;
-                uint16_t part;
-                for (i=0;i<count;i++)
-                {
-                    strncat(bufhr,"&part=", 6);
-                    part = parse_part_option(&opt[i].buf,&end);
-                    sprintf((bufhr+strlen(bufhr)),"%d&end=%d"
-                            ,part,end);
-                }
-            }
-            scratch->p = scratch_raw;
-            scratch->len = inpkt->payload.len;
-            memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);
-            DBG_LOG_DEBUG("ProtocolHandler4 %d bytes hash %04X.\n",
-                            scratch->len,CRC16ANSI(scratch->p,scratch->len));
-            #ifdef DEBUG
-                DBG_LOG_DEBUG("Found.\n");
-            #endif
-        }
-        else
-        {
-            #ifdef DEBUG
-                DBG_LOG_DEBUG("Not Found Any.\nInto END of coap_handle_req.\n");
-            #endif
-            return 0;
-        }
-    }
-    #ifdef DEBUG
-        printf("======================================\r\n\r%s\r\n\r======================================\r\n\r",bufhr);
-    #endif
-    if ((*callback_function)((char*)bufhr))
-    {
+//        scratch->p = inpkt->payload.p;
+//        scratch->len = inpkt->payload.len;
         scratch->len = 4096;
     }
-    scratch->len = 4096;
-
-    #ifdef DEBUG
-        DBG_LOG_DEBUG("Into END of coap_handle_req.\n");
-    #endif
+    FindCommand(bufhr)(
+            inpkt->hdr.code,
+            mediatype,
+            &params,
+            inpkt->payload.p,
+            scratch->len
+    );
     return 0;
 }
 

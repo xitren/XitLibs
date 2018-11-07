@@ -66,10 +66,6 @@
 
 /* Public types --------------------------------------------------------------*/
 typedef unsigned char     uint8_t;
-#ifdef AVR
-#else
-    typedef unsigned short  uint16_t;
-#endif
 #ifdef PLATFORM_LINUX
     typedef unsigned int  uint32_t;
 #else
@@ -78,18 +74,15 @@ typedef unsigned char     uint8_t;
 /*============================================================================*/
 
 /* Public types --------------------------------------------------------------*/
-   /* The following type definition represents the structure which holds*/
-   /* all information about the parameter, in particular the parameter  */
-   /* as a string and the parameter as an unsigned int.                 */
+typedef union {
+    unsigned char ui8[4];
+    uint32_t ui32;
+} conv_uint32_bytes_t;
 typedef struct _tagParameter_t
 {
    char     *strParam;
    uint32_t  intParam;
 } Parameter_t;
-   /* The following type definition represents the structure which holds*/
-   /* a list of parameters that are to be associated with a command The */
-   /* NumberofParameters variable holds the value of the number of      */
-   /* parameters in the list.                                           */
 typedef struct _tagParameterList_t
 {
    int         NumberofParameters;

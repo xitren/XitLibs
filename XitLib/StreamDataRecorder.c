@@ -22,7 +22,9 @@
 
 /* Private variables ---------------------------------------------------------*/
 const char* global_link_streamer[][2] = {
-    {"/STREAMDATARECORDER", "</streamdatarecorder>"}
+    {"/STREAMDATARECORDER", "</streamdatarecorder>"},
+    {"/STREAMDATARECORDER/CURRENT", "</streamdatarecorder/current>"},
+    {"/STREAMDATARECORDER/LAST", "</streamdatarecorder/last>"}
 };
 static CircularBuffer_t buffer;
 static uint32_t sample_frequency = 250;
@@ -497,6 +499,162 @@ int StreamRecorderCommand(uint8_t Method, uint8_t MediaType,
             break;
         case Method_RESET:
             ret_val = StreamRecorderCommand_RESET(
+                    MediaType,TempParam,data,data_size
+            );
+            break;
+        default:
+            ret_val = INVALID_PARAMETERS_ERROR;
+            (*data_size) = snprintf(
+                    (char*)data, *data_size,
+                    "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+            );
+            break;
+    }
+    return(ret_val);
+}
+
+
+inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType, 
+        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int ret_val = 0;
+    int Value = -1;
+    
+    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    {
+        if (ret_val >= 0)
+        {
+            switch (MediaType) 
+            {
+                case Media_XML:
+                    (*data_size) = snprintf(
+                            (char*)data, *data_size,
+                            "<CURRENTRECORDER>%d</CURRENTRECORDER>",
+                            circularbuffer_get_first_index(&buffer)
+                    );
+                    break;
+                case Media_TEXT:
+                    (*data_size) = snprintf(
+                            (char*)data, *data_size,
+                            "%d", circularbuffer_get_first_index(&buffer)
+                    );
+                    break;
+                case Media_BYTE:
+                    Value = circularbuffer_get_first_index(&buffer);
+                    memcpy((void*)data,(void*)&Value,4);
+                    (*data_size) = 4;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    else
+    {
+        switch (MediaType) 
+        {
+            case Media_XML:
+                ret_val = INVALID_PARAMETERS_ERROR;
+                (*data_size) = snprintf(
+                        (char*)data, *data_size,
+                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+                );
+                break;
+            default:
+                break;
+        }
+    }
+    return(ret_val);
+}
+inline int StreamRecorderLastCommand_GET(uint8_t MediaType, 
+        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int ret_val = 0;
+    int Value = -1;
+    
+    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    {
+        if (ret_val >= 0)
+        {
+            switch (MediaType) 
+            {
+                case Media_XML:
+                    (*data_size) = snprintf(
+                            (char*)data, *data_size,
+                            "<LASTRECORDER>%d</LASTRECORDER>",
+                            circularbuffer_get_first_index(&buffer)
+                    );
+                    break;
+                case Media_TEXT:
+                    (*data_size) = snprintf(
+                            (char*)data, *data_size,
+                            "%d", circularbuffer_get_first_index(&buffer)
+                    );
+                    break;
+                case Media_BYTE:
+                    Value = circularbuffer_get_last_index(&buffer);
+                    memcpy((void*)data,(void*)&Value,4);
+                    (*data_size) = 4;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+    else
+    {
+        switch (MediaType) 
+        {
+            case Media_XML:
+                ret_val = INVALID_PARAMETERS_ERROR;
+                (*data_size) = snprintf(
+                        (char*)data, *data_size,
+                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+                );
+                break;
+            default:
+                break;
+        }
+    }
+    return(ret_val);
+}
+int StreamRecorderCurrentCommand(uint8_t Method, uint8_t MediaType, 
+        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int  ret_val = 0;
+    switch (Method) 
+    {
+        case Method_GET:
+            ret_val = StreamRecorderCurrentCommand_GET(
+                    MediaType,TempParam,data,data_size
+            );
+            break;
+        default:
+            ret_val = INVALID_PARAMETERS_ERROR;
+            (*data_size) = snprintf(
+                    (char*)data, *data_size,
+                    "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+            );
+            break;
+    }
+    return(ret_val);
+}
+int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType, 
+        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int  ret_val = 0;
+    switch (Method) 
+    {
+        case Method_GET:
+            ret_val = StreamRecorderLastCommand_GET(
                     MediaType,TempParam,data,data_size
             );
             break;
