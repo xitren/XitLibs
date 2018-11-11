@@ -170,7 +170,7 @@ int add_parameter(ParameterList_t *params, char *strParam, uint32_t intParam)
     if (params->NumberofParameters >= MAX_NUM_OF_PARAMETERS)
         return TO_MANY_PARAMS;
     params->Params[params->NumberofParameters].strParam = strParam;
-    params->Params[params->NumberofParameters].intParam = intParam;
+    params->Params[params->NumberofParameters++].intParam = intParam;
     return 0;
 }
 int get_parameter(ParameterList_t *params, char *strParam, uint32_t *intParam)

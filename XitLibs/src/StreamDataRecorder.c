@@ -104,15 +104,16 @@ void AddSample(void)
         double phase = (TwoPi*circularbuffer_get_first_index(&buffer)) 
                                                             / sample_frequency;
         Data_sample[0] = ReadMem(REG_ADC_CHA);
+        WriteMem(REG_ADC_CHA,ReadMem(REG_ADC_CHA)+1);
         Data_sample[1] = ReadMem(REG_ADC_CHB);
-//        for(i=2;i<BUFFER_SAMPLE_SIZE;i++)
-//            Data_sample[i] = ((int32_t)
-//                                    (signal_amplitude[i-1]*
-//                                         sin(signal_frequency[i-1]*phase)) +
-//                                    (int32_t)
-//                                    (power_amplitude[i-1]*sin(0.5*phase)) +
-//                                    (int32_t)
-//                                    ((rand()*noise_amplitude[i-1])/RAND_MAX) );
+        for(i=2;i<BUFFER_SAMPLE_SIZE;i++)
+            Data_sample[i] = ((int32_t)
+                                    (signal_amplitude[i-1]*
+                                         sin(signal_frequency[i-1]*phase)) +
+                                    (int32_t)
+                                    (power_amplitude[i-1]*sin(0.5*phase)) +
+                                    (int32_t)
+                                    ((rand()*noise_amplitude[i-1])/RAND_MAX) );
     }
     circularbuffer_push(&buffer,(void *)Data_sample);
     return;
@@ -137,6 +138,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
     uint32_t data_size_st = 0;
     uint32_t l = 0,i,k;
     uint32_t Data_sample[MAX_SAMPLE_SIZE];
+    enum cc_stat ret;
     if ((TempParam))
     {
         ret_val_f = get_parameter(TempParam,"from",(uint32_t*)&From);
@@ -153,13 +155,14 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                 (char*)data, *data_size,
                                 "{\n \"DATABLOCK\": [\n"
                         );
-                        data += data_size_st-1;
+                        data += data_size_st;
+                        *data_size -= data_size_st;
                         l = circularbuffer_unreaded_items_size(&buffer);
                         if (l > 0)
                         {
                             last = From;
                             first = To;
-                            for (i=last;i <= first;i++)
+                            for (i=last;i < first;i++)
                             {
                                 circularbuffer_get_at(
                                         &buffer, i, (void*)Data_sample
@@ -170,46 +173,52 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                             (char*)data, *data_size,
                                             ",\n"
                                     );
-                                    data += data_size_st-1;
+                                    data += data_size_st;
+                                    *data_size -= data_size_st;
                                 }
                                 data_size_st = snprintf(
                                         (char*)data, *data_size,
                                         "  {\"sample\": %d, \"data\": [",i
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                                 for (k=0;k < (sample_size-1);k++)
                                 {
                                     data_size_st = snprintf(
                                             (char*)data, *data_size,
                                             "%d, ", Data_sample[k]
                                     );
-                                    data += data_size_st-1;
+                                    data += data_size_st;
+                                    *data_size -= data_size_st;
                                 }
                                 data_size_st = snprintf(
                                         (char*)data, *data_size,
                                         "%d]}", Data_sample[k]
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                             }
                         }
                         data_size_st = snprintf(
                                 (char*)data, *data_size,
                                 "\n ]\n}\n"
                         );
-                        data += data_size_st-1;
+                        data += data_size_st;
+                        *data_size -= data_size_st;
                         break;
                     case Media_XML:
                         data_size_st = snprintf(
                                 (char*)data, *data_size,
                                 "<DATABLOCK>"
                         );
-                        data += data_size_st-1;
+                        data += data_size_st;
+                        *data_size -= data_size_st;
                         l = circularbuffer_unreaded_items_size(&buffer);
                         if (l > 0)
                         {
                             last = From;
                             first = To;
-                            for (i=last;i <= first;i++)
+                            for (i=last;i < first;i++)
                             {
                                 circularbuffer_get_at(
                                         &buffer, i, 
@@ -219,20 +228,23 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                         (char*)data, *data_size,
                                         "<SAMPLE ID=\"%d\"",i
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                                 for (k=0;k < (sample_size);k++)
                                 {
                                     data_size_st = snprintf(
                                             (char*)data, *data_size,
                                             " ch%d=\"%d\"", k, Data_sample[k]
                                     );
-                                    data += data_size_st-1;
+                                    data += data_size_st;
+                                    *data_size -= data_size_st;
                                 }
                                 data_size_st = snprintf(
                                         (char*)data, *data_size,
                                         ">"
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                             }
                         }
                         else
@@ -241,13 +253,15 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                     (char*)data, *data_size,
                                     "<NO_DATA>"
                             );
-                            data += data_size_st-1;
+                            data += data_size_st;
+                            *data_size -= data_size_st;
                         }
                         data_size_st = snprintf(
                                 (char*)data, *data_size,
                                 "</DATABLOCK>"
                         );
-                        data += data_size_st-1;
+                        data += data_size_st;
+                        *data_size -= data_size_st;
                         break;
                     case Media_TEXT:
                         l = circularbuffer_unreaded_items_size(&buffer);
@@ -255,7 +269,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                         {
                             last = From;
                             first = To;
-                            for (i=last;i <= first;i++)
+                            for (i=last;i < first;i++)
                             {
                                 circularbuffer_get_at(
                                         &buffer, i, (void*)Data_sample
@@ -264,14 +278,16 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                         (char*)data, *data_size,
                                         "%d",i
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                                 for (k=0;k < (sample_size);k++)
                                 {
                                     data_size_st = snprintf(
                                             (char*)data, *data_size,
                                             " %d", Data_sample[k]
                                     );
-                                    data += data_size_st-1;
+                                    data += data_size_st;
+                                    *data_size -= data_size_st;
                                 }
                             }
                         }
@@ -282,14 +298,16 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                         {
                             last = From;
                             first = To;
-                            for (i=last;i <= first;i++)
+                            for (i=last; (i < first) 
+                                    && ((*data_size) > ((sample_size+1)*sizeof(uint32_t)) );i++)
                             {
                                 memcpy(
                                         (void*)data,
                                         (void*)&i,
                                         sizeof(uint32_t)
                                 );
-                                data += sample_size*sizeof(uint32_t);
+                                data += sizeof(uint32_t);
+                                *data_size -= sizeof(uint32_t);
                                 circularbuffer_get_at(
                                         &buffer, i, (void*)Data_sample
                                 );
@@ -299,6 +317,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                         sample_size*sizeof(uint32_t)
                                 );
                                 data += sample_size*sizeof(uint32_t);
+                                *data_size -= sample_size*sizeof(uint32_t);
                             }
                         }
                         break;
@@ -316,13 +335,14 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                             (char*)data, *data_size,
                             "{\n \"DATABLOCK\": [\n"
                     );
-                    data += data_size_st-1;
+                    data += data_size_st;
+                    *data_size -= data_size_st;
                     l = circularbuffer_unreaded_items_size(&buffer);
                     if (l > 0)
                     {
                         last = circularbuffer_get_last_index(&buffer);
                         first = circularbuffer_get_first_index(&buffer);
-                        for (i=last;i <= first;i++)
+                        for (i=last;i < first;i++)
                         {
                             circularbuffer_get_at(
                                     &buffer, i, (void*)Data_sample
@@ -333,46 +353,52 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                         (char*)data, *data_size,
                                         ",\n"
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                             }
                             data_size_st = snprintf(
                                     (char*)data, *data_size,
                                     "  {\"sample\": %d, \"data\": [",i
                             );
-                            data += data_size_st-1;
+                            data += data_size_st;
+                            *data_size -= data_size_st;
                             for (k=0;k < (sample_size-1);k++)
                             {
                                 data_size_st = snprintf(
                                         (char*)data, *data_size,
                                         "%d, ", Data_sample[k]
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                             }
                             data_size_st = snprintf(
                                     (char*)data, *data_size,
                                     "%d]}", Data_sample[k]
                             );
-                            data += data_size_st-1;
+                            data += data_size_st;
+                            *data_size -= data_size_st;
                         }
                     }
                     data_size_st = snprintf(
                             (char*)data, *data_size,
                             "\n ]\n}\n"
                     );
-                    data += data_size_st-1;
+                    data += data_size_st;
+                    *data_size -= data_size_st;
                     break;
                 case Media_XML:
                     data_size_st = snprintf(
                             (char*)data, *data_size,
                             "<DATABLOCK>"
                     );
-                    data += data_size_st-1;
+                    data += data_size_st;
+                    *data_size -= data_size_st;
                     l = circularbuffer_unreaded_items_size(&buffer);
                     if (l > 0)
                     {
                         last = circularbuffer_get_last_index(&buffer);
                         first = circularbuffer_get_first_index(&buffer);
-                        for (i=last;i <= first;i++)
+                        for (i=last;i < first;i++)
                         {
                             circularbuffer_get_at(
                                     &buffer, i, (void*)Data_sample
@@ -381,20 +407,23 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                     (char*)data, *data_size,
                                     "<SAMPLE ID=\"%d\"",i
                             );
-                            data += data_size_st-1;
+                            data += data_size_st;
+                            *data_size -= data_size_st;
                             for (k=0;k < (sample_size);k++)
                             {
                                 data_size_st = snprintf(
                                         (char*)data, *data_size,
                                         " ch%d=\"%d\"", k, Data_sample[k]
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                             }
                             data_size_st = snprintf(
                                     (char*)data, *data_size,
                                     ">"
                             );
-                            data += data_size_st-1;
+                            data += data_size_st;
+                            *data_size -= data_size_st;
                         }
                     }
                     else
@@ -403,13 +432,15 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                 (char*)data, *data_size,
                                 "<NO_DATA>"
                         );
-                        data += data_size_st-1;
+                        data += data_size_st;
+                        *data_size -= data_size_st;
                     }
                     data_size_st = snprintf(
                             (char*)data, *data_size,
                             "</DATABLOCK>"
                     );
-                    data += data_size_st-1;
+                    data += data_size_st;
+                    *data_size -= data_size_st;
                     break;
                 case Media_TEXT:
                     l = circularbuffer_unreaded_items_size(&buffer);
@@ -417,7 +448,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                     {
                         last = circularbuffer_get_last_index(&buffer);
                         first = circularbuffer_get_first_index(&buffer);
-                        for (i=last;i <= first;i++)
+                        for (i=last;i < first;i++)
                         {
                             circularbuffer_get_at(
                                     &buffer, i, (void*)Data_sample
@@ -426,14 +457,16 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                     (char*)data, *data_size,
                                     "%d",i
                             );
-                            data += data_size_st-1;
+                            data += data_size_st;
+                            *data_size -= data_size_st;
                             for (k=0;k < (sample_size);k++)
                             {
                                 data_size_st = snprintf(
                                         (char*)data, *data_size,
                                         " %d", Data_sample[k]
                                 );
-                                data += data_size_st-1;
+                                data += data_size_st;
+                                *data_size -= data_size_st;
                             }
                         }
                     }
@@ -444,14 +477,16 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                     {
                         last = circularbuffer_get_last_index(&buffer);
                         first = circularbuffer_get_first_index(&buffer);
-                        for (i=last;i <= first;i++)
+                        for (i=last; (i < first) 
+                                    && ((*data_size) > ((sample_size+1)*sizeof(uint32_t)) );i++)
                         {
                             memcpy(
                                     (void*)data,
                                     (void*)&i,
                                     sizeof(uint32_t)
                             );
-                            data += sample_size*sizeof(uint32_t);
+                            data += sizeof(uint32_t);
+                            *data_size -= sample_size*sizeof(uint32_t);
                             circularbuffer_get_at(
                                     &buffer, i, (void*)Data_sample
                             );
@@ -461,6 +496,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType,
                                     sample_size*sizeof(uint32_t)
                             );
                             data += sample_size*sizeof(uint32_t);
+                            *data_size -= sample_size*sizeof(uint32_t);
                         }
                     }
                     break;

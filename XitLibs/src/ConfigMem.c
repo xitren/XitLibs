@@ -306,12 +306,16 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
     int ret_val = 0;
+    int ret_val2 = 0;
     int Address = -1;
     int Value = -1;
     
     if ((TempParam) && (TempParam->NumberofParameters > 0))
     {
         ret_val = get_parameter(TempParam,"address",(uint32_t*)&Address);
+        ret_val2 = get_parameter(TempParam,"value",(uint32_t*)&Value);
+        if (ret_val2 >= 0)
+            WriteMem(Address,Value);
         if (ret_val >= 0)
         {
             switch (MediaType) 
@@ -339,6 +343,10 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
                     (*data_size) = 4;
                     break;
                 default:
+                    (*data_size) = snprintf(
+                            (char*)data, *data_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    );
                     break;
             }
         }
@@ -371,41 +379,51 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
     int Address = -1;
     int Value = -1;
     
-    if ((TempParam) && (TempParam->NumberofParameters > 1))
+    if ((TempParam))
     {
-        ret_val1 = get_parameter(TempParam,"address",(uint32_t*)&Address);
-        ret_val2 = get_parameter(TempParam,"value",(uint32_t*)&Value);
-        if ( (ret_val1 >= 0) || (ret_val2 >= 0) )
+        data[*data_size-1] = 0;
+        switch (MediaType)
         {
-            WriteMem(Address,Value);
-            switch (MediaType)
-            {
-                case Media_XML:
-                    (*data_size) = snprintf(
-                            (char*)data, *data_size,
-                            "<MEMORY>\r\n\r "
-                            "<ADDRESS>%d</ADDRESS>\r\n\r "
-                            "<VALUE>%d</VALUE>\r\n\r"
-                            "</MEMORY>\r\n\r",
-                            (int)Address,
-                            (int)ReadMem(Address)
-                    );
-                    break;
-                case Media_TEXT:
-                    (*data_size) = snprintf(
-                            (char*)data, *data_size,
-                            "%d", (int)ReadMem(Address)
-                    );
-                    break;
-                case Media_BYTE:
-                    Value = (int)ReadMem(Address);
-                    memcpy((void*)data,(void*)&Value,4);
-                    (*data_size) = 4;
-                    break;
-                default:
-                    break;
-            }
+            case Media_XML:
+                ret_val2 = sscanf(
+                        (char*)data, 
+                        "<MEMORY>\r\n\r "
+                        "<ADDRESS>%d</ADDRESS>\r\n\r"
+                        "<VALUE>%d</VALUE>\r\n\r"
+                        "</MEMORY>\r\n\r",
+                        &Address,
+                        &Value
+                );
+                if (ret_val2 > 1)
+                {
+                    ret_val2 = INVALID_PARAMETERS_ERROR;
+                    return ret_val2;
+                }
+                break;
+            case Media_TEXT:
+                ret_val1 = get_parameter(TempParam,"address",(uint32_t*)&Address);
+                if (ret_val2 > 1)
+                {
+                    ret_val2 = INVALID_PARAMETERS_ERROR;
+                    return ret_val2;
+                }
+                ret_val2 = sscanf(
+                        (char*)data,
+                        "%d", &Value
+                );
+                if (ret_val2 > 0)
+                {
+                    ret_val2 = INVALID_PARAMETERS_ERROR;
+                    return ret_val2;
+                }
+                break;
+            case Media_BYTE:
+                memcpy((void*)&Value,(void*)data,4);
+                break;
+            default:
+                break;
         }
+        WriteMem(Address,Value);
     }
     else
     {
@@ -413,10 +431,6 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
         {
             case Media_XML:
                 ret_val1 = INVALID_PARAMETERS_ERROR;
-                (*data_size) = snprintf(
-                        (char*)data, *data_size,
-                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
-                );
                 break;
             default:
                 break;

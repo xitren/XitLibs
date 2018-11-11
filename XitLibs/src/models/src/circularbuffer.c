@@ -45,51 +45,52 @@ enum cc_stat circularbuffer_push(CircularBuffer_t* st, void *item)
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
     st->Head += st->ItemSize;
-    if ( (st->Head - st->StorageSize) > st->Tail)
+    if ( ((st->Head - st->StorageSize) > st->Tail) && (st->Head > st->StorageSize) )
         st->Tail = st->Head - st->StorageSize;
     if (st->Head > st->SwapVal)
         st->Head -= st->SwapVal;
-    if ( (st->Head % st->StorageSize) 
-            < ((st->Head - st->ItemSize) % st->StorageSize) )
-    {
+//    printf("\n%d < %d\n",st->Head % st->StorageSize,(st->Head - st->ItemSize) % st->StorageSize);
+//    if ( (st->Head % st->StorageSize) 
+//            < ((st->Head - st->ItemSize) % st->StorageSize) )
+//    {
         memcpy(
                 st->Storage + ((st->Head - st->ItemSize) % st->StorageSize),
                 item,
                 st->ItemSize
         );
-    }
-    else
-    {
-        DBG_LOG_WARNING("circularbuffer_push %d >= %d",
-                ((st->Head - st->ItemSize) % st->StorageSize),
-                (st->Head % st->StorageSize));
-    }
+//    }
+//    else
+//    {
+//        DBG_LOG_WARNING("circularbuffer_push %d >= %d",
+//                ((st->Head - st->ItemSize) % st->StorageSize),
+//                (st->Head % st->StorageSize));
+//    }
     return CC_OK;
 }
 enum cc_stat circularbuffer_pull(CircularBuffer_t* st, void *item)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    if ( st->Head == st->Tail)
+    if ( (st->Head) <= st->Tail)
         return CC_ITER_END;
     st->Tail += st->ItemSize;
     if (st->Tail > st->SwapVal)
         st->Tail -= st->SwapVal;
-    if ( (st->Tail % st->StorageSize) 
-            < ((st->Tail - st->ItemSize) % st->StorageSize) )
-    {
+//    if ( (st->Tail % st->StorageSize) 
+//            < ((st->Tail - st->ItemSize) % st->StorageSize) )
+//    {
         memcpy(
                 item,
                 st->Storage + ((st->Tail - st->ItemSize) % st->StorageSize),
                 st->ItemSize
         );
-    }
-    else
-    {
-        DBG_LOG_WARNING("circularbuffer_pull %d >= %d",
-                ((st->Tail - st->ItemSize) % st->StorageSize),
-                (st->Tail % st->StorageSize));
-    }
+//    }
+//    else
+//    {
+//        DBG_LOG_WARNING("circularbuffer_pull %d >= %d",
+//                ((st->Tail - st->ItemSize) % st->StorageSize),
+//                (st->Tail % st->StorageSize));
+//    }
     return CC_OK;
 }
 enum cc_stat circularbuffer_remove_all(CircularBuffer_t* st)
@@ -106,9 +107,9 @@ enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, size_t index, void *ite
                       __LINE__, __FILE__, __func__);
     size_t last = circularbuffer_get_last_index(st);
     size_t first = circularbuffer_get_first_index(st);
-    uint32_t ind = index * st->ItemSize;
-    if ( (last <= index) && (index <= first) )
+    if ( (index < last) || (first <= index) )
         return CC_ERR_INVALID_RANGE;
+    uint32_t ind = index * st->ItemSize;
     memcpy(item,st->Storage + (ind % st->StorageSize),st->ItemSize);
     return CC_OK;
 }
@@ -116,18 +117,21 @@ size_t circularbuffer_get_last_index(CircularBuffer_t* st)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    return ((st->Tail) % st->ItemSize);
+    return ((st->Tail) / st->ItemSize);
 }
 size_t circularbuffer_get_first_index(CircularBuffer_t* st)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    return ((st->Head) % st->ItemSize);
+    return ((st->Head) / st->ItemSize);
 }
 size_t circularbuffer_unreaded_items_size(CircularBuffer_t* st)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    return ((st->Head - st->Tail) % st->ItemSize);
+    if (st->Head < st->Tail)
+        return (((st->SwapVal - st->Tail) + st->Head) / st->ItemSize);
+    else
+        return ((st->Head - st->Tail) / st->ItemSize);
 }
 /*============================================================================*/

@@ -1,0 +1,94 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/*
+ * File:   streamtest.c
+ * Author: xitre
+ *
+ * Created on 10 ноября 2018 г., 17:23
+ */
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include "xitlibtypes.h"
+#include "CommandModule.h"
+#include "StreamDataRecorder.h"
+
+uint8_t file[2048];
+char buffer_str[100000];
+int size = 100000;
+ParameterList_t params;
+
+/*
+ * Simple C Test Suite
+ */
+
+void test1() {
+    printf("streamtest test 1\n");
+    size = 100000;
+    StreamRecorderCommand(Method_GET,Media_XML,&params,buffer_str,&size);
+    printf(buffer_str);
+    printf("Massage size: %d\n",size);
+}
+
+void test2() {
+    printf("streamtest test 2\n");
+    size = 100000;
+    StreamRecorderCommand(Method_GET,Media_TEXT,&params,buffer_str,&size);
+    printf(buffer_str);
+    printf("\n");
+    printf("Massage size: %d\n",size);
+}
+
+void test3() {
+    printf("streamtest test 3\n");
+    size = 100000;
+    StreamRecorderCommand(Method_GET,Media_BYTE,&params,buffer_str,&size);
+    printf("%d %d %d %d \n",
+            buffer_str[0],buffer_str[1],
+            buffer_str[2],buffer_str[3]
+            );
+    printf("Massage size: %d\n",size);
+}
+
+void test4() {
+    printf("streamtest test 4\n");
+    size = 100000;
+    StreamRecorderCommand(Method_GET,Media_JSON,&params,buffer_str,&size);
+    printf(buffer_str);
+    printf("Massage size: %d\n",size);
+}
+
+int main(int argc, char** argv) {
+    printf("%%SUITE_STARTING%% streamtest\n");
+    printf("%%SUITE_STARTED%%\n");
+
+    int i;
+    InitStreamRecorder(file, sizeof(file), 250, 8);
+    for (i=0;i < 1000;i++)
+        AddSample();
+    
+    printf("%%TEST_STARTED%% test1 (streamtest)\n");
+    test1();
+    printf("%%TEST_FINISHED%% time=0 test1 (streamtest) \n");
+    
+    printf("%%TEST_STARTED%% test2 (streamtest)\n");
+    test2();
+    printf("%%TEST_FINISHED%% time=0 test2 (streamtest) \n");
+    
+    printf("%%TEST_STARTED%% test3 (streamtest)\n");
+    test3();
+    printf("%%TEST_FINISHED%% time=0 test3 (streamtest) \n");
+    
+    printf("%%TEST_STARTED%% test4 (streamtest)\n");
+    test4();
+    printf("%%TEST_FINISHED%% time=0 test4 (streamtest) \n");
+
+    printf("%%SUITE_FINISHED%% time=0\n");
+
+    return (EXIT_SUCCESS);
+}

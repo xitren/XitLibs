@@ -68,11 +68,17 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
-	${TESTDIR}/TestFiles/f1
+	${TESTDIR}/TestFiles/f3 \
+	${TESTDIR}/TestFiles/f4 \
+	${TESTDIR}/TestFiles/f1 \
+	${TESTDIR}/TestFiles/f2
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/tests/csmacdtest.o
+	${TESTDIR}/tests/circlebuffertest.o \
+	${TESTDIR}/tests/csmacdtest.o \
+	${TESTDIR}/tests/memorytest.o \
+	${TESTDIR}/tests/streamtest.o
 
 # C Compiler Flags
 CFLAGS=
@@ -242,15 +248,45 @@ ${OBJECTDIR}/src/models/src/treetable.o: src/models/src/treetable.c
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
+${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/streamtest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}   
+
+${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/circlebuffertest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
+
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
+
+${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/memorytest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   
+
+
+${TESTDIR}/tests/streamtest.o: tests/streamtest.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/streamtest.o tests/streamtest.c
+
+
+${TESTDIR}/tests/circlebuffertest.o: tests/circlebuffertest.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
 
 
 ${TESTDIR}/tests/csmacdtest.o: tests/csmacdtest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/csmacdtest.o tests/csmacdtest.c
+
+
+${TESTDIR}/tests/memorytest.o: tests/memorytest.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/memorytest.o tests/memorytest.c
 
 
 ${OBJECTDIR}/src/CRC16ANSI_nomain.o: ${OBJECTDIR}/src/CRC16ANSI.o src/CRC16ANSI.c 
@@ -608,7 +644,10 @@ ${OBJECTDIR}/src/models/src/treetable_nomain.o: ${OBJECTDIR}/src/models/src/tree
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
+	    ${TESTDIR}/TestFiles/f3 || true; \
+	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
+	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \
 	    ./${TEST} || true; \
 	fi

@@ -54,7 +54,7 @@ void test1() {
     printf("Received %d %02X\n",ID,DATA[0]);
     if ( (ID != 0x20) 
             || (DATA[0] != 0x56) )    
-        printf("%%TEST_FAILED%% time=0 testname=test1 (recvtest) message=error message sample\n");
+        printf(" %%TEST_FAILED%% time=0 testname=test1 (recvtest) message=error message sample\n");
 }
 
 void test2() {
@@ -87,7 +87,7 @@ void test2() {
             || (DATA[1] != 0x33)
             || (DATA[2] != 0x54)
             || (DATA[3] != 0x44) )    
-        printf("%%TEST_FAILED%% time=0 testname=test2 (recvtest) message=error message sample\n");
+        printf(" %%TEST_FAILED%% time=0 testname=test2 (recvtest) message=error message sample\n");
 }
 
 void test3() {
@@ -98,6 +98,7 @@ void test3() {
     csma_clock_cycle(&controller);
     csma_clock_cycle(&controller);
     csma_clock_cycle(&controller);
+    printf("\n");
 }
 
 void test4() {
@@ -108,31 +109,32 @@ void test4() {
     csma_clock_cycle(&controller);
     csma_clock_cycle(&controller);
     csma_clock_cycle(&controller);
+    printf("\n");
 }
 
 int main(int argc, char** argv) {
-    printf("%%SUITE_STARTING%% \n");
+    printf("%%SUITE_STARTING%% csmacdtest\n");
     printf("%%SUITE_STARTED%%\n");
     
     csma_init(&controller,&Sender);
 
-    printf("%%TEST_STARTED%% test1 (recvtest)\n");
+    printf("%%TEST_STARTED%% test1 (csmacdtest)\n");
     test1();
-    printf("%%TEST_FINISHED%% time=0 test1 (recvtest) \n");
+    printf("%%TEST_FINISHED%% time=0 test1 (csmacdtest) \n");
 
-    printf("%%TEST_STARTED%% test2 (recvtest)\n");
+    printf("%%TEST_STARTED%% test2 (csmacdtest)\n");
     test2();
-    printf("%%TEST_FINISHED%% time=0 test2 (recvtest) \n");
+    printf("%%TEST_FINISHED%% time=0 test2 (csmacdtest) \n");
     
     csma_init(&controller,&Sender);
 
-    printf("%%TEST_STARTED%% test3 (sendtest)\n");
+    printf("%%TEST_STARTED%% test3 (csmacdtest)\n");
     test3();
-    printf("%%TEST_FINISHED%% time=0 test3 (sendtest) \n");
+    printf("%%TEST_FINISHED%% time=0 test3 (csmacdtest) \n");
 
-    printf("%%TEST_STARTED%% test4 (sendtest)\n");
+    printf("%%TEST_STARTED%% test4 (csmacdtest)\n");
     test4();
-    printf("%%TEST_FINISHED%% time=0 test4 (sendtest) \n");
+    printf("%%TEST_FINISHED%% time=0 test4 (csmacdtest) \n");
 
     printf("%%SUITE_FINISHED%% time=0\n");
 
