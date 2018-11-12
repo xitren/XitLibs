@@ -36,11 +36,14 @@ void InitStreamRecorder(uint8_t* _storage, uint32_t _storage_size,
 void AddSample(void);
 void ClearStreamRecorder(void);
 int StreamRecorderCommand(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size);
 int StreamRecorderCurrentCommand(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size);
 int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size);
 /*============================================================================*/
 
 #ifdef __cplusplus

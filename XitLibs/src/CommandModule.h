@@ -25,7 +25,7 @@ typedef struct _tagUserCommand_t
 } UserCommand_t;
 typedef int (*CommandFunction_t)(
             uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam, 
-            uint8_t *data, uint32_t *data_size
+            uint8_t *data, uint32_t *data_size, uint32_t buffer_size
 );    
 typedef enum
 {
@@ -49,8 +49,9 @@ typedef enum
 
 /* Public function prototypes ------------------------------------------------*/
 void InitCommands(void);
-int AddCommand(uint8_t _Methods, char *CommandName, 
-                    char *Link, CommandFunction_t CommandFunction);
+int AddCommand(uint8_t _Methods, const char *CommandName, 
+                    const char *Link, CommandFunction_t CommandFunction);
+CommandFunction_t FindCommand(const char *Command);
 void ClearCommands(void);
 char* GetCommandLink(int N);
 int GetCommandsNumber(void);

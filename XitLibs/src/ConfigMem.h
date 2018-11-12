@@ -230,7 +230,7 @@ void InitCfgMem(void);
 void WriteMem(uint32_t _adr, uint32_t _val);
 uint32_t ReadMem(uint32_t _adr);
 int MemoryCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam, 
-                                    uint8_t *data, uint32_t *data_size);
+                    uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
 /*============================================================================*/
 
 #ifdef __cplusplus

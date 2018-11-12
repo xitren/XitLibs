@@ -29,16 +29,14 @@ ParameterList_t params;
 
 void test1() {
     printf("streamtest test 1\n");
-    size = 100000;
-    StreamRecorderCommand(Method_GET,Media_XML,&params,buffer_str,&size);
+    StreamRecorderCommand(Method_GET,Media_XML,&params,buffer_str,&size,100000);
     printf(buffer_str);
     printf("Massage size: %d\n",size);
 }
 
 void test2() {
     printf("streamtest test 2\n");
-    size = 100000;
-    StreamRecorderCommand(Method_GET,Media_TEXT,&params,buffer_str,&size);
+    StreamRecorderCommand(Method_GET,Media_TEXT,&params,buffer_str,&size,100000);
     printf(buffer_str);
     printf("\n");
     printf("Massage size: %d\n",size);
@@ -46,8 +44,7 @@ void test2() {
 
 void test3() {
     printf("streamtest test 3\n");
-    size = 100000;
-    StreamRecorderCommand(Method_GET,Media_BYTE,&params,buffer_str,&size);
+    StreamRecorderCommand(Method_GET,Media_BYTE,&params,buffer_str,&size,100000);
     printf("%d %d %d %d \n",
             buffer_str[0],buffer_str[1],
             buffer_str[2],buffer_str[3]
@@ -57,8 +54,7 @@ void test3() {
 
 void test4() {
     printf("streamtest test 4\n");
-    size = 100000;
-    StreamRecorderCommand(Method_GET,Media_JSON,&params,buffer_str,&size);
+    StreamRecorderCommand(Method_GET,Media_JSON,&params,buffer_str,&size,100000);
     printf(buffer_str);
     printf("Massage size: %d\n",size);
 }

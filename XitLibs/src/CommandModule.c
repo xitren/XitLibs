@@ -71,8 +71,8 @@ int GetCommandsNumber(void)
     return array_size(CommandTableArray);
 }
 
-int AddCommand(uint8_t _Methods, char *CommandName, 
-                    char *Link, CommandFunction_t CommandFunction)
+int AddCommand(uint8_t _Methods, const char *CommandName, 
+                    const char *Link, CommandFunction_t CommandFunction)
 {
     int ret_val = 0;
     CommandTable_t *comm;
@@ -117,7 +117,7 @@ int AddCommand(uint8_t _Methods, char *CommandName,
     return(ret_val);
 }
 
-CommandFunction_t FindCommand(char *Command)
+CommandFunction_t FindCommand(const char *Command)
 {
     uint16_t          crc;
     unsigned int      Index;

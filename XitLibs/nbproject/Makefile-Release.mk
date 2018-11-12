@@ -45,7 +45,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/PWMModule.o \
 	${OBJECTDIR}/src/Schedule.o \
 	${OBJECTDIR}/src/StreamDataRecorder.o \
-	${OBJECTDIR}/src/SymbolBuffer.o \
 	${OBJECTDIR}/src/coap/coap.o \
 	${OBJECTDIR}/src/json/cJSON.o \
 	${OBJECTDIR}/src/json/cJSON_Utils.o \
@@ -70,12 +69,14 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 TESTFILES= \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f4 \
+	${TESTDIR}/TestFiles/f5 \
 	${TESTDIR}/TestFiles/f1 \
 	${TESTDIR}/TestFiles/f2
 
 # Test Object Files
 TESTOBJECTFILES= \
 	${TESTDIR}/tests/circlebuffertest.o \
+	${TESTDIR}/tests/coaptest.o \
 	${TESTDIR}/tests/csmacdtest.o \
 	${TESTDIR}/tests/memorytest.o \
 	${TESTDIR}/tests/streamtest.o
@@ -155,11 +156,6 @@ ${OBJECTDIR}/src/StreamDataRecorder.o: src/StreamDataRecorder.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StreamDataRecorder.o src/StreamDataRecorder.c
-
-${OBJECTDIR}/src/SymbolBuffer.o: src/SymbolBuffer.c
-	${MKDIR} -p ${OBJECTDIR}/src
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SymbolBuffer.o src/SymbolBuffer.c
 
 ${OBJECTDIR}/src/coap/coap.o: src/coap/coap.c
 	${MKDIR} -p ${OBJECTDIR}/src/coap
@@ -256,6 +252,10 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/circlebuffertest.o ${OBJECTFILES:%.o=%
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
 
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}   
+
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
@@ -275,6 +275,12 @@ ${TESTDIR}/tests/circlebuffertest.o: tests/circlebuffertest.c
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
+
+
+${TESTDIR}/tests/coaptest.o: tests/coaptest.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coaptest.o tests/coaptest.c
 
 
 ${TESTDIR}/tests/csmacdtest.o: tests/csmacdtest.c 
@@ -417,19 +423,6 @@ ${OBJECTDIR}/src/StreamDataRecorder_nomain.o: ${OBJECTDIR}/src/StreamDataRecorde
 	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StreamDataRecorder_nomain.o src/StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/StreamDataRecorder.o ${OBJECTDIR}/src/StreamDataRecorder_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/SymbolBuffer_nomain.o: ${OBJECTDIR}/src/SymbolBuffer.o src/SymbolBuffer.c 
-	${MKDIR} -p ${OBJECTDIR}/src
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/SymbolBuffer.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/SymbolBuffer_nomain.o src/SymbolBuffer.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/SymbolBuffer.o ${OBJECTDIR}/src/SymbolBuffer_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/coap/coap_nomain.o: ${OBJECTDIR}/src/coap/coap.o src/coap/coap.c 
@@ -646,6 +639,7 @@ ${OBJECTDIR}/src/models/src/treetable_nomain.o: ${OBJECTDIR}/src/models/src/tree
 	then  \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
+	    ${TESTDIR}/TestFiles/f5 || true; \
 	    ${TESTDIR}/TestFiles/f1 || true; \
 	    ${TESTDIR}/TestFiles/f2 || true; \
 	else  \

@@ -815,6 +815,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     }
     ParameterList_t params;
     memset(&params,0,sizeof(ParameterList_t));
+    memset(&bufhr,0,sizeof(bufhr));
     const coap_option_t *opt;
     uint8_t count;
     uint8_t contentistext = 0;
@@ -844,7 +845,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             }
         }
         conv_uint32_bytes_t converter;
-        scanf("%d.%d.%d.%d", &(converter.ui8[0]),
+        sscanf(_ip,"%d.%d.%d.%d", &(converter.ui8[0]),
                                 &(converter.ui8[1]),
                                 &(converter.ui8[2]),
                                 &(converter.ui8[3]));
@@ -883,17 +884,23 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                     mediatype = Media_JSON;
             }
         }
-//        scratch->p = inpkt->payload.p;
-//        scratch->len = inpkt->payload.len;
         scratch->len = 4096;
     }
-//    FindCommand(bufhr)(
-//            inpkt->hdr.code,
-//            mediatype,
-//            &params,
-//            inpkt->payload.p,
-//            scratch->len
-//    );
+    for(i=0;i<strlen(bufhr);i++)
+       if((bufhr[i] >= 'A') && (bufhr[i] <= 'Z'))
+          bufhr[i] += ('a' - 'A');
+    CommandFunction_t CommandFunction;
+    CommandFunction = FindCommand(bufhr);
+    if (CommandFunction != 0)
+        ((*CommandFunction)(
+                methodpermission,
+                mediatype,
+                &params,
+                inpkt->payload.p,
+                inpkt->payload.len,
+                4096
+        ));
+    else return NO_COMMAND_ERROR;
     return 0;
 }
 
