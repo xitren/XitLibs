@@ -51,6 +51,12 @@
                    displayName="Файлы тестов"
                    projectFiles="false"
                    kind="TEST_LOGICAL_FOLDER">
+      <logicalFolder name="f6"
+                     displayName="Тесты анализатора производительности"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>tests/distcalctest.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Тесты потока данных"
                      projectFiles="true"
@@ -186,6 +192,21 @@
           <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
+      </folder>
       <item path="src/CRC16ANSI.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/CSMACD.c" ex="false" tool="0" flavor2="0">
@@ -243,6 +264,8 @@
       <item path="tests/coaptest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/csmacdtest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/distcalctest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/memorytest.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -346,6 +369,21 @@
           <output>${TESTDIR}/TestFiles/f5</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
+      </folder>
       <item path="src/CRC16ANSI.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/CSMACD.c" ex="false" tool="0" flavor2="0">
@@ -403,6 +441,8 @@
       <item path="tests/coaptest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/csmacdtest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/distcalctest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/memorytest.c" ex="false" tool="0" flavor2="0">
       </item>

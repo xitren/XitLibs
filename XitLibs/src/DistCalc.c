@@ -15,23 +15,24 @@
 #include "DistCalc.h"
 #include "LogModule.h"
 #include "CommandModule.h"
+#include "coap.h"
 /*============================================================================*/
 
 /* Private defines -----------------------------------------------------------*/
-int ClockCommand_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
-int ClockCommand_PUT(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
-int ClockCommand_RESET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
-int CalculationFreeCycles_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
-int CalculationMaxCycles_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
-int CalculationMaxCycles_RESET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
-int CalculationPercentCycles_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size);
+int ClockCommand_GET(uint8_t MediaType, ParameterList_t *TempParam, 
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int ClockCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam, 
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int ClockCommand_RESET(uint8_t MediaType, ParameterList_t *TempParam, 
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int CalculationFreeCycles_GET(uint8_t MediaType, ParameterList_t *TempParam, 
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int CalculationMaxCycles_GET(uint8_t MediaType, ParameterList_t *TempParam, 
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int CalculationMaxCycles_RESET(uint8_t MediaType, ParameterList_t *TempParam, 
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int CalculationPercentCycles_GET(uint8_t MediaType, ParameterList_t *TempParam, 
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
 /*============================================================================*/
 
 /* Private extern ------------------------------------------------------------*/
@@ -42,10 +43,10 @@ int CalculationPercentCycles_GET(uint8_t MediaType,
 
 /* Private variables ---------------------------------------------------------*/
 const char* global_link_syncro[][2] = {
-    {"/CLOCK", "</clock>"},
-    {"/CALCULATION/CYCLES/FREE", "</calculation/cycles/free>"},
-    {"/CALCULATION/CYCLES/MAX", "</calculation/cycles/max>"},
-    {"/CALCULATION/CYCLES/PERCENT", "</calculation/cycles/percent>"}
+    {"/clock", "</clock>"},
+    {"/calculation/cycles/free", "</calculation/cycles/free>"},
+    {"/calculation/cycles/max", "</calculation/cycles/max>"},
+    {"/calculation/cycles/percent", "</calculation/cycles/percent>"}
 };
 uint32_t now_clock = 0;
 uint32_t free_cycles = 0;
@@ -94,7 +95,8 @@ void ClockHandler(void)
 }
 
 inline int ClockCommand_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -105,8 +107,9 @@ inline int ClockCommand_GET(uint8_t MediaType,
         switch (MediaType)
         {
             case Media_XML:
+                current_coap_mediatype = Media_XML;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "<CLOCK>\r\n\r "
                         "%d"
                         "</CLOCK>\r\n\r",
@@ -114,25 +117,33 @@ inline int ClockCommand_GET(uint8_t MediaType,
                 );
                 break;
             case Media_TEXT:
+                current_coap_mediatype = Media_TEXT;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "%d", (int)GetClock()
                 );
                 break;
             case Media_BYTE:
+                current_coap_mediatype = Media_BYTE;
                 Value = (int)GetClock();
                 memcpy((void*)data,(void*)&Value,4);
                 (*data_size) = 4;
                 break;
             default:
+                current_coap_mediatype = Media_XML;
+                (*data_size) = snprintf(
+                        (char*)data, buffer_size,
+                        "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                );
                 break;
         }
     }
     else
     {
+        current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
-                (char*)data, *data_size,
+                (char*)data, buffer_size,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
@@ -141,13 +152,14 @@ inline int ClockCommand_GET(uint8_t MediaType,
 }
 
 inline int ClockCommand_PUT(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
     int ret_val = 0;
     int Value = -1;
-    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    if ((TempParam))
     {
         ret_val = get_parameter(TempParam,"value",(uint32_t*)&Value);
         if ( (ret_val >= 0) )
@@ -156,8 +168,9 @@ inline int ClockCommand_PUT(uint8_t MediaType,
             switch (MediaType)
             {
                 case Media_XML:
+                    current_coap_mediatype = Media_XML;
                     (*data_size) = snprintf(
-                            (char*)data, *data_size,
+                            (char*)data, buffer_size,
                             "<CLOCK>\r\n\r "
                             "%d"
                             "</CLOCK>\r\n\r",
@@ -165,26 +178,34 @@ inline int ClockCommand_PUT(uint8_t MediaType,
                     );
                     break;
                 case Media_TEXT:
+                    current_coap_mediatype = Media_TEXT;
                     (*data_size) = snprintf(
-                            (char*)data, *data_size,
+                            (char*)data, buffer_size,
                             "%d", (int)GetClock()
                     );
                     break;
                 case Media_BYTE:
+                    current_coap_mediatype = Media_BYTE;
                     Value = (int)GetClock();
                     memcpy((void*)data,(void*)&Value,4);
                     (*data_size) = 4;
                     break;
                 default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*)data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    );
                     break;
             }
         }
     }
     else
     {
+        current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
-                (char*)data, *data_size,
+                (char*)data, buffer_size,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
@@ -192,13 +213,14 @@ inline int ClockCommand_PUT(uint8_t MediaType,
 }
 
 inline int ClockCommand_RESET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
     int ret_val = 0;
     int Value = -1;
-    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    if ((TempParam))
     {
         if ( (ret_val >= 0) )
         {
@@ -206,8 +228,9 @@ inline int ClockCommand_RESET(uint8_t MediaType,
             switch (MediaType)
             {
                 case Media_XML:
+                    current_coap_mediatype = Media_XML;
                     (*data_size) = snprintf(
-                            (char*)data, *data_size,
+                            (char*)data, buffer_size,
                             "<CLOCK>\r\n\r "
                             "%d"
                             "</CLOCK>\r\n\r",
@@ -215,26 +238,34 @@ inline int ClockCommand_RESET(uint8_t MediaType,
                     );
                     break;
                 case Media_TEXT:
+                    current_coap_mediatype = Media_TEXT;
                     (*data_size) = snprintf(
-                            (char*)data, *data_size,
+                            (char*)data, buffer_size,
                             "%d", (int)GetClock()
                     );
                     break;
                 case Media_BYTE:
+                    current_coap_mediatype = Media_BYTE;
                     Value = (int)GetClock();
                     memcpy((void*)data,(void*)&Value,4);
                     (*data_size) = 4;
                     break;
                 default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*)data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    );
                     break;
             }
         }
     }
     else
     {
+        current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
-                (char*)data, *data_size,
+                (char*)data, buffer_size,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
@@ -242,7 +273,8 @@ inline int ClockCommand_RESET(uint8_t MediaType,
 }
 
 int ClockCommand(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -250,18 +282,25 @@ int ClockCommand(uint8_t Method, uint8_t MediaType,
     switch (Method) 
     {
         case Method_GET:
-            ret_val = ClockCommand_GET(MediaType,TempParam,data,data_size);
+            ret_val = ClockCommand_GET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         case Method_PUT:
-            ret_val = ClockCommand_PUT(MediaType,TempParam,data,data_size);
+            ret_val = ClockCommand_PUT(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         case Method_RESET:
-            ret_val = ClockCommand_RESET(MediaType,TempParam,data,data_size);
+            ret_val = ClockCommand_RESET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
-                    (char*)data, *data_size,
+                    (char*)data, buffer_size,
                     "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
             );
             break;
@@ -270,7 +309,8 @@ int ClockCommand(uint8_t Method, uint8_t MediaType,
 }
 
 inline int CalculationFreeCycles_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -281,8 +321,9 @@ inline int CalculationFreeCycles_GET(uint8_t MediaType,
         switch (MediaType)
         {
             case Media_XML:
+                current_coap_mediatype = Media_XML;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "<FREECYCLES>\r\n\r "
                         "%d"
                         "</FREECYCLES>\r\n\r",
@@ -290,25 +331,33 @@ inline int CalculationFreeCycles_GET(uint8_t MediaType,
                 );
                 break;
             case Media_TEXT:
+                current_coap_mediatype = Media_TEXT;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "%d", (int)GetCycle()
                 );
                 break;
             case Media_BYTE:
+                current_coap_mediatype = Media_BYTE;
                 Value = (int)GetCycle();
                 memcpy((void*)data,(void*)&Value,4);
                 (*data_size) = 4;
                 break;
             default:
+                current_coap_mediatype = Media_XML;
+                (*data_size) = snprintf(
+                        (char*)data, buffer_size,
+                        "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                );
                 break;
         }
     }
     else
     {
+        current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
-                (char*)data, *data_size,
+                (char*)data, buffer_size,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
@@ -317,7 +366,8 @@ inline int CalculationFreeCycles_GET(uint8_t MediaType,
 }
 
 int CalculationFreeCycles(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -325,12 +375,15 @@ int CalculationFreeCycles(uint8_t Method, uint8_t MediaType,
     switch (Method) 
     {
         case Method_GET:
-            ret_val = CalculationFreeCycles_GET(MediaType,TempParam,data,data_size);
+            ret_val = CalculationFreeCycles_GET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
-                    (char*)data, *data_size,
+                    (char*)data, buffer_size,
                     "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
             );
             break;
@@ -339,7 +392,8 @@ int CalculationFreeCycles(uint8_t Method, uint8_t MediaType,
 }
 
 inline int CalculationMaxCycles_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -350,8 +404,9 @@ inline int CalculationMaxCycles_GET(uint8_t MediaType,
         switch (MediaType)
         {
             case Media_XML:
+                current_coap_mediatype = Media_XML;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "<MAXCYCLES>\r\n\r "
                         "%d"
                         "</MAXCYCLES>\r\n\r",
@@ -359,25 +414,33 @@ inline int CalculationMaxCycles_GET(uint8_t MediaType,
                 );
                 break;
             case Media_TEXT:
+                current_coap_mediatype = Media_TEXT;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "%d", (int)GetMaxCycle()
                 );
                 break;
             case Media_BYTE:
+                current_coap_mediatype = Media_BYTE;
                 Value = (int)GetMaxCycle();
                 memcpy((void*)data,(void*)&Value,4);
                 (*data_size) = 4;
                 break;
             default:
+                current_coap_mediatype = Media_XML;
+                (*data_size) = snprintf(
+                        (char*)data, buffer_size,
+                        "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                );
                 break;
         }
     }
     else
     {
+        current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
-                (char*)data, *data_size,
+                (char*)data, buffer_size,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
@@ -385,7 +448,8 @@ inline int CalculationMaxCycles_GET(uint8_t MediaType,
     return(ret_val);
 }
 inline int CalculationMaxCycles_RESET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -397,8 +461,9 @@ inline int CalculationMaxCycles_RESET(uint8_t MediaType,
         switch (MediaType)
         {
             case Media_XML:
+                current_coap_mediatype = Media_XML;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "<MAXCYCLES>\r\n\r "
                         "%d"
                         "</MAXCYCLES>\r\n\r",
@@ -406,25 +471,33 @@ inline int CalculationMaxCycles_RESET(uint8_t MediaType,
                 );
                 break;
             case Media_TEXT:
+                current_coap_mediatype = Media_TEXT;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "%d", (int)GetMaxCycle()
                 );
                 break;
             case Media_BYTE:
+                current_coap_mediatype = Media_BYTE;
                 Value = (int)GetMaxCycle();
                 memcpy((void*)data,(void*)&Value,4);
                 (*data_size) = 4;
                 break;
             default:
+                current_coap_mediatype = Media_XML;
+                (*data_size) = snprintf(
+                        (char*)data, buffer_size,
+                        "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                );
                 break;
         }
     }
     else
     {
+        current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
-                (char*)data, *data_size,
+                (char*)data, buffer_size,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
@@ -433,7 +506,8 @@ inline int CalculationMaxCycles_RESET(uint8_t MediaType,
 }
 
 int CalculationMaxCycles(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -441,15 +515,20 @@ int CalculationMaxCycles(uint8_t Method, uint8_t MediaType,
     switch (Method) 
     {
         case Method_GET:
-            ret_val = CalculationMaxCycles_GET(MediaType,TempParam,data,data_size);
+            ret_val = CalculationMaxCycles_GET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         case Method_RESET:
-            ret_val = CalculationMaxCycles_RESET(MediaType,TempParam,data,data_size);
+            ret_val = CalculationMaxCycles_RESET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
-                    (char*)data, *data_size,
+                    (char*)data, buffer_size,
                     "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
             );
             break;
@@ -458,7 +537,8 @@ int CalculationMaxCycles(uint8_t Method, uint8_t MediaType,
 }
 
 inline int CalculationPercentCycles_GET(uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -469,8 +549,9 @@ inline int CalculationPercentCycles_GET(uint8_t MediaType,
         switch (MediaType)
         {
             case Media_XML:
+                current_coap_mediatype = Media_XML;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "<PERCENTCYCLES>\r\n\r "
                         "%d"
                         "</PERCENTCYCLES>\r\n\r",
@@ -478,17 +559,24 @@ inline int CalculationPercentCycles_GET(uint8_t MediaType,
                 );
                 break;
             case Media_TEXT:
+                current_coap_mediatype = Media_TEXT;
                 (*data_size) = snprintf(
-                        (char*)data, *data_size,
+                        (char*)data, buffer_size,
                         "%d", (int)GetPercent()
                 );
                 break;
             case Media_BYTE:
+                current_coap_mediatype = Media_BYTE;
                 Value = (int)GetPercent();
                 memcpy((void*)data,(void*)&Value,4);
                 (*data_size) = 4;
                 break;
             default:
+                current_coap_mediatype = Media_XML;
+                (*data_size) = snprintf(
+                        (char*)data, buffer_size,
+                        "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                );
                 break;
         }
     }
@@ -496,7 +584,7 @@ inline int CalculationPercentCycles_GET(uint8_t MediaType,
     {
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
-                (char*)data, *data_size,
+                (char*)data, buffer_size,
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
@@ -505,7 +593,8 @@ inline int CalculationPercentCycles_GET(uint8_t MediaType,
 }
 
 int CalculationPercentCycles(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, uint32_t *data_size)
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -514,13 +603,14 @@ int CalculationPercentCycles(uint8_t Method, uint8_t MediaType,
     {
         case Method_GET:
             ret_val = CalculationPercentCycles_GET(
-                    MediaType,TempParam,data,data_size
+                    MediaType,TempParam,data,data_size,buffer_size
             );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
-                    (char*)data, *data_size,
+                    (char*)data, buffer_size,
                     "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
             );
             break;

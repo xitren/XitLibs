@@ -798,6 +798,7 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
     return 0;
 }
 
+uint32_t current_coap_mediatype = 0;
 static char bufhr[100];
 int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, 
                                         coap_packet_t *outpkt,
@@ -820,7 +821,6 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     uint8_t count;
     uint8_t contentistext = 0;
     uint32_t methodpermission = 0;
-    uint32_t mediatype = 0;
     int i;
     if (inpkt->hdr.code < 5)
     {
@@ -875,13 +875,17 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             {
                 uint8_t media_option = (((opt[i].buf.p[0]) << 8)+(opt[i].buf.p[1]));
                 if ( media_option == COAP_CONTENTTYPE_TEXT_PLAIN )
-                    mediatype = Media_TEXT;
+                    current_coap_mediatype = Media_TEXT;
                 else if ( media_option == COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM )
-                    mediatype = Media_BYTE;
+                    current_coap_mediatype = Media_BYTE;
                 else if ( media_option == COAP_CONTENTTYPE_APPLICATION_XML )
-                    mediatype = Media_XML;
+                    current_coap_mediatype = Media_XML;
                 else if ( media_option == COAP_CONTENTTYPE_APPLICATION_JSON )
-                    mediatype = Media_JSON;
+                    current_coap_mediatype = Media_JSON;
+                else if ( media_option == COAP_CONTENTTYPE_APPLICATION_LINKFORMAT )
+                    current_coap_mediatype = Media_LINK;
+                else
+                    current_coap_mediatype = Media_XML;
             }
         }
         scratch->len = 4096;
@@ -892,16 +896,15 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     CommandFunction_t CommandFunction;
     CommandFunction = FindCommand(bufhr);
     if (CommandFunction != 0)
-        ((*CommandFunction)(
+        return ((*CommandFunction)(
                 methodpermission,
-                mediatype,
+                current_coap_mediatype,
                 &params,
                 inpkt->payload.p,
                 inpkt->payload.len,
                 4096
         ));
     else return NO_COMMAND_ERROR;
-    return 0;
 }
 
 Array *coap_get_waiting_list(void)

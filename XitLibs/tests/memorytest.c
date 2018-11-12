@@ -29,39 +29,39 @@ ParameterList_t params;
 void test1() {
     printf("memorytest test 1\n");
     size = 1000;
-    MemoryCommand(Method_GET,Media_XML,&params,buffer,&size,1000);
+    MemoryCommand(Method_GET,Media_XML,&params,buffer,(uint32_t *)&size,1000);
     printf(buffer);
-    printf("Massage size: %d\n",size);
-    MemoryCommand(Method_PUT,Media_XML,&params,buffer,&size,1000);
+    printf("Message size: %d\n",size);
+    MemoryCommand(Method_PUT,Media_XML,&params,buffer,(uint32_t *)&size,1000);
 }
 
 void test2() {
     printf("memorytest test 2\n");
     size = 1000;
-    MemoryCommand(Method_GET,Media_TEXT,&params,buffer,&size,1000);
+    MemoryCommand(Method_GET,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
     printf(buffer);
     printf("\n");
-    printf("Massage size: %d\n",size);
-    MemoryCommand(Method_PUT,Media_TEXT,&params,buffer,&size,1000);
+    printf("Message size: %d\n",size);
+    MemoryCommand(Method_PUT,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
 }
 
 void test3() {
     printf("memorytest test 3\n");
     size = 1000;
-    MemoryCommand(Method_GET,Media_BYTE,&params,buffer,&size,1000);
+    MemoryCommand(Method_GET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
     printf("%02X %02X %02X %02X \n",
             (uint8_t)buffer[0],(uint8_t)buffer[1],
             (uint8_t)buffer[2],(uint8_t)buffer[3]
             );
-    printf("Massage size: %d\n",size);
+    printf("Message size: %d\n",size);
 }
 
 void test4() {
     printf("memorytest test 4\n");
     size = 1000;
-    MemoryCommand(Method_GET,Media_JSON,&params,buffer,&size,1000);
+    MemoryCommand(Method_GET,Media_JSON,&params,buffer,(uint32_t *)&size,1000);
     printf(buffer);
-    printf("Massage size: %d\n",size);
+    printf("Message size: %d\n",size);
 }
 
 int main(int argc, char** argv) {

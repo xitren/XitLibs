@@ -9,10 +9,11 @@
 // ----------------------------------------------------------------------------
 
 /* Local headers -------------------------------------------------------------*/
+#include <string.h>
 #include "ConfigMem.h"
 #include "LogModule.h"
 #include "CommandModule.h"
-#include <string.h>
+#include "coap.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -321,6 +322,7 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
             switch (MediaType) 
             {
                 case Media_XML:
+                    current_coap_mediatype = Media_XML;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "<MEMORY>\r\n\r "
@@ -332,17 +334,20 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
                     );
                     break;
                 case Media_TEXT:
+                    current_coap_mediatype = Media_TEXT;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "%d", (int)ReadMem(Address)
                     );
                     break;
                 case Media_BYTE:
+                    current_coap_mediatype = Media_BYTE;
                     Value = (int)ReadMem(Address);
                     memcpy((void*)data,(void*)&Value,4);
                     (*data_size) = 4;
                     break;
                 default:
+                    current_coap_mediatype = Media_XML;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
@@ -353,18 +358,12 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
     }
     else
     {
-        switch (MediaType) 
-        {
-            case Media_XML:
-                ret_val = INVALID_PARAMETERS_ERROR;
-                (*data_size) = snprintf(
-                        (char*)data, buffer_size,
-                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
-                );
-                break;
-            default:
-                break;
-        }
+        current_coap_mediatype = Media_XML;
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*)data, buffer_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+        );
     }
     return(ret_val);
 }
@@ -385,6 +384,7 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
         switch (MediaType)
         {
             case Media_XML:
+                current_coap_mediatype = Media_XML;
                 ret_val2 = sscanf(
                         (char*)data, 
                         "<MEMORY>\r\n\r "
@@ -427,14 +427,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
     }
     else
     {
-        switch (MediaType) 
-        {
-            case Media_XML:
-                ret_val1 = INVALID_PARAMETERS_ERROR;
-                break;
-            default:
-                break;
-        }
+        current_coap_mediatype = Media_XML;
+        ret_val1 = INVALID_PARAMETERS_ERROR;
     }
     return(ret_val1);
 }
@@ -448,15 +442,22 @@ int MemoryCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
     switch (Method) 
     {
         case Method_RESET:
-            ret_val = MemoryCommand_RESET(MediaType,TempParam,data,data_size,buffer_size);
+            ret_val = MemoryCommand_RESET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         case Method_GET:
-            ret_val = MemoryCommand_GET(MediaType,TempParam,data,data_size,buffer_size);
+            ret_val = MemoryCommand_GET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         case Method_PUT:
-            ret_val = MemoryCommand_PUT(MediaType,TempParam,data,data_size,buffer_size);
+            ret_val = MemoryCommand_PUT(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
                     (char*)data, buffer_size,

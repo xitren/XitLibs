@@ -164,6 +164,7 @@ typedef struct
     int count;
     const char *elems[MAX_SEGMENTS];
 } coap_endpoint_path_t;
+extern uint32_t current_coap_mediatype;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/

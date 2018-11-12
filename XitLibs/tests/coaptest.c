@@ -158,7 +158,8 @@ uint8_t msg_test_delete_stream_from_to[] = {
 coap_packet_t inpkt;
 coap_packet_t outpkt;
 uint8_t buffer[4096];
-coap_rw_buffer_t scratch;
+uint8_t scratch_b[4096];
+coap_rw_buffer_t scratch = {scratch_b, sizeof(scratch_b)};
 
 uint32_t msgs_streamer[][2] = {
     {(uint32_t)msg_test_get_wellknown, sizeof(msg_test_get_wellknown)},
@@ -195,18 +196,97 @@ uint32_t msgs_streamer[][2] = {
 };
 
 void test1() {
-    int rc,i;
+    int rc,i,j;
     printf("coaptest test 1\n");
-    for (i=0;i < 25;i++)
+    uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
+    for (i=0;i < 1/*25*/;i++)
     {
         memset((void *)&inpkt,0,sizeof(coap_packet_t));
+        /*==1= Parse package =================================================*/
         rc = coap_parse(
                 &inpkt, 
                 (uint8_t *)msgs_streamer[i][0], 
                 msgs_streamer[i][1]
         );
+        /*==2= Handle request ================================================*/
         if (rc == 0)
-            coap_handle_req(&scratch,&inpkt,&outpkt,0,"127.0.0.1",4567);
+            rc = coap_handle_req(&scratch,&inpkt,&outpkt,0,"127.0.0.1",4567);
+        /*==3= Build response content ========================================*/
+        switch (current_coap_mediatype) 
+        {
+            case Media_TEXT:
+                media_option = COAP_CONTENTTYPE_TEXT_PLAIN;
+                break;
+            case Media_BYTE:
+                media_option = COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM;
+                break;
+            case Media_XML:
+                media_option = COAP_CONTENTTYPE_APPLICATION_XML;
+                break;
+            case Media_JSON:
+                media_option = COAP_CONTENTTYPE_APPLICATION_JSON;
+                break;
+            case Media_LINK:
+                media_option = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
+                break;
+            default:
+                media_option = COAP_CONTENTTYPE_APPLICATION_XML;
+                break;
+        }
+        if (rc == 0)
+        {
+            if ( (inpkt.hdr.code == COAP_METHOD_GET) )
+                coap_make_response(&scratch, &outpkt, 0,
+                    (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                    inpkt.hdr.id[0], inpkt.hdr.id[1],
+                    inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_CONTENT,
+                    media_option);
+            else
+                coap_make_response(&scratch, &outpkt, 0,
+                    (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                    inpkt.hdr.id[0], inpkt.hdr.id[1],
+                    inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_CHANGED,
+                    media_option);
+        }
+        else
+        {
+            switch (rc) 
+            {
+                case INVALID_PARAMETERS_ERROR:
+                    coap_make_response(&scratch, &outpkt, 0,
+                        (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                        inpkt.hdr.id[0], inpkt.hdr.id[1],
+                        inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
+                        media_option);
+                    break;
+                case NO_COMMAND_ERROR:
+                    coap_make_response(&scratch, &outpkt, 0,
+                        (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                        inpkt.hdr.id[0], inpkt.hdr.id[1],
+                        inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_NOT_FOUND,
+                        media_option);
+                    break;
+                default:
+                    coap_make_response(&scratch, &outpkt, 0,
+                        (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                        inpkt.hdr.id[0], inpkt.hdr.id[1],
+                        inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
+                        media_option);
+                    break;
+            }
+        }
+        /*==4= Build response package ========================================*/
+        rc = coap_build(scratch.p, &scratch.len, &outpkt, NULL, NULL);
+        /*==5= Transmitt package =============================================*/
+        if (rc == 0)
+        {
+            printf("Dump:");
+            for (j=0;j < scratch.len;j++)
+            {
+                printf(" %02X",scratch.p[j]);
+            }
+            printf("\n");
+        }
     }
 }
 
@@ -236,7 +316,7 @@ int main(int argc, char** argv) {
     );
     AddCommand(
             Method_GET,
-            global_link_streamer[1][0],global_link_streamer[1][1],
+            global_link_streamer[2][0],global_link_streamer[2][1],
             &StreamRecorderLastCommand
     );
 

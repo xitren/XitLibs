@@ -21,6 +21,7 @@
 #include "StreamDataRecorder.h"
 #include "circularbuffer.h"
 #include "ConfigMem.h"
+#include "coap.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -151,6 +152,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                 switch (MediaType)
                 {
                     case Media_JSON:
+                        current_coap_mediatype = Media_JSON;
                         data_size_st = snprintf(
                                 (char*)data, buffer_size,
                                 "{\n \"DATABLOCK\": [\n"
@@ -207,6 +209,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         buffer_size -= data_size_st;
                         break;
                     case Media_XML:
+                        current_coap_mediatype = Media_XML;
                         data_size_st = snprintf(
                                 (char*)data, buffer_size,
                                 "<DATABLOCK>"
@@ -264,6 +267,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         buffer_size -= data_size_st;
                         break;
                     case Media_TEXT:
+                        current_coap_mediatype = Media_TEXT;
                         l = circularbuffer_unreaded_items_size(&buffer);
                         if (l > 0)
                         {
@@ -293,6 +297,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         }
                         break;
                     case Media_BYTE:
+                        current_coap_mediatype = Media_BYTE;
                         l = circularbuffer_unreaded_items_size(&buffer);
                         if (l > 0)
                         {
@@ -322,15 +327,28 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         }
                         break;
                     default:
+                        current_coap_mediatype = Media_XML;
+                        (*data_size) = snprintf(
+                                (char*)data, buffer_size,
+                                "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                        );
                         break;
                 }
             else
-                return INVALID_PARAMETERS_ERROR;
+            {
+                current_coap_mediatype = Media_XML;
+                ret_val = INVALID_PARAMETERS_ERROR;
+                (*data_size) = snprintf(
+                        (char*)data, buffer_size,
+                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+                );
+            }
         }
         else
             switch (MediaType)
             {
                 case Media_JSON:
+                    current_coap_mediatype = Media_JSON;
                     data_size_st = snprintf(
                             (char*)data, buffer_size,
                             "{\n \"DATABLOCK\": [\n"
@@ -387,6 +405,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     buffer_size -= data_size_st;
                     break;
                 case Media_XML:
+                    current_coap_mediatype = Media_XML;
                     data_size_st = snprintf(
                             (char*)data, buffer_size,
                             "<DATABLOCK>"
@@ -443,6 +462,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     buffer_size -= data_size_st;
                     break;
                 case Media_TEXT:
+                    current_coap_mediatype = Media_TEXT;
                     l = circularbuffer_unreaded_items_size(&buffer);
                     if (l > 0)
                     {
@@ -472,6 +492,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     }
                     break;
                 case Media_BYTE:
+                    current_coap_mediatype = Media_BYTE;
                     l = circularbuffer_unreaded_items_size(&buffer);
                     if (l > 0)
                     {
@@ -501,24 +522,23 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     }
                     break;
                 default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*)data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    );
                     break;
             }
         (*data_size) = data - data_st;
     }
     else
     {
-        switch (MediaType) 
-        {
-            case Media_XML:
-                ret_val = INVALID_PARAMETERS_ERROR;
-                (*data_size) = snprintf(
-                        (char*)data, buffer_size,
-                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
-                );
-                break;
-            default:
-                break;
-        }
+        current_coap_mediatype = Media_XML;
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*)data, buffer_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+        );
     }
     return(ret_val);
 }
@@ -552,10 +572,11 @@ int StreamRecorderCommand(uint8_t Method, uint8_t MediaType,
             );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
                     (char*)data, *data_size,
-                    "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    "<INVALID_PARAMETERS_ERROR/>\r\n\r"
             );
             break;
     }
@@ -578,6 +599,7 @@ inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType,
             switch (MediaType) 
             {
                 case Media_XML:
+                    current_coap_mediatype = Media_XML;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "<CURRENTRECORDER>%d</CURRENTRECORDER>",
@@ -585,35 +607,36 @@ inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType,
                     );
                     break;
                 case Media_TEXT:
+                    current_coap_mediatype = Media_TEXT;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "%d", circularbuffer_get_first_index(&buffer)
                     );
                     break;
                 case Media_BYTE:
+                    current_coap_mediatype = Media_BYTE;
                     Value = circularbuffer_get_first_index(&buffer);
                     memcpy((void*)data,(void*)&Value,4);
                     (*data_size) = 4;
                     break;
                 default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*)data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    );
                     break;
             }
         }
     }
     else
     {
-        switch (MediaType) 
-        {
-            case Media_XML:
-                ret_val = INVALID_PARAMETERS_ERROR;
-                (*data_size) = snprintf(
-                        (char*)data, buffer_size,
-                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
-                );
-                break;
-            default:
-                break;
-        }
+        current_coap_mediatype = Media_XML;
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*)data, buffer_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+        );
     }
     return(ret_val);
 }
@@ -633,6 +656,7 @@ inline int StreamRecorderLastCommand_GET(uint8_t MediaType,
             switch (MediaType) 
             {
                 case Media_XML:
+                    current_coap_mediatype = Media_XML;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "<LASTRECORDER>%d</LASTRECORDER>",
@@ -640,35 +664,36 @@ inline int StreamRecorderLastCommand_GET(uint8_t MediaType,
                     );
                     break;
                 case Media_TEXT:
+                    current_coap_mediatype = Media_TEXT;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "%d", circularbuffer_get_first_index(&buffer)
                     );
                     break;
                 case Media_BYTE:
+                    current_coap_mediatype = Media_BYTE;
                     Value = circularbuffer_get_last_index(&buffer);
                     memcpy((void*)data,(void*)&Value,4);
                     (*data_size) = 4;
                     break;
                 default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*)data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    );
                     break;
             }
         }
     }
     else
     {
-        switch (MediaType) 
-        {
-            case Media_XML:
-                ret_val = INVALID_PARAMETERS_ERROR;
-                (*data_size) = snprintf(
-                        (char*)data, buffer_size,
-                        "<INVALID_PARAMETERS_ERROR/>\r\n\r"
-                );
-                break;
-            default:
-                break;
-        }
+        current_coap_mediatype = Media_XML;
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*)data, buffer_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+        );
     }
     return(ret_val);
 }
@@ -687,6 +712,7 @@ int StreamRecorderCurrentCommand(uint8_t Method, uint8_t MediaType,
             );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
                     (char*)data, buffer_size,
@@ -711,6 +737,7 @@ int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType,
             );
             break;
         default:
+            current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
             (*data_size) = snprintf(
                     (char*)data, buffer_size,

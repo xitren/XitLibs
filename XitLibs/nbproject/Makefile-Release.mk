@@ -67,6 +67,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 
 # Test Files
 TESTFILES= \
+	${TESTDIR}/TestFiles/f6 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f5 \
@@ -78,6 +79,7 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/circlebuffertest.o \
 	${TESTDIR}/tests/coaptest.o \
 	${TESTDIR}/tests/csmacdtest.o \
+	${TESTDIR}/tests/distcalctest.o \
 	${TESTDIR}/tests/memorytest.o \
 	${TESTDIR}/tests/streamtest.o
 
@@ -244,6 +246,10 @@ ${OBJECTDIR}/src/models/src/treetable.o: src/models/src/treetable.c
 .build-tests-conf: .build-tests-subprojects .build-conf ${TESTFILES}
 .build-tests-subprojects:
 
+${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/distcalctest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c} -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS}   
+
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/streamtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}   
@@ -263,6 +269,12 @@ ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomai
 ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/memorytest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f2 $^ ${LDLIBSOPTIONS}   
+
+
+${TESTDIR}/tests/distcalctest.o: tests/distcalctest.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/distcalctest.o tests/distcalctest.c
 
 
 ${TESTDIR}/tests/streamtest.o: tests/streamtest.c 
@@ -637,6 +649,7 @@ ${OBJECTDIR}/src/models/src/treetable_nomain.o: ${OBJECTDIR}/src/models/src/tree
 .test-conf:
 	@if [ "${TEST}" = "" ]; \
 	then  \
+	    ${TESTDIR}/TestFiles/f6 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
