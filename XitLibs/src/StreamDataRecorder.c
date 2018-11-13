@@ -59,7 +59,7 @@ int StreamRecorderLastCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-void InitStreamRecorder(uint8_t* _storage, uint32_t _storage_size, 
+void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size, 
         uint32_t _sample_frequency, uint32_t _sample_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
@@ -68,7 +68,6 @@ void InitStreamRecorder(uint8_t* _storage, uint32_t _storage_size,
     sample_size = _sample_size;
     circularbuffer_new(
             &buffer,
-            sample_size * sizeof(uint32_t),
             _storage,
             _storage_size
     );

@@ -426,7 +426,7 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
         DBG_LOG_ERROR("coap_parse argument is NULL\n");
         return 0;
     }
-    coap_dump(buf, buflen, false);
+//    coap_dump(buf, buflen, false);
     DBG_LOG_DEBUG("coap_parse %d bytes hash %04X.\n",
             buflen,CRC16ANSI(buf,buflen));
 
@@ -570,7 +570,7 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
 
     if (pkt->payload.len > 0)
     {
-        if (*buflen < 4 + 1 + pkt->payload.len + opts_len)
+        if ((*buflen) < 4 + 1 + pkt->payload.len + opts_len)
             return COAP_ERR_BUFFER_TOO_SMALL;
         buf[4 + opts_len] = 0xFF;  // payload marker
         memcpy(buf+5 + opts_len, pkt->payload.p, pkt->payload.len);
@@ -757,8 +757,7 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         coap_content_type_t content_type)
 {
     DBG_LOG_DEBUG("Into coap_make_response.\n");
-    if ((scratch == NULL) || (pkt == NULL) 
-            || (content == NULL) || (tok_p == NULL))
+    if ((scratch == NULL) || (pkt == NULL) || (tok_p == NULL))
     {
         DBG_LOG_ERROR("coap_make_response argument is NULL\n");
         return 0;
@@ -793,8 +792,16 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         pkt->opts[1].buf.len = opt_part->buf.len;
         pkt->numopts = 2;
     }
-    pkt->payload.p = content;
-    pkt->payload.len = content_len;
+    if (content == NULL)
+    {
+        pkt->payload.p = 0;
+        pkt->payload.len = 0;
+    }
+    else
+    {
+        pkt->payload.p = content;
+        pkt->payload.len = content_len;
+    }
     return 0;
 }
 
@@ -888,7 +895,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                     current_coap_mediatype = Media_XML;
             }
         }
-        scratch->len = 4096;
+        memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);
+        scratch->len = inpkt->payload.len;
     }
     for(i=0;i<strlen(bufhr);i++)
        if((bufhr[i] >= 'A') && (bufhr[i] <= 'Z'))
@@ -900,8 +908,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 methodpermission,
                 current_coap_mediatype,
                 &params,
-                inpkt->payload.p,
-                inpkt->payload.len,
+                scratch->p,
+                &scratch->len,
                 4096
         ));
     else return NO_COMMAND_ERROR;

@@ -17,7 +17,7 @@
 #include "CommandModule.h"
 
 CircularBuffer_t buffer;
-uint8_t storage[2048];
+CircularBufferItem_t storage[400];
 
 /*
  * Simple C Test Suite
@@ -26,24 +26,26 @@ uint8_t storage[2048];
 void test1() {
     int i;
     printf("circlebuffertest test push\n");
-    uint32_t Data_sample[8];
+    CircularBufferItem_t Data_sample;
+    int ptr = circularbuffer_get_first_index(&buffer)+1;
+    printf("first_index %d\n",ptr);
     for(i=0;i < 8;i++)
     {
-        Data_sample[i] = ( circularbuffer_get_first_index(&buffer)+1 );
+        Data_sample.Channel[i] = ptr;
     }
-    circularbuffer_push(&buffer,(void *)Data_sample);
+    circularbuffer_push(&buffer,&Data_sample);
 }
 void test2() {
     enum cc_stat ret;
     printf("circlebuffertest test pull\n");
-    uint32_t Data_sample[8];
-    ret = circularbuffer_pull(&buffer,(void *)Data_sample);
+    CircularBufferItem_t Data_sample;
+    ret = circularbuffer_pull(&buffer,&Data_sample);
     if (ret == CC_OK)
         printf("%d %d %d %d %d %d %d %d \n",
-                Data_sample[0],Data_sample[1],
-                Data_sample[2],Data_sample[3],
-                Data_sample[4],Data_sample[5],
-                Data_sample[6],Data_sample[7]
+                Data_sample.Channel[0],Data_sample.Channel[1],
+                Data_sample.Channel[2],Data_sample.Channel[3],
+                Data_sample.Channel[4],Data_sample.Channel[5],
+                Data_sample.Channel[6],Data_sample.Channel[7]
                 );
     else
         printf("buffer depleted\n");
@@ -56,9 +58,8 @@ int main(int argc, char** argv) {
     int i;
     circularbuffer_new(
             &buffer,
-            8 * sizeof(uint32_t),
-            storage,
-            sizeof(storage)
+            (CircularBufferItem_t *)storage,
+            20
     );
 
     printf("%%TEST_STARTED%% test1 (circlebuffertest)\n");
@@ -88,6 +89,22 @@ int main(int argc, char** argv) {
         test2();
     }
     printf("%%TEST_FINISHED%% time=0 test4 (circlebuffertest) \n");
+
+    printf("%%TEST_STARTED%% test5 (circlebuffertest)\n");
+    for(i=0;i < 3;i++)
+    {
+        test1();
+        test2();
+    }
+    for(i=0;i < 3;i++)
+    {
+        test1();
+    }
+    for(i=0;i < 3;i++)
+    {
+        test2();
+    }
+    printf("%%TEST_FINISHED%% time=0 test5 (circlebuffertest) \n");
 
     printf("%%SUITE_FINISHED%% time=0\n");
 

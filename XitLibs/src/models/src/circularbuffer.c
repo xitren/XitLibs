@@ -27,71 +27,49 @@
 #include "circularbuffer.h"
 
 /* Functions declaration -----------------------------------------------------*/
-enum cc_stat circularbuffer_new(CircularBuffer_t* st, uint32_t _item_size,
-                                uint8_t* _storage, uint32_t _storage_size)
+enum cc_stat circularbuffer_new(CircularBuffer_t* st,
+                    CircularBufferItem_t* _storage, uint32_t _storage_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
+    
     st->Head = 0;
     st->Tail = 0;
+    st->Cycle = 0;
     st->Storage = _storage;
-    st->ItemSize = _item_size;
-    st->StorageSize = _storage_size - (_storage_size % _item_size);
-    st->SwapVal = ((uint32_t)(0xFFFFFFFF / _item_size)) * _item_size;
+    st->StorageSize = _storage_size;
     return CC_OK;
 }
-enum cc_stat circularbuffer_push(CircularBuffer_t* st, void *item)
+enum cc_stat circularbuffer_push(CircularBuffer_t* st, CircularBufferItem_t *item)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    st->Head += st->ItemSize;
-    if ( ((st->Head - st->StorageSize) > st->Tail) && (st->Head > st->StorageSize) )
-        st->Tail = st->Head - st->StorageSize;
-    if (st->Head > st->SwapVal)
-        st->Head -= st->SwapVal;
-//    printf("\n%d < %d\n",st->Head % st->StorageSize,(st->Head - st->ItemSize) % st->StorageSize);
-//    if ( (st->Head % st->StorageSize) 
-//            < ((st->Head - st->ItemSize) % st->StorageSize) )
-//    {
-        memcpy(
-                st->Storage + ((st->Head - st->ItemSize) % st->StorageSize),
-                item,
-                st->ItemSize
-        );
-//    }
-//    else
-//    {
-//        DBG_LOG_WARNING("circularbuffer_push %d >= %d",
-//                ((st->Head - st->ItemSize) % st->StorageSize),
-//                (st->Head % st->StorageSize));
-//    }
-    return CC_OK;
+    int next;
+    next = st->Head + 1;  // next is where head will point to after this write.
+    if (next >= st->StorageSize)
+    {
+        next = 0;
+        st->Cycle++;
+    }
+    if (next == st->Tail)  // if the head + 1 == tail, circular buffer is full
+        st->Tail = st->Head;
+    st->Storage[st->Head] = *item;  // Load data and then move
+    st->Head = next;             // head to next data offset.
+    return CC_OK;  // return success to indicate successful push.
 }
-enum cc_stat circularbuffer_pull(CircularBuffer_t* st, void *item)
+enum cc_stat circularbuffer_pull(CircularBuffer_t* st, CircularBufferItem_t *item)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    if ( (st->Head) <= st->Tail)
+    int next;
+    if (st->Head == st->Tail)  // if the head == tail, we don't have any data
         return CC_ITER_END;
-    st->Tail += st->ItemSize;
-    if (st->Tail > st->SwapVal)
-        st->Tail -= st->SwapVal;
-//    if ( (st->Tail % st->StorageSize) 
-//            < ((st->Tail - st->ItemSize) % st->StorageSize) )
-//    {
-        memcpy(
-                item,
-                st->Storage + ((st->Tail - st->ItemSize) % st->StorageSize),
-                st->ItemSize
-        );
-//    }
-//    else
-//    {
-//        DBG_LOG_WARNING("circularbuffer_pull %d >= %d",
-//                ((st->Tail - st->ItemSize) % st->StorageSize),
-//                (st->Tail % st->StorageSize));
-//    }
-    return CC_OK;
+    next = st->Tail + 1;  // next is where tail will point to after this read.
+    if(next >= st->StorageSize)
+        next = 0;
+    *item = st->Storage[st->Tail];  // Read data and then move
+    st->Tail = next;              // tail to next offset.
+    return CC_OK;  // return success to indicate successful push.
 }
 enum cc_stat circularbuffer_remove_all(CircularBuffer_t* st)
 {
@@ -99,39 +77,48 @@ enum cc_stat circularbuffer_remove_all(CircularBuffer_t* st)
                       __LINE__, __FILE__, __func__);
     st->Head = 0;
     st->Tail = 0;
+    st->Cycle = 0;
     return CC_OK;
 }
-enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, size_t index, void *item)
+enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, int index, 
+                                                CircularBufferItem_t *item)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    size_t last = circularbuffer_get_last_index(st);
-    size_t first = circularbuffer_get_first_index(st);
+    int last = circularbuffer_get_last_index(st);
+    int first = circularbuffer_get_first_index(st);
     if ( (index < last) || (first <= index) )
         return CC_ERR_INVALID_RANGE;
-    uint32_t ind = index * st->ItemSize;
-    memcpy(item,st->Storage + (ind % st->StorageSize),st->ItemSize);
+    int ind = index - last;
+    if(ind >= st->StorageSize)
+        ind = ind - st->StorageSize;
+    *item = st->Storage[st->Tail];  // Read data
     return CC_OK;
 }
-size_t circularbuffer_get_last_index(CircularBuffer_t* st)
+int circularbuffer_get_last_index(CircularBuffer_t* st)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    return ((st->Tail) / st->ItemSize);
-}
-size_t circularbuffer_get_first_index(CircularBuffer_t* st)
-{
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-                      __LINE__, __FILE__, __func__);
-    return ((st->Head) / st->ItemSize);
-}
-size_t circularbuffer_unreaded_items_size(CircularBuffer_t* st)
-{
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-                      __LINE__, __FILE__, __func__);
-    if (st->Head < st->Tail)
-        return (((st->SwapVal - st->Tail) + st->Head) / st->ItemSize);
+    if ( st->Tail > st->Head )
+        return ((st->Tail) + (st->Cycle - 1)*st->StorageSize);
     else
-        return ((st->Head - st->Tail) / st->ItemSize);
+        return ((st->Tail) + (st->Cycle)*st->StorageSize);
+}
+int circularbuffer_get_first_index(CircularBuffer_t* st)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    return ((st->Head) + st->Cycle*st->StorageSize);
+}
+int circularbuffer_unreaded_items_size(CircularBuffer_t* st)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    if ( st->Tail > st->Head )
+        return ( ((st->Head) + st->Cycle*st->StorageSize) 
+                - ((st->Tail) + (st->Cycle - 1)*st->StorageSize) );
+    else
+        return ( ((st->Head) + st->Cycle*st->StorageSize) 
+                - ((st->Tail) + (st->Cycle)*st->StorageSize) );
 }
 /*============================================================================*/

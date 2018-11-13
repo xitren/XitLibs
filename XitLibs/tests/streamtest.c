@@ -18,7 +18,7 @@
 #include "CommandModule.h"
 #include "StreamDataRecorder.h"
 
-uint8_t file[2048];
+CircularBufferItem_t storage[48];
 char buffer_str[100000];
 int size = 100000;
 ParameterList_t params;
@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
     printf("%%SUITE_STARTED%%\n");
 
     int i;
-    InitStreamRecorder(file, sizeof(file), 250, 8);
+    InitStreamRecorder(storage, 48, 250, 8);
     for (i=0;i < 1000;i++)
         AddSample();
     

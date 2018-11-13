@@ -10,6 +10,7 @@
 #include <stdint.h>
 #include "xitlibtypes.h"             /* Application Header.            */
 #include "LibConfig.h"
+#include "circularbuffer.h"
 /*============================================================================*/
 
 #ifndef __EEGRECORDER_H__
@@ -31,7 +32,7 @@ extern const char* global_link_streamer[][2];
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
-void InitStreamRecorder(uint8_t* _storage, uint32_t _storage_size, 
+void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size, 
         uint32_t _sample_frequency, uint32_t _sample_size);
 void AddSample(void);
 void ClearStreamRecorder(void);

@@ -260,7 +260,7 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/circlebuffertest.o ${OBJECTFILES:%.o=%
 
 ${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
-	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}   
+	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}  -Xlinker -Map=output.map 
 
 ${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles

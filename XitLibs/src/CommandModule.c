@@ -133,7 +133,7 @@ CommandFunction_t FindCommand(const char *Command)
         /* Now loop through each element in the table to see if there is  */
         /* a match.                                                       */
         for(Index=0,ret_val=NULL;
-                ((Index<array_size(CommandTableArray)) && (!ret_val));
+                ((Index<array_size(CommandTableArray))/* && (!ret_val)*/);
                   Index++)
         {
             array_get_at(CommandTableArray, Index, (void**)&Comm);
@@ -141,7 +141,10 @@ CommandFunction_t FindCommand(const char *Command)
                 if((strlen(Comm->CommandName) == strlen(Command)) 
                        && (memcmp(Command, Comm->CommandName, 
                                   strlen(Comm->CommandName)) == 0))
+                {
                     ret_val = Comm->CommandFunction;
+                    break;
+                }
         }
     }
     else

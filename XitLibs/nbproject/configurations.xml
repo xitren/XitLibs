@@ -367,6 +367,7 @@
         </ccTool>
         <linkerTool>
           <output>${TESTDIR}/TestFiles/f5</output>
+          <commandLine>-Xlinker -Map=output.map</commandLine>
         </linkerTool>
       </folder>
       <folder path="TestFiles/f6">

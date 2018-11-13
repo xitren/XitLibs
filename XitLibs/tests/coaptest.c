@@ -159,7 +159,9 @@ coap_packet_t inpkt;
 coap_packet_t outpkt;
 uint8_t buffer[4096];
 uint8_t scratch_b[4096];
+uint8_t message_b[4096];
 coap_rw_buffer_t scratch = {scratch_b, sizeof(scratch_b)};
+coap_rw_buffer_t message = {message_b, sizeof(message_b)};
 
 uint32_t msgs_streamer[][2] = {
     {(uint32_t)msg_test_get_wellknown, sizeof(msg_test_get_wellknown)},
@@ -199,7 +201,7 @@ void test1() {
     int rc,i,j;
     printf("coaptest test 1\n");
     uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
-    for (i=0;i < 1/*25*/;i++)
+    for (i=0;i < 25;i++)
     {
         memset((void *)&inpkt,0,sizeof(coap_packet_t));
         /*==1= Parse package =================================================*/
@@ -237,13 +239,13 @@ void test1() {
         {
             if ( (inpkt.hdr.code == COAP_METHOD_GET) )
                 coap_make_response(&scratch, &outpkt, 0,
-                    (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                    (uint8_t*) scratch.p, scratch.len,
                     inpkt.hdr.id[0], inpkt.hdr.id[1],
                     inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_CONTENT,
                     media_option);
             else
                 coap_make_response(&scratch, &outpkt, 0,
-                    (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                    (uint8_t*) scratch.p, scratch.len,
                     inpkt.hdr.id[0], inpkt.hdr.id[1],
                     inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_CHANGED,
                     media_option);
@@ -254,21 +256,21 @@ void test1() {
             {
                 case INVALID_PARAMETERS_ERROR:
                     coap_make_response(&scratch, &outpkt, 0,
-                        (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                        (uint8_t*) scratch.p, scratch.len,
                         inpkt.hdr.id[0], inpkt.hdr.id[1],
                         inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
                         media_option);
                     break;
                 case NO_COMMAND_ERROR:
                     coap_make_response(&scratch, &outpkt, 0,
-                        (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                        (uint8_t*) scratch.p, scratch.len,
                         inpkt.hdr.id[0], inpkt.hdr.id[1],
                         inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_NOT_FOUND,
                         media_option);
                     break;
                 default:
                     coap_make_response(&scratch, &outpkt, 0,
-                        (uint8_t*) inpkt.payload.p, inpkt.payload.len,
+                        (uint8_t*) scratch.p, scratch.len,
                         inpkt.hdr.id[0], inpkt.hdr.id[1],
                         inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
                         media_option);
@@ -276,14 +278,15 @@ void test1() {
             }
         }
         /*==4= Build response package ========================================*/
-        rc = coap_build(scratch.p, &scratch.len, &outpkt, NULL, NULL);
+        message.len = 4096;
+        rc = coap_build(message.p, &message.len, &outpkt, NULL, NULL);
         /*==5= Transmitt package =============================================*/
         if (rc == 0)
         {
             printf("Dump:");
-            for (j=0;j < scratch.len;j++)
+            for (j=0;j < message.len;j++)
             {
-                printf(" %02X",scratch.p[j]);
+                printf(" %02X",message.p[j]);
             }
             printf("\n");
         }
@@ -294,11 +297,20 @@ void test2() {
     printf("coaptest test 2\n");
 }
 
+CircularBufferItem_t file[48];
 int main(int argc, char** argv) {
     printf("%%SUITE_STARTING%% coaptest\n");
     printf("%%SUITE_STARTED%%\n");
     
+    int i;
     InitCommands();
+    InitStreamRecorder(file, 48, 250, 8);
+    for (i=0;i < 1000;i++)
+        if (i == 263)
+            AddSample();
+        else
+            AddSample();
+    
     AddCommand(
             Method_GET | Method_PUT | Method_POST | Method_RESET,
             global_link_memory[0],global_link_memory[1],

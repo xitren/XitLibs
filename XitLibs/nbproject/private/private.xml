@@ -6,22 +6,6 @@
     </data>
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group name="Encephalon">
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/csmacdtest.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/streamtest.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/xitlibtypes.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/memorytest.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/circlebuffertest.c</file>
-        </group>
         <group name="INEUM">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/DistCalc.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/tests/distcalctest.c</file>
@@ -45,6 +29,25 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/tests/coaptest.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/tests/circlebuffertest.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
+        </group>
+        <group name="Encephalon">
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/csmacdtest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/streamtest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/xitlibtypes.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/coaptest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/memorytest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/circlebuffertest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/include/circularbuffer.h</file>
         </group>
     </open-files>
 </project-private>
