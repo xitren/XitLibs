@@ -57,6 +57,13 @@
                      kind="TEST">
         <itemPath>tests/distcalctest.c</itemPath>
       </logicalFolder>
+      <logicalFolder name="f7"
+                     displayName="Тесты на обработчик сообщений"
+                     projectFiles="true"
+                     kind="TEST">
+        <itemPath>extension/ext_handler.c</itemPath>
+        <itemPath>tests/handlertest.c</itemPath>
+      </logicalFolder>
       <logicalFolder name="f3"
                      displayName="Тесты потока данных"
                      projectFiles="true"
@@ -73,6 +80,7 @@
                      displayName="Тесты протокола CoAP"
                      projectFiles="true"
                      kind="TEST">
+        <itemPath>tests/coap_messages_example.c</itemPath>
         <itemPath>tests/coaptest.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
@@ -117,6 +125,8 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="extension/ext_handler.c" ex="false" tool="0" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -207,6 +217,21 @@
           <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
       <item path="src/CRC16ANSI.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/CSMACD.c" ex="false" tool="0" flavor2="0">
@@ -261,11 +286,15 @@
       </item>
       <item path="tests/circlebuffertest.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="tests/coap_messages_example.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="tests/coaptest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/csmacdtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/distcalctest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/handlertest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/memorytest.c" ex="false" tool="0" flavor2="0">
       </item>
@@ -294,6 +323,8 @@
         <archiverTool>
         </archiverTool>
       </compileType>
+      <item path="extension/ext_handler.c" ex="false" tool="0" flavor2="0">
+      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -385,6 +416,21 @@
           <output>${TESTDIR}/TestFiles/f6</output>
         </linkerTool>
       </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
       <item path="src/CRC16ANSI.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/CSMACD.c" ex="false" tool="0" flavor2="0">
@@ -439,11 +485,15 @@
       </item>
       <item path="tests/circlebuffertest.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="tests/coap_messages_example.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="tests/coaptest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/csmacdtest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/distcalctest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/handlertest.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="tests/memorytest.c" ex="false" tool="0" flavor2="0">
       </item>

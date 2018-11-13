@@ -22,134 +22,7 @@
 #include "StreamDataRecorder.h"
 #include "ConfigMem.h"
 
-uint8_t msg_test_get_wellknown[] = {
-    0x40, 0x01, 0xFD, 0x5A, 0xBB, 0x2E, 0x77, 0x65, 0x6C, 0x6C, 0x2D, 0x6B,
-    0x6E, 0x6F, 0x77, 0x6E, 0x04, 0x63, 0x6F, 0x72, 0x65, 0xC1, 0x06
-};
-
-uint8_t msg_test_get_memory[] = {
-    0x40, 0x01, 0x61, 0xBD, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0xC1, 0x06
-};
-uint8_t msg_test_post_memory[] = {
-    0x40, 0x02, 0x61, 0xBE, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0xFF, 0x32
-};
-uint8_t msg_test_put_memory[] = {
-    0x40, 0x03, 0x61, 0xBF, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0xFF, 0x32
-};
-uint8_t msg_test_delete_memory[] = {
-    0x40, 0x04, 0x61, 0xC0, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79
-};
-
-uint8_t msg_test_get_memory_addr_val[] = {
-    0x40, 0x01, 0xDD, 0xE4, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0x4C, 
-    0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3D, 0x30, 0x78, 0x33, 0x45, 
-    0x07, 0x76, 0x61, 0x6C, 0x75, 0x65, 0x3D, 0x31, 0x81, 0x06
-};
-uint8_t msg_test_post_memory_addr_val[] = {
-    0x40, 0x02, 0xDD, 0xE5, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0x4C, 
-    0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3D, 0x30, 0x78, 0x33, 0x45, 
-    0x07, 0x76, 0x61, 0x6C, 0x75, 0x65, 0x3D, 0x31, 0xFF, 0x32
-};
-uint8_t msg_test_put_memory_addr_val[] = {
-    0x40, 0x03, 0xDD, 0xE6, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0x4C, 
-    0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3D, 0x30, 0x78, 0x33, 0x45, 
-    0x07, 0x76, 0x61, 0x6C, 0x75, 0x65, 0x3D, 0x31, 0xFF, 0x32
-};
-uint8_t msg_test_delete_memory_addr_val[] = {
-    0x40, 0x04, 0xDD, 0xE7, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0x4C, 
-    0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3D, 0x30, 0x78, 0x33, 0x45, 
-    0x07, 0x76, 0x61, 0x6C, 0x75, 0x65, 0x3D, 0x31
-};
-
-uint8_t msg_test_get_stream[] = {
-    0x40, 0x01, 0xFC, 0xB0, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0xC1, 0x06
-};
-uint8_t msg_test_post_stream[] = {
-    0x40, 0x02, 0xFC, 0xB1, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0xFF, 0x32
-};
-uint8_t msg_test_put_stream[] = {
-    0x40, 0x03, 0xFC, 0xB2, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0xFF, 0x32
-};
-uint8_t msg_test_delete_stream[] = {
-    0x40, 0x04, 0xFC, 0xB3, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72
-};
-    
-uint8_t msg_test_get_stream_current[] = {
-    0x40, 0x01, 0x51, 0x36, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x07, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6E, 0x74, 0xC1, 0x06
-};
-uint8_t msg_test_post_stream_current[] = {
-    0x40, 0x02, 0x51, 0x37, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x07, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6E, 0x74, 0xFF, 0x32
-};
-uint8_t msg_test_put_stream_current[] = {
-    0x40, 0x03, 0x51, 0x38, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x07, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6E, 0x74, 0xFF, 0x32
-};
-uint8_t msg_test_delete_stream_current[] = {
-    0x40, 0x04, 0x51, 0x39, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x07, 0x63, 0x75, 0x72, 0x72, 0x65, 0x6E, 0x74
-};
- 
-uint8_t msg_test_get_stream_last[] = {
-    0x40, 0x01, 0xA6, 0x04, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x04, 0x6C, 0x61, 0x73, 0x74, 0xC1, 0x06
-};
-uint8_t msg_test_post_stream_last[] = {
-    0x40, 0x02, 0xA6, 0x05, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x04, 0x6C, 0x61, 0x73, 0x74, 0xFF, 0x32
-};
-uint8_t msg_test_put_stream_last[] = {
-    0x40, 0x03, 0xA6, 0x06, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x04, 0x6C, 0x61, 0x73, 0x74, 0xFF, 0x32
-};
-uint8_t msg_test_delete_stream_last[] = {
-    0x40, 0x04, 0xA6, 0x07, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x04, 0x6C, 0x61, 0x73, 0x74
-};
- 
-uint8_t msg_test_get_stream_from_to[] = {
-    0x40, 0x01, 0x06, 0xE8, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x47, 0x66, 0x72, 0x6F, 0x6D, 0x3D, 0x31, 0x35, 0x05, 0x74, 0x6F, 0x3D, 
-    0x33, 0x30, 0x81, 0x06
-};
-
-uint8_t msg_test_post_stream_from_to[] = {
-    0x40, 0x02, 0x06, 0xE9, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x47, 0x66, 0x72, 0x6F, 0x6D, 0x3D, 0x31, 0x35, 0x05, 0x74, 0x6F, 0x3D, 
-    0x33, 0x30, 0xFF, 0x32
-};
-
-uint8_t msg_test_put_stream_from_to[] = {
-    0x40, 0x03, 0x06, 0xEA, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x47, 0x66, 0x72, 0x6F, 0x6D, 0x3D, 0x31, 0x35, 0x05, 0x74, 0x6F, 0x3D, 
-    0x33, 0x30, 0xFF, 0x32
-};
-
-uint8_t msg_test_delete_stream_from_to[] = {
-    0x40, 0x04, 0x06, 0xEB, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D, 
-    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72, 
-    0x47, 0x66, 0x72, 0x6F, 0x6D, 0x3D, 0x31, 0x35, 0x05, 0x74, 0x6F, 0x3D, 
-    0x33, 0x30
-};
+#include "coap_messages_example.h"
 
 /*
  * Simple C Test Suite
@@ -160,61 +33,27 @@ coap_packet_t outpkt;
 uint8_t buffer[4096];
 uint8_t scratch_b[4096];
 uint8_t message_b[4096];
-coap_rw_buffer_t scratch = {scratch_b, sizeof(scratch_b)};
-coap_rw_buffer_t message = {message_b, sizeof(message_b)};
+coap_rw_buffer_t scratch = {scratch_b, sizeof (scratch_b)};
+coap_rw_buffer_t message = {message_b, sizeof (message_b)};
 
-uint32_t msgs_streamer[][2] = {
-    {(uint32_t)msg_test_get_wellknown, sizeof(msg_test_get_wellknown)},
-    
-    {(uint32_t)msg_test_get_memory, sizeof(msg_test_get_memory)},
-    {(uint32_t)msg_test_post_memory, sizeof(msg_test_post_memory)},
-    {(uint32_t)msg_test_put_memory, sizeof(msg_test_put_memory)},
-    {(uint32_t)msg_test_delete_memory, sizeof(msg_test_delete_memory)},
-    
-    {(uint32_t)msg_test_get_memory_addr_val, sizeof(msg_test_get_memory_addr_val)},
-    {(uint32_t)msg_test_post_memory_addr_val, sizeof(msg_test_post_memory_addr_val)},
-    {(uint32_t)msg_test_put_memory_addr_val, sizeof(msg_test_put_memory_addr_val)},
-    {(uint32_t)msg_test_delete_memory_addr_val, sizeof(msg_test_delete_memory_addr_val)},
-    
-    {(uint32_t)msg_test_get_stream, sizeof(msg_test_get_stream)},
-    {(uint32_t)msg_test_post_stream, sizeof(msg_test_post_stream)},
-    {(uint32_t)msg_test_put_stream, sizeof(msg_test_put_stream)},
-    {(uint32_t)msg_test_delete_stream, sizeof(msg_test_delete_stream)},
-    
-    {(uint32_t)msg_test_get_stream_current, sizeof(msg_test_get_stream_current)},
-    {(uint32_t)msg_test_post_stream_current, sizeof(msg_test_post_stream_current)},
-    {(uint32_t)msg_test_put_stream_current, sizeof(msg_test_put_stream_current)},
-    {(uint32_t)msg_test_delete_stream_current, sizeof(msg_test_delete_stream_current)},
-    
-    {(uint32_t)msg_test_get_stream_last, sizeof(msg_test_get_stream_last)},
-    {(uint32_t)msg_test_post_stream_last, sizeof(msg_test_post_stream_last)},
-    {(uint32_t)msg_test_put_stream_last, sizeof(msg_test_put_stream_last)},
-    {(uint32_t)msg_test_delete_stream_last, sizeof(msg_test_delete_stream_last)},
-    
-    {(uint32_t)msg_test_get_stream_from_to, sizeof(msg_test_get_stream_from_to)},
-    {(uint32_t)msg_test_post_stream_from_to, sizeof(msg_test_post_stream_from_to)},
-    {(uint32_t)msg_test_put_stream_from_to, sizeof(msg_test_put_stream_from_to)},
-    {(uint32_t)msg_test_delete_stream_from_to, sizeof(msg_test_delete_stream_from_to)}
-};
-
-void test1() {
-    int rc,i,j;
+void test1()
+{
+    int rc, i, j;
     printf("coaptest test 1\n");
     uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
-    for (i=0;i < 25;i++)
+    for (i = 0; i < 25; i++)
     {
-        memset((void *)&inpkt,0,sizeof(coap_packet_t));
+        memset((void *) &inpkt, 0, sizeof (coap_packet_t));
         /*==1= Parse package =================================================*/
         rc = coap_parse(
-                &inpkt, 
-                (uint8_t *)msgs_streamer[i][0], 
-                msgs_streamer[i][1]
-        );
+                &inpkt,
+                (uint8_t *) msgs_streamer[i][0],
+                msgs_streamer[i][1] );
         /*==2= Handle request ================================================*/
         if (rc == 0)
-            rc = coap_handle_req(&scratch,&inpkt,&outpkt,0,"127.0.0.1",4567);
+            rc = coap_handle_req(&scratch, &inpkt, &outpkt, 0, "127.0.0.1", 4567);
         /*==3= Build response content ========================================*/
-        switch (current_coap_mediatype) 
+        switch (current_coap_mediatype)
         {
             case Media_TEXT:
                 media_option = COAP_CONTENTTYPE_TEXT_PLAIN;
@@ -237,43 +76,43 @@ void test1() {
         }
         if (rc == 0)
         {
-            if ( (inpkt.hdr.code == COAP_METHOD_GET) )
+            if ((inpkt.hdr.code == COAP_METHOD_GET))
                 coap_make_response(&scratch, &outpkt, 0,
                     (uint8_t*) scratch.p, scratch.len,
                     inpkt.hdr.id[0], inpkt.hdr.id[1],
-                    inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_CONTENT,
+                    inpkt.tok_p, inpkt.tok_len, COAP_RSPCODE_CONTENT,
                     media_option);
             else
                 coap_make_response(&scratch, &outpkt, 0,
                     (uint8_t*) scratch.p, scratch.len,
                     inpkt.hdr.id[0], inpkt.hdr.id[1],
-                    inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_CHANGED,
+                    inpkt.tok_p, inpkt.tok_len, COAP_RSPCODE_CHANGED,
                     media_option);
         }
         else
         {
-            switch (rc) 
+            switch (rc)
             {
                 case INVALID_PARAMETERS_ERROR:
                     coap_make_response(&scratch, &outpkt, 0,
-                        (uint8_t*) scratch.p, scratch.len,
-                        inpkt.hdr.id[0], inpkt.hdr.id[1],
-                        inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
-                        media_option);
+                            (uint8_t*) scratch.p, scratch.len,
+                            inpkt.hdr.id[0], inpkt.hdr.id[1],
+                            inpkt.tok_p, inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
+                            media_option);
                     break;
                 case NO_COMMAND_ERROR:
                     coap_make_response(&scratch, &outpkt, 0,
-                        (uint8_t*) scratch.p, scratch.len,
-                        inpkt.hdr.id[0], inpkt.hdr.id[1],
-                        inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_NOT_FOUND,
-                        media_option);
+                            (uint8_t*) scratch.p, scratch.len,
+                            inpkt.hdr.id[0], inpkt.hdr.id[1],
+                            inpkt.tok_p, inpkt.tok_len, COAP_RSPCODE_NOT_FOUND,
+                            media_option);
                     break;
                 default:
                     coap_make_response(&scratch, &outpkt, 0,
-                        (uint8_t*) scratch.p, scratch.len,
-                        inpkt.hdr.id[0], inpkt.hdr.id[1],
-                        inpkt.tok_p,inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
-                        media_option);
+                            (uint8_t*) scratch.p, scratch.len,
+                            inpkt.hdr.id[0], inpkt.hdr.id[1],
+                            inpkt.tok_p, inpkt.tok_len, COAP_RSPCODE_BAD_REQUEST,
+                            media_option);
                     break;
             }
         }
@@ -284,53 +123,52 @@ void test1() {
         if (rc == 0)
         {
             printf("Dump:");
-            for (j=0;j < message.len;j++)
+            for (j = 0; j < message.len; j++)
             {
-                printf(" %02X",message.p[j]);
+                printf(" %02X", message.p[j]);
             }
             printf("\n");
         }
     }
 }
 
-void test2() {
+void test2()
+{
     printf("coaptest test 2\n");
 }
 
 CircularBufferItem_t file[48];
-int main(int argc, char** argv) {
+
+int main(int argc, char** argv)
+{
     printf("%%SUITE_STARTING%% coaptest\n");
     printf("%%SUITE_STARTED%%\n");
-    
+
     int i;
     InitCommands();
     InitStreamRecorder(file, 48, 250, 8);
-    for (i=0;i < 1000;i++)
+    for (i = 0; i < 1000; i++)
         if (i == 263)
             AddSample();
         else
             AddSample();
-    
+
     AddCommand(
             Method_GET | Method_PUT | Method_POST | Method_RESET,
-            global_link_memory[0],global_link_memory[1],
-            &MemoryCommand
-    );
+            global_link_memory[0], global_link_memory[1],
+            &MemoryCommand);
     AddCommand(
             Method_GET | Method_RESET,
-            global_link_streamer[0][0],global_link_streamer[0][1],
-            &StreamRecorderCommand
-    );
+            global_link_streamer[0][0], global_link_streamer[0][1],
+            &StreamRecorderCommand);
     AddCommand(
             Method_GET,
-            global_link_streamer[1][0],global_link_streamer[1][1],
-            &StreamRecorderCurrentCommand
-    );
+            global_link_streamer[1][0], global_link_streamer[1][1],
+            &StreamRecorderCurrentCommand);
     AddCommand(
             Method_GET,
-            global_link_streamer[2][0],global_link_streamer[2][1],
-            &StreamRecorderLastCommand
-    );
+            global_link_streamer[2][0], global_link_streamer[2][1],
+            &StreamRecorderLastCommand);
 
     printf("%%TEST_STARTED%% test1 (coaptest)\n");
     test1();

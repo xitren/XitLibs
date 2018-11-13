@@ -68,6 +68,7 @@ TESTDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tests
 # Test Files
 TESTFILES= \
 	${TESTDIR}/TestFiles/f6 \
+	${TESTDIR}/TestFiles/f7 \
 	${TESTDIR}/TestFiles/f3 \
 	${TESTDIR}/TestFiles/f4 \
 	${TESTDIR}/TestFiles/f5 \
@@ -76,10 +77,13 @@ TESTFILES= \
 
 # Test Object Files
 TESTOBJECTFILES= \
+	${TESTDIR}/extension/ext_handler.o \
 	${TESTDIR}/tests/circlebuffertest.o \
+	${TESTDIR}/tests/coap_messages_example.o \
 	${TESTDIR}/tests/coaptest.o \
 	${TESTDIR}/tests/csmacdtest.o \
 	${TESTDIR}/tests/distcalctest.o \
+	${TESTDIR}/tests/handlertest.o \
 	${TESTDIR}/tests/memorytest.o \
 	${TESTDIR}/tests/streamtest.o
 
@@ -250,6 +254,10 @@ ${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/distcalctest.o ${OBJECTFILES:%.o=%_nom
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS}   
 
+${TESTDIR}/TestFiles/f7: ${TESTDIR}/extension/ext_handler.o ${TESTDIR}/tests/handlertest.o ${OBJECTFILES:%.o=%_nomain.o}
+	${MKDIR} -p ${TESTDIR}/TestFiles
+	${LINK.c} -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS}   
+
 ${TESTDIR}/TestFiles/f3: ${TESTDIR}/tests/streamtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f3 $^ ${LDLIBSOPTIONS}   
@@ -258,7 +266,7 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/circlebuffertest.o ${OBJECTFILES:%.o=%
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coap_messages_example.o ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}  -Xlinker -Map=output.map 
 
@@ -277,6 +285,18 @@ ${TESTDIR}/tests/distcalctest.o: tests/distcalctest.c
 	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/distcalctest.o tests/distcalctest.c
 
 
+${TESTDIR}/extension/ext_handler.o: extension/ext_handler.c 
+	${MKDIR} -p ${TESTDIR}/extension
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/extension/ext_handler.o extension/ext_handler.c
+
+
+${TESTDIR}/tests/handlertest.o: tests/handlertest.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/handlertest.o tests/handlertest.c
+
+
 ${TESTDIR}/tests/streamtest.o: tests/streamtest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
@@ -287,6 +307,12 @@ ${TESTDIR}/tests/circlebuffertest.o: tests/circlebuffertest.c
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
+
+
+${TESTDIR}/tests/coap_messages_example.o: tests/coap_messages_example.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_messages_example.o tests/coap_messages_example.c
 
 
 ${TESTDIR}/tests/coaptest.o: tests/coaptest.c 
@@ -650,6 +676,7 @@ ${OBJECTDIR}/src/models/src/treetable_nomain.o: ${OBJECTDIR}/src/models/src/tree
 	@if [ "${TEST}" = "" ]; \
 	then  \
 	    ${TESTDIR}/TestFiles/f6 || true; \
+	    ${TESTDIR}/TestFiles/f7 || true; \
 	    ${TESTDIR}/TestFiles/f3 || true; \
 	    ${TESTDIR}/TestFiles/f4 || true; \
 	    ${TESTDIR}/TestFiles/f5 || true; \
