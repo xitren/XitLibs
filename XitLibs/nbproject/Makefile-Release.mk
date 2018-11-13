@@ -266,11 +266,11 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/circlebuffertest.o ${OBJECTFILES:%.o=%
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coap_messages_example.o ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}  -Xlinker -Map=output.map 
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/coap_messages_example.o ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
 
@@ -309,16 +309,16 @@ ${TESTDIR}/tests/circlebuffertest.o: tests/circlebuffertest.c
 	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
 
 
-${TESTDIR}/tests/coap_messages_example.o: tests/coap_messages_example.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_messages_example.o tests/coap_messages_example.c
-
-
 ${TESTDIR}/tests/coaptest.o: tests/coaptest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
 	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coaptest.o tests/coaptest.c
+
+
+${TESTDIR}/tests/coap_messages_example.o: tests/coap_messages_example.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_messages_example.o tests/coap_messages_example.c
 
 
 ${TESTDIR}/tests/csmacdtest.o: tests/csmacdtest.c 

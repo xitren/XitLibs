@@ -49,5 +49,13 @@
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/circlebuffertest.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/include/circularbuffer.h</file>
         </group>
+        <group>
+            <file>file:/D:/Github/XitLibs/XitLibs/tests/coap_messages_example.c</file>
+            <file>file:/D:/Github/XitLibs/XitLibs/extension/ext_handler.c</file>
+            <file>file:/D:/Github/XitLibs/XitLibs/tests/handlertest.c</file>
+            <file>file:/D:/Github/XitLibs/XitLibs/tests/csmacdtest.c</file>
+            <file>file:/D:/Github/XitLibs/XitLibs/tests/coap_messages_example.h</file>
+            <file>file:/D:/Github/XitLibs/XitLibs/tests/coaptest.c</file>
+        </group>
     </open-files>
 </project-private>

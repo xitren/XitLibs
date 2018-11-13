@@ -80,13 +80,13 @@
                      displayName="Тесты протокола CoAP"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>tests/coap_messages_example.c</itemPath>
         <itemPath>tests/coaptest.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f1"
                      displayName="Тесты разделения шины"
                      projectFiles="true"
                      kind="TEST">
+        <itemPath>tests/coap_messages_example.c</itemPath>
         <itemPath>tests/csmacdtest.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f2"
@@ -127,6 +127,18 @@
       </compileType>
       <item path="extension/ext_handler.c" ex="false" tool="0" flavor2="0">
       </item>
+      <folder path="TestFiles">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+            <pElem>extension</pElem>
+            <pElem>tests</pElem>
+          </incDir>
+          <incFile>
+            <pElem>tests/coap_messages_example.h</pElem>
+          </incFile>
+        </cTool>
+      </folder>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -218,11 +230,6 @@
         </linkerTool>
       </folder>
       <folder path="TestFiles/f7">
-        <cTool>
-          <incDir>
-            <pElem>.</pElem>
-          </incDir>
-        </cTool>
         <ccTool>
           <incDir>
             <pElem>.</pElem>

@@ -266,11 +266,11 @@ ${TESTDIR}/TestFiles/f4: ${TESTDIR}/tests/circlebuffertest.o ${OBJECTFILES:%.o=%
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f4 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coap_messages_example.o ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f5: ${TESTDIR}/tests/coaptest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f5 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f1: ${TESTDIR}/tests/coap_messages_example.o ${TESTDIR}/tests/csmacdtest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f1 $^ ${LDLIBSOPTIONS}   
 
@@ -282,55 +282,55 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/memorytest.o ${OBJECTFILES:%.o=%_nomai
 ${TESTDIR}/tests/distcalctest.o: tests/distcalctest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/distcalctest.o tests/distcalctest.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -I. -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/distcalctest.o tests/distcalctest.c
 
 
 ${TESTDIR}/extension/ext_handler.o: extension/ext_handler.c 
 	${MKDIR} -p ${TESTDIR}/extension
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/extension/ext_handler.o extension/ext_handler.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/extension/ext_handler.o extension/ext_handler.c
 
 
 ${TESTDIR}/tests/handlertest.o: tests/handlertest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/handlertest.o tests/handlertest.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/handlertest.o tests/handlertest.c
 
 
 ${TESTDIR}/tests/streamtest.o: tests/streamtest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/streamtest.o tests/streamtest.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -I. -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/streamtest.o tests/streamtest.c
 
 
 ${TESTDIR}/tests/circlebuffertest.o: tests/circlebuffertest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
-
-
-${TESTDIR}/tests/coap_messages_example.o: tests/coap_messages_example.c 
-	${MKDIR} -p ${TESTDIR}/tests
-	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_messages_example.o tests/coap_messages_example.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -I. -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
 
 
 ${TESTDIR}/tests/coaptest.o: tests/coaptest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coaptest.o tests/coaptest.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -I. -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coaptest.o tests/coaptest.c
+
+
+${TESTDIR}/tests/coap_messages_example.o: tests/coap_messages_example.c 
+	${MKDIR} -p ${TESTDIR}/tests
+	${RM} "$@.d"
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -I. -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_messages_example.o tests/coap_messages_example.c
 
 
 ${TESTDIR}/tests/csmacdtest.o: tests/csmacdtest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/csmacdtest.o tests/csmacdtest.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -I. -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/csmacdtest.o tests/csmacdtest.c
 
 
 ${TESTDIR}/tests/memorytest.o: tests/memorytest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/memorytest.o tests/memorytest.c
+	$(COMPILE.c) -g -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -Iextension -Itests -I. -include tests/coap_messages_example.h -std=c99 -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/memorytest.o tests/memorytest.c
 
 
 ${OBJECTDIR}/src/CRC16ANSI_nomain.o: ${OBJECTDIR}/src/CRC16ANSI.o src/CRC16ANSI.c 
