@@ -40,6 +40,7 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/CommandModule.o \
 	${OBJECTDIR}/src/ConfigMem.o \
 	${OBJECTDIR}/src/DistCalc.o \
+	${OBJECTDIR}/src/Handler.o \
 	${OBJECTDIR}/src/InOutBuffer.o \
 	${OBJECTDIR}/src/LogModule.o \
 	${OBJECTDIR}/src/PWMModule.o \
@@ -77,7 +78,6 @@ TESTFILES= \
 
 # Test Object Files
 TESTOBJECTFILES= \
-	${TESTDIR}/extension/ext_handler.o \
 	${TESTDIR}/tests/circlebuffertest.o \
 	${TESTDIR}/tests/coap_messages_example.o \
 	${TESTDIR}/tests/coaptest.o \
@@ -88,7 +88,7 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/streamtest.o
 
 # C Compiler Flags
-CFLAGS=
+CFLAGS=-Wall
 
 # CC Compiler Flags
 CCFLAGS=
@@ -116,132 +116,137 @@ ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlibs.a: ${OBJECTFILES}
 ${OBJECTDIR}/src/CRC16ANSI.o: src/CRC16ANSI.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CRC16ANSI.o src/CRC16ANSI.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CRC16ANSI.o src/CRC16ANSI.c
 
 ${OBJECTDIR}/src/CSMACD.o: src/CSMACD.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CSMACD.o src/CSMACD.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CSMACD.o src/CSMACD.c
 
 ${OBJECTDIR}/src/CommandModule.o: src/CommandModule.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CommandModule.o src/CommandModule.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CommandModule.o src/CommandModule.c
 
 ${OBJECTDIR}/src/ConfigMem.o: src/ConfigMem.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigMem.o src/ConfigMem.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigMem.o src/ConfigMem.c
 
 ${OBJECTDIR}/src/DistCalc.o: src/DistCalc.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DistCalc.o src/DistCalc.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DistCalc.o src/DistCalc.c
+
+${OBJECTDIR}/src/Handler.o: src/Handler.c
+	${MKDIR} -p ${OBJECTDIR}/src
+	${RM} "$@.d"
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Handler.o src/Handler.c
 
 ${OBJECTDIR}/src/InOutBuffer.o: src/InOutBuffer.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/InOutBuffer.o src/InOutBuffer.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/InOutBuffer.o src/InOutBuffer.c
 
 ${OBJECTDIR}/src/LogModule.o: src/LogModule.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogModule.o src/LogModule.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogModule.o src/LogModule.c
 
 ${OBJECTDIR}/src/PWMModule.o: src/PWMModule.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PWMModule.o src/PWMModule.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PWMModule.o src/PWMModule.c
 
 ${OBJECTDIR}/src/Schedule.o: src/Schedule.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Schedule.o src/Schedule.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Schedule.o src/Schedule.c
 
 ${OBJECTDIR}/src/StreamDataRecorder.o: src/StreamDataRecorder.c
 	${MKDIR} -p ${OBJECTDIR}/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StreamDataRecorder.o src/StreamDataRecorder.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StreamDataRecorder.o src/StreamDataRecorder.c
 
 ${OBJECTDIR}/src/coap/coap.o: src/coap/coap.c
 	${MKDIR} -p ${OBJECTDIR}/src/coap
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/coap/coap.o src/coap/coap.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/coap/coap.o src/coap/coap.c
 
 ${OBJECTDIR}/src/json/cJSON.o: src/json/cJSON.c
 	${MKDIR} -p ${OBJECTDIR}/src/json
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON.o src/json/cJSON.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON.o src/json/cJSON.c
 
 ${OBJECTDIR}/src/json/cJSON_Utils.o: src/json/cJSON_Utils.c
 	${MKDIR} -p ${OBJECTDIR}/src/json
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_Utils.o src/json/cJSON_Utils.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_Utils.o src/json/cJSON_Utils.c
 
 ${OBJECTDIR}/src/malloc/umm_malloc.o: src/malloc/umm_malloc.c
 	${MKDIR} -p ${OBJECTDIR}/src/malloc
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/malloc/umm_malloc.o src/malloc/umm_malloc.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/malloc/umm_malloc.o src/malloc/umm_malloc.c
 
 ${OBJECTDIR}/src/models/src/array.o: src/models/src/array.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/array.o src/models/src/array.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/array.o src/models/src/array.c
 
 ${OBJECTDIR}/src/models/src/circularbuffer.o: src/models/src/circularbuffer.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/circularbuffer.o src/models/src/circularbuffer.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/circularbuffer.o src/models/src/circularbuffer.c
 
 ${OBJECTDIR}/src/models/src/common.o: src/models/src/common.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/common.o src/models/src/common.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/common.o src/models/src/common.c
 
 ${OBJECTDIR}/src/models/src/deque.o: src/models/src/deque.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/deque.o src/models/src/deque.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/deque.o src/models/src/deque.c
 
 ${OBJECTDIR}/src/models/src/hashset.o: src/models/src/hashset.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashset.o src/models/src/hashset.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashset.o src/models/src/hashset.c
 
 ${OBJECTDIR}/src/models/src/hashtable.o: src/models/src/hashtable.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashtable.o src/models/src/hashtable.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashtable.o src/models/src/hashtable.c
 
 ${OBJECTDIR}/src/models/src/list.o: src/models/src/list.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/list.o src/models/src/list.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/list.o src/models/src/list.c
 
 ${OBJECTDIR}/src/models/src/queue.o: src/models/src/queue.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/queue.o src/models/src/queue.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/queue.o src/models/src/queue.c
 
 ${OBJECTDIR}/src/models/src/slist.o: src/models/src/slist.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/slist.o src/models/src/slist.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/slist.o src/models/src/slist.c
 
 ${OBJECTDIR}/src/models/src/stack.o: src/models/src/stack.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/stack.o src/models/src/stack.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/stack.o src/models/src/stack.c
 
 ${OBJECTDIR}/src/models/src/treeset.o: src/models/src/treeset.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treeset.o src/models/src/treeset.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treeset.o src/models/src/treeset.c
 
 ${OBJECTDIR}/src/models/src/treetable.o: src/models/src/treetable.c
 	${MKDIR} -p ${OBJECTDIR}/src/models/src
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treetable.o src/models/src/treetable.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treetable.o src/models/src/treetable.c
 
 # Subprojects
 .build-subprojects:
@@ -254,7 +259,7 @@ ${TESTDIR}/TestFiles/f6: ${TESTDIR}/tests/distcalctest.o ${OBJECTFILES:%.o=%_nom
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f6 $^ ${LDLIBSOPTIONS}   
 
-${TESTDIR}/TestFiles/f7: ${TESTDIR}/extension/ext_handler.o ${TESTDIR}/tests/handlertest.o ${OBJECTFILES:%.o=%_nomain.o}
+${TESTDIR}/TestFiles/f7: ${TESTDIR}/tests/handlertest.o ${OBJECTFILES:%.o=%_nomain.o}
 	${MKDIR} -p ${TESTDIR}/TestFiles
 	${LINK.c} -o ${TESTDIR}/TestFiles/f7 $^ ${LDLIBSOPTIONS}   
 
@@ -282,55 +287,49 @@ ${TESTDIR}/TestFiles/f2: ${TESTDIR}/tests/memorytest.o ${OBJECTFILES:%.o=%_nomai
 ${TESTDIR}/tests/distcalctest.o: tests/distcalctest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/distcalctest.o tests/distcalctest.c
-
-
-${TESTDIR}/extension/ext_handler.o: extension/ext_handler.c 
-	${MKDIR} -p ${TESTDIR}/extension
-	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/extension/ext_handler.o extension/ext_handler.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/distcalctest.o tests/distcalctest.c
 
 
 ${TESTDIR}/tests/handlertest.o: tests/handlertest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/handlertest.o tests/handlertest.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/handlertest.o tests/handlertest.c
 
 
 ${TESTDIR}/tests/streamtest.o: tests/streamtest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/streamtest.o tests/streamtest.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/streamtest.o tests/streamtest.c
 
 
 ${TESTDIR}/tests/circlebuffertest.o: tests/circlebuffertest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/circlebuffertest.o tests/circlebuffertest.c
 
 
 ${TESTDIR}/tests/coaptest.o: tests/coaptest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coaptest.o tests/coaptest.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coaptest.o tests/coaptest.c
 
 
 ${TESTDIR}/tests/coap_messages_example.o: tests/coap_messages_example.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_messages_example.o tests/coap_messages_example.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/coap_messages_example.o tests/coap_messages_example.c
 
 
 ${TESTDIR}/tests/csmacdtest.o: tests/csmacdtest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/csmacdtest.o tests/csmacdtest.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/csmacdtest.o tests/csmacdtest.c
 
 
 ${TESTDIR}/tests/memorytest.o: tests/memorytest.c 
 	${MKDIR} -p ${TESTDIR}/tests
 	${RM} "$@.d"
-	$(COMPILE.c) -O2 -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/memorytest.o tests/memorytest.c
+	$(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -I. -MMD -MP -MF "$@.d" -o ${TESTDIR}/tests/memorytest.o tests/memorytest.c
 
 
 ${OBJECTDIR}/src/CRC16ANSI_nomain.o: ${OBJECTDIR}/src/CRC16ANSI.o src/CRC16ANSI.c 
@@ -341,7 +340,7 @@ ${OBJECTDIR}/src/CRC16ANSI_nomain.o: ${OBJECTDIR}/src/CRC16ANSI.o src/CRC16ANSI.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CRC16ANSI_nomain.o src/CRC16ANSI.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CRC16ANSI_nomain.o src/CRC16ANSI.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/CRC16ANSI.o ${OBJECTDIR}/src/CRC16ANSI_nomain.o;\
 	fi
@@ -354,7 +353,7 @@ ${OBJECTDIR}/src/CSMACD_nomain.o: ${OBJECTDIR}/src/CSMACD.o src/CSMACD.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CSMACD_nomain.o src/CSMACD.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CSMACD_nomain.o src/CSMACD.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/CSMACD.o ${OBJECTDIR}/src/CSMACD_nomain.o;\
 	fi
@@ -367,7 +366,7 @@ ${OBJECTDIR}/src/CommandModule_nomain.o: ${OBJECTDIR}/src/CommandModule.o src/Co
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CommandModule_nomain.o src/CommandModule.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/CommandModule_nomain.o src/CommandModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/CommandModule.o ${OBJECTDIR}/src/CommandModule_nomain.o;\
 	fi
@@ -380,7 +379,7 @@ ${OBJECTDIR}/src/ConfigMem_nomain.o: ${OBJECTDIR}/src/ConfigMem.o src/ConfigMem.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigMem_nomain.o src/ConfigMem.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/ConfigMem_nomain.o src/ConfigMem.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/ConfigMem.o ${OBJECTDIR}/src/ConfigMem_nomain.o;\
 	fi
@@ -393,9 +392,22 @@ ${OBJECTDIR}/src/DistCalc_nomain.o: ${OBJECTDIR}/src/DistCalc.o src/DistCalc.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DistCalc_nomain.o src/DistCalc.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/DistCalc_nomain.o src/DistCalc.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/DistCalc.o ${OBJECTDIR}/src/DistCalc_nomain.o;\
+	fi
+
+${OBJECTDIR}/src/Handler_nomain.o: ${OBJECTDIR}/src/Handler.o src/Handler.c 
+	${MKDIR} -p ${OBJECTDIR}/src
+	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/Handler.o`; \
+	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
+	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
+	then  \
+	    ${RM} "$@.d";\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Handler_nomain.o src/Handler.c;\
+	else  \
+	    ${CP} ${OBJECTDIR}/src/Handler.o ${OBJECTDIR}/src/Handler_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/InOutBuffer_nomain.o: ${OBJECTDIR}/src/InOutBuffer.o src/InOutBuffer.c 
@@ -406,7 +418,7 @@ ${OBJECTDIR}/src/InOutBuffer_nomain.o: ${OBJECTDIR}/src/InOutBuffer.o src/InOutB
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/InOutBuffer_nomain.o src/InOutBuffer.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/InOutBuffer_nomain.o src/InOutBuffer.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/InOutBuffer.o ${OBJECTDIR}/src/InOutBuffer_nomain.o;\
 	fi
@@ -419,7 +431,7 @@ ${OBJECTDIR}/src/LogModule_nomain.o: ${OBJECTDIR}/src/LogModule.o src/LogModule.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogModule_nomain.o src/LogModule.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/LogModule_nomain.o src/LogModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/LogModule.o ${OBJECTDIR}/src/LogModule_nomain.o;\
 	fi
@@ -432,7 +444,7 @@ ${OBJECTDIR}/src/PWMModule_nomain.o: ${OBJECTDIR}/src/PWMModule.o src/PWMModule.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PWMModule_nomain.o src/PWMModule.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/PWMModule_nomain.o src/PWMModule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/PWMModule.o ${OBJECTDIR}/src/PWMModule_nomain.o;\
 	fi
@@ -445,7 +457,7 @@ ${OBJECTDIR}/src/Schedule_nomain.o: ${OBJECTDIR}/src/Schedule.o src/Schedule.c
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Schedule_nomain.o src/Schedule.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/Schedule_nomain.o src/Schedule.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/Schedule.o ${OBJECTDIR}/src/Schedule_nomain.o;\
 	fi
@@ -458,7 +470,7 @@ ${OBJECTDIR}/src/StreamDataRecorder_nomain.o: ${OBJECTDIR}/src/StreamDataRecorde
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StreamDataRecorder_nomain.o src/StreamDataRecorder.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/StreamDataRecorder_nomain.o src/StreamDataRecorder.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/StreamDataRecorder.o ${OBJECTDIR}/src/StreamDataRecorder_nomain.o;\
 	fi
@@ -471,7 +483,7 @@ ${OBJECTDIR}/src/coap/coap_nomain.o: ${OBJECTDIR}/src/coap/coap.o src/coap/coap.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/coap/coap_nomain.o src/coap/coap.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/coap/coap_nomain.o src/coap/coap.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/coap/coap.o ${OBJECTDIR}/src/coap/coap_nomain.o;\
 	fi
@@ -484,7 +496,7 @@ ${OBJECTDIR}/src/json/cJSON_nomain.o: ${OBJECTDIR}/src/json/cJSON.o src/json/cJS
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_nomain.o src/json/cJSON.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_nomain.o src/json/cJSON.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/json/cJSON.o ${OBJECTDIR}/src/json/cJSON_nomain.o;\
 	fi
@@ -497,7 +509,7 @@ ${OBJECTDIR}/src/json/cJSON_Utils_nomain.o: ${OBJECTDIR}/src/json/cJSON_Utils.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_Utils_nomain.o src/json/cJSON_Utils.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_Utils_nomain.o src/json/cJSON_Utils.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/json/cJSON_Utils.o ${OBJECTDIR}/src/json/cJSON_Utils_nomain.o;\
 	fi
@@ -510,7 +522,7 @@ ${OBJECTDIR}/src/malloc/umm_malloc_nomain.o: ${OBJECTDIR}/src/malloc/umm_malloc.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/malloc/umm_malloc_nomain.o src/malloc/umm_malloc.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/malloc/umm_malloc_nomain.o src/malloc/umm_malloc.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/malloc/umm_malloc.o ${OBJECTDIR}/src/malloc/umm_malloc_nomain.o;\
 	fi
@@ -523,7 +535,7 @@ ${OBJECTDIR}/src/models/src/array_nomain.o: ${OBJECTDIR}/src/models/src/array.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/array_nomain.o src/models/src/array.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/array_nomain.o src/models/src/array.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/array.o ${OBJECTDIR}/src/models/src/array_nomain.o;\
 	fi
@@ -536,7 +548,7 @@ ${OBJECTDIR}/src/models/src/circularbuffer_nomain.o: ${OBJECTDIR}/src/models/src
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/circularbuffer_nomain.o src/models/src/circularbuffer.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/circularbuffer_nomain.o src/models/src/circularbuffer.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/circularbuffer.o ${OBJECTDIR}/src/models/src/circularbuffer_nomain.o;\
 	fi
@@ -549,7 +561,7 @@ ${OBJECTDIR}/src/models/src/common_nomain.o: ${OBJECTDIR}/src/models/src/common.
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/common_nomain.o src/models/src/common.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/common_nomain.o src/models/src/common.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/common.o ${OBJECTDIR}/src/models/src/common_nomain.o;\
 	fi
@@ -562,7 +574,7 @@ ${OBJECTDIR}/src/models/src/deque_nomain.o: ${OBJECTDIR}/src/models/src/deque.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/deque_nomain.o src/models/src/deque.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/deque_nomain.o src/models/src/deque.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/deque.o ${OBJECTDIR}/src/models/src/deque_nomain.o;\
 	fi
@@ -575,7 +587,7 @@ ${OBJECTDIR}/src/models/src/hashset_nomain.o: ${OBJECTDIR}/src/models/src/hashse
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashset_nomain.o src/models/src/hashset.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashset_nomain.o src/models/src/hashset.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/hashset.o ${OBJECTDIR}/src/models/src/hashset_nomain.o;\
 	fi
@@ -588,7 +600,7 @@ ${OBJECTDIR}/src/models/src/hashtable_nomain.o: ${OBJECTDIR}/src/models/src/hash
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashtable_nomain.o src/models/src/hashtable.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/hashtable_nomain.o src/models/src/hashtable.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/hashtable.o ${OBJECTDIR}/src/models/src/hashtable_nomain.o;\
 	fi
@@ -601,7 +613,7 @@ ${OBJECTDIR}/src/models/src/list_nomain.o: ${OBJECTDIR}/src/models/src/list.o sr
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/list_nomain.o src/models/src/list.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/list_nomain.o src/models/src/list.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/list.o ${OBJECTDIR}/src/models/src/list_nomain.o;\
 	fi
@@ -614,7 +626,7 @@ ${OBJECTDIR}/src/models/src/queue_nomain.o: ${OBJECTDIR}/src/models/src/queue.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/queue_nomain.o src/models/src/queue.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/queue_nomain.o src/models/src/queue.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/queue.o ${OBJECTDIR}/src/models/src/queue_nomain.o;\
 	fi
@@ -627,7 +639,7 @@ ${OBJECTDIR}/src/models/src/slist_nomain.o: ${OBJECTDIR}/src/models/src/slist.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/slist_nomain.o src/models/src/slist.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/slist_nomain.o src/models/src/slist.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/slist.o ${OBJECTDIR}/src/models/src/slist_nomain.o;\
 	fi
@@ -640,7 +652,7 @@ ${OBJECTDIR}/src/models/src/stack_nomain.o: ${OBJECTDIR}/src/models/src/stack.o 
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/stack_nomain.o src/models/src/stack.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/stack_nomain.o src/models/src/stack.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/stack.o ${OBJECTDIR}/src/models/src/stack_nomain.o;\
 	fi
@@ -653,7 +665,7 @@ ${OBJECTDIR}/src/models/src/treeset_nomain.o: ${OBJECTDIR}/src/models/src/treese
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treeset_nomain.o src/models/src/treeset.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treeset_nomain.o src/models/src/treeset.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/treeset.o ${OBJECTDIR}/src/models/src/treeset_nomain.o;\
 	fi
@@ -666,7 +678,7 @@ ${OBJECTDIR}/src/models/src/treetable_nomain.o: ${OBJECTDIR}/src/models/src/tree
 	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
 	then  \
 	    ${RM} "$@.d";\
-	    $(COMPILE.c) -O2 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treetable_nomain.o src/models/src/treetable.c;\
+	    $(COMPILE.c) -O3 -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/models/src/treetable_nomain.o src/models/src/treetable.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/models/src/treetable.o ${OBJECTDIR}/src/models/src/treetable_nomain.o;\
 	fi

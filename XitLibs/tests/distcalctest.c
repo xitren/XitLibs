@@ -18,7 +18,7 @@
 #include "CommandModule.h"
 #include "DistCalc.h"
 
-char buffer[1000];
+char buffer_test[1000];
 int size = 1000;
 ParameterList_t params;
 
@@ -29,103 +29,103 @@ ParameterList_t params;
 void test1() {
     printf("distcalctest test 1\n");
     size = 1000;
-    ClockCommand(Method_GET,Media_XML,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    ClockCommand(Method_GET,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    ClockCommand(Method_PUT,Media_XML,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
-    printf("Message size: %d\n",size);
-    size = 1000;
-    ClockCommand(Method_GET,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
-    printf("Message size: %d\n",size);
-    ClockCommand(Method_PUT,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    ClockCommand(Method_PUT,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
     size = 1000;
-    ClockCommand(Method_GET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    ClockCommand(Method_GET,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    ClockCommand(Method_PUT,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    ClockCommand(Method_PUT,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    ClockCommand(Method_RESET,Media_XML,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    size = 1000;
+    ClockCommand(Method_GET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    ClockCommand(Method_RESET,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    ClockCommand(Method_PUT,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    ClockCommand(Method_RESET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    ClockCommand(Method_RESET,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    ClockCommand(Method_GET,Media_JSON,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    ClockCommand(Method_RESET,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
+    printf("Message size: %d\n",size);
+    ClockCommand(Method_RESET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
+    printf("Message size: %d\n",size);
+    ClockCommand(Method_GET,Media_JSON,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
 }
 
 void test2() {
     printf("distcalctest test 2\n");
     size = 1000;
-    CalculationFreeCycles(Method_GET,Media_XML,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationFreeCycles(Method_GET,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
     size = 1000;
-    CalculationFreeCycles(Method_GET,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationFreeCycles(Method_GET,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
     size = 1000;
-    CalculationFreeCycles(Method_GET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationFreeCycles(Method_GET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    CalculationFreeCycles(Method_PUT,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationFreeCycles(Method_PUT,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    CalculationFreeCycles(Method_RESET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationFreeCycles(Method_RESET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
 }
 
 void test3() {
     printf("distcalctest test 3\n");
     size = 1000;
-    CalculationMaxCycles(Method_GET,Media_XML,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationMaxCycles(Method_GET,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
     size = 1000;
-    CalculationMaxCycles(Method_GET,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationMaxCycles(Method_GET,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
     size = 1000;
-    CalculationMaxCycles(Method_GET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationMaxCycles(Method_GET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    CalculationMaxCycles(Method_PUT,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationMaxCycles(Method_PUT,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    CalculationMaxCycles(Method_RESET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationMaxCycles(Method_RESET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
 }
 
 void test4() {
     printf("distcalctest test 4\n");
     size = 1000;
-    CalculationPercentCycles(Method_GET,Media_XML,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationPercentCycles(Method_GET,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
     size = 1000;
-    CalculationPercentCycles(Method_GET,Media_TEXT,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationPercentCycles(Method_GET,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
     size = 1000;
-    CalculationPercentCycles(Method_GET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationPercentCycles(Method_GET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    CalculationPercentCycles(Method_PUT,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationPercentCycles(Method_PUT,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
-    CalculationPercentCycles(Method_RESET,Media_BYTE,&params,buffer,(uint32_t *)&size,1000);
-    printf(buffer);
+    CalculationPercentCycles(Method_RESET,Media_BYTE,&params,buffer_test,(uint32_t *)&size,1000);
+    printf(buffer_test);
     printf("Message size: %d\n",size);
 }
 

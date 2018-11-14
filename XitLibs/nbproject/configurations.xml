@@ -33,6 +33,7 @@
       <itemPath>src/CommandModule.c</itemPath>
       <itemPath>src/ConfigMem.c</itemPath>
       <itemPath>src/DistCalc.c</itemPath>
+      <itemPath>src/Handler.c</itemPath>
       <itemPath>src/InOutBuffer.c</itemPath>
       <itemPath>src/LogModule.c</itemPath>
       <itemPath>src/PWMModule.c</itemPath>
@@ -61,7 +62,6 @@
                      displayName="Тесты на обработчик сообщений"
                      projectFiles="true"
                      kind="TEST">
-        <itemPath>extension/ext_handler.c</itemPath>
         <itemPath>tests/handlertest.c</itemPath>
       </logicalFolder>
       <logicalFolder name="f3"
@@ -121,12 +121,14 @@
             <pElem>src/malloc</pElem>
             <pElem>src</pElem>
           </incDir>
+          <commandLine>-Wall</commandLine>
+          <preprocessorList>
+            <Elem>DEBUG</Elem>
+          </preprocessorList>
         </cTool>
         <archiverTool>
         </archiverTool>
       </compileType>
-      <item path="extension/ext_handler.c" ex="false" tool="0" flavor2="0">
-      </item>
       <folder path="TestFiles">
         <cTool>
           <incDir>
@@ -249,6 +251,8 @@
       </item>
       <item path="src/DistCalc.c" ex="false" tool="0" flavor2="0">
       </item>
+      <item path="src/Handler.c" ex="false" tool="0" flavor2="0">
+      </item>
       <item path="src/InOutBuffer.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/LogModule.c" ex="false" tool="0" flavor2="0">
@@ -316,7 +320,15 @@
       </toolsSet>
       <compileType>
         <cTool>
-          <developmentMode>5</developmentMode>
+          <developmentMode>6</developmentMode>
+          <incDir>
+            <pElem>src/models/include</pElem>
+            <pElem>src/coap</pElem>
+            <pElem>src/json</pElem>
+            <pElem>src/malloc</pElem>
+            <pElem>src</pElem>
+          </incDir>
+          <commandLine>-Wall</commandLine>
         </cTool>
         <ccTool>
           <developmentMode>5</developmentMode>
@@ -330,8 +342,6 @@
         <archiverTool>
         </archiverTool>
       </compileType>
-      <item path="extension/ext_handler.c" ex="false" tool="0" flavor2="0">
-      </item>
       <folder path="TestFiles/f1">
         <cTool>
           <incDir>
@@ -447,6 +457,8 @@
       <item path="src/ConfigMem.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/DistCalc.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="src/Handler.c" ex="false" tool="0" flavor2="0">
       </item>
       <item path="src/InOutBuffer.c" ex="false" tool="0" flavor2="0">
       </item>

@@ -10,15 +10,15 @@
 #include "CommandModule.h"
 #include "StreamDataRecorder.h"
 
-#ifndef __EXTERNAL_H__
-#define __EXTERNAL_H__  
+#ifndef __HANDLER_H__
+#define __HANDLER_H__  
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-void ext_init_handler(const uint32_t sample_frequency, const uint32_t sample_size);
-coap_rw_buffer_t *ext_handler(const uint8_t *buf, size_t buflen, char *ip, uint32_t port);
+void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size);
+coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint32_t port);
 
 #ifdef __cplusplus
 }

@@ -32,13 +32,135 @@ static uint8_t type_opt[3];
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
+
+//#ifdef DEBUG
+void coap_dumpHeader(coap_header_t *hdr)
+{
+    DBG_LOG_DEBUG("Into coap_dumpHeader.\n");
+    if (hdr == NULL)
+    {
+        DBG_LOG_ERROR("hdr is NULL\n");
+        return;
+    }
+    DBG_LOG_DEBUG("Header:\n");
+    DBG_LOG_DEBUG("  ver  0x%02X\n", hdr->ver);
+    DBG_LOG_DEBUG("  t    0x%02X\n", hdr->t);
+    DBG_LOG_DEBUG("  tkl  0x%02X\n", hdr->tkl);
+    DBG_LOG_DEBUG("  code 0x%02X\n", hdr->code);
+    DBG_LOG_DEBUG("  id   0x%02X%02X\n", hdr->id[0], hdr->id[1]);
+}
+
+void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
+{
+    DBG_LOG_DEBUG("Into coap_dump_char.\n");
+    if (buf == NULL)
+    {
+        DBG_LOG_ERROR("buf is NULL\n");
+        return;
+    }
+    if (bare)
+    {
+        while(buflen--)
+        {
+            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
+        }
+    }
+    else
+    {
+        printf("Dump: ");
+        while(buflen--)
+        {
+            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
+        }
+        printf("\r\n\r");
+    }
+}
+
+void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
+{
+    DBG_LOG_DEBUG("Into coap_dump.\n");
+    if (buf == NULL)
+    {
+        DBG_LOG_ERROR("buf is NULL\n");
+        return;
+    }
+    if (bare)
+    {
+        printf("Bare.\n"); 
+        for(;(buflen) > 0;buflen--)
+        {
+            printf("%02X ",*buf++);
+        }
+        printf("\r\n\r");
+    }
+    else
+    {
+        printf("Dump: ");
+        while(buflen--)
+        {
+            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
+        }
+        printf("\r\n\r");
+    }
+}
+
+void coap_dumpOptions(coap_option_t *opts, size_t numopt)
+{
+    size_t i;
+    DBG_LOG_DEBUG("Into coap_dumpOptions.\n");
+    if (opts == NULL)
+    {
+        DBG_LOG_ERROR("opts is NULL\n");
+        return;
+    }
+    DBG_LOG_DEBUG(" Options:\n");
+    for (i = 0; i < numopt; i++)
+    {
+        DBG_LOG_DEBUG("  0x%02X [ ", opts[i].num);
+        if (opts[i].buf.p == NULL)
+        {
+            DBG_LOG_ERROR("opts[i].buf.p is NULL\n");
+            continue;
+        }
+        coap_dump(opts[i].buf.p, opts[i].buf.len, true);
+        DBG_LOG_DEBUG(" ]\n");
+    }
+    for (i = 0; i < numopt; i++)
+    {
+        DBG_LOG_DEBUG("  0x%02X [ ", opts[i].num);
+        if (opts[i].buf.p == NULL)
+        {
+            DBG_LOG_ERROR("opts[i].buf.p is NULL\n");
+            continue;
+        }
+        coap_dump_char(opts[i].buf.p, opts[i].buf.len, true);
+        DBG_LOG_DEBUG(" ]\n");
+    }
+}
+
+void coap_dumpPacket(coap_packet_t *pkt)
+{
+    DBG_LOG_DEBUG("Into coap_dumpPacket.\n");
+    if (pkt == NULL)
+    {
+        DBG_LOG_ERROR("pkt is NULL\n");
+        return;
+    }
+    coap_dumpHeader(&pkt->hdr);
+    coap_dumpOptions(pkt->opts, pkt->numopts);
+    DBG_LOG_DEBUG("Payload: Size of %d", (int)pkt->payload.len);
+    DBG_LOG_DEBUG("\n");
+}
+
+//#endif
+
 void coap_clock(void)
 {
-    int i,j;
+    int i;
     coap_token_record *answer;
     coap_token_record *removed;
     DBG_LOG_DEBUG("Into coap_clock.\n");
-    for (i=0;i < array_size(AwaitedAnswersArray);i++)
+    for (i = 0; i < array_size(AwaitedAnswersArray); i++)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
         if (answer == NULL)
@@ -97,15 +219,15 @@ void coap_clock(void)
 }
 char* coap_check_ans(const char *other)
 {
-    int i,j;
+    int i;
     if (other == NULL)
     {
         DBG_LOG_ERROR("other is NULL\n");
         return 0;
     }
     coap_token_record *answer;
-        DBG_LOG_TRACE("size %d\n",(int)array_size(AwaitedAnswersArray));
-    for (i=0;i < array_size(AwaitedAnswersArray);i++)
+    DBG_LOG_TRACE("size %d\n", (int)array_size(AwaitedAnswersArray));
+    for (i = 0; i < array_size(AwaitedAnswersArray); i++)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
         if (answer == NULL)
@@ -126,122 +248,6 @@ char* coap_check_ans(const char *other)
     }
     return 0;
 }
-
-//#ifdef DEBUG
-void coap_dumpHeader(coap_header_t *hdr)
-{
-    DBG_LOG_DEBUG("Into coap_dumpHeader.\n");
-    if (hdr == NULL)
-    {
-        DBG_LOG_ERROR("hdr is NULL\n");
-        return;
-    }
-    DBG_LOG_DEBUG("Header:\n");
-    DBG_LOG_DEBUG("  ver  0x%02X\n", hdr->ver);
-    DBG_LOG_DEBUG("  t    0x%02X\n", hdr->t);
-    DBG_LOG_DEBUG("  tkl  0x%02X\n", hdr->tkl);
-    DBG_LOG_DEBUG("  code 0x%02X\n", hdr->code);
-    DBG_LOG_DEBUG("  id   0x%02X%02X\n", hdr->id[0], hdr->id[1]);
-}
-void coap_dumpOptions(coap_option_t *opts, size_t numopt)
-{
-    size_t i;
-    DBG_LOG_DEBUG("Into coap_dumpOptions.\n");
-    if (opts == NULL)
-    {
-        DBG_LOG_ERROR("opts is NULL\n");
-        return;
-    }
-    DBG_LOG_DEBUG(" Options:\n");
-    for (i=0;i<numopt;i++)
-    {
-        DBG_LOG_DEBUG("  0x%02X [ ", opts[i].num);
-        if (opts[i].buf.p == NULL)
-        {
-            DBG_LOG_ERROR("opts[i].buf.p is NULL\n");
-            continue;
-        }
-        coap_dump(opts[i].buf.p, opts[i].buf.len, true);
-        DBG_LOG_DEBUG(" ]\n");
-    }
-    for (i=0;i<numopt;i++)
-    {
-        DBG_LOG_DEBUG("  0x%02X [ ", opts[i].num);
-        if (opts[i].buf.p == NULL)
-        {
-            DBG_LOG_ERROR("opts[i].buf.p is NULL\n");
-            continue;
-        }
-        coap_dump_char(opts[i].buf.p, opts[i].buf.len, true);
-        DBG_LOG_DEBUG(" ]\n");
-    }
-}
-void coap_dumpPacket(coap_packet_t *pkt)
-{
-    DBG_LOG_DEBUG("Into coap_dumpPacket.\n");
-    if (pkt == NULL)
-    {
-        DBG_LOG_ERROR("pkt is NULL\n");
-        return;
-    }
-    coap_dumpHeader(&pkt->hdr);
-    coap_dumpOptions(pkt->opts, pkt->numopts);
-    DBG_LOG_DEBUG("Payload: Size of %d", (int)pkt->payload.len);
-    DBG_LOG_DEBUG("\n");
-}
-void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
-{
-    DBG_LOG_DEBUG("Into coap_dump.\n");
-    if (buf == NULL)
-    {
-        DBG_LOG_ERROR("buf is NULL\n");
-        return;
-    }
-    if (bare)
-    {
-        printf("Bare.\n"); 
-        for(;(buflen) > 0;buflen--)
-        {
-            printf("%02X ",*buf++);
-        }
-        printf("\r\n\r");
-    }
-    else
-    {
-        printf("Dump: ");
-        while(buflen--)
-        {
-            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
-        }
-        printf("\r\n\r");
-    }
-}
-void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
-{
-    DBG_LOG_DEBUG("Into coap_dump_char.\n");
-    if (buf == NULL)
-    {
-        DBG_LOG_ERROR("buf is NULL\n");
-        return;
-    }
-    if (bare)
-    {
-        while(buflen--)
-        {
-            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
-        }
-    }
-    else
-    {
-        printf("Dump: ");
-        while(buflen--)
-        {
-            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
-        }
-        printf("\r\n\r");
-    }
-}
-//#endif
 
 int coap_parseHeader(coap_header_t *hdr, const uint8_t *buf, size_t buflen)
 {
@@ -634,6 +640,7 @@ void coap_option_nibble(uint32_t value, uint8_t *nibble)
         *nibble = 14;
     }
 }
+
 int make_part_option(coap_option_t *opt_part, uint32_t num, 
         coap_option_part_size sizep, uint8_t last)
 {
@@ -659,6 +666,7 @@ int make_part_option(coap_option_t *opt_part, uint32_t num,
     #endif
     return 0;
 }
+
 int parse_part_option(const coap_buffer_t *opt_part,uint8_t *end)
 {
     uint32_t value = 0;
@@ -698,6 +706,7 @@ int parse_part_option(const coap_buffer_t *opt_part,uint8_t *end)
     #endif
     return value;
 }
+
 int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt, 
         coap_option_t *opt_path, coap_option_t *opt_args, coap_option_t *opt_part, 
         const uint8_t *content, size_t content_len, 
@@ -749,6 +758,7 @@ int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
     pkt->payload.len = content_len;
     return 0;
 }
+
 int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,  
         coap_option_t *opt_part, 
         const uint8_t *content, size_t content_len, 
@@ -826,7 +836,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     memset(&bufhr,0,sizeof(bufhr));
     const coap_option_t *opt;
     uint8_t count;
-    uint8_t contentistext = 0;
+//    uint8_t contentistext = 0;
     uint32_t methodpermission = 0;
     int i;
     if (inpkt->hdr.code < 5)
@@ -919,6 +929,7 @@ Array *coap_get_waiting_list(void)
 {
     return AwaitedAnswersArray;
 }
+
 void coap_setup(void)
 {
     DBG_LOG_DEBUG("Into coap_setup.\n");

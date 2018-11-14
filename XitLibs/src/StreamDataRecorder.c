@@ -30,7 +30,7 @@ const char* global_link_streamer[][2] = {
     {"/streamdatarecorder/current", "</streamdatarecorder/current>"},
     {"/streamdatarecorder/last", "</streamdatarecorder/last>"}
 };
-CircularBuffer_t buffer;
+CircularBuffer_t buffer_test;
 static uint32_t sample_frequency = 250;
 uint32_t sample_size = 8;
 static uint32_t signal_amplitude[BUFFER_SAMPLE_SIZE-1] = 
@@ -67,7 +67,7 @@ void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size,
     sample_frequency = _sample_frequency;
     sample_size = _sample_size;
     circularbuffer_new(
-            &buffer,
+            &buffer_test,
             _storage,
             _storage_size
     );
@@ -101,7 +101,7 @@ void AddSample(void)
     {}
     else
     {
-        double phase = (TwoPi*circularbuffer_get_first_index(&buffer)) 
+        double phase = (TwoPi*circularbuffer_get_first_index(&buffer_test)) 
                                                             / sample_frequency;
         Data_sample[0] = ReadMem(REG_ADC_CHA);
         WriteMem(REG_ADC_CHA,ReadMem(REG_ADC_CHA)+1);
@@ -115,12 +115,12 @@ void AddSample(void)
                                     (int32_t)
                                     ((rand()*noise_amplitude[i-1])/RAND_MAX) );
     }
-    circularbuffer_push(&buffer,(void *)Data_sample);
+    circularbuffer_push(&buffer_test,(void *)Data_sample);
     return;
 }
 void ClearStreamRecorder(void)
 {
-    circularbuffer_remove_all(&buffer);
+    circularbuffer_remove_all(&buffer_test);
 }
 inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempParam, 
                     uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
@@ -138,15 +138,15 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
     uint32_t data_size_st = 0;
     uint32_t l = 0,i,k;
     uint32_t Data_sample[MAX_SAMPLE_SIZE];
-    enum cc_stat ret;
+//    enum cc_stat ret;
     if ((TempParam))
     {
         ret_val_f = get_parameter(TempParam,"from",(uint32_t*)&From);
         ret_val_t = get_parameter(TempParam,"to",(uint32_t*)&To);
         if ( (ret_val_f >= 0) && (ret_val_t >= 0) ) 
         {
-            last = circularbuffer_get_last_index(&buffer);
-            first = circularbuffer_get_first_index(&buffer);
+            last = circularbuffer_get_last_index(&buffer_test);
+            first = circularbuffer_get_first_index(&buffer_test);
             if ( (last <= From) && (To <= first) && (From <= To) )
                 switch (MediaType)
                 {
@@ -158,7 +158,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         );
                         data += data_size_st;
                         buffer_size -= data_size_st;
-                        l = circularbuffer_unreaded_items_size(&buffer);
+                        l = circularbuffer_unreaded_items_size(&buffer_test);
                         if (l > 0)
                         {
                             last = From;
@@ -166,7 +166,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             for (i=last;i < first;i++)
                             {
                                 circularbuffer_get_at(
-                                        &buffer, i, (void*)Data_sample
+                                        &buffer_test, i, (void*)Data_sample
                                 );
                                 if(i != last)
                                 {
@@ -215,7 +215,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         );
                         data += data_size_st;
                         buffer_size -= data_size_st;
-                        l = circularbuffer_unreaded_items_size(&buffer);
+                        l = circularbuffer_unreaded_items_size(&buffer_test);
                         if (l > 0)
                         {
                             last = From;
@@ -223,7 +223,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             for (i=last;i < first;i++)
                             {
                                 circularbuffer_get_at(
-                                        &buffer, i, 
+                                        &buffer_test, i, 
                                         (void*)Data_sample
                                 );
                                 data_size_st = snprintf(
@@ -267,7 +267,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         break;
                     case Media_TEXT:
                         current_coap_mediatype = Media_TEXT;
-                        l = circularbuffer_unreaded_items_size(&buffer);
+                        l = circularbuffer_unreaded_items_size(&buffer_test);
                         if (l > 0)
                         {
                             last = From;
@@ -275,7 +275,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             for (i=last;i < first;i++)
                             {
                                 circularbuffer_get_at(
-                                        &buffer, i, (void*)Data_sample
+                                        &buffer_test, i, (void*)Data_sample
                                 );
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
@@ -297,7 +297,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         break;
                     case Media_BYTE:
                         current_coap_mediatype = Media_BYTE;
-                        l = circularbuffer_unreaded_items_size(&buffer);
+                        l = circularbuffer_unreaded_items_size(&buffer_test);
                         if (l > 0)
                         {
                             last = From;
@@ -313,7 +313,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                                 data += sizeof(uint32_t);
                                 buffer_size -= sizeof(uint32_t);
                                 circularbuffer_get_at(
-                                        &buffer, i, (void*)Data_sample
+                                        &buffer_test, i, (void*)Data_sample
                                 );
                                 memcpy(
                                         (void*)data,
@@ -354,15 +354,15 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     );
                     data += data_size_st;
                     buffer_size -= data_size_st;
-                    l = circularbuffer_unreaded_items_size(&buffer);
+                    l = circularbuffer_unreaded_items_size(&buffer_test);
                     if (l > 0)
                     {
-                        last = circularbuffer_get_last_index(&buffer);
-                        first = circularbuffer_get_first_index(&buffer);
+                        last = circularbuffer_get_last_index(&buffer_test);
+                        first = circularbuffer_get_first_index(&buffer_test);
                         for (i=last;i < first;i++)
                         {
                             circularbuffer_get_at(
-                                    &buffer, i, (void*)Data_sample
+                                    &buffer_test, i, (void*)Data_sample
                             );
                             if(i != last)
                             {
@@ -411,15 +411,15 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     );
                     data += data_size_st;
                     buffer_size -= data_size_st;
-                    l = circularbuffer_unreaded_items_size(&buffer);
+                    l = circularbuffer_unreaded_items_size(&buffer_test);
                     if (l > 0)
                     {
-                        last = circularbuffer_get_last_index(&buffer);
-                        first = circularbuffer_get_first_index(&buffer);
+                        last = circularbuffer_get_last_index(&buffer_test);
+                        first = circularbuffer_get_first_index(&buffer_test);
                         for (i=last;i < first;i++)
                         {
                             circularbuffer_get_at(
-                                    &buffer, i, (void*)Data_sample
+                                    &buffer_test, i, (void*)Data_sample
                             );
                             data_size_st = snprintf(
                                     (char*)data, buffer_size,
@@ -462,15 +462,15 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     break;
                 case Media_TEXT:
                     current_coap_mediatype = Media_TEXT;
-                    l = circularbuffer_unreaded_items_size(&buffer);
+                    l = circularbuffer_unreaded_items_size(&buffer_test);
                     if (l > 0)
                     {
-                        last = circularbuffer_get_last_index(&buffer);
-                        first = circularbuffer_get_first_index(&buffer);
+                        last = circularbuffer_get_last_index(&buffer_test);
+                        first = circularbuffer_get_first_index(&buffer_test);
                         for (i=last;i < first;i++)
                         {
                             circularbuffer_get_at(
-                                    &buffer, i, (void*)Data_sample
+                                    &buffer_test, i, (void*)Data_sample
                             );
                             data_size_st = snprintf(
                                     (char*)data, buffer_size,
@@ -492,11 +492,11 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     break;
                 case Media_BYTE:
                     current_coap_mediatype = Media_BYTE;
-                    l = circularbuffer_unreaded_items_size(&buffer);
+                    l = circularbuffer_unreaded_items_size(&buffer_test);
                     if (l > 0)
                     {
-                        last = circularbuffer_get_last_index(&buffer);
-                        first = circularbuffer_get_first_index(&buffer);
+                        last = circularbuffer_get_last_index(&buffer_test);
+                        first = circularbuffer_get_first_index(&buffer_test);
                         for (i=last; (i < first) 
                                     && (buffer_size > ((sample_size+1)*sizeof(uint32_t)) );i++)
                         {
@@ -508,7 +508,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             data += sizeof(uint32_t);
                             buffer_size -= sample_size*sizeof(uint32_t);
                             circularbuffer_get_at(
-                                    &buffer, i, (void*)Data_sample
+                                    &buffer_test, i, (void*)Data_sample
                             );
                             memcpy(
                                     (void*)data,
@@ -602,19 +602,19 @@ inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType,
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "<CURRENTRECORDER>%d</CURRENTRECORDER>",
-                            circularbuffer_get_first_index(&buffer)
+                            circularbuffer_get_first_index(&buffer_test)
                     );
                     break;
                 case Media_TEXT:
                     current_coap_mediatype = Media_TEXT;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
-                            "%d", circularbuffer_get_first_index(&buffer)
+                            "%d", circularbuffer_get_first_index(&buffer_test)
                     );
                     break;
                 case Media_BYTE:
                     current_coap_mediatype = Media_BYTE;
-                    Value = circularbuffer_get_first_index(&buffer);
+                    Value = circularbuffer_get_first_index(&buffer_test);
                     memcpy((void*)data,(void*)&Value,4);
                     (*data_size) = 4;
                     break;
@@ -659,19 +659,19 @@ inline int StreamRecorderLastCommand_GET(uint8_t MediaType,
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
                             "<LASTRECORDER>%d</LASTRECORDER>",
-                            circularbuffer_get_first_index(&buffer)
+                            circularbuffer_get_first_index(&buffer_test)
                     );
                     break;
                 case Media_TEXT:
                     current_coap_mediatype = Media_TEXT;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
-                            "%d", circularbuffer_get_first_index(&buffer)
+                            "%d", circularbuffer_get_first_index(&buffer_test)
                     );
                     break;
                 case Media_BYTE:
                     current_coap_mediatype = Media_BYTE;
-                    Value = circularbuffer_get_last_index(&buffer);
+                    Value = circularbuffer_get_last_index(&buffer_test);
                     memcpy((void*)data,(void*)&Value,4);
                     (*data_size) = 4;
                     break;

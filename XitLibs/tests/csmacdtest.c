@@ -121,7 +121,7 @@ void test5()
 {
     uint16_t CRC_MB = 0xFFFF;
     uint8_t ID = 0;
-    uint8_t DATA[10];
+    uint8_t DATA[256];
     printf("recvtest test 5\n");
     int i;
     for (i = 0; i < 25; i++)
@@ -142,10 +142,11 @@ void test5()
             csma_receiver(&controller, bp[j]);
             CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (bp[j])];
         }
-        csma_receiver(&controller, ((CRC_MB) / 256)&255);
-        csma_receiver(&controller, (CRC_MB)&255);
+        csma_receiver(&controller, ((CRC_MB / 256) & 255));
+        csma_receiver(&controller, (CRC_MB & 255));
         csma_main_cycle(&controller, &ID, DATA);
         printf("Received %d %02X\n", ID, DATA[0]);
+        printf("Packet number of %d: length packet is %d\n", i, msgs_streamer[i][1]);
         if ((ID != 0x20)
                 || (DATA[0] != 0x56))
         {
@@ -179,11 +180,9 @@ int main(int argc, char** argv)
     test4();
     printf("%%TEST_FINISHED%% time=0 test4 (csmacdtest) \n");
     
-	/*
     printf("%%TEST_STARTED%% test5 (csmacdtest)\n");
     test5();
     printf("%%TEST_FINISHED%% time=0 test5 (csmacdtest) \n");
-	*/
 	
     printf("%%SUITE_FINISHED%% time=0\n");
 

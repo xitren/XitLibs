@@ -16,7 +16,7 @@
 #include "circularbuffer.h"
 #include "CommandModule.h"
 
-CircularBuffer_t buffer;
+CircularBuffer_t buffer_test;
 CircularBufferItem_t storage[400];
 
 /*
@@ -27,19 +27,19 @@ void test1() {
     int i;
     printf("circlebuffertest test push\n");
     CircularBufferItem_t Data_sample;
-    int ptr = circularbuffer_get_first_index(&buffer)+1;
+    int ptr = circularbuffer_get_first_index(&buffer_test)+1;
     printf("first_index %d\n",ptr);
     for(i=0;i < 8;i++)
     {
         Data_sample.Channel[i] = ptr;
     }
-    circularbuffer_push(&buffer,&Data_sample);
+    circularbuffer_push(&buffer_test,&Data_sample);
 }
 void test2() {
     enum cc_stat ret;
     printf("circlebuffertest test pull\n");
     CircularBufferItem_t Data_sample;
-    ret = circularbuffer_pull(&buffer,&Data_sample);
+    ret = circularbuffer_pull(&buffer_test,&Data_sample);
     if (ret == CC_OK)
         printf("%d %d %d %d %d %d %d %d \n",
                 Data_sample.Channel[0],Data_sample.Channel[1],
@@ -57,7 +57,7 @@ int main(int argc, char** argv) {
     
     int i;
     circularbuffer_new(
-            &buffer,
+            &buffer_test,
             (CircularBufferItem_t *)storage,
             20
     );
