@@ -19,6 +19,7 @@
 #include "array.h"
 #include "umm_malloc.h"
 #include "CRC16ANSI.h"
+#include "coap.h"
 /*============================================================================*/                           
 
 /* Private structures --------------------------------------------------------*/
@@ -41,9 +42,103 @@ typedef struct _tagCommandTable_t
 
 /* Private variables ---------------------------------------------------------*/
 static Array *CommandTableArray;
+const char* global_link_wellknown[2] = {
+    "/.well-known/core", "</.well-known/core>"
+};
+/*============================================================================*/
+
+/* Private function prototypes -----------------------------------------------*/
+int WellKnown_GET(uint8_t MediaType, ParameterList_t *TempParam, 
+                    uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
 /*============================================================================*/
     
 /* Functions declaration -----------------------------------------------------*/
+inline int WellKnown_GET(uint8_t MediaType, 
+        ParameterList_t *TempParam, uint8_t *data, 
+        uint32_t *data_size, uint32_t buffer_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int ret_val = 0;
+    uint8_t *data_st = data;
+    uint32_t data_size_st = 0;
+    int i = 0;
+    
+    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    {
+        if (ret_val >= 0)
+        {
+            DBG_LOG_TRACE("MediaType (%d)\n",MediaType);
+            if (MediaType == Media_FREE)
+                MediaType = Media_LINK;
+            switch (MediaType) 
+            {
+                case Media_LINK:
+                    current_coap_mediatype = Media_LINK;
+                    int ii = GetCommandsNumber();
+                    for (i=0;i < ii;i++)
+                    {   
+                        DBG_LOG_TRACE(
+                                "Added %s (%d, limit %d)\n",
+                                GetCommandLink(i),
+                                i,
+                                buffer_size
+                        );
+                        data_size_st = snprintf(
+                                (char*)data, buffer_size,
+                                "%s,", GetCommandLink(i)
+                        );
+                        data += data_size_st;
+                        buffer_size -= data_size_st;
+                        (*data_size) = data - data_st;
+                    }
+                    break;
+                default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*)data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+                    );
+                    break;
+            }
+        }
+    }
+    else
+    {
+        current_coap_mediatype = Media_XML;
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*)data, buffer_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r"
+        );
+    }
+    return(ret_val);
+}
+int WellKnownCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam, 
+                    uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int ret_val = 0;
+    switch (Method) 
+    {
+        case Method_GET:
+            ret_val = WellKnown_GET(
+                    MediaType,TempParam,data,data_size,buffer_size
+            );
+            break;
+        default:
+            current_coap_mediatype = Media_XML;
+            ret_val = INVALID_PARAMETERS_ERROR;
+            (*data_size) = snprintf(
+                    (char*)data, buffer_size,
+                    "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
+            );
+            break;
+    }
+    return(ret_val);
+}
+
 void InitCommands(void)
 {
     if (array_new(&CommandTableArray) != 0)
@@ -130,6 +225,7 @@ CommandFunction_t FindCommand(const char *Command)
     if(Command)
     {
         crc = CRC16ANSI(Command,strlen(Command));
+        DBG_LOG_TRACE("Command %s (%04X)\n",Command,crc);
         /* Now loop through each element in the table to see if there is  */
         /* a match.                                                       */
         for(Index=0,ret_val=NULL;
@@ -137,6 +233,7 @@ CommandFunction_t FindCommand(const char *Command)
                   Index++)
         {
             array_get_at(CommandTableArray, Index, (void**)&Comm);
+            DBG_LOG_TRACE("Compare %s (%04X)\n",Comm->CommandName,Comm->UniCode);
             if (crc == Comm->UniCode)
                 if((strlen(Comm->CommandName) == strlen(Command)) 
                        && (memcmp(Command, Comm->CommandName, 

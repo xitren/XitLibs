@@ -317,6 +317,8 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
         ret_val2 = get_parameter(TempParam,"value",(uint32_t*)&Value);
         if (ret_val2 >= 0)
             WriteMem(Address,Value);
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         if (ret_val >= 0)
         {
             switch (MediaType) 
@@ -380,6 +382,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
     
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         data[*data_size-1] = 0;
         switch (MediaType)
         {

@@ -588,6 +588,7 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
 
     opts_len = (p - buf) - 4;   // number of bytes used by options
 
+    DBG_LOG_TRACE("Build payload (size:%d)\n",pkt->payload.len);
     if (pkt->payload.len > 0)
     {
         if ((*buflen) < 4 + 1 + pkt->payload.len + opts_len)
@@ -804,7 +805,8 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
     pkt->numopts = 1;
 
     // need token in response
-    if (tok_len > 0) {
+    if (tok_len > 0) 
+    {
         pkt->hdr.tkl = tok_len;
         pkt->tok_len = tok_len;
         memcpy(pkt->tok_p,tok_p,tok_len);
@@ -814,12 +816,15 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
     // safe because 1 < MAXOPT
     pkt->opts[0].num = COAP_OPTION_CONTENT_FORMAT;
     pkt->opts[0].buf.p = type_opt;
-    if (scratch->len < 2)
+    if (scratch->len < 2){
+        DBG_LOG_ERROR("COAP_ERR_BUFFER_TOO_SMALL %d\n",scratch->len);
         return COAP_ERR_BUFFER_TOO_SMALL;
+    }
     pkt->opts[0].buf.p[0] = ((uint16_t)content_type & 0xFF00) >> 8;
     pkt->opts[0].buf.p[1] = ((uint16_t)content_type & 0x00FF);
     pkt->opts[0].buf.len = 2;
-    if (opt_part){
+    if (opt_part)
+    {
         pkt->opts[1].num = opt_part->num;
         pkt->opts[1].buf.p = opt_part->buf.p;
         pkt->opts[1].buf.len = opt_part->buf.len;
@@ -910,6 +915,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 add_parameter(&params,"end",end);
             }
         }
+        current_coap_mediatype = Media_FREE;
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_CONTENT_FORMAT, &count)))
         {
             for (i=0;i<count;i++)
@@ -926,7 +932,12 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 else if ( media_option == COAP_CONTENTTYPE_APPLICATION_LINKFORMAT )
                     current_coap_mediatype = Media_LINK;
                 else
-                    current_coap_mediatype = Media_XML;
+                    current_coap_mediatype = Media_UNKNOWN;
+                DBG_LOG_TRACE(
+                        "current_coap_mediatype (%d : %d)\n",
+                        current_coap_mediatype,
+                        media_option
+                );
             }
         }
         memcpy(scratch->p,inpkt->payload.p,inpkt->payload.len);

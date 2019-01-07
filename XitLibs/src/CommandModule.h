@@ -41,11 +41,14 @@ typedef enum
   Media_TEXT           =       0x00000001,
   Media_BYTE           =       0x00000002,
   Media_JSON           =       0x00000003,
-  Media_LINK           =       0x00000004
+  Media_LINK           =       0x00000004,
+  Media_FREE           =       0x00000005,
+  Media_UNKNOWN        =       0x00000006
 } MediaTypeDef;
 /*============================================================================*/
 
 /* Public variables ----------------------------------------------------------*/
+extern const char* global_link_wellknown[2];
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
@@ -59,6 +62,8 @@ int GetCommandsNumber(void);
 int add_parameter(ParameterList_t *params, char *strParam, uint32_t intParam);
 int get_parameter(ParameterList_t *params, char *strParam, uint32_t *intParam);
 int delete_parameter(ParameterList_t *params, char *strParam);
+int WellKnownCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam, 
+                    uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
 /*============================================================================*/
 
 #ifdef __cplusplus

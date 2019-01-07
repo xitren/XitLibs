@@ -104,6 +104,8 @@ inline int ClockCommand_GET(uint8_t MediaType,
     int Value = -1;
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         switch (MediaType)
         {
             case Media_XML:
@@ -161,6 +163,8 @@ inline int ClockCommand_PUT(uint8_t MediaType,
     int Value = -1;
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         ret_val = get_parameter(TempParam,"value",(uint32_t*)&Value);
         if ( (ret_val >= 0) )
         {
@@ -224,6 +228,8 @@ inline int ClockCommand_RESET(uint8_t MediaType,
     {
         if ( (ret_val >= 0) )
         {
+            if (MediaType == Media_FREE)
+                MediaType = Media_XML;
             SetClock(0);
             switch (MediaType)
             {
@@ -318,6 +324,8 @@ inline int CalculationFreeCycles_GET(uint8_t MediaType,
     int Value = -1;
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         switch (MediaType)
         {
             case Media_XML:
@@ -401,6 +409,8 @@ inline int CalculationMaxCycles_GET(uint8_t MediaType,
     int Value = -1;
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         switch (MediaType)
         {
             case Media_XML:
@@ -457,6 +467,8 @@ inline int CalculationMaxCycles_RESET(uint8_t MediaType,
     int Value = -1;
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         max_free_cycles = 1;
         switch (MediaType)
         {
@@ -546,6 +558,8 @@ inline int CalculationPercentCycles_GET(uint8_t MediaType,
     int Value = -1;
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_XML;
         switch (MediaType)
         {
             case Media_XML:

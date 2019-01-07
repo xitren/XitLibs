@@ -40,6 +40,11 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
             global_link_streamer[2][0],
             global_link_streamer[2][1],
             &StreamRecorderLastCommand);
+    AddCommand(
+            Method_GET,
+            global_link_wellknown[0],
+            global_link_wellknown[1],
+            &WellKnownCommand);
 }
 
 coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint32_t port)
@@ -79,8 +84,10 @@ coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint3
             media_option = COAP_CONTENTTYPE_APPLICATION_XML;
             break;
     }
+    DBG_LOG_TRACE("coap_handle_req return code rc == %d\n",rc);
     if (rc == 0)
     {
+        DBG_LOG_TRACE("header rc == %d\n",inpkt.hdr.code);
         if ((inpkt.hdr.code == COAP_METHOD_GET))
         {
             coap_make_response(
@@ -114,15 +121,17 @@ coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint3
     }
     else
     {
+        scratch.len = HANDLER_BUFFER_LENGTH;
         switch (rc)
         {
             case INVALID_PARAMETERS_ERROR:
+                DBG_LOG_TRACE("Answer INVALID_PARAMETERS_ERROR\n");
                 coap_make_response(
                         &scratch,
                         &outpkt,
                         0,
-                        (uint8_t*) scratch.p,
-                        scratch.len,
+                        NULL,
+                        0,
                         inpkt.hdr.id[0],
                         inpkt.hdr.id[1],
                         inpkt.tok_p,
@@ -131,12 +140,13 @@ coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint3
                         media_option);
                 break;
             case NO_COMMAND_ERROR:
+                DBG_LOG_TRACE("Answer NO_COMMAND_ERROR\n");
                 coap_make_response(
                         &scratch,
                         &outpkt,
                         0,
-                        (uint8_t*) scratch.p,
-                        scratch.len,
+                        NULL,
+                        0,
                         inpkt.hdr.id[0],
                         inpkt.hdr.id[1],
                         inpkt.tok_p,
@@ -145,12 +155,13 @@ coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint3
                         media_option);
                 break;
             default:
+                DBG_LOG_TRACE("Answer default\n");
                 coap_make_response(
                         &scratch,
                         &outpkt,
                         0,
-                        (uint8_t*) scratch.p,
-                        scratch.len,
+                        NULL,
+                        0,
                         inpkt.hdr.id[0],
                         inpkt.hdr.id[1],
                         inpkt.tok_p,
@@ -161,6 +172,7 @@ coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint3
         }
     }
     /*==4= Build response package ========================================*/
+    DBG_LOG_TRACE("Build response package (size:%d)\n",outpkt.payload.len);
     message.len = HANDLER_BUFFER_LENGTH;
     rc = coap_build(message.p, &message.len, &outpkt, NULL, NULL);
     /*==5= Transmitt package =============================================*/

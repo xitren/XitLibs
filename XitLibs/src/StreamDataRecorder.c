@@ -141,6 +141,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 //    enum cc_stat ret;
     if ((TempParam))
     {
+        if (MediaType == Media_FREE)
+            MediaType = Media_JSON;
         ret_val_f = get_parameter(TempParam,"from",(uint32_t*)&From);
         ret_val_t = get_parameter(TempParam,"to",(uint32_t*)&To);
         if ( (ret_val_f >= 0) && (ret_val_t >= 0) ) 
@@ -595,6 +597,8 @@ inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType,
     {
         if (ret_val >= 0)
         {
+            if (MediaType == Media_FREE)
+                MediaType = Media_XML;
             switch (MediaType) 
             {
                 case Media_XML:
@@ -652,6 +656,8 @@ inline int StreamRecorderLastCommand_GET(uint8_t MediaType,
     {
         if (ret_val >= 0)
         {
+            if (MediaType == Media_FREE)
+                MediaType = Media_XML;
             switch (MediaType) 
             {
                 case Media_XML:
