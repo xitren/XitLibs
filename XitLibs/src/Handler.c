@@ -1,4 +1,5 @@
 #include "Handler.h"
+#include "LogModule.h"
     
 #define HANDLER_BUFFER_LENGTH   4096
 #define CIRCULAR_BUFFER_LENGTH  48
@@ -14,6 +15,8 @@ CircularBufferItem_t file[CIRCULAR_BUFFER_LENGTH];
     
 void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
 {
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     InitCommands();
     InitStreamRecorder(file, CIRCULAR_BUFFER_LENGTH, sample_frequency, sample_size);
 
@@ -41,6 +44,8 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
 
 coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint32_t port)
 {
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     int rc;
     uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
     memset((void *) &inpkt, 0, sizeof (coap_packet_t));

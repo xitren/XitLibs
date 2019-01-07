@@ -43,8 +43,9 @@ static Deque *TransmiteDeque;
 /* Functions declaration -----------------------------------------------------*/
 int InitBuffer()
 {
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     int ret_val = NO_BUFFER_ERROR;
-    DBG_LOG_TRACE("Into InitBuffer.\n");
     if (deque_new(&ReceiveDeque) != 0)
         return BUFFER_ERROR;
     if (deque_new(&TransmiteDeque) != 0)
@@ -56,7 +57,8 @@ int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
     int ret_val = NO_BUFFER_ERROR;
     ReceiveDeque_t *comm;
    
-    DBG_LOG_TRACE("Into AddToReceive.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((msg == NULL))
     {
         DBG_LOG_ERROR("msg argument is NULL\n");
@@ -91,6 +93,8 @@ int ProceedReceive(uint8_t *msg,uint32_t *size, uint32_t *ip, uint32_t *port)
     int ret_val = NO_BUFFER_ERROR;
     ReceiveDeque_t *comm;
    
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((msg == NULL) || (size == NULL) || (ip == NULL) || (port == NULL))
     {
         DBG_LOG_ERROR("ProceedReceive argument is NULL\n");
@@ -123,7 +127,8 @@ int AddToTransmite(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port
     int ret_val = NO_BUFFER_ERROR;
     TransmiteDeque_t *comm;
    
-    DBG_LOG_TRACE("Into AddToReceive.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((msg == NULL))
     {
         DBG_LOG_ERROR("msg argument is NULL\n");
@@ -158,6 +163,8 @@ int ProceedTransmite(uint8_t *msg,uint32_t *size, uint32_t *ip, uint32_t *port)
     int ret_val = NO_BUFFER_ERROR;
     TransmiteDeque_t *comm;
    
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((msg == NULL) || (size == NULL) || (ip == NULL) || (port == NULL))
     {
         DBG_LOG_ERROR("ProceedReceive argument is NULL\n");
@@ -188,7 +195,8 @@ int ProceedTransmite(uint8_t *msg,uint32_t *size, uint32_t *ip, uint32_t *port)
 int ClearBuffer()
 {
     int ret_val = NO_BUFFER_ERROR;
-    DBG_LOG_TRACE("Into ClearBuffer.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((ReceiveDeque == NULL))
     {
         return BUFFER_ERROR;

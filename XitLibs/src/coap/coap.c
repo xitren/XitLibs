@@ -36,7 +36,8 @@ static uint8_t type_opt[3];
 //#ifdef DEBUG
 void coap_dumpHeader(coap_header_t *hdr)
 {
-    DBG_LOG_DEBUG("Into coap_dumpHeader.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if (hdr == NULL)
     {
         DBG_LOG_ERROR("hdr is NULL\n");
@@ -52,7 +53,8 @@ void coap_dumpHeader(coap_header_t *hdr)
 
 void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
 {
-    DBG_LOG_DEBUG("Into coap_dump_char.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if (buf == NULL)
     {
         DBG_LOG_ERROR("buf is NULL\n");
@@ -78,7 +80,8 @@ void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
 
 void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
 {
-    DBG_LOG_DEBUG("Into coap_dump.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if (buf == NULL)
     {
         DBG_LOG_ERROR("buf is NULL\n");
@@ -107,7 +110,8 @@ void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
 void coap_dumpOptions(coap_option_t *opts, size_t numopt)
 {
     size_t i;
-    DBG_LOG_DEBUG("Into coap_dumpOptions.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if (opts == NULL)
     {
         DBG_LOG_ERROR("opts is NULL\n");
@@ -140,7 +144,8 @@ void coap_dumpOptions(coap_option_t *opts, size_t numopt)
 
 void coap_dumpPacket(coap_packet_t *pkt)
 {
-    DBG_LOG_DEBUG("Into coap_dumpPacket.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if (pkt == NULL)
     {
         DBG_LOG_ERROR("pkt is NULL\n");
@@ -159,7 +164,8 @@ void coap_clock(void)
     int i;
     coap_token_record *answer;
     coap_token_record *removed;
-    DBG_LOG_DEBUG("Into coap_clock.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     for (i = 0; i < array_size(AwaitedAnswersArray); i++)
     {
         array_get_at(AwaitedAnswersArray, i, (void**)&answer);
@@ -251,7 +257,8 @@ char* coap_check_ans(const char *other)
 
 int coap_parseHeader(coap_header_t *hdr, const uint8_t *buf, size_t buflen)
 {
-    DBG_LOG_DEBUG("Into coap_parseHeader.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((hdr == NULL) || (buf == NULL))
     {
         DBG_LOG_ERROR("coap_parseHeader argument is NULL\n");
@@ -274,7 +281,8 @@ int coap_parseHeader(coap_header_t *hdr, const uint8_t *buf, size_t buflen)
 
 int coap_parseToken(char* tok_p, size_t *tok_len, const coap_header_t *hdr, const uint8_t *buf, size_t buflen)
 {
-    DBG_LOG_DEBUG("Into coap_parseToken.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((tok_p == NULL) || (tok_len == NULL) || (hdr == NULL) || (buf == NULL))
     {
         DBG_LOG_ERROR("coap_parseToken argument is NULL\n");
@@ -306,7 +314,8 @@ int coap_parseToken(char* tok_p, size_t *tok_len, const coap_header_t *hdr, cons
 int coap_parseOption(coap_option_t *option, uint16_t *running_delta, 
                                             const uint8_t **buf, size_t buflen)
 {
-    DBG_LOG_DEBUG("Into coap_parseOption.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((option == NULL) || (running_delta == NULL) || (buf == NULL))
     {
         DBG_LOG_ERROR("coap_parseOption argument is NULL\n");
@@ -382,7 +391,8 @@ int coap_parseOption(coap_option_t *option, uint16_t *running_delta,
 // http://tools.ietf.org/html/rfc7252#section-3.1
 int coap_parseOptionsAndPayload(coap_option_t *options, uint8_t *numOptions, coap_buffer_t *payload, const coap_header_t *hdr, const uint8_t *buf, size_t buflen)
 {
-    DBG_LOG_DEBUG("Into coap_parseOptionsAndPayload.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((options == NULL) || (numOptions == NULL) || (payload == NULL) 
                             || (hdr == NULL) || (buf == NULL))
     {
@@ -426,7 +436,8 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
 {
     int rc;
 
-    DBG_LOG_DEBUG("Into coap_parse.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((pkt == NULL) || (buf == NULL))
     {
         DBG_LOG_ERROR("coap_parse argument is NULL\n");
@@ -455,7 +466,8 @@ const coap_option_t *coap_findOptions(const coap_packet_t *pkt, uint8_t num, uin
     size_t i;
     const coap_option_t *first = NULL;
     *count = 0;
-    DBG_LOG_DEBUG("Into coap_findOptions.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((pkt == NULL) || (count == NULL))
     {
         DBG_LOG_ERROR("coap_findOptions argument is NULL\n");
@@ -480,7 +492,8 @@ const coap_option_t *coap_findOptions(const coap_packet_t *pkt, uint8_t num, uin
 
 int coap_buffer_to_string(char *strbuf, size_t strbuflen, const coap_buffer_t *buf)
 {
-    DBG_LOG_DEBUG("Into coap_buffer_to_string.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((strbuf == NULL) || (buf == NULL))
     {
         DBG_LOG_ERROR("coap_buffer_to_string argument is NULL\n");
@@ -501,7 +514,8 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     uint8_t *p;
     uint16_t running_delta = 0;
     coap_token_record *answer;
-    DBG_LOG_DEBUG("Into coap_build.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((buf == NULL) || (buflen == NULL) || (pkt == NULL))
     {
         DBG_LOG_ERROR("coap_build argument is NULL\n");
@@ -551,21 +565,21 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
             *p++ = (optDelta - 13);
         }
         else
-        if (delta == 14)
-        {
-            *p++ = ((optDelta-269) >> 8);
-            *p++ = (0xFF & (optDelta-269));
-        }
+            if (delta == 14)
+            {
+                *p++ = ((optDelta-269) >> 8);
+                *p++ = (0xFF & (optDelta-269));
+            }
         if (len == 13)
         {
             *p++ = (pkt->opts[i].buf.len - 13);
         }
         else
-        if (len == 14)
-  	    {
-            *p++ = (pkt->opts[i].buf.len >> 8);
-            *p++ = (0xFF & (pkt->opts[i].buf.len-269));
-        }
+            if (len == 14)
+                {
+                *p++ = (pkt->opts[i].buf.len >> 8);
+                *p++ = (0xFF & (pkt->opts[i].buf.len-269));
+            }
 
         memcpy(p, pkt->opts[i].buf.p, pkt->opts[i].buf.len);
         p += pkt->opts[i].buf.len;
@@ -584,8 +598,8 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
     }
     else
         *buflen = opts_len + 4;
-        DBG_LOG_DEBUG("awaited_answers_cnt %d && callback %s.\n"
-                , (int)array_size(AwaitedAnswersArray), callback);
+//    DBG_LOG_DEBUG("awaited_answers_cnt %d && callback %s.\n"
+//            , (int)array_size(AwaitedAnswersArray), callback);
     if (callback)
     {
         answer = (coap_token_record *)umm_calloc(1,sizeof(coap_token_record));
@@ -621,10 +635,12 @@ int coap_build(uint8_t *buf, size_t *buflen, const coap_packet_t *pkt,
 
 void coap_option_nibble(uint32_t value, uint8_t *nibble)
 {
-    DBG_LOG_DEBUG("Into coap_option_nibble.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((nibble == NULL))
     {
-        DBG_LOG_ERROR("coap_option_nibble argument is NULL\n");
+        DBG_LOG_ERROR("Error in (function %s)\n",
+                          __LINE__, __FILE__, __func__);
         return;
     }
     if (value<13)
@@ -632,19 +648,23 @@ void coap_option_nibble(uint32_t value, uint8_t *nibble)
         *nibble = (0xFF & value);
     }
     else
-    if (value<=0xFF+13)
     {
-        *nibble = 13;
-    } else if (value<=0xFFFF+269)
-    {
-        *nibble = 14;
+        if (value<=0xFF+13)
+        {
+            *nibble = 13;
+        } 
+        else if (value<=0xFFFF+269)
+        {
+            *nibble = 14;
+        }
     }
 }
 
 int make_part_option(coap_option_t *opt_part, uint32_t num, 
         coap_option_part_size sizep, uint8_t last)
 {
-    DBG_LOG_DEBUG("Into make_part_option.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((opt_part == NULL))
     {
         DBG_LOG_ERROR("make_part_option argument is NULL\n");
@@ -671,7 +691,8 @@ int parse_part_option(const coap_buffer_t *opt_part,uint8_t *end)
 {
     uint32_t value = 0;
     uint32_t len = opt_part->len;
-    DBG_LOG_DEBUG("Into parse_part_option.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((opt_part == NULL) || (end == NULL))
     {
         DBG_LOG_ERROR("parse_part_option argument is NULL\n");
@@ -714,7 +735,8 @@ int coap_make_msg(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         const char* tok_p, size_t tok_len, coap_responsecode_t rspcode, 
         coap_content_type_t content_type)
 {
-    DBG_LOG_DEBUG("Into coap_make_msg.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((scratch == NULL) || (pkt == NULL) || (tok_p == NULL))
     {
         DBG_LOG_ERROR("coap_make_msg argument is NULL\n");
@@ -766,7 +788,8 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
         const char* tok_p, size_t tok_len, coap_responsecode_t rspcode, 
         coap_content_type_t content_type)
 {
-    DBG_LOG_DEBUG("Into coap_make_response.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((scratch == NULL) || (pkt == NULL) || (tok_p == NULL))
     {
         DBG_LOG_ERROR("coap_make_response argument is NULL\n");
@@ -822,7 +845,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                                         ParserCallback_t callback_function,
                                         char *_ip,uint32_t port)
 {
-    DBG_LOG_DEBUG("Into coap_handle_req.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     DBG_LOG_DEBUG("ProtocolHandler2-in %d bytes hash %04X.\n",
         inpkt->payload.len,CRC16ANSI(inpkt->payload.p,inpkt->payload.len));
     if ((scratch == NULL) || (inpkt == NULL) || (outpkt == NULL) 
@@ -932,7 +956,8 @@ Array *coap_get_waiting_list(void)
 
 void coap_setup(void)
 {
-    DBG_LOG_DEBUG("Into coap_setup.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if (array_new(&AwaitedAnswersArray) != 0)
         return;
 }

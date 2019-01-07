@@ -38,7 +38,8 @@ void InitSchedule(void)
 
 void AddToSchedule(ScheduleFunction_t ScheduleFunction)
 {
-    DBG_LOG_TRACE("Into AddToSchedule.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     ScheduleFunction_t *comm;
     comm = (ScheduleFunction_t *)umm_calloc(1,sizeof(ScheduleFunction_t));
     if ((comm == NULL))
@@ -56,7 +57,8 @@ void AddToSchedule(ScheduleFunction_t ScheduleFunction)
 }
 void ClearSchedule(void)
 {
-    DBG_LOG_TRACE("Into ClearSchedule.\n");
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
     if ((ScheduleTableDeque == NULL))
     {
         DBG_LOG_ERROR("ScheduleTableDeque argument is NULL\n");

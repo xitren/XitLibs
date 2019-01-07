@@ -31,31 +31,50 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
         </group>
         <group name="Encephalon">
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CRC16ANSI.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/handlertest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/csmacdtest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/include/circularbuffer.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/csmacdtest.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/streamtest.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/xitlibtypes.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/coaptest.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/memorytest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/LogModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Schedule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/json/cJSON.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/PWMModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/InOutBuffer.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/json/cJSON_Utils.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/xitlibtypes.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/circlebuffertest.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/include/circularbuffer.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/DistCalc.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/streamtest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/coaptest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/LogModule.c</file>
         </group>
         <group>
-            <file>file:/D:/Github/XitLibs/XitLibs/tests/coap_messages_example.c</file>
-            <file>file:/D:/Github/XitLibs/XitLibs/extension/ext_handler.c</file>
-            <file>file:/D:/Github/XitLibs/XitLibs/tests/handlertest.c</file>
-            <file>file:/D:/Github/XitLibs/XitLibs/tests/csmacdtest.c</file>
-            <file>file:/D:/Github/XitLibs/XitLibs/tests/coap_messages_example.h</file>
-            <file>file:/D:/Github/XitLibs/XitLibs/tests/coaptest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CRC16ANSI.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/DistCalc.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/coaptest.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/PWMModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/LogModule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Schedule.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/InOutBuffer.c</file>
         </group>
     </open-files>
 </project-private>
