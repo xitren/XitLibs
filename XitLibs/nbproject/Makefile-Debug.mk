@@ -47,8 +47,6 @@ OBJECTFILES= \
 	${OBJECTDIR}/src/Schedule.o \
 	${OBJECTDIR}/src/StreamDataRecorder.o \
 	${OBJECTDIR}/src/coap/coap.o \
-	${OBJECTDIR}/src/json/cJSON.o \
-	${OBJECTDIR}/src/json/cJSON_Utils.o \
 	${OBJECTDIR}/src/malloc/umm_malloc.o \
 	${OBJECTDIR}/src/models/src/array.o \
 	${OBJECTDIR}/src/models/src/circularbuffer.o \
@@ -172,16 +170,6 @@ ${OBJECTDIR}/src/coap/coap.o: src/coap/coap.c
 	${MKDIR} -p ${OBJECTDIR}/src/coap
 	${RM} "$@.d"
 	$(COMPILE.c) -g -DDEBUG -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/coap/coap.o src/coap/coap.c
-
-${OBJECTDIR}/src/json/cJSON.o: src/json/cJSON.c
-	${MKDIR} -p ${OBJECTDIR}/src/json
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON.o src/json/cJSON.c
-
-${OBJECTDIR}/src/json/cJSON_Utils.o: src/json/cJSON_Utils.c
-	${MKDIR} -p ${OBJECTDIR}/src/json
-	${RM} "$@.d"
-	$(COMPILE.c) -g -DDEBUG -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -std=c99 -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_Utils.o src/json/cJSON_Utils.c
 
 ${OBJECTDIR}/src/malloc/umm_malloc.o: src/malloc/umm_malloc.c
 	${MKDIR} -p ${OBJECTDIR}/src/malloc
@@ -486,32 +474,6 @@ ${OBJECTDIR}/src/coap/coap_nomain.o: ${OBJECTDIR}/src/coap/coap.o src/coap/coap.
 	    $(COMPILE.c) -g -DDEBUG -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -std=c99 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/coap/coap_nomain.o src/coap/coap.c;\
 	else  \
 	    ${CP} ${OBJECTDIR}/src/coap/coap.o ${OBJECTDIR}/src/coap/coap_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/json/cJSON_nomain.o: ${OBJECTDIR}/src/json/cJSON.o src/json/cJSON.c 
-	${MKDIR} -p ${OBJECTDIR}/src/json
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/json/cJSON.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -std=c99 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_nomain.o src/json/cJSON.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/json/cJSON.o ${OBJECTDIR}/src/json/cJSON_nomain.o;\
-	fi
-
-${OBJECTDIR}/src/json/cJSON_Utils_nomain.o: ${OBJECTDIR}/src/json/cJSON_Utils.o src/json/cJSON_Utils.c 
-	${MKDIR} -p ${OBJECTDIR}/src/json
-	@NMOUTPUT=`${NM} ${OBJECTDIR}/src/json/cJSON_Utils.o`; \
-	if (echo "$$NMOUTPUT" | ${GREP} '|main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T main$$') || \
-	   (echo "$$NMOUTPUT" | ${GREP} 'T _main$$'); \
-	then  \
-	    ${RM} "$@.d";\
-	    $(COMPILE.c) -g -DDEBUG -Isrc/models/include -Isrc/coap -Isrc/json -Isrc/malloc -Isrc -std=c99 -Dmain=__nomain -MMD -MP -MF "$@.d" -o ${OBJECTDIR}/src/json/cJSON_Utils_nomain.o src/json/cJSON_Utils.c;\
-	else  \
-	    ${CP} ${OBJECTDIR}/src/json/cJSON_Utils.o ${OBJECTDIR}/src/json/cJSON_Utils_nomain.o;\
 	fi
 
 ${OBJECTDIR}/src/malloc/umm_malloc_nomain.o: ${OBJECTDIR}/src/malloc/umm_malloc.o src/malloc/umm_malloc.c 
