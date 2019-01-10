@@ -507,5 +507,211 @@
       <item path="tests/streamtest.c" ex="false" tool="0" flavor2="0">
       </item>
     </conf>
+    <conf name="Release_ARM_Cortex_M4" type="3">
+      <toolsSet>
+        <compilerSet>GNU-ARM|MinGW</compilerSet>
+        <dependencyChecking>true</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <compileType>
+        <cTool>
+          <developmentMode>6</developmentMode>
+          <incDir>
+            <pElem>src/models/include</pElem>
+            <pElem>src/coap</pElem>
+            <pElem>src/json</pElem>
+            <pElem>src/malloc</pElem>
+            <pElem>src</pElem>
+          </incDir>
+          <commandLine>-Wall</commandLine>
+        </cTool>
+        <ccTool>
+          <developmentMode>5</developmentMode>
+        </ccTool>
+        <fortranCompilerTool>
+          <developmentMode>5</developmentMode>
+        </fortranCompilerTool>
+        <asmTool>
+          <developmentMode>5</developmentMode>
+        </asmTool>
+        <archiverTool>
+          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a</output>
+          <commandlineTool>arm-none-eabi-ar</commandlineTool>
+          <ranlibTool>arm-none-eabi-ranlib</ranlibTool>
+        </archiverTool>
+      </compileType>
+      <folder path="TestFiles/f1">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f1</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f2">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f2</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f3">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f3</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f4">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f4</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f5">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f5</output>
+          <commandLine>-Xlinker -Map=output.map</commandLine>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f6">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f6</output>
+        </linkerTool>
+      </folder>
+      <folder path="TestFiles/f7">
+        <cTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </cTool>
+        <ccTool>
+          <incDir>
+            <pElem>.</pElem>
+          </incDir>
+        </ccTool>
+        <linkerTool>
+          <output>${TESTDIR}/TestFiles/f7</output>
+        </linkerTool>
+      </folder>
+      <item path="src/CRC16ANSI.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/CSMACD.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/CommandModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/ConfigMem.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/DistCalc.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/Handler.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/InOutBuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/LogModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/PWMModule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/Schedule.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/StreamDataRecorder.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/coap/coap.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/malloc/umm_malloc.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/array.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/circularbuffer.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/common.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/deque.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/hashset.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/hashtable.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/list.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/queue.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/slist.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/stack.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/treeset.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="src/models/src/treetable.c" ex="false" tool="0" flavor2="9">
+      </item>
+      <item path="tests/circlebuffertest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/coap_messages_example.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/coaptest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/csmacdtest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/distcalctest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/handlertest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/memorytest.c" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="tests/streamtest.c" ex="false" tool="0" flavor2="0">
+      </item>
+    </conf>
   </confs>
 </configurationDescriptor>

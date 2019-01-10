@@ -22,6 +22,14 @@ CND_ARTIFACT_PATH_Release=dist/Release/MinGW-Windows/libxitlibs.a
 CND_PACKAGE_DIR_Release=dist/Release/MinGW-Windows/package
 CND_PACKAGE_NAME_Release=XitLibs.tar
 CND_PACKAGE_PATH_Release=dist/Release/MinGW-Windows/package/XitLibs.tar
+# Release_ARM_Cortex_M4 configuration
+CND_PLATFORM_Release_ARM_Cortex_M4=GNU-ARM-Windows
+CND_ARTIFACT_DIR_Release_ARM_Cortex_M4=dist/Release_ARM_Cortex_M4/GNU-ARM-Windows
+CND_ARTIFACT_NAME_Release_ARM_Cortex_M4=libxitlib_cortexm4.a
+CND_ARTIFACT_PATH_Release_ARM_Cortex_M4=dist/Release_ARM_Cortex_M4/GNU-ARM-Windows/libxitlib_cortexm4.a
+CND_PACKAGE_DIR_Release_ARM_Cortex_M4=dist/Release_ARM_Cortex_M4/GNU-ARM-Windows/package
+CND_PACKAGE_NAME_Release_ARM_Cortex_M4=XitLibs.tar
+CND_PACKAGE_PATH_Release_ARM_Cortex_M4=dist/Release_ARM_Cortex_M4/GNU-ARM-Windows/package/XitLibs.tar
 #
 # include compiler specific variables
 #
