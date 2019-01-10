@@ -10,8 +10,15 @@ uint8_t scratch_b[HANDLER_BUFFER_LENGTH];
 uint8_t message_b[HANDLER_BUFFER_LENGTH];
 coap_rw_buffer_t scratch = {scratch_b, sizeof (scratch_b)};
 coap_rw_buffer_t message = {message_b, sizeof (message_b)};
+coap_observer_buffer_t observer_message = {message_b, sizeof (message_b)};
 
 CircularBufferItem_t file[CIRCULAR_BUFFER_LENGTH];
+
+extern int StreamGetObserverData(uint8_t *data, uint32_t *data_size, 
+                                                    uint32_t buffer_size);
+extern uint32_t StreamGetObserverIp();
+extern uint32_t StreamGetObserverPort();
+extern coap_packet_t* StreamGetObserverPacket();
     
 void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
 {
@@ -47,7 +54,27 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
             &WellKnownCommand);
 }
 
-coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint32_t port)
+uint8_t GetCoapFromMediaType()
+{
+    switch (current_coap_mediatype)
+    {
+        case Media_TEXT:
+            return COAP_CONTENTTYPE_TEXT_PLAIN;
+        case Media_BYTE:
+            return COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM;
+        case Media_XML:
+            return COAP_CONTENTTYPE_APPLICATION_XML;
+        case Media_JSON:
+            return COAP_CONTENTTYPE_APPLICATION_JSON;
+        case Media_LINK:
+            return COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
+        default:
+            return COAP_CONTENTTYPE_APPLICATION_XML;
+    }
+}
+
+coap_rw_buffer_t *MessageHandler( const uint8_t *buf, size_t buflen, 
+                                                char *ip, uint32_t port)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
@@ -63,27 +90,7 @@ coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint3
     if (rc == 0)
         rc = coap_handle_req(&scratch, &inpkt, &outpkt, 0, ip, port);
     /*==3= Build response content ========================================*/
-    switch (current_coap_mediatype)
-    {
-        case Media_TEXT:
-            media_option = COAP_CONTENTTYPE_TEXT_PLAIN;
-            break;
-        case Media_BYTE:
-            media_option = COAP_CONTENTTYPE_APPLICATION_OCTECT_STREAM;
-            break;
-        case Media_XML:
-            media_option = COAP_CONTENTTYPE_APPLICATION_XML;
-            break;
-        case Media_JSON:
-            media_option = COAP_CONTENTTYPE_APPLICATION_JSON;
-            break;
-        case Media_LINK:
-            media_option = COAP_CONTENTTYPE_APPLICATION_LINKFORMAT;
-            break;
-        default:
-            media_option = COAP_CONTENTTYPE_APPLICATION_XML;
-            break;
-    }
+    media_option = GetCoapFromMediaType();
     DBG_LOG_TRACE("coap_handle_req return code rc == %d\n",rc);
     if (rc == 0)
     {
@@ -181,4 +188,47 @@ coap_rw_buffer_t *UserHandler(const uint8_t *buf, size_t buflen, char *ip, uint3
         return &message;
     }
     return (NULL);
+}
+
+coap_observer_buffer_t *StreamObserverHandler()
+{
+    int rc;
+    if (GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
+        int i = StreamGetObserverData(
+                scratch.p, 
+                &scratch.len, 
+                HANDLER_BUFFER_LENGTH
+        );
+        if (i >= 0) {
+            uint8_t media_option = GetCoapFromMediaType();
+            coap_make_response(
+                    &scratch,
+                    &outpkt,
+                    0,
+                    (uint8_t*) scratch.p,
+                    scratch.len,
+                    StreamGetObserverPacket()->hdr.id[0],
+                    StreamGetObserverPacket()->hdr.id[1],
+                    StreamGetObserverPacket()->tok_p,
+                    StreamGetObserverPacket()->tok_len,
+                    COAP_RSPCODE_CONTENT,
+                    media_option
+            );
+            DBG_LOG_TRACE(
+                    "Build observer package (size:%d)\n",
+                    outpkt.payload.len
+            );
+            observer_message.len = HANDLER_BUFFER_LENGTH;
+            rc = coap_build(
+                    observer_message.p, &observer_message.len, 
+                    &outpkt, NULL, NULL
+            );
+            if (rc == 0)
+            {
+                observer_message.ip = StreamGetObserverIp();
+                observer_message.port = StreamGetObserverPort();
+                return &observer_message;
+            }
+        }
+    }
 }

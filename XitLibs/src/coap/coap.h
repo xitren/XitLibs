@@ -50,6 +50,13 @@ typedef struct
 } coap_rw_buffer_t;
 typedef struct
 {
+    uint8_t *p;
+    size_t len;
+    uint32_t ip;
+    uint32_t port;
+} coap_observer_buffer_t;
+typedef struct
+{
     char *callback;
     char release[MAXRELEASESTR];
     uint8_t used;
@@ -165,6 +172,7 @@ typedef struct
     const char *elems[MAX_SEGMENTS];
 } coap_endpoint_path_t;
 extern uint32_t current_coap_mediatype;
+extern coap_packet_t *current_packet;
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/

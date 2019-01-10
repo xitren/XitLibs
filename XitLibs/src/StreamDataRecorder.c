@@ -31,8 +31,9 @@ const char* global_link_streamer[][2] = {
     {"/streamdatarecorder/last", "</streamdatarecorder/last>"}
 };
 CircularBuffer_t buffer_test;
-static uint32_t sample_frequency = 250;
 uint32_t sample_size = 8;
+coap_packet_t observe_pkt;
+static uint32_t sample_frequency = 250;
 static uint32_t signal_amplitude[BUFFER_SAMPLE_SIZE-1] = 
                                     {10,100,1000,10000,1000,100,10};
 static uint32_t noise_amplitude[BUFFER_SAMPLE_SIZE-1] = 
@@ -40,7 +41,11 @@ static uint32_t noise_amplitude[BUFFER_SAMPLE_SIZE-1] =
 static uint32_t power_amplitude[BUFFER_SAMPLE_SIZE-1] = 
                                     {100,1000,10000,1000,1000,1000,1000};
 static uint32_t signal_frequency[BUFFER_SAMPLE_SIZE-1] = {10,20,30,40,50,60,70};
-static uint8_t signal_type = 0;
+static uint8_t signal_type = 0;    
+static uint8_t observed = 0;
+static uint8_t media_type;
+static uint32_t observer_ip;
+static uint32_t observer_port;
 /*============================================================================*/
 
 /* Private constants ---------------------------------------------------------*/
@@ -72,6 +77,7 @@ void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size,
             _storage_size
     );
 }
+
 void AddSample(void)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
@@ -118,10 +124,38 @@ void AddSample(void)
     circularbuffer_push(&buffer_test,(void *)Data_sample);
     return;
 }
+
+int GetStreamDataReadyCnt(void)
+{
+    return circularbuffer_unreaded_items_size(&buffer_test);
+}
+
 void ClearStreamRecorder(void)
 {
     circularbuffer_remove_all(&buffer_test);
 }
+
+uint32_t StreamGetObserverIp(){
+    return observer_ip;
+}
+
+uint32_t StreamGetObserverPort(){
+    return observer_port;
+}
+
+coap_packet_t* StreamGetObserverPacket(){
+    return &observe_pkt;
+}
+
+int StreamGetObserverData(uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
+    ParameterList_t TempParam;
+    if (observed < 1)
+        return -1;
+    StreamRecorderCommand_GET(media_type,&TempParam,data,data_size,buffer_size);
+    return 0;
+}
+
 inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempParam, 
                     uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
 {
@@ -132,17 +166,31 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
     int ret_val_t = 0;
     int From = -1;
     int To = -1;
+    int Observer = -1;
     size_t last;
     size_t first;
     uint8_t *data_st = data;
     uint32_t data_size_st = 0;
     uint32_t l = 0,i,k;
     uint32_t Data_sample[MAX_SAMPLE_SIZE];
-//    enum cc_stat ret;
     if ((TempParam))
     {
         if (MediaType == Media_FREE)
             MediaType = Media_JSON;
+        ret_val_f = get_parameter(TempParam,"observe",(uint32_t*)&Observer);
+        if ( (ret_val_f >= 0) )
+        {
+            ret_val_f = get_parameter(TempParam,"ip",(uint32_t*)&From);
+            ret_val_t = get_parameter(TempParam,"port",(uint32_t*)&To);
+            observed = Observer;
+            media_type = MediaType;
+            if ( (Observer >= 0) && (ret_val_f >= 0) && (ret_val_t >= 0) ) 
+            {
+                memcpy(&observe_pkt, current_packet, sizeof(coap_packet_t));
+                observer_ip = From;
+                observer_port = To;
+            }
+        }
         ret_val_f = get_parameter(TempParam,"from",(uint32_t*)&From);
         ret_val_t = get_parameter(TempParam,"to",(uint32_t*)&To);
         if ( (ret_val_f >= 0) && (ret_val_t >= 0) ) 

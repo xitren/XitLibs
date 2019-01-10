@@ -25,10 +25,11 @@
 
 /* Private variables ---------------------------------------------------------*/
 Array *AwaitedAnswersArray;
-//static coap_token_record awaited_answers[MAXWAIT];
-//uint32_t awaited_answers_cnt = 0;
 static uint8_t part_buff[3];
 static uint8_t type_opt[3];
+uint32_t current_coap_mediatype = 0;
+static char bufhr[100];
+coap_packet_t *current_packet;
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
@@ -843,8 +844,6 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
     return 0;
 }
 
-uint32_t current_coap_mediatype = 0;
-static char bufhr[100];
 int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, 
                                         coap_packet_t *outpkt,
                                         ParserCallback_t callback_function,
@@ -852,6 +851,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
+    current_packet = inpkt;
     DBG_LOG_DEBUG("ProtocolHandler2-in %d bytes hash %04X.\n",
         inpkt->payload.len,CRC16ANSI(inpkt->payload.p,inpkt->payload.len));
     if ((scratch == NULL) || (inpkt == NULL) || (outpkt == NULL) 
@@ -897,6 +897,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                                 &(converter.ui8[3]));
         add_parameter(&params,"ip",converter.ui32);
         add_parameter(&params,"port",port);
+//        add_parameter(&params,"",port);
         if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_OBSERVE, &count)))
         {
             for (i=0;i<count;i++)
