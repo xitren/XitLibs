@@ -283,8 +283,8 @@ inline void WriteMem(uint32_t _adr, uint32_t _val)
 }
 inline uint32_t ReadMem(uint32_t _adr)
 {
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-                      __LINE__, __FILE__, __func__);
+//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+//                      __LINE__, __FILE__, __func__);
     if (_adr < CFG_SIZE)
     {
         return config_reg[_adr];

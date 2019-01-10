@@ -112,8 +112,8 @@ int circularbuffer_get_first_index(CircularBuffer_t* st)
 }
 int circularbuffer_unreaded_items_size(CircularBuffer_t* st)
 {
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-                      __LINE__, __FILE__, __func__);
+//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+//                      __LINE__, __FILE__, __func__);
     if ( st->Tail > st->Head )
         return ( ((st->Head) + st->Cycle*st->StorageSize) 
                 - ((st->Tail) + (st->Cycle - 1)*st->StorageSize) );

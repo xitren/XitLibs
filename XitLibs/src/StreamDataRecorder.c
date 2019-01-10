@@ -180,6 +180,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
         ret_val_f = get_parameter(TempParam,"observe",(uint32_t*)&Observer);
         if ( (ret_val_f >= 0) )
         {
+            DBG_LOG_DEBUG("Found observer property.\n")
             ret_val_f = get_parameter(TempParam,"ip",(uint32_t*)&From);
             ret_val_t = get_parameter(TempParam,"port",(uint32_t*)&To);
             observed = Observer;

@@ -24,6 +24,7 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
+    InitCfgMem();
     InitCommands();
     InitStreamRecorder(file, CIRCULAR_BUFFER_LENGTH, sample_frequency, sample_size);
 
@@ -194,6 +195,11 @@ coap_observer_buffer_t *StreamObserverHandler()
 {
     int rc;
     if (GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
+            DBG_LOG_TRACE(
+                    "GetStreamDataReadyCnt (%d >= %d)\n",
+                    GetStreamDataReadyCnt(),
+                    ReadMem(REG_EEG_PocketSize)
+            );
         int i = StreamGetObserverData(
                 scratch.p, 
                 &scratch.len, 
@@ -231,4 +237,5 @@ coap_observer_buffer_t *StreamObserverHandler()
             }
         }
     }
+    return 0;
 }

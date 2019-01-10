@@ -277,14 +277,24 @@ int get_parameter(ParameterList_t *params, char *strParam, uint32_t *intParam)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
+    if ( (params == 0) || (strParam == 0) )
+        return 0;
+    DBG_LOG_TRACE("Get parameter %s\n", strParam);
     int i;
+    DBG_LOG_TRACE("Check parameters\n");
     for (i=0;i < params->NumberofParameters;i++)
     {
-        if (!strcmp(strParam,params->Params[i].strParam))
+        if (params->Params[i].strParam == 0)
+            continue;
+        DBG_LOG_TRACE("Parameter %d", i);
+        DBG_LOG_TRACE(" { %08X }\n", params->Params[i].strParam);
+        DBG_LOG_TRACE(" { %s }", params->Params[i].strParam);
+        if (!strncmp(strParam,params->Params[i].strParam,STRING_SIZE))
         {
             return ((*intParam) = params->Params[i].intParam); 
         }
     }
+    DBG_LOG_TRACE("\n");
     return INVALID_PARAMETERS_ERROR;
 }
 #define SIZE_OF_PARAMETER sizeof(Parameter_t)
