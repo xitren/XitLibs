@@ -7,14 +7,14 @@
 # Macros
 TOP=`pwd`
 CND_PLATFORM=GNU-ARM-Windows
-CND_CONF=Release_ARM_Cortex_M4
+CND_CONF=Release_ARM_Cortex_M7
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 CND_DLIB_EXT=dll
 NBTMPDIR=${CND_BUILDDIR}/${CND_CONF}/${CND_PLATFORM}/tmp-packaging
 TMPDIRNAME=tmp-packaging
-OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a
-OUTPUT_BASENAME=libxitlib_cortexm4.a
+OUTPUT_PATH=${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm7.a
+OUTPUT_BASENAME=libxitlib_cortexm7.a
 PACKAGE_TOP_DIR=XitLibs/
 
 # Functions

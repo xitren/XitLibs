@@ -24,7 +24,7 @@ AR=arm-none-eabi-ar
 # Macros
 CND_PLATFORM=GNU-ARM-Windows
 CND_DLIB_EXT=dll
-CND_CONF=Release_ARM_Cortex_M4
+CND_CONF=Release_ARM_Cortex_M7
 CND_DISTDIR=dist
 CND_BUILDDIR=build
 
@@ -87,7 +87,7 @@ TESTOBJECTFILES= \
 	${TESTDIR}/tests/streamtest.o
 
 # C Compiler Flags
-CFLAGS=-Wall -mthumb -mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16
+CFLAGS=-Wall -mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16
 
 # CC Compiler Flags
 CCFLAGS=
@@ -104,13 +104,13 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm7.a
 
-${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a: ${OBJECTFILES}
+${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm7.a: ${OBJECTFILES}
 	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a
-	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a ${OBJECTFILES} 
-	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a
+	${RM} ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm7.a
+	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm7.a ${OBJECTFILES} 
+	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm7.a
 
 ${OBJECTDIR}/src/CRC16ANSI.o: src/CRC16ANSI.c
 	${MKDIR} -p ${OBJECTDIR}/src
