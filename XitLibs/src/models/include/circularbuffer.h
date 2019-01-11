@@ -49,6 +49,7 @@ enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, int index,
 int circularbuffer_get_last_index(CircularBuffer_t* st);
 int circularbuffer_get_first_index(CircularBuffer_t* st);
 int circularbuffer_unreaded_items_size(CircularBuffer_t* st);
+void increment_last_index(CircularBuffer_t* st, uint32_t inc_value);
 /*============================================================================*/
 
 /* Public defines ------------------------------------------------------------*/
