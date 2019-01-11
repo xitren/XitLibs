@@ -36,28 +36,6 @@
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/LogModule.c</file>
         </group>
-        <group>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/DistCalc.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/include/circularbuffer.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Schedule.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/LogModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/coaptest.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CRC16ANSI.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/PWMModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.h</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
-            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/InOutBuffer.c</file>
-        </group>
         <group name="INEUM">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/DistCalc.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/DistCalc.c</file>
@@ -85,5 +63,6 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
         </group>
+        <group/>
     </open-files>
 </project-private>

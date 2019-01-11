@@ -535,7 +535,7 @@
           <developmentMode>5</developmentMode>
         </asmTool>
         <archiverTool>
-          <output>${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a</output>
+          <output>${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a</output>
           <commandlineTool>arm-none-eabi-ar</commandlineTool>
           <ranlibTool>arm-none-eabi-ranlib</ranlibTool>
         </archiverTool>

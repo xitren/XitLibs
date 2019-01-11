@@ -104,13 +104,13 @@ LDLIBSOPTIONS=
 
 # Build Targets
 .build-conf: ${BUILD_SUBPROJECTS}
-	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a
+	"${MAKE}"  -f nbproject/Makefile-${CND_CONF}.mk ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a
 
-${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a: ${OBJECTFILES}
-	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}
-	${RM} ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a
-	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a ${OBJECTFILES} 
-	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/${CND_PLATFORM}/libxitlib_cortexm4.a
+${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a: ${OBJECTFILES}
+	${MKDIR} -p ${CND_DISTDIR}/${CND_CONF}
+	${RM} ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a
+	${AR} -rv ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a ${OBJECTFILES} 
+	$(RANLIB) ${CND_DISTDIR}/${CND_CONF}/libxitlib_cortexm4.a
 
 ${OBJECTDIR}/src/CRC16ANSI.o: src/CRC16ANSI.c
 	${MKDIR} -p ${OBJECTDIR}/src
