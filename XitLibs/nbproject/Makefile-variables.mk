@@ -30,6 +30,14 @@ CND_ARTIFACT_PATH_Release_ARM_Cortex_M4=dist/Release_ARM_Cortex_M4/libxitlib_cor
 CND_PACKAGE_DIR_Release_ARM_Cortex_M4=dist/Release_ARM_Cortex_M4/GNU-ARM-Windows/package
 CND_PACKAGE_NAME_Release_ARM_Cortex_M4=XitLibs.tar
 CND_PACKAGE_PATH_Release_ARM_Cortex_M4=dist/Release_ARM_Cortex_M4/GNU-ARM-Windows/package/XitLibs.tar
+# Release_ARM_Cortex_M7 configuration
+CND_PLATFORM_Release_ARM_Cortex_M7=GNU-ARM-Windows
+CND_ARTIFACT_DIR_Release_ARM_Cortex_M7=dist/Release_ARM_Cortex_M7
+CND_ARTIFACT_NAME_Release_ARM_Cortex_M7=libxitlib_cortexm7.a
+CND_ARTIFACT_PATH_Release_ARM_Cortex_M7=dist/Release_ARM_Cortex_M7/libxitlib_cortexm7.a
+CND_PACKAGE_DIR_Release_ARM_Cortex_M7=dist/Release_ARM_Cortex_M7/GNU-ARM-Windows/package
+CND_PACKAGE_NAME_Release_ARM_Cortex_M7=XitLibs.tar
+CND_PACKAGE_PATH_Release_ARM_Cortex_M7=dist/Release_ARM_Cortex_M7/GNU-ARM-Windows/package/XitLibs.tar
 #
 # include compiler specific variables
 #

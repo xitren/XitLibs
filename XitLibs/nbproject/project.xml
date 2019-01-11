@@ -23,6 +23,10 @@
                     <name>Release_ARM_Cortex_M4</name>
                     <type>3</type>
                 </confElem>
+                <confElem>
+                    <name>Release_ARM_Cortex_M7</name>
+                    <type>3</type>
+                </confElem>
             </confList>
             <formatting>
                 <project-formatting-style>false</project-formatting-style>

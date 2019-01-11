@@ -31,7 +31,7 @@ DEFAULTCONF=Debug
 CONF=${DEFAULTCONF}
 
 # All Configurations
-ALLCONFS=Debug Release Release_ARM_Cortex_M4 
+ALLCONFS=Debug Release Release_ARM_Cortex_M4 Release_ARM_Cortex_M7 
 
 
 # build
