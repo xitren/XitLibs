@@ -28,5 +28,6 @@ uint32_t size_glob;
 inline int AddToLog(const char *str, uint32_t N, int lvl)
 {
     printf("LOGGER<%d>:--//internal//-- %s",lvl,str);
+    return 0;
 }
 /*============================================================================*/

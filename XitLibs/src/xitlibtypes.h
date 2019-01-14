@@ -74,20 +74,29 @@ typedef unsigned char     uint8_t;
 /*============================================================================*/
 
 /* Public types --------------------------------------------------------------*/
+
+typedef union {
+    unsigned char ui8[2];
+    uint16_t ui16;
+} conv_uint16_bytes_t;
+
 typedef union {
     unsigned char ui8[4];
     uint32_t ui32;
 } conv_uint32_bytes_t;
+
 typedef struct _tagParameter_t
 {
    char     *strParam;
    uint32_t  intParam;
 } Parameter_t;
+
 typedef struct _tagParameterList_t
 {
    int         NumberofParameters;
    Parameter_t Params[MAX_NUM_OF_PARAMETERS];
 } ParameterList_t;
+
 typedef enum
 {
   BASESTATION            =       0x00000000,

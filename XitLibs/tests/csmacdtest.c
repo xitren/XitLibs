@@ -119,36 +119,67 @@ void test4()
 
 void test5()
 {
-    uint16_t CRC_MB = 0xFFFF;
     uint8_t ID = 0;
-    uint8_t DATA[256];
+    uint8_t DATA[1024];
     printf("recvtest test 5\n");
     int i;
     for (i = 0; i < 25; i++)
     {
-        int j;
-        csma_receiver(&controller, 0x55);
-        CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (0x55)];
-        csma_receiver(&controller, 0x20);
-        CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (0x20)];
-        csma_receiver(&controller, 0x00);
-        CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (0x00)];
-        csma_receiver(&controller, 0x04);
-        CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ ((uint8_t)msgs_streamer[i][1])];
-        csma_receiver(&controller, 0x56);
-        uint8_t *bp = (uint8_t *)&msgs_streamer[i][0];
+        int j, k = 0;
+        uint32_t *payload = msgs_streamer[i][0];
+        uint16_t length = (uint16_t)msgs_streamer[i][1];
+        uint8_t load[length];
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        load[k++] = 0x55;
+        load[k++] = 0x20;
+        load[k++] = 0x00;
+        load[k++] = (uint8_t)length;
+        printf("--------- length : %02X\n", (uint8_t)length);
         for (j = 0; j < msgs_streamer[i][1]; j++)
         {
-            csma_receiver(&controller, bp[j]);
-            CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (bp[j])];
+            printf("--------- : %02X\n", (uint8_t)payload[j]);
         }
-        csma_receiver(&controller, ((CRC_MB / 256) & 255));
-        csma_receiver(&controller, (CRC_MB & 255));
+        csma_receiver(&controller, load[0]);
         csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_receiver(&controller, load[1]);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_receiver(&controller, load[2]);
+        csma_receiver(&controller, load[3]);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        csma_main_cycle(&controller, &ID, DATA);
+        for (j = 0; j < length; j++)
+        {
+            load[k++] = (uint8_t)payload[j];
+            csma_receiver(&controller, (uint8_t)payload[j]);
+        }
+        uint16_t CRC = CRC16ANSI(load, length + 4);
+        csma_receiver(&controller, (uint8_t)((CRC >> 8) & 0xFF) );
+        csma_receiver(&controller, (uint8_t)(CRC & 0xFF) );
+        csma_main_cycle(&controller, &ID, DATA);
+        printf("--------- CRC : 0x%04X\n", CRC );
         printf("Received %d %02X\n", ID, DATA[0]);
         printf("Packet number of %d: length packet is %d\n", i, msgs_streamer[i][1]);
+        printf("ID = 0x%02X\n", ID);
+        printf("DATA[0] = 0x%02X\n", DATA[0]);
         if ((ID != 0x20)
-                || (DATA[0] != 0x56))
+                || (DATA[0] != payload[0])
+                || (DATA[3] != payload[3])
+                || (DATA[5] != payload[5]))
         {
             printf(" %%TEST_FAILED%% time=0 testname=test5 (recvtest) message=Packet number of %d: length packet is %d\n", i, msgs_streamer[i][1]);
         }
@@ -169,8 +200,6 @@ int main(int argc, char** argv)
     printf("%%TEST_STARTED%% test2 (csmacdtest)\n");
     test2();
     printf("%%TEST_FINISHED%% time=0 test2 (csmacdtest) \n");
-
-    csma_init(&controller, &Sender);
 
     printf("%%TEST_STARTED%% test3 (csmacdtest)\n");
     test3();

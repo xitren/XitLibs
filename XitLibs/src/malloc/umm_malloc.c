@@ -1123,7 +1123,7 @@ void *umm_calloc( size_t num, size_t sizen ) {
 void *umm_realloc( void *ptr, size_t size ) {
 
    unsigned short int blocks;
-   char buf_local[60];
+   /*char buf_local[60];*/
    unsigned short int blockSize;
 
    unsigned short int c;

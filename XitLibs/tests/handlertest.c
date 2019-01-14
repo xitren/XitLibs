@@ -10,8 +10,9 @@
 #include "CommandModule.h"
 #include "StreamDataRecorder.h"
 #include "Handler.h"
+#include "coap_messages_example.h"
 
-uint8_t msg_test_get_wellknown[] = {
+/*uint8_t msg_test_get_wellknown[] = {
     0x40, 0x01, 0xFD, 0x5A, 0xBB, 0x2E, 0x77, 0x65, 0x6C, 0x6C, 0x2D, 0x6B,
     0x6E, 0x6F, 0x77, 0x6E, 0x04, 0x63, 0x6F, 0x72, 0x65, 0xC1, 0x06
 };
@@ -177,7 +178,7 @@ uint32_t msgs_streamer[][2] = {
     {(uint32_t) msg_test_post_stream_from_to, sizeof (msg_test_post_stream_from_to)},
     {(uint32_t) msg_test_put_stream_from_to, sizeof (msg_test_put_stream_from_to)},
     {(uint32_t) msg_test_delete_stream_from_to, sizeof (msg_test_delete_stream_from_to)}
-};
+};*/
 
 /*
  * Simple C Test Suite
@@ -185,16 +186,16 @@ uint32_t msgs_streamer[][2] = {
 
 void testCoap_make_response()
 {
-    coap_rw_buffer_t *buff;
+    /*coap_rw_buffer_t *buff;
     for (int i = 0; i < 25; i++)
     {
-        buff = UserHandler((const uint8_t *)msgs_streamer[i][0], msgs_streamer[i][1], "127.0.0.1", 4567);
+        buff = MessageHandler((const uint8_t *)msgs_streamer[i][0], msgs_streamer[i][1], "127.0.0.1", 4567);
         if (buff != NULL)
         {
             continue;
         }
         printf(" %%TEST_FAILED%% time=0 testname=test2 (recvtest) message=error message sample\n");
-    }
+    }*/
 }
 
 int main(int argc, char** argv)

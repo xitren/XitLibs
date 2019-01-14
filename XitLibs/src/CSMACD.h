@@ -21,8 +21,8 @@
 extern "C" {
 #endif
 
-#define MAX_CSMACD_MSGS             5
-#define MAX_CSMACD_NODES            5
+#define MAX_CSMACD_MSGS             255
+#define MAX_CSMACD_NODES            255
 #define CIRCULAR_BUFFER_SIZE        1024
     
 enum State
@@ -89,9 +89,9 @@ typedef struct _tagCSMACDController_t
     uint16_t                        recv_data_s;
     uint16_t                        recv_addr;
     uint8_t                         recv_buffer[CIRCULAR_BUFFER_SIZE];
-    uint8_t                         recv_buffer_head;
+    uint16_t                        recv_buffer_head;
     uint8_t                         send_buffer[CIRCULAR_BUFFER_SIZE];
-    uint8_t                         send_buffer_head;
+    uint16_t                        send_buffer_head;
     uint8_t                         bus_send;
     size_t                          bus_recv;
     int                             bus_id;
