@@ -33,7 +33,7 @@ extern const char* global_link_streamer[][2];
 
 /* Public function prototypes ------------------------------------------------*/
 void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size, 
-        uint32_t _sample_frequency, uint32_t _sample_size);
+    uint32_t _sample_frequency, uint32_t _sample_size, uint32_t _signal_type);
 void AddSample(void);
 void ClearStreamRecorder(void);
 int GetStreamDataReadyCnt(void);
@@ -46,6 +46,7 @@ int StreamRecorderCurrentCommand(uint8_t Method, uint8_t MediaType,
 int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType, 
         ParameterList_t *TempParam, uint8_t *data, 
         uint32_t *data_size, uint32_t buffer_size);
+int IsObserved(void);
 /*============================================================================*/
 
 #ifdef __cplusplus

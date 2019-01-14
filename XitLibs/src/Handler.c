@@ -15,7 +15,7 @@ coap_observer_buffer_t observer_message = {message_b, sizeof (message_b)};
 CircularBufferItem_t file[CIRCULAR_BUFFER_LENGTH];
 
 extern int StreamGetObserverData(uint8_t *data, uint32_t *data_size, 
-                                                    uint32_t buffer_size);
+                                    uint32_t buffer_size, uint32_t iter_s);
 extern uint32_t StreamGetObserverIp();
 extern uint32_t StreamGetObserverPort();
 extern coap_packet_t* StreamGetObserverPacket();
@@ -26,7 +26,11 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
                       __LINE__, __FILE__, __func__);
     InitCfgMem();
     InitCommands();
-    InitStreamRecorder(file, CIRCULAR_BUFFER_LENGTH, sample_frequency, sample_size);
+    InitStreamRecorder(
+            file, CIRCULAR_BUFFER_LENGTH, 
+            sample_frequency, sample_size,
+            1
+    );
 
     AddCommand(
             Method_GET | Method_PUT | Method_POST | Method_RESET,
@@ -194,6 +198,9 @@ coap_rw_buffer_t *MessageHandler( const uint8_t *buf, size_t buflen,
 coap_observer_buffer_t *StreamObserverHandler()
 {
     int rc;
+    if (!IsObserved()){
+        return 0;
+    }
     if (GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
             DBG_LOG_TRACE(
                     "GetStreamDataReadyCnt (%d >= %d)\n",
@@ -203,7 +210,8 @@ coap_observer_buffer_t *StreamObserverHandler()
         int i = StreamGetObserverData(
                 scratch.p, 
                 &scratch.len, 
-                HANDLER_BUFFER_LENGTH
+                HANDLER_BUFFER_LENGTH, 
+                ReadMem(REG_EEG_PocketSize)
         );
         if (i >= 0) {
             uint8_t media_option = GetCoapFromMediaType();
@@ -217,7 +225,7 @@ coap_observer_buffer_t *StreamObserverHandler()
                     StreamGetObserverPacket()->hdr.id[1],
                     StreamGetObserverPacket()->tok_p,
                     StreamGetObserverPacket()->tok_len,
-                    COAP_RSPCODE_CONTENT,
+                    COAP_RSPCODE_CHANGED,
                     media_option
             );
             DBG_LOG_TRACE(

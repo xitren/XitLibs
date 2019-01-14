@@ -87,12 +87,11 @@ enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, int index,
                       __LINE__, __FILE__, __func__);
     int last = circularbuffer_get_last_index(st);
     int first = circularbuffer_get_first_index(st);
-    if ( (index < last) || (first <= index) )
+    if ( (index < last) || (first <= index) ){
         return CC_ERR_INVALID_RANGE;
-    int ind = index - last;
-    if(ind >= st->StorageSize)
-        ind = ind - st->StorageSize;
-    *item = st->Storage[st->Tail];  // Read data
+        DBG_LOG_TRACE("CC_ERR_INVALID_RANGE\n");
+    }
+    *item = st->Storage[index % st->StorageSize];  // Read data
     return CC_OK;
 }
 int circularbuffer_get_last_index(CircularBuffer_t* st)
@@ -103,6 +102,22 @@ int circularbuffer_get_last_index(CircularBuffer_t* st)
         return ((st->Tail) + (st->Cycle - 1)*st->StorageSize);
     else
         return ((st->Tail) + (st->Cycle)*st->StorageSize);
+}
+void increment_last_index(CircularBuffer_t* st, uint32_t inc_value)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int i;
+    int next;
+    for (i=0;i < inc_value;i++)
+    {
+        if (st->Head == st->Tail)  // if the head == tail, we don't have any data
+            return;
+        next = st->Tail + 1;  // next is where tail will point to after this read.
+        if(next >= st->StorageSize)
+            next = 0;
+        st->Tail = next;              // tail to next offset.
+    }
 }
 int circularbuffer_get_first_index(CircularBuffer_t* st)
 {
