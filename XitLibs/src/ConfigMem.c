@@ -311,6 +311,8 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
     int Address = -1;
     int Value = -1;
     
+    DBG_LOG_TRACE("MemoryCommand_GET %08X (NumberofParameters %d)\n",
+            TempParam,TempParam->NumberofParameters);
     if ((TempParam) && (TempParam->NumberofParameters > 0))
     {
         ret_val = get_parameter(TempParam,"address",(uint32_t*)&Address);
@@ -319,8 +321,12 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
             WriteMem(Address,Value);
         if (MediaType == Media_FREE)
             MediaType = Media_XML;
+        DBG_LOG_TRACE("MemoryCommand_GET %08X = %d\n",
+                Address,Value);
         if (ret_val >= 0)
         {
+            ret_val = 0;
+            DBG_LOG_TRACE("MemoryCommand_GET Gen res %d\n",MediaType);
             switch (MediaType) 
             {
                 case Media_XML:

@@ -844,6 +844,153 @@ int coap_make_response(coap_rw_buffer_t *scratch, coap_packet_t *pkt,
     return 0;
 }
 
+   /* The following function is responsible for converting number       */
+   /* strings to there unsigned integer equivalent.  This function can  */
+   /* handle leading and tailing white space, however it does not handle*/
+   /* signed or comma delimited values.  This function takes as its     */
+   /* input the string which is to be converted.  The function returns  */
+   /* zero if an error occurs otherwise it returns the value parsed from*/
+   /* the string passed as the input parameter.                         */
+unsigned long StringToUnsignedInteger(char *StringInteger, size_t len)
+{
+    int           IsHex;
+    unsigned int  Index;
+    unsigned long ret_val = 0;
+
+    DBG_LOG_TRACE("Into StringToUnsignedInteger.\n");
+    printf("\n");
+    /* Before proceeding make sure that the parameter that was passed as */
+    /* an input appears to be at least semi-valid.                       */
+    if((StringInteger) && (len))
+    {
+        /* Initialize the variable.                                       */
+        Index = 0;
+        printf("%c",StringInteger[Index]);
+
+        /* Next check to see if this is a hexadecimal number.             */
+        if(len > 2)
+        {
+            if((StringInteger[0] == '0') 
+                    && ((StringInteger[1] == 'x') 
+                    || (StringInteger[1] == 'X')))
+            {
+                IsHex = 1;
+
+                /* Increment the String passed the Hexadecimal prefix.      */
+                StringInteger += 2;
+            }
+            else
+                IsHex = 0;
+        }
+        else
+            IsHex = 0;
+
+        /* Process the value differently depending on whether or not a    */
+        /* Hexadecimal Number has been specified.                         */
+        if(!IsHex)
+        {
+            /* Decimal Number has been specified.                          */
+            while(1)
+            {
+                printf("\n");
+                printf("Dec %c",StringInteger[Index]);
+                /* First check to make sure that this is a valid decimal    */
+                /* digit.                                                   */
+                if((StringInteger[Index] >= '0') 
+                        && (StringInteger[Index] <= '9'))
+                {
+                    /* This is a valid digit, add it to the value being      */
+                    /* built.                                                */
+                    ret_val += (StringInteger[Index] & 0xF);
+
+                    /* Determine if the next digit is valid.                 */
+                    if(((Index + 1) < len) 
+                            && (StringInteger[Index+1] >= '0') 
+                            && (StringInteger[Index+1] <= '9'))
+                    {
+                        /* The next digit is valid so multiply the current    */
+                        /* return value by 10.                                */
+                        ret_val *= 10;
+                    }
+                    else
+                    {
+                        /* The next value is invalid so break out of the loop.*/
+                        break;
+                    }
+                }
+                else
+                {
+                    /* The next value is invalid so break out of the loop.*/
+                    break;
+                }
+
+                Index++;
+            }
+        }
+        else
+        {
+            /* Hexadecimal Number has been specified.                      */
+            while(1)
+            {
+                /* First check to make sure that this is a valid Hexadecimal*/
+                /* digit.                                                   */
+                if(((StringInteger[Index] >= '0') 
+                        && (StringInteger[Index] <= '9')) 
+                        || ((StringInteger[Index] >= 'a') 
+                        && (StringInteger[Index] <= 'f')) 
+                        || ((StringInteger[Index] >= 'A') 
+                        && (StringInteger[Index] <= 'F')))
+                {
+                    printf("\n");
+                    printf("Hex %c",StringInteger[Index]);
+                    /* This is a valid digit, add it to the value being      */
+                    /* built.                                                */
+                    if((StringInteger[Index] >= '0') 
+                            && (StringInteger[Index] <= '9'))
+                        ret_val += (StringInteger[Index] & 0xF);
+                    else
+                    {
+                        if((StringInteger[Index] >= 'a') 
+                                && (StringInteger[Index] <= 'f'))
+                            ret_val += (StringInteger[Index] - 'a' + 10);
+                        else
+                            ret_val += (StringInteger[Index] - 'A' + 10);
+                    }
+
+                    /* Determine if the next digit is valid.                 */
+                    if(((Index + 1) < len) 
+                            && (((StringInteger[Index+1] >= '0') 
+                            && (StringInteger[Index+1] <= '9')) 
+                            || ((StringInteger[Index+1] >= 'a') 
+                            && (StringInteger[Index+1] <= 'f')) 
+                            || ((StringInteger[Index+1] >= 'A') 
+                            && (StringInteger[Index+1] <= 'F'))))
+                    {
+                        /* The next digit is valid so multiply the current    */
+                        /* return value by 16.                                */
+                        ret_val *= 16;
+                    }
+                    else
+                    {
+                        /* The next value is invalid so break out of the loop.*/
+                        break;
+                    }
+                }
+                else
+                { 
+                    /* The next value is invalid so break out of the loop.*/
+                    break;
+                }
+
+                Index++;
+            }
+        }
+    }
+    printf("\n");
+    DBG_LOG_TRACE("Out of StringToUnsignedInteger %d.\n",ret_val);
+    return(ret_val);
+}
+
 int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt, 
                                         coap_packet_t *outpkt,
                                         ParserCallback_t callback_function,
@@ -867,7 +1014,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
     uint8_t count;
 //    uint8_t contentistext = 0;
     uint32_t methodpermission = 0;
-    int i;
+    uint32_t i,j;
     if (inpkt->hdr.code < 5)
     {
         DBG_LOG_DEBUG("ProtocolHandler3 %d bytes hash %04X.\n",
@@ -890,6 +1037,49 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 strncat(bufhr,(char const *)opt[i].buf.p, opt[i].buf.len);
             }
         }
+        if (NULL != (opt = coap_findOptions(inpkt, COAP_OPTION_URI_QUERY, &count)))
+        {
+            for (i=0;i<count;i++)
+            {
+                uint32_t pre = 0;
+                uint32_t old = 0;
+                for (j=0;j<opt[i].buf.len;j++)
+                {
+                    printf("\n");
+                    printf("%c",opt[i].buf.p[j]);
+                    if (opt[i].buf.p[j] == '=')
+                    {
+                        printf(" =");
+                        pre = j+1;
+                        opt[i].buf.p[j] = 0;
+                    }
+                    if (opt[i].buf.p[j] == '&') 
+                    {
+                        printf(" &");
+                        add_parameter(
+                                &params,
+                                opt[i].buf.p + old,
+                                StringToUnsignedInteger(
+                                        opt[i].buf.p + pre,
+                                        j - pre
+                                )
+                        );
+                        old = j+1;
+                        pre = 0;
+                        opt[i].buf.p[j] = 0;
+                    }
+                }
+                add_parameter(
+                        &params,
+                        opt[i].buf.p + old,
+                        StringToUnsignedInteger(
+                                opt[i].buf.p + pre,
+                                j - pre
+                        )
+                );
+                printf("\n");
+            }
+        }
         conv_uint32_bytes_t converter;
         sscanf(_ip,"%d.%d.%d.%d", &(converter.ui8[0]),
                                 &(converter.ui8[1]),
@@ -902,7 +1092,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
         {
             for (i=0;i<count;i++)
             {
-                DBG_LOG_DEBUG("Found observer property.\n")
+                DBG_LOG_DEBUG("Found observer property.\n");
                 add_parameter(&params,"observe",1);
             }
         }

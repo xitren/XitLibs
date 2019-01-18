@@ -72,8 +72,8 @@ typedef struct
 typedef struct
 {
     coap_header_t hdr;          /* Header of the packet */
-    char tok_p[6];          /* Token value, size as specified by hdr.tkl */
-    size_t tok_len;          /* Token value, size as specified by hdr.tkl */
+    char tok_p[6];              /* Token value, size as specified by hdr.tkl */
+    size_t tok_len;             /* Token value, size as specified by hdr.tkl */
     uint8_t numopts;            /* Number of options */
     coap_option_t opts[MAXOPT]; /* Options of the packet. For possible entries see
                                  * http://tools.ietf.org/html/rfc7252#section-5.10 */

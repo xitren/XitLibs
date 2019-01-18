@@ -286,9 +286,10 @@ int get_parameter(ParameterList_t *params, char *strParam, uint32_t *intParam)
     {
         if (params->Params[i].strParam == 0)
             continue;
-        DBG_LOG_TRACE("Parameter %d", i);
+        DBG_LOG_TRACE("Parameter %d\n", i);
         DBG_LOG_TRACE(" { %08X }\n", params->Params[i].strParam);
-        DBG_LOG_TRACE(" { %s }", params->Params[i].strParam);
+        DBG_LOG_TRACE(" { %s }\n", params->Params[i].strParam);
+        DBG_LOG_TRACE(" { %d (%08X) }\n", params->Params[i].intParam, params->Params[i].intParam);
         if (!strncmp(strParam,params->Params[i].strParam,STRING_SIZE))
         {
             return ((*intParam) = params->Params[i].intParam); 
