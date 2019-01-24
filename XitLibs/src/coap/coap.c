@@ -1007,7 +1007,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
         DBG_LOG_ERROR("coap_make_response argument is NULL\n");
         return 0;
     }
-    ParameterList_t params;
+    static ParameterList_t params;
     memset(&params,0,sizeof(ParameterList_t));
     memset(&bufhr,0,sizeof(bufhr));
     const coap_option_t *opt;
