@@ -65,17 +65,17 @@ void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
     {
         while(buflen--)
         {
-            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_TRACE("%c%s", *buf++, (buflen > 0) ? " " : "");
         }
     }
     else
     {
-        printf("Dump: ");
+        DBG_LOG_TRACE("Dump: ");
         while(buflen--)
         {
-            printf("%c%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_TRACE("%c%s", *buf++, (buflen > 0) ? " " : "");
         }
-        printf("\r\n\r");
+        DBG_LOG_TRACE("\r\n\r");
     }
 }
 
@@ -90,21 +90,21 @@ void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
     }
     if (bare)
     {
-        printf("Bare.\n"); 
+        DBG_LOG_TRACE("Bare.\n"); 
         for(;(buflen) > 0;buflen--)
         {
-            printf("%02X ",*buf++);
+            DBG_LOG_TRACE("%02X ", *buf++);
         }
-        printf("\r\n\r");
+        DBG_LOG_TRACE("\r\n\r");
     }
     else
     {
-        printf("Dump: ");
+        DBG_LOG_TRACE("Dump: ");
         while(buflen--)
         {
-            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_TRACE("%02X%s", *buf++, (buflen > 0) ? " " : "");
         }
-        printf("\r\n\r");
+        DBG_LOG_TRACE("\r\n\r");
     }
 }
 
@@ -858,14 +858,14 @@ unsigned long StringToUnsignedInteger(char *StringInteger, size_t len)
     unsigned long ret_val = 0;
 
     DBG_LOG_TRACE("Into StringToUnsignedInteger.\n");
-    printf("\n");
+    
     /* Before proceeding make sure that the parameter that was passed as */
     /* an input appears to be at least semi-valid.                       */
     if((StringInteger) && (len))
     {
         /* Initialize the variable.                                       */
         Index = 0;
-        printf("%c",StringInteger[Index]);
+        DBG_LOG_TRACE("\n%c", StringInteger[Index]);
 
         /* Next check to see if this is a hexadecimal number.             */
         if(len > 2)
@@ -892,8 +892,7 @@ unsigned long StringToUnsignedInteger(char *StringInteger, size_t len)
             /* Decimal Number has been specified.                          */
             while(1)
             {
-                printf("\n");
-                printf("Dec %c",StringInteger[Index]);
+                DBG_LOG_TRACE("\nDec %c", StringInteger[Index]);
                 /* First check to make sure that this is a valid decimal    */
                 /* digit.                                                   */
                 if((StringInteger[Index] >= '0') 
@@ -941,8 +940,7 @@ unsigned long StringToUnsignedInteger(char *StringInteger, size_t len)
                         || ((StringInteger[Index] >= 'A') 
                         && (StringInteger[Index] <= 'F')))
                 {
-                    printf("\n");
-                    printf("Hex %c",StringInteger[Index]);
+                    DBG_LOG_TRACE("\nHex %c", StringInteger[Index]);
                     /* This is a valid digit, add it to the value being      */
                     /* built.                                                */
                     if((StringInteger[Index] >= '0') 
@@ -986,8 +984,7 @@ unsigned long StringToUnsignedInteger(char *StringInteger, size_t len)
             }
         }
     }
-    printf("\n");
-    DBG_LOG_TRACE("Out of StringToUnsignedInteger %d.\n",ret_val);
+    DBG_LOG_TRACE("\nOut of StringToUnsignedInteger %d.\n", ret_val);
     return(ret_val);
 }
 
@@ -1045,17 +1042,16 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 uint32_t old = 0;
                 for (j=0;j<opt[i].buf.len;j++)
                 {
-                    printf("\n");
-                    printf("%c",opt[i].buf.p[j]);
+                    DBG_LOG_TRACE("\n%c", opt[i].buf.p[j]);
                     if (opt[i].buf.p[j] == '=')
                     {
-                        printf(" =");
+                        DBG_LOG_TRACE(" =");
                         pre = j+1;
                         opt[i].buf.p[j] = 0;
                     }
                     if (opt[i].buf.p[j] == '&') 
                     {
-                        printf(" &");
+                        DBG_LOG_TRACE(" &");
                         add_parameter(
                                 &params,
                                 opt[i].buf.p + old,
@@ -1077,7 +1073,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                                 j - pre
                         )
                 );
-                printf("\n");
+                DBG_LOG_TRACE("\n");
             }
         }
         conv_uint32_bytes_t converter;
