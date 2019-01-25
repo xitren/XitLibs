@@ -64,7 +64,7 @@ int main(int argc, char** argv) {
     printf("%%SUITE_STARTED%%\n");
 
     int i;
-    InitStreamRecorder(storage, 48, 250, 8);
+    InitStreamRecorder(storage, 48, 250, 8, 1);
     for (i=0;i < 1000;i++)
         AddSample();
     

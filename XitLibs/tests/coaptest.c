@@ -168,6 +168,26 @@ static uint8_t _msg_test_delete_stream_from_to[] = {
     0x33, 0x30
 };
 
+static uint8_t _msg_test_get_reg1[] = {
+    0x40, 0x01, 0x00, 0x01, 0xb6, 0x6d, 0x65, 0x6d, 0x6f, 0x72, 0x79, 0x4d,
+    0x05, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3d, 0x30, 0x78, 0x30,
+    0x30, 0x30, 0x30, 0x30, 0x30, 0x33, 0x46
+};
+    
+static uint8_t _msg_test_put_reg[] = {
+    0x40, 0x03, 0x00, 0x01, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0x4D, 0x0E,
+    0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3D, 0x30, 0x78, 0x30, 0x30, 0x30,
+    0x30, 0x30, 0x30, 0x33, 0x46, 0x26, 0x76, 0x61, 0x6C, 0x75, 0x65, 0x3D, 0x31,
+    0x30
+};
+
+static uint8_t _msg_test_get_reg2[] = {
+    0x40, 0x03, 0x00, 0x01, 0xB6, 0x6D, 0x65, 0x6D, 0x6F, 0x72, 0x79, 0x4D, 0x0E,
+    0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x3D, 0x30, 0x78, 0x30, 0x30, 0x30,
+    0x30, 0x30, 0x30, 0x33, 0x46, 0x26, 0x76, 0x61, 0x6C, 0x75, 0x65, 0x3D, 0x31,
+    0x30
+};
+
 static uint32_t _msgs_streamer[][2] = {
     {(uint32_t) _msg_test_get_wellknown, sizeof (_msg_test_get_wellknown)},
 
@@ -199,7 +219,11 @@ static uint32_t _msgs_streamer[][2] = {
     {(uint32_t) _msg_test_get_stream_from_to, sizeof (_msg_test_get_stream_from_to)},
     {(uint32_t) _msg_test_post_stream_from_to, sizeof (_msg_test_post_stream_from_to)},
     {(uint32_t) _msg_test_put_stream_from_to, sizeof (_msg_test_put_stream_from_to)},
-    {(uint32_t) _msg_test_delete_stream_from_to, sizeof (_msg_test_delete_stream_from_to)}
+    {(uint32_t) _msg_test_delete_stream_from_to, sizeof (_msg_test_delete_stream_from_to)},
+    
+    {(uint32_t) _msg_test_get_reg1, sizeof (_msg_test_get_reg1)},
+    {(uint32_t) _msg_test_put_reg, sizeof (_msg_test_put_reg)},
+    {(uint32_t) _msg_test_get_reg2, sizeof (_msg_test_get_reg2)}
 };
 
 coap_packet_t inpkt_test;
@@ -213,10 +237,11 @@ coap_rw_buffer_t message_test = {message_b_test, sizeof (message_b_test)};
 void test1()
 {
     int rc, i, j;
-    printf("coaptest test 1\n");
+    printf("**** ---------------------- coaptest test 1 ---------------------- ****\n");
     uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
-    for (i = 0; i < 25; i++)
+    for (i = 0; i < 28; i++)
     {
+    printf("**** ---------------------- coaptest test 1: %d ---------------------- ****\n", i);
         memset((void *) &inpkt_test, 0, sizeof (coap_packet_t));
         /*==1= Parse package =================================================*/
         rc = coap_parse(
@@ -321,12 +346,12 @@ int main(int argc, char** argv)
 
     int i;
     InitCommands();
-    InitStreamRecorder(file, 48, 250, 8);
-    for (i = 0; i < 1000; i++)
-        if (i == 263)
-            AddSample();
-        else
-            AddSample();
+    InitStreamRecorder(file, 48, 250, 8, 1);
+//    for (i = 0; i < 1000; i++)
+//        if (i == 263)
+//            AddSample();
+//        else
+//            AddSample();
 
     AddCommand(
             Method_GET | Method_PUT | Method_POST | Method_RESET,
