@@ -25,6 +25,7 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
     InitCfgMem();
+    InitBuffer();
     InitCommands();
     InitStreamRecorder(
             file, CIRCULAR_BUFFER_LENGTH, 
@@ -78,7 +79,128 @@ uint8_t GetCoapFromMediaType()
     }
 }
 
-coap_rw_buffer_t *MessageHandler( const uint8_t *buf, size_t buflen, 
+coap_rw_buffer_t *MessageHandlerIntIP( const uint8_t *buf, size_t buflen, 
+                                                uint32_t ipi, uint32_t port)
+{
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+                      __LINE__, __FILE__, __func__);
+    int rc;
+    char ip[15];
+    conv_uint32_bytes_t ip_d;
+    ip_d.ui32 = ipi;
+    snprintf(ip,15,"%d.%d.%d.%d",ip_d.ui8[0],ip_d.ui8[1],ip_d.ui8[2],ip_d.ui8[3]);
+    uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
+    memset((void *) &inpkt, 0, sizeof (coap_packet_t));
+    /*==1= Parse package =================================================*/
+    rc = coap_parse(
+            &inpkt,
+            (uint8_t *) buf,
+            buflen);
+    /*==2= Handle request ================================================*/
+    if (rc == 0)
+        rc = coap_handle_req(&scratch, &inpkt, &outpkt, 0, ip, port);
+    /*==3= Build response content ========================================*/
+    media_option = GetCoapFromMediaType();
+    DBG_LOG_TRACE("coap_handle_req return code rc == %d\n",rc);
+    if (rc == 0)
+    {
+        DBG_LOG_TRACE("header rc == %d\n",inpkt.hdr.code);
+        if ((inpkt.hdr.code == COAP_METHOD_GET))
+        {
+            coap_make_response(
+                    &scratch,
+                    &outpkt,
+                    0,
+                    (uint8_t*) scratch.p,
+                    scratch.len,
+                    inpkt.hdr.id[0],
+                    inpkt.hdr.id[1],
+                    inpkt.tok_p,
+                    inpkt.tok_len,
+                    COAP_RSPCODE_CONTENT,
+                    media_option);
+        }
+        else
+        {
+            coap_make_response(
+                    &scratch,
+                    &outpkt,
+                    0,
+                    (uint8_t*) scratch.p,
+                    scratch.len,
+                    inpkt.hdr.id[0],
+                    inpkt.hdr.id[1],
+                    inpkt.tok_p,
+                    inpkt.tok_len,
+                    COAP_RSPCODE_CHANGED,
+                    media_option);
+        }
+    }
+    else
+    {
+        scratch.len = HANDLER_BUFFER_LENGTH;
+        switch (rc)
+        {
+            case INVALID_PARAMETERS_ERROR:
+                DBG_LOG_TRACE("Answer INVALID_PARAMETERS_ERROR\n");
+                coap_make_response(
+                        &scratch,
+                        &outpkt,
+                        0,
+                        NULL,
+                        0,
+                        inpkt.hdr.id[0],
+                        inpkt.hdr.id[1],
+                        inpkt.tok_p,
+                        inpkt.tok_len,
+                        COAP_RSPCODE_BAD_REQUEST,
+                        media_option);
+                break;
+            case NO_COMMAND_ERROR:
+                DBG_LOG_TRACE("Answer NO_COMMAND_ERROR\n");
+                coap_make_response(
+                        &scratch,
+                        &outpkt,
+                        0,
+                        NULL,
+                        0,
+                        inpkt.hdr.id[0],
+                        inpkt.hdr.id[1],
+                        inpkt.tok_p,
+                        inpkt.tok_len,
+                        COAP_RSPCODE_NOT_FOUND,
+                        media_option);
+                break;
+            default:
+                DBG_LOG_TRACE("Answer default\n");
+                coap_make_response(
+                        &scratch,
+                        &outpkt,
+                        0,
+                        NULL,
+                        0,
+                        inpkt.hdr.id[0],
+                        inpkt.hdr.id[1],
+                        inpkt.tok_p,
+                        inpkt.tok_len,
+                        COAP_RSPCODE_BAD_REQUEST,
+                        media_option);
+                break;
+        }
+    }
+    /*==4= Build response package ========================================*/
+    DBG_LOG_TRACE("Build response package (size:%d)\n",outpkt.payload.len);
+    message.len = HANDLER_BUFFER_LENGTH;
+    rc = coap_build(message.p, &message.len, &outpkt, NULL, NULL);
+    /*==5= Transmitt package =============================================*/
+    if (rc == 0)
+    {
+        return &message;
+    }
+    return (NULL);
+}
+
+coap_rw_buffer_t *MessageHandlerTextIP( const uint8_t *buf, size_t buflen, 
                                                 char *ip, uint32_t port)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
