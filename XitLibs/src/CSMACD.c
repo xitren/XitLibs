@@ -55,19 +55,23 @@ uint16_t ParseFromRecv(CSMACDController_t *controller,
     if (controller->msg_cnt <= 0)
         return 0;
     item = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE];
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (item)];
     *id = item = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE];
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (item)];
     SIZE = (item = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE]) << 8;
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (item)];
     SIZE += (item = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE]);
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (item)];
     while (N--)
     {
         data[N_d++] = (item = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE]);
+        CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (item)];
     }
-    CRC_MB_other = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE] << 8;
-    CRC_MB_other += controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE];
-    CRC_MB = CRC16ANSI(&controller->recv_buffer[ptr % CIRCULAR_BUFFER_SIZE], SIZE + 4);
+    CRC_MB_other = (item = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE]) << 8;
+    CRC_MB_other += (item = controller->recv_buffer[(DATA++) % CIRCULAR_BUFFER_SIZE]);
     if (CRC_MB != CRC_MB_other)
     {
-        DBG_LOG_ERROR("Error CRC\n");
+        DBG_LOG_ERROR("Error CRC %04X <> %04X\n",CRC_MB,CRC_MB_other);
         return 0;
     }
     DBG_LOG_TRACE("Received message from buffer\n");
@@ -152,8 +156,6 @@ void csma_init(CSMACDController_t *controller, ByteSender_t func)
 uint16_t csma_main_cycle(CSMACDController_t *controller,
         uint8_t *id, uint8_t *data)
 {
-//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-//            __LINE__, __FILE__, __func__);
     uint8_t i;
     uint16_t size;
     csma_check_send_msgs(controller);
@@ -179,34 +181,34 @@ uint16_t csma_main_cycle(CSMACDController_t *controller,
 
 int csma_receiver(CSMACDController_t *controller, uint8_t byte)
 {
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-            __LINE__, __FILE__, __func__);
+//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+//            __LINE__, __FILE__, __func__);
     controller->no_bytes_cnt = 0;
     switch (controller->recv_state)
     {
         case CSMACD_RECV_READY:
             if (byte == MSG_HEADER)
             {
-                DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_KEY\n");
+//                DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_KEY\n");
                 controller->recv_state = CSMACD_RECV_KEY;
                 controller->recv_addr = controller->recv_buffer_head;
             }
             break;
         case CSMACD_RECV_KEY:
-            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_ID\n");
+//            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_ID\n");
             controller->recv_state = CSMACD_RECV_ID;
             break;
         case CSMACD_RECV_ID:
-            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_SIZE1\n");
+//            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_SIZE1\n");
             controller->recv_state = CSMACD_RECV_SIZE1;
             controller->recv_data = (uint16_t) byte << 8;
             break;
         case CSMACD_RECV_SIZE1:
-            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_DATA\n");
+//            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_DATA\n");
             controller->recv_state = CSMACD_RECV_DATA;
             controller->recv_data += byte;
             controller->recv_data_s = controller->recv_data;
-            DBG_LOG_TRACE("Receive counter %d\n", controller->recv_data_s);
+//            DBG_LOG_TRACE("Receive counter %d\n", controller->recv_data_s);
             break;
             //        case CSMACD_RECV_SIZE2:
             //            if (controller->recv_data <= 0)
@@ -224,16 +226,16 @@ int csma_receiver(CSMACDController_t *controller, uint8_t byte)
             controller->recv_data--;
             if (controller->recv_data <= 0)
             {
-                DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_CRC1\n");
+//                DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_CRC1\n");
                 controller->recv_state = CSMACD_RECV_CRC1;
             }
             break;
         case CSMACD_RECV_CRC1:
-            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_CRC2\n");
+//            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_CRC2\n");
             controller->recv_state = CSMACD_RECV_CRC2;
             break;
         case CSMACD_RECV_CRC2:
-            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_READY\n");
+//            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_READY\n");
             controller->recv_state = CSMACD_RECV_READY;
             controller->msg_area[controller->msg_cnt].msg_addr =
                     controller->recv_buffer_head - (6 + controller->recv_data_s - 1);
