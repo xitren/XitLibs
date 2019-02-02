@@ -109,6 +109,8 @@ int csma_receiver(CSMACDController_t *controller, uint8_t byte);
 int csma_sender(CSMACDController_t *controller);
 uint16_t PacketizeToSend(CSMACDController_t *controller,
             uint8_t *bytes,const uint8_t id,const uint16_t size);
+uint16_t csma_get_msg_to_transmitte(CSMACDController_t *controller,
+        uint8_t *id, uint8_t *data);
 
 #ifdef __cplusplus
 }

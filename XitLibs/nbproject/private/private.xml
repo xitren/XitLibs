@@ -36,11 +36,6 @@
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/LogModule.c</file>
         </group>
-        <group>
-            <file>file:/D:/Github/Polygraph/Code/STM32F767ZIT/XitLibs/XitLibs/src/CSMACD.c</file>
-            <file>file:/D:/Github/Polygraph/Code/STM32F767ZIT/XitLibs/XitLibs/tests/streamtest.c</file>
-            <file>file:/D:/Github/Polygraph/Code/STM32F767ZIT/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
-        </group>
         <group name="INEUM">
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/DistCalc.h</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/DistCalc.c</file>
@@ -74,6 +69,12 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/tests/circlebuffertest.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
+        </group>
+        <group>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.h</file>
         </group>
     </open-files>
 </project-private>

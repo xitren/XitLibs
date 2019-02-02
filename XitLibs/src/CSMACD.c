@@ -92,7 +92,8 @@ uint16_t PacketizeToSend(CSMACDController_t *controller,
         return 0;
     if (controller->msg_cnt >= MAX_CSMACD_MSGS)
         return 0;
-    controller->msg_area[controller->msg_cnt].msg_addr = controller->send_buffer_head;
+    controller->msg_area[controller->msg_cnt].msg_addr = 
+            controller->send_buffer + controller->send_buffer_head;
     controller->msg_area[controller->msg_cnt].msg_size = size + 6;
     controller->msg_area[controller->msg_cnt].msg_type = CSMACD_SENDING_MSG;
     controller->msg_area[controller->msg_cnt].msg_attempt = MAX_ATTEMPT;
@@ -163,7 +164,7 @@ uint16_t csma_main_cycle(CSMACDController_t *controller,
     {
         if (controller->msg_area[i].msg_type == CSMACD_RECEIVED_MSG)
         {
-            DBG_LOG_TRACE("Found CSMACD_RECEIVED_MSG\n");
+            DBG_LOG_TRACE("Found CSMACD_RECEIVED_MSG i[%d]\n",i);
             size = ParseFromRecv(
                     controller,
                     controller->msg_area[i].msg_addr,
@@ -171,6 +172,34 @@ uint16_t csma_main_cycle(CSMACDController_t *controller,
                     id,
                     data
                     );
+            DBG_LOG_TRACE("Delete MSG\n");
+            delete_msg_in_controller(controller, i);
+            return size;
+        } 
+    }
+    return 0;
+}
+
+uint16_t csma_get_msg_to_transmitte(CSMACDController_t *controller,
+        uint8_t *id, uint8_t *data)
+{
+    uint8_t i,j;
+    uint16_t size;
+    uint32_t buffer_head;
+    csma_check_send_msgs(controller);
+    for (i = 0; i < controller->msg_cnt; i++)
+    {
+        if (controller->msg_area[i].msg_type == CSMACD_SENDING_MSG)
+        {
+            DBG_LOG_TRACE("Found CSMACD_SENDING_MSG i[%d]\n",i);
+            buffer_head = controller->msg_area[i].msg_addr 
+                                    - (uint32_t)controller->send_buffer;
+            size = controller->msg_area[i].msg_size;
+            for (j=0;j < size;j++)
+            {
+                data[j] = controller->send_buffer
+                        [(buffer_head+j) % CIRCULAR_BUFFER_SIZE];
+            }
             DBG_LOG_TRACE("Delete MSG\n");
             delete_msg_in_controller(controller, i);
             return size;
