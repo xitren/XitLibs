@@ -23,7 +23,7 @@ extern "C" {
 
 #define MAX_CSMACD_MSGS             255
 #define MAX_CSMACD_NODES            255
-#define CIRCULAR_BUFFER_SIZE        1024
+#define CIRCULAR_BUFFER_SIZE        4096
     
 enum State
 { 

@@ -1,5 +1,4 @@
 #include "Handler.h"
-#include "LogModule.h"
     
 #define HANDLER_BUFFER_LENGTH   4096
 #define CIRCULAR_BUFFER_LENGTH  48
@@ -20,6 +19,16 @@ extern uint32_t StreamGetObserverIp();
 extern uint32_t StreamGetObserverPort();
 extern coap_packet_t* StreamGetObserverPacket();
     
+void timer1sHandler(CSMACDController_t *controller)
+{
+    csma_clock_cycle(controller);
+}
+    
+void timerSampleFreqHandler(void)
+{
+    AddSample();
+}
+
 void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
@@ -324,11 +333,11 @@ coap_observer_buffer_t *StreamObserverHandler()
         return 0;
     }
     if (GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
-            DBG_LOG_TRACE(
-                    "GetStreamDataReadyCnt (%d >= %d)\n",
-                    GetStreamDataReadyCnt(),
-                    ReadMem(REG_EEG_PocketSize)
-            );
+        DBG_LOG_TRACE(
+                "GetStreamDataReadyCnt (%d >= %d)\n",
+                GetStreamDataReadyCnt(),
+                ReadMem(REG_EEG_PocketSize)
+        );
         int i = StreamGetObserverData(
                 scratch.p, 
                 &scratch.len, 

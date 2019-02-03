@@ -71,10 +71,17 @@
             <file>file:/D:/Users/gusev_a/Documents/NetBeansProjects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
         </group>
         <group>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/models/src/circularbuffer.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.h</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/StreamDataRecorder.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CommandModule.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/coap/coap.c</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/tests/coaptest.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/Handler.c</file>
             <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/CSMACD.h</file>
+            <file>file:/C:/Users/xitre/Documents/Projects/INEUM/XitLibs/XitLibs/src/ConfigMem.c</file>
         </group>
     </open-files>
 </project-private>

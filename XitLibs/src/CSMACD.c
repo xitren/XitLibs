@@ -94,6 +94,13 @@ uint16_t PacketizeToSend(CSMACDController_t *controller,
         return 0;
     controller->msg_area[controller->msg_cnt].msg_addr = 
             controller->send_buffer + controller->send_buffer_head;
+    DBG_LOG_TRACE(
+            "Data in copy 0x%08X <0x%08X[%d]> 0x%08X\n",
+            controller->send_buffer,
+            controller->send_buffer + controller->send_buffer_head,
+            size + 6,
+            controller->send_buffer+CIRCULAR_BUFFER_SIZE
+    );
     controller->msg_area[controller->msg_cnt].msg_size = size + 6;
     controller->msg_area[controller->msg_cnt].msg_type = CSMACD_SENDING_MSG;
     controller->msg_area[controller->msg_cnt].msg_attempt = MAX_ATTEMPT;
@@ -125,8 +132,8 @@ uint16_t PacketizeToSend(CSMACDController_t *controller,
 
 void csma_clock_cycle(CSMACDController_t *controller)
 {
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-            __LINE__, __FILE__, __func__);
+//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+//            __LINE__, __FILE__, __func__);
     controller->no_bytes_cnt++;
     if ((controller->recv_state != CSMACD_RECV_READY)
             && (controller->no_bytes_cnt > 3))
@@ -183,8 +190,8 @@ uint16_t csma_main_cycle(CSMACDController_t *controller,
 uint16_t csma_get_msg_to_transmitte(CSMACDController_t *controller,
         uint8_t *id, uint8_t *data)
 {
-    uint8_t i,j;
-    uint16_t size;
+    uint8_t i;
+    uint16_t size,j;
     uint32_t buffer_head;
     csma_check_send_msgs(controller);
     for (i = 0; i < controller->msg_cnt; i++)
@@ -195,6 +202,13 @@ uint16_t csma_get_msg_to_transmitte(CSMACDController_t *controller,
             buffer_head = controller->msg_area[i].msg_addr 
                                     - (uint32_t)controller->send_buffer;
             size = controller->msg_area[i].msg_size;
+            DBG_LOG_TRACE(
+                    "Data out copy 0x%08X <0x%08X[%d]> 0x%08X\n",
+                    controller->send_buffer,
+                    controller->send_buffer + buffer_head,
+                    size,
+                    controller->send_buffer+CIRCULAR_BUFFER_SIZE
+            );
             for (j=0;j < size;j++)
             {
                 data[j] = controller->send_buffer

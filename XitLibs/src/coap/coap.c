@@ -1121,7 +1121,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             for (i = 0; i < count; i++)
             {
                 DBG_LOG_DEBUG("Found observer property.\n");
-                add_parameter(&params, "observe", 1);
+                add_parameter(&params, "observe", opt[i].buf.p[0]);
             }
         }
         DBG_LOG_DEBUG("%s: line %d\n", __func__, __LINE__);
@@ -1171,7 +1171,8 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 DBG_LOG_TRACE(
                         "current_coap_mediatype (%d : %d)\n",
                         current_coap_mediatype,
-                        media_option);
+                        media_option
+                );
             }
         }
         memcpy(scratch->p, inpkt->payload.p, inpkt->payload.len);
