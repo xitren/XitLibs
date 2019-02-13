@@ -49,6 +49,8 @@ typedef enum
 
 /* Public variables ----------------------------------------------------------*/
 extern const char* global_link_wellknown[2];
+extern const char* global_link_device[2];
+extern const char* global_link_version[2];
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
@@ -59,11 +61,17 @@ CommandFunction_t FindCommand(const char *Command);
 void ClearCommands(void);
 char* GetCommandLink(int N);
 int GetCommandsNumber(void);
+void SetDeviceName(char *_device_name);
+void SetVersion(uint8_t _major_version,uint8_t _minor_version);
 int add_parameter(ParameterList_t *params, char *strParam, uint32_t intParam);
 int get_parameter(ParameterList_t *params, char *strParam, uint32_t *intParam);
 int delete_parameter(ParameterList_t *params, char *strParam);
 int WellKnownCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam, 
                     uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int DeviceCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int VersionCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
 /*============================================================================*/
 
 #ifdef __cplusplus

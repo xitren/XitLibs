@@ -46,27 +46,44 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
             Method_GET | Method_PUT | Method_POST | Method_RESET,
             global_link_memory[0],
             global_link_memory[1],
-            &MemoryCommand);
+            &MemoryCommand
+    );
     AddCommand(
             Method_GET | Method_RESET,
             global_link_streamer[0][0],
             global_link_streamer[0][1],
-            &StreamRecorderCommand);
+            &StreamRecorderCommand
+    );
     AddCommand(
             Method_GET,
             global_link_streamer[1][0],
             global_link_streamer[1][1],
-            &StreamRecorderCurrentCommand);
+            &StreamRecorderCurrentCommand
+    );
     AddCommand(
             Method_GET,
             global_link_streamer[2][0],
             global_link_streamer[2][1],
-            &StreamRecorderLastCommand);
+            &StreamRecorderLastCommand
+    );
     AddCommand(
             Method_GET,
             global_link_wellknown[0],
             global_link_wellknown[1],
-            &WellKnownCommand);
+            &WellKnownCommand
+    );
+    AddCommand(
+            Method_GET,
+            global_link_device[0],
+            global_link_device[1],
+            &DeviceCommand
+    );
+    AddCommand(
+            Method_GET,
+            global_link_version[0],
+            global_link_version[1],
+            &VersionCommand
+    );
 }
 
 uint8_t GetCoapFromMediaType()

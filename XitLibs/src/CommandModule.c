@@ -46,14 +46,37 @@ static Array *CommandTableArray;
 const char* global_link_wellknown[2] = {
     "/.well-known/core", "</.well-known/core>"
 };
+const char* global_link_device[2] = {
+    "/device", "</device>"
+};
+const char* global_link_version[2] = {
+    "/version", "</version>"
+};
+char *device_name = "COMMON";
+uint8_t major_version = 0;
+uint8_t minor_version = 0;
 /*============================================================================*/
 
 /* Private function prototypes -----------------------------------------------*/
 int WellKnown_GET(uint8_t MediaType, ParameterList_t *TempParam,
         uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int Device_GET(uint8_t MediaType, ParameterList_t *TempParam,
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int Version_GET(uint8_t MediaType, ParameterList_t *TempParam,
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
+void SetDeviceName(char *_device_name)
+{
+    device_name = _device_name;
+}
+void SetVersion(uint8_t _major_version,uint8_t _minor_version)
+{
+    major_version = _major_version;
+    minor_version = _minor_version;
+}
+
 inline int WellKnown_GET(uint8_t MediaType,
         ParameterList_t *TempParam, uint8_t *data,
         uint32_t *data_size, uint32_t buffer_size)
@@ -126,6 +149,173 @@ int WellKnownCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempPar
     {
         case Method_GET:
             ret_val = WellKnown_GET(
+                    MediaType, TempParam, data, data_size, buffer_size);
+            break;
+        default:
+            current_coap_mediatype = Media_XML;
+            ret_val = INVALID_PARAMETERS_ERROR;
+            (*data_size) = snprintf(
+                    (char *) data,
+                    buffer_size,
+                    "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r");
+            break;
+    }
+    return (ret_val);
+}
+
+inline int Device_GET(uint8_t MediaType,
+        ParameterList_t *TempParam, uint8_t *data,
+        uint32_t *data_size, uint32_t buffer_size)
+{
+    int ret_val = 0;
+    uint8_t *data_st = data;
+    uint32_t data_size_st = 0;
+    int i = 0;
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+            __LINE__, __FILE__, __func__);
+    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    {
+        if (ret_val >= 0)
+        {
+            DBG_LOG_TRACE("MediaType (%d)\n", MediaType);
+            if (MediaType == Media_FREE)
+            {
+                MediaType = Media_XML;
+            }
+            switch (MediaType)
+            {
+                case Media_XML:
+                    current_coap_mediatype = Media_XML;
+                    data_size_st = snprintf(
+                            (char *) data,
+                            buffer_size,
+                            "<DEVICE>%s</DEVICE>",
+                            device_name);
+                    data += data_size_st;
+                    buffer_size -= data_size_st;
+                    (*data_size) = data - data_st;
+                    break;
+                default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*) data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r");
+                    break;
+            }
+        }
+    }
+    else
+    {
+        current_coap_mediatype = Media_XML;
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*) data,
+                buffer_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r");
+    }
+    return (ret_val);
+}
+
+int DeviceCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
+    int ret_val = 0;
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+            __LINE__, __FILE__, __func__);
+    switch (Method)
+    {
+        case Method_GET:
+            ret_val = Device_GET(
+                    MediaType, TempParam, data, data_size, buffer_size);
+            break;
+        default:
+            current_coap_mediatype = Media_XML;
+            ret_val = INVALID_PARAMETERS_ERROR;
+            (*data_size) = snprintf(
+                    (char *) data,
+                    buffer_size,
+                    "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r");
+            break;
+    }
+    return (ret_val);
+}
+
+inline int Version_GET(uint8_t MediaType,
+        ParameterList_t *TempParam, uint8_t *data,
+        uint32_t *data_size, uint32_t buffer_size)
+{
+    int ret_val = 0;
+    uint8_t *data_st = data;
+    uint32_t data_size_st = 0;
+    int i = 0;
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+            __LINE__, __FILE__, __func__);
+    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    {
+        if (ret_val >= 0)
+        {
+            DBG_LOG_TRACE("MediaType (%d)\n", MediaType);
+            if (MediaType == Media_FREE)
+            {
+                MediaType = Media_XML;
+            }
+            switch (MediaType)
+            {
+                case Media_XML:
+                    current_coap_mediatype = Media_XML;
+                    if ( (major_version != 0) && (minor_version != 0) )
+                    {
+                        data_size_st = snprintf(
+                                (char *) data,
+                                buffer_size,
+                                "<VERSION>%d.%d</VERSION>",
+                                major_version, minor_version);
+                        data += data_size_st;
+                        buffer_size -= data_size_st;
+                        (*data_size) = data - data_st;
+                    } 
+                    else
+                    {
+                        data_size_st = snprintf(
+                                (char *) data,
+                                buffer_size,
+                                "<VERSION>UNSETTED</VERSION>");
+                        data += data_size_st;
+                        buffer_size -= data_size_st;
+                        (*data_size) = data - data_st;
+                    }
+                    break;
+                default:
+                    current_coap_mediatype = Media_XML;
+                    (*data_size) = snprintf(
+                            (char*) data, buffer_size,
+                            "<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r");
+                    break;
+            }
+        }
+    }
+    else
+    {
+        current_coap_mediatype = Media_XML;
+        ret_val = INVALID_PARAMETERS_ERROR;
+        (*data_size) = snprintf(
+                (char*) data,
+                buffer_size,
+                "<INVALID_PARAMETERS_ERROR/>\r\n\r");
+    }
+    return (ret_val);
+}
+
+int VersionCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
+    int ret_val = 0;
+    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+            __LINE__, __FILE__, __func__);
+    switch (Method)
+    {
+        case Method_GET:
+            ret_val = Version_GET(
                     MediaType, TempParam, data, data_size, buffer_size);
             break;
         default:
