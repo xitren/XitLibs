@@ -170,7 +170,6 @@ inline int Device_GET(uint8_t MediaType,
     int ret_val = 0;
     uint8_t *data_st = data;
     uint32_t data_size_st = 0;
-    int i = 0;
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
     if ((TempParam) && (TempParam->NumberofParameters > 0))
@@ -247,7 +246,6 @@ inline int Version_GET(uint8_t MediaType,
     int ret_val = 0;
     uint8_t *data_st = data;
     uint32_t data_size_st = 0;
-    int i = 0;
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
     if ((TempParam) && (TempParam->NumberofParameters > 0))

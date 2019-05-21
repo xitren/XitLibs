@@ -163,7 +163,7 @@ void coap_dumpPacket(coap_packet_t *pkt)
 
 void coap_clock(void)
 {
-    int i;
+    uint32_t i;
     coap_token_record *answer;
     coap_token_record *removed;
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
@@ -228,7 +228,7 @@ void coap_clock(void)
 
 char* coap_check_ans(const char *other)
 {
-    int i;
+    uint32_t i;
     if (other == NULL)
     {
         DBG_LOG_ERROR("%s: argument is NULL\n", __func__);
@@ -1195,7 +1195,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
                 current_coap_mediatype,
                 &params,
                 scratch->p,
-                &scratch->len,
+                (uint32_t *)&scratch->len,
                 4096));
     }
     else

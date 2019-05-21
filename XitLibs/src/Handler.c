@@ -9,7 +9,7 @@ uint8_t scratch_b[HANDLER_BUFFER_LENGTH];
 uint8_t message_b[HANDLER_BUFFER_LENGTH];
 coap_rw_buffer_t scratch = {scratch_b, sizeof (scratch_b)};
 coap_rw_buffer_t message = {message_b, sizeof (message_b)};
-coap_observer_buffer_t observer_message = {message_b, sizeof (message_b)};
+coap_observer_buffer_t observer_message = {message_b, sizeof (message_b), 0, 0};
 
 CircularBufferItem_t file[CIRCULAR_BUFFER_LENGTH];
 
@@ -349,7 +349,7 @@ coap_observer_buffer_t *StreamObserverHandler()
     if (!IsObserved()){
         return 0;
     }
-    if (GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
+    if ((uint32_t)GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
         DBG_LOG_TRACE(
                 "GetStreamDataReadyCnt (%d >= %d)\n",
                 GetStreamDataReadyCnt(),
@@ -357,7 +357,7 @@ coap_observer_buffer_t *StreamObserverHandler()
         );
         int i = StreamGetObserverData(
                 scratch.p, 
-                &scratch.len, 
+                (uint32_t *)&scratch.len, 
                 HANDLER_BUFFER_LENGTH, 
                 ReadMem(REG_EEG_PocketSize)
         );

@@ -93,7 +93,7 @@ uint16_t PacketizeToSend(CSMACDController_t *controller,
     if (controller->msg_cnt >= MAX_CSMACD_MSGS)
         return 0;
     controller->msg_area[controller->msg_cnt].msg_addr = 
-            controller->send_buffer + controller->send_buffer_head;
+            (uint32_t) (controller->send_buffer + controller->send_buffer_head);
     DBG_LOG_TRACE(
             "Data in copy 0x%08X <0x%08X[%d]> 0x%08X\n",
             controller->send_buffer,
@@ -190,7 +190,7 @@ uint16_t csma_main_cycle(CSMACDController_t *controller,
 uint16_t csma_get_msg_to_transmitte(CSMACDController_t *controller,
         uint8_t *id, uint8_t *data)
 {
-    uint8_t i;
+    uint8_t i = *id;
     uint16_t size,j;
     uint32_t buffer_head;
     csma_check_send_msgs(controller);
@@ -199,8 +199,8 @@ uint16_t csma_get_msg_to_transmitte(CSMACDController_t *controller,
         if (controller->msg_area[i].msg_type == CSMACD_SENDING_MSG)
         {
             DBG_LOG_TRACE("Found CSMACD_SENDING_MSG i[%d]\n",i);
-            buffer_head = controller->msg_area[i].msg_addr 
-                                    - (uint32_t)controller->send_buffer;
+            buffer_head = (controller->msg_area[i].msg_addr 
+                                    - (uint32_t)controller->send_buffer);
             size = controller->msg_area[i].msg_size;
             DBG_LOG_TRACE(
                     "Data out copy 0x%08X <0x%08X[%d]> 0x%08X\n",

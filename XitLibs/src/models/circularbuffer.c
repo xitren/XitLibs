@@ -44,7 +44,7 @@ enum cc_stat circularbuffer_push(CircularBuffer_t* st, CircularBufferItem_t *ite
 {
 //    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 //                      __LINE__, __FILE__, __func__);
-    int next;
+    uint32_t next;
     next = st->Head + 1;  // next is where head will point to after this write.
     if (next >= st->StorageSize)
     {
@@ -61,7 +61,7 @@ enum cc_stat circularbuffer_pull(CircularBuffer_t* st, CircularBufferItem_t *ite
 {
 //    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 //                      __LINE__, __FILE__, __func__);
-    int next;
+    uint32_t next;
     if (st->Head == st->Tail)  // if the head == tail, we don't have any data
         return CC_ITER_END;
     next = st->Tail + 1;  // next is where tail will point to after this read.
@@ -107,8 +107,8 @@ void increment_last_index(CircularBuffer_t* st, uint32_t inc_value)
 {
 //    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 //                      __LINE__, __FILE__, __func__);
-    int i;
-    int next;
+    uint32_t i;
+    uint32_t next;
     for (i=0;i < inc_value;i++)
     {
         if (st->Head == st->Tail)  // if the head == tail, we don't have any data
@@ -141,5 +141,6 @@ int circularbuffer_unreaded_items_nullify(CircularBuffer_t* st)
 //    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 //                      __LINE__, __FILE__, __func__);
     st->Tail = st->Head;
+	return 0;
 }
 /*============================================================================*/

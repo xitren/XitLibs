@@ -85,8 +85,10 @@ void ExecuteSchedule(void)
             continue;
         }
         if (deque_size(ScheduleTableDeque) > 2)
+		{
             DBG_LOG_INFO("Schedule executing, %d left. \n",
-                                (int)deque_size(ScheduleTableDeque));
+                                deque_size(ScheduleTableDeque));
+		}
         (*(*Comm))();
         umm_free((void *)Comm);
     }
