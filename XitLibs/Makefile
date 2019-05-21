@@ -7,7 +7,7 @@ SRC_DIR := ./
 TEST_DIR := tests/
 AR_N := XitLib.a
 NAME := XitLib.a
-CFLAGS := -std=c99 -Werror -Wall -Wextra -Wimplicit-fallthrough=0 \
+CFLAGS := -std=c99 -Werror -Wall -Wextra\
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
 	-Wno-int-conversion
 #CFLAGS :=
@@ -30,6 +30,7 @@ tests: fclean $(EXE_N)
 all: $(NAME)
 
 test: parallel
+	rm -rf $(TEXES)
 	make $(TEXES)
 
 $(NAME): $(OBJS)
@@ -39,7 +40,7 @@ $(NAME): $(OBJS)
 	$(TOOL) $(INCLUDES) $(CFLAGS) -c $< -o $@
 	
 %.exe: %.o
-	$(TOOL) $(INCLUDES) $(TFLAGS) -c $< $(AR_N) -o $@
+	$(TOOL) $(INCLUDES) $(TFLAGS) $< $(AR_N) -o $@
 	./$@
 	
 parallel: 
@@ -50,4 +51,4 @@ parallel:
 fclean:
 	rm -rf $(OBJS) $(TOBJS) $(AR_N)
 clean:
-	rm -rf $(OBJS) $(TOBJS) $(AR_N)
+	rm -rf $(OBJS) $(TOBJS)
