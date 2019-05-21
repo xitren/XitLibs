@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "CSMACD.h"
+#include "CRC16ANSI.h"
 #include "coap_messages_example.h"
 
 CSMACDController_t controller;
@@ -122,10 +123,10 @@ void test5()
     uint8_t ID = 0;
     uint8_t DATA[1024];
     printf("recvtest test 5\n");
-    int i;
+    uint32_t i;
     for (i = 0; i < 25; i++)
     {
-        int j, k = 0;
+        uint32_t j, k = 0;
         uint32_t *payload = msgs_streamer[i][0];
         uint16_t length = (uint16_t)msgs_streamer[i][1];
         uint8_t load[length];

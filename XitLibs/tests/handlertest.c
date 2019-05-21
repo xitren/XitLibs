@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "src/coap/coap.h"
+#include "coap.h"
 #include "CommandModule.h"
 #include "StreamDataRecorder.h"
 #include "Handler.h"

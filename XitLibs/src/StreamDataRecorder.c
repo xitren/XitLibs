@@ -247,7 +247,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                                 DBG_LOG_TRACE("sample %d \n",i);
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
-                                        "  {\"sample\": %lu, \"data\": [",i
+                                        "  {\"sample\": %lu, \"data\": [",
+										(long unsigned int)i
                                 );
                                 data += data_size_st;
                                 buffer_size -= data_size_st;
@@ -256,14 +257,16 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                                     DBG_LOG_TRACE("%d \n",Data_sample[k]);
                                     data_size_st = snprintf(
                                             (char*)data, buffer_size,
-                                            "%lu, ", Data_sample[k]
+                                            "%lu, ", 
+										(long unsigned int)Data_sample[k]
                                     );
                                     data += data_size_st;
                                     buffer_size -= data_size_st;
                                 }
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
-                                        "%lu]}", Data_sample[k]
+                                        "%lu]}", 
+										(long unsigned int)Data_sample[k]
                                 );
                                 data += data_size_st;
                                 buffer_size -= data_size_st;
@@ -297,7 +300,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                                 );
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
-                                        "<SAMPLE ID=\"%lu\"",i
+                                        "<SAMPLE ID=\"%lu\"",
+										(long unsigned int)i
                                 );
                                 data += data_size_st;
                                 buffer_size -= data_size_st;
@@ -305,7 +309,9 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                                 {
                                     data_size_st = snprintf(
                                             (char*)data, buffer_size,
-                                            " ch%lu=\"%lu\"", k, Data_sample[k]
+                                            " ch%lu=\"%lu\"", 
+											(long unsigned int)k, 
+											(long unsigned int)Data_sample[k]
                                     );
                                     data += data_size_st;
                                     buffer_size -= data_size_st;
@@ -348,7 +354,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                                 );
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
-                                        "%lu",i
+                                        "%lu",
+										(long unsigned int)i
                                 );
                                 data += data_size_st;
                                 buffer_size -= data_size_st;
@@ -356,7 +363,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                                 {
                                     data_size_st = snprintf(
                                             (char*)data, buffer_size,
-                                            " %lu", Data_sample[k]
+                                            " %lu", 
+											(long unsigned int)Data_sample[k]
                                     );
                                     data += data_size_st;
                                     buffer_size -= data_size_st;
@@ -445,7 +453,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             }
                             data_size_st = snprintf(
                                     (char*)data, buffer_size,
-                                    "  {\"sample\": %lu, \"data\": [",i
+                                    "  {\"sample\": %lu, \"data\": [",
+									(long unsigned int)i
                             );
 //                            DBG_LOG_TRACE("2sample %d \n",i);
                             data += data_size_st;
@@ -455,14 +464,16 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 //                                DBG_LOG_TRACE("%d \n",Data_sample[k]);
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
-                                        "%lu, ", Data_sample[k]
+                                        "%lu, ", 
+										(long unsigned int)Data_sample[k]
                                 );
                                 data += data_size_st;
                                 buffer_size -= data_size_st;
                             }
                             data_size_st = snprintf(
                                     (char*)data, buffer_size,
-                                    "%lu]}", Data_sample[k]
+                                    "%lu]}", 
+									(long unsigned int)Data_sample[k]
                             );
                             data += data_size_st;
                             buffer_size -= data_size_st;
@@ -496,7 +507,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             );
                             data_size_st = snprintf(
                                     (char*)data, buffer_size,
-                                    "<SAMPLE ID=\"%lu\"",i
+                                    "<SAMPLE ID=\"%lu\"",
+									(long unsigned int)i
                             );
                             data += data_size_st;
                             buffer_size -= data_size_st;
@@ -504,7 +516,9 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             {
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
-                                        " ch%lu=\"%lu\"", k, Data_sample[k]
+                                        " ch%lu=\"%lu\"", 
+										(long unsigned int)k, 
+										(long unsigned int)Data_sample[k]
                                 );
                                 data += data_size_st;
                                 buffer_size -= data_size_st;
@@ -548,7 +562,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             );
                             data_size_st = snprintf(
                                     (char*)data, buffer_size,
-                                    "%lu",i
+                                    "%lu",
+									(long unsigned int)i
                             );
                             data += data_size_st;
                             buffer_size -= data_size_st;
@@ -556,7 +571,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                             {
                                 data_size_st = snprintf(
                                         (char*)data, buffer_size,
-                                        " %lu", Data_sample[k]
+                                        " %lu", 
+										(long unsigned int)Data_sample[k]
                                 );
                                 data += data_size_st;
                                 buffer_size -= data_size_st;

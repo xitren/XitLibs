@@ -18,7 +18,7 @@
 #include "xitlibtypes.h"
 #include "CommandModule.h"
 
-char buffer_test[1000];
+uint8_t buffer_test[1000];
 int size = 1000;
 ParameterList_t params;
 
@@ -30,7 +30,7 @@ void test1() {
     printf("memorytest test 1\n");
     size = 1000;
     MemoryCommand(Method_GET,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
-    printf(buffer_test);
+    printf((char *)buffer_test);
     printf("Message size: %d\n",size);
     MemoryCommand(Method_PUT,Media_XML,&params,buffer_test,(uint32_t *)&size,1000);
 }
@@ -39,7 +39,7 @@ void test2() {
     printf("memorytest test 2\n");
     size = 1000;
     MemoryCommand(Method_GET,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
-    printf(buffer_test);
+    printf((char *)buffer_test);
     printf("\n");
     printf("Message size: %d\n",size);
     MemoryCommand(Method_PUT,Media_TEXT,&params,buffer_test,(uint32_t *)&size,1000);
@@ -60,7 +60,7 @@ void test4() {
     printf("memorytest test 4\n");
     size = 1000;
     MemoryCommand(Method_GET,Media_JSON,&params,buffer_test,(uint32_t *)&size,1000);
-    printf(buffer_test);
+    printf((char *)buffer_test);
     printf("Message size: %d\n",size);
 }
 

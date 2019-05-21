@@ -19,8 +19,8 @@
 #include "StreamDataRecorder.h"
 
 CircularBufferItem_t storage[48];
-char buffer_str[100000];
-int size = 100000;
+uint8_t buffer_str[100000];
+uint32_t size = 100000;
 ParameterList_t params;
 
 /*
@@ -30,14 +30,14 @@ ParameterList_t params;
 void test1() {
     printf("streamtest test 1\n");
     StreamRecorderCommand(Method_GET,Media_XML,&params,buffer_str,&size,100000);
-    printf(buffer_str);
+    printf((char *)buffer_str);
     printf("Message size: %d\n",size);
 }
 
 void test2() {
     printf("streamtest test 2\n");
     StreamRecorderCommand(Method_GET,Media_TEXT,&params,buffer_str,&size,100000);
-    printf(buffer_str);
+    printf((char *)buffer_str);
     printf("\n");
     printf("Message size: %d\n",size);
 }
@@ -55,7 +55,7 @@ void test3() {
 void test4() {
     printf("streamtest test 4\n");
     StreamRecorderCommand(Method_GET,Media_JSON,&params,buffer_str,&size,100000);
-    printf(buffer_str);
+    printf((char *)buffer_str);
     printf("Message size: %d\n",size);
 }
 
