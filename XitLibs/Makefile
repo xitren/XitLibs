@@ -1,14 +1,16 @@
 INCLUDES := -Iinclude -Iinclude/coap -Iinclude/json -Iinclude/models \
 	-Iinclude/malloc -Itests
 
-TOOL := gcc
-#TOOL := arm-none-eabi-gcc
+#TOOL := gcc
+TOOL := arm-none-eabi-gcc
 SRC_DIR := ./
 TEST_DIR := tests/
 AR_N := XitLib.a
 NAME := XitLib.a
 CFLAGS := -std=c99 -Werror -Wall -Wextra\
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
+	-Wno-implicit-fallthrough \
+	-mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16 --specs=nosys.specs \
 	-Wno-int-conversion
 #CFLAGS :=
 TFLAGS := 

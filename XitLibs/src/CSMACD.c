@@ -150,11 +150,12 @@ void csma_clock_cycle(CSMACDController_t *controller)
     return;
 }
 
-void csma_init(CSMACDController_t *controller, ByteSender_t func)
+void csma_init(CSMACDController_t *controller, ByteSender_t func, uint8_t *id)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
     memset(controller, 0, sizeof (CSMACDController_t));
+    controller->node_id = *id;
     controller->sender = func;
     controller->state = CSMACD_READY;
     controller->recv_state = CSMACD_RECV_READY;
@@ -235,11 +236,17 @@ int csma_receiver(CSMACDController_t *controller, uint8_t byte)
 //                DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_KEY\n");
                 controller->recv_state = CSMACD_RECV_KEY;
                 controller->recv_addr = controller->recv_buffer_head;
+				controller->msg_loose = 0;
             }
             break;
         case CSMACD_RECV_KEY:
 //            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_ID\n");
             controller->recv_state = CSMACD_RECV_ID;
+			if (byte != controller->node_id)
+			{
+				controller->recv_state = CSMACD_RECV_READY;
+				controller->msg_loose = 1;
+			}
             break;
         case CSMACD_RECV_ID:
 //            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_SIZE1\n");
@@ -253,18 +260,6 @@ int csma_receiver(CSMACDController_t *controller, uint8_t byte)
             controller->recv_data_s = controller->recv_data;
 //            DBG_LOG_TRACE("Receive counter %d\n", controller->recv_data_s);
             break;
-            //        case CSMACD_RECV_SIZE2:
-            //            if (controller->recv_data <= 0)
-            //            {
-            //                DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_CRC1\n");
-            //                controller->recv_state = CSMACD_RECV_CRC1;
-            //            }
-            //            else
-            //            {
-            //                DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_DATA\n");
-            //                controller->recv_state = CSMACD_RECV_DATA;
-            //            }
-            //            break;
         case CSMACD_RECV_DATA:
             controller->recv_data--;
             if (controller->recv_data <= 0)
@@ -281,7 +276,8 @@ int csma_receiver(CSMACDController_t *controller, uint8_t byte)
 //            DBG_LOG_TRACE("Recv state changed => CSMACD_RECV_READY\n");
             controller->recv_state = CSMACD_RECV_READY;
             controller->msg_area[controller->msg_cnt].msg_addr =
-                    controller->recv_buffer_head - (6 + controller->recv_data_s - 1);
+                    controller->recv_buffer_head - 
+					(6 + controller->recv_data_s - 1);
             controller->msg_area[controller->msg_cnt].msg_size =
                     controller->recv_data_s;
             controller->msg_area[controller->msg_cnt].msg_type =
