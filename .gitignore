@@ -1,6 +1,6 @@
-/XitLibs/build
-/XitLibs/dist
-/XitLibs/nbproject
+build
+dist
+nbproject
 /**/*.o
-/XitLibs/tests/*.exe
-/XitLibs/XitLib.a
+tests/*.exe
+XitLib.a
