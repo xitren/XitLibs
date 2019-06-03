@@ -7,16 +7,18 @@ SRC_DIR := ./
 TEST_DIR := tests/
 AR_N := XitLib.a
 NAME := XitLib.a
-CFLAGS := -std=c99 -Werror -Wall -Wextra\
+CFLAGS := -std=c99 -Werror -Wall -Wextra -Os \
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
 	-Wno-implicit-fallthrough \
 	-mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16 --specs=nosys.specs \
-	-Wno-int-conversion
-CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra\
+	-Wno-int-conversion \
+	-fdata-sections -ffunction-sections
+CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra -Os \
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
 	-Wno-implicit-fallthrough \
 	-mthumb -mcpu=cortex-m3 -mfloat-abi=soft --specs=nosys.specs \
-	-Wno-int-conversion
+	-Wno-int-conversion -DSMALL \
+	-fdata-sections -ffunction-sections
 #CFLAGS :=
 TFLAGS := 
 CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \

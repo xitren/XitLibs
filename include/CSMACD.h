@@ -14,16 +14,11 @@
 #ifndef CSMACD_H
 #define CSMACD_H
 
-#include <pthread.h>
-#include <stdint.h>
+#include "ConfigMem.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define MAX_CSMACD_MSGS             255
-#define MAX_CSMACD_NODES            255
-#define CIRCULAR_BUFFER_SIZE        4096
     
 enum State
 { 
