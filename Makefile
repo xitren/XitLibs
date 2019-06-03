@@ -12,6 +12,11 @@ CFLAGS := -std=c99 -Werror -Wall -Wextra\
 	-Wno-implicit-fallthrough \
 	-mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16 --specs=nosys.specs \
 	-Wno-int-conversion
+CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra\
+	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
+	-Wno-implicit-fallthrough \
+	-mthumb -mcpu=cortex-m3 -mfloat-abi=soft --specs=nosys.specs \
+	-Wno-int-conversion
 #CFLAGS :=
 TFLAGS := 
 CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \
@@ -30,6 +35,9 @@ tests: fclean $(EXE_N)
 	./test
 	
 all: $(NAME)
+	
+soft: 
+	make parallel CFLAGS='$(CFLAGS_SOFT)'
 
 test: parallel
 	rm -rf $(TEXES)
