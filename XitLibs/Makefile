@@ -2,7 +2,7 @@ INCLUDES := -Iinclude -Iinclude/coap -Iinclude/json -Iinclude/models \
 	-Iinclude/malloc -Itests
 
 TOOL := gcc
-#TOOL := arm-none-eabi-gcc
+#TOOL_ARM := arm-none-eabi-gcc
 SRC_DIR := ./
 TEST_DIR := tests/
 AR_N := XitLib.a
