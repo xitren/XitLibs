@@ -1,7 +1,4 @@
 #include "Handler.h"
-    
-#define HANDLER_BUFFER_LENGTH   4096
-#define CIRCULAR_BUFFER_LENGTH  48
 
 coap_packet_t inpkt;
 coap_packet_t outpkt;
@@ -36,11 +33,13 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
     InitCfgMem();
     InitBuffer();
     InitCommands();
+#ifndef SMALL
     InitStreamRecorder(
             file, CIRCULAR_BUFFER_LENGTH, 
             sample_frequency, sample_size,
             1
     );
+#endif
 
     AddCommand(
             Method_GET | Method_PUT | Method_POST | Method_RESET,
@@ -48,6 +47,7 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
             global_link_memory[1],
             &MemoryCommand
     );
+#ifndef SMALL
     AddCommand(
             Method_GET | Method_RESET,
             global_link_streamer[0][0],
@@ -66,6 +66,7 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
             global_link_streamer[2][1],
             &StreamRecorderLastCommand
     );
+#endif
     AddCommand(
             Method_GET,
             global_link_wellknown[0],
@@ -114,7 +115,7 @@ coap_rw_buffer_t *MessageHandlerIntIP( const uint8_t *buf, size_t buflen,
     char ip[15];
     conv_uint32_bytes_t ip_d;
     ip_d.ui32 = ipi;
-    snprintf(ip,15,"%d.%d.%d.%d",ip_d.ui8[0],ip_d.ui8[1],ip_d.ui8[2],ip_d.ui8[3]);
+    snprintf(ip,16,"%hd.%hd.%hd.%hd",ip_d.ui8[0],ip_d.ui8[1],ip_d.ui8[2],ip_d.ui8[3]);
     uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
     memset((void *) &inpkt, 0, sizeof (coap_packet_t));
     /*==1= Parse package =================================================*/

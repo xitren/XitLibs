@@ -14,16 +14,11 @@
 #ifndef CSMACD_H
 #define CSMACD_H
 
-#include <pthread.h>
-#include <stdint.h>
+#include "ConfigMem.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-
-#define MAX_CSMACD_MSGS             255
-#define MAX_CSMACD_NODES            255
-#define CIRCULAR_BUFFER_SIZE        4096
     
 enum State
 { 
@@ -75,6 +70,8 @@ typedef struct _tagNodeDesc_t
 
 typedef struct _tagCSMACDController_t
 {
+    uint8_t                         node_id;
+    uint8_t                         msg_loose;
     MsgDesc_t                       msg_area[MAX_CSMACD_MSGS];
     uint8_t                         msg_cnt;
     NodeDesc_t                      nodes_area[MAX_CSMACD_NODES];
@@ -102,7 +99,7 @@ typedef struct _tagCSMACDController_t
 } CSMACDController_t;  
 
 void csma_clock_cycle(CSMACDController_t *controller);
-void csma_init(CSMACDController_t *controller, ByteSender_t func);
+void csma_init(CSMACDController_t *controller, ByteSender_t func, uint8_t *id);
 uint16_t csma_main_cycle(CSMACDController_t *controller,
                             uint8_t *id, uint8_t *data);
 int csma_receiver(CSMACDController_t *controller, uint8_t byte);
