@@ -9,7 +9,7 @@ AR_N := XitLib.a
 NAME := XitLib.a
 CFLAGS := -std=c99 -Werror -Wall -Wextra\
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
-	-Wno-int-conversion
+	-Wno-int-conversion -Wno-implicit-fallthrough
 #CFLAGS :=
 TFLAGS := 
 CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \

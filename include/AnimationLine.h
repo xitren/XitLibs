@@ -43,6 +43,13 @@ typedef int (*DrawFunction_t)(
 /*============================================================================*/
 
 /* Public function prototypes ------------------------------------------------*/
+int AnimationLine(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
+        uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
+int AddAnimationFigure(char _size_type, char *_name,
+				uint32_t _show_time, uint8_t *_data);
+void InitCfgAnimLine(DrawFunction_t _func);
+void ResetAnimationTime(void);
+void IncAnimationTime(void);
 /*============================================================================*/
 
 #ifdef __cplusplus

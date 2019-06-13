@@ -15,6 +15,7 @@
 #include "CommandModule.h"
 #include "coap.h"
 #include "array.h"
+#include "umm_malloc.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
@@ -47,12 +48,12 @@ void InitCfgAnimLine(DrawFunction_t _func)
     return;
 }
 
-inline void ResetAnimationTime(void)
+void ResetAnimationTime(void)
 {
 	animation_time = 0;
 }
 
-inline void IncAnimationTime(void)
+void IncAnimationTime(void)
 {
     UserFigure_t *commf;
 	animation_time++;
@@ -69,7 +70,7 @@ inline void IncAnimationTime(void)
 #define AREA_DATA_SIZE		6
 #define SMALLAREA_DATA_SIZE	2
 
-inline int AddAnimationFigure(char _size_type, char	*_name
+int AddAnimationFigure(char _size_type, char	*_name,
 										uint32_t _show_time, uint8_t *_data)
 {
     int ret_val = 0;
@@ -82,7 +83,7 @@ inline int AddAnimationFigure(char _size_type, char	*_name
             __LINE__, __FILE__, __func__);
     /* First, make sure that the parameters passed to us appear to be    */
     /* semi-valid.                                                       */
-    if ((show_time) && (FiguresArray))
+    if ((_show_time) && (FiguresArray))
     {
 		/* Simply add the command data to the command table and        */
 		/* increment the number of supported commands.                 */
@@ -97,29 +98,29 @@ inline int AddAnimationFigure(char _size_type, char	*_name
 		switch (_size_type)
 		{
 			case 0:
-				comm->data = (char *) umm_malloc(FULL_DATA_SIZE);
+				comm->data = (uint8_t *) umm_malloc(FULL_DATA_SIZE);
 				memcpy(comm->data, _data, FULL_DATA_SIZE);
 				break;
 			case 1:
-				comm->data = (char *) umm_malloc(QUARTER_DATA_SIZE);
+				comm->data = (uint8_t *) umm_malloc(QUARTER_DATA_SIZE);
 				memcpy(comm->data, _data, QUARTER_DATA_SIZE);
 				break;
 			case 2:
-				comm->data = (char *) umm_malloc(AREA_DATA_SIZE);
+				comm->data = (uint8_t *) umm_malloc(AREA_DATA_SIZE);
 				memcpy(comm->data, _data, AREA_DATA_SIZE);
 				break;
 			case 3:
-				comm->data = (char *) umm_malloc(SMALLAREA_DATA_SIZE);
+				comm->data = (uint8_t *) umm_malloc(SMALLAREA_DATA_SIZE);
 				memcpy(comm->data, _data, SMALLAREA_DATA_SIZE);
 				break;
 			default:
-				comm->data = (char *) umm_malloc(SMALLAREA_DATA_SIZE);
+				comm->data = (uint8_t *) umm_malloc(SMALLAREA_DATA_SIZE);
 				memcpy(comm->data, _data, SMALLAREA_DATA_SIZE);
 				break;
 		}
 		//Finding the position
 		strl = array_size(FiguresArray);
-        for (Index = 0, ret_command = 0;
+        for (Index = 0;
                 Index < strl; /* && (!ret_val)*/
                 Index++)
         {
@@ -158,23 +159,23 @@ inline int AddAnimationFigure(char _size_type, char	*_name
     return (ret_val);
 }
 
-inline int AnimationLine_RESET(uint8_t MediaType, ParameterList_t *TempParam,
+int AnimationLine_RESET(uint8_t MediaType, ParameterList_t *TempParam,
         uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
-    InitCfgMem();
+    InitCfgAnimLine(func);
     return 0;
 }
 
-inline int AnimationLine_GET(uint8_t MediaType, ParameterList_t *TempParam,
+int AnimationLine_GET(uint8_t MediaType, ParameterList_t *TempParam,
         uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
     int ret_val = 0;
-    int Address = -1;
-    int Value = -1;
+//    int Address = -1;
+//    int Value = -1;
 //
 //    DBG_LOG_TRACE("%s: %08X (NumberofParameters %d)\n",
 //            __func__,
@@ -239,15 +240,15 @@ inline int AnimationLine_GET(uint8_t MediaType, ParameterList_t *TempParam,
     return (ret_val);
 }
 
-inline int AnimationLine_PUT(uint8_t MediaType, ParameterList_t *TempParam,
+int AnimationLine_PUT(uint8_t MediaType, ParameterList_t *TempParam,
         uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s).\n",
             __LINE__, __FILE__, __func__);
     int ret_val1 = 0;
-    int ret_val2 = 0;
-    int Address = -1;
-    int Value = -1;
+//    int ret_val2 = 0;
+//    int Address = -1;
+//    int Value = -1;
 //
 //    if ((TempParam) && (TempParam->NumberofParameters > 0))
 //    {
