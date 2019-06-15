@@ -38,6 +38,7 @@ typedef struct _tagUserFigure_t
 					//	    uint8_t [2][10][3]
 					// 1 - quarter data	8 * 5 * 3
 					//	    uint8_t [1][5][3]
+					// !!!!!ONLY SIZES BELOW COPIES THE DATA
 					// 2 - area data	4 * 4 * 3
 					//	    uint8_t [2][3]
 					// 3 - small area data	2 * 2 * 3
