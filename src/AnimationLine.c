@@ -19,6 +19,8 @@
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
+static enum timeline_mode animation_mode = 0;
+static uint8_t animation_needed;
 static uint32_t animation_time;
 static Array *FiguresArray;
 static DrawFunction_t func;
@@ -38,13 +40,18 @@ int AnimationLine_RESET(uint8_t MediaType, ParameterList_t *TempParam,
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-void InitCfgAnimLine(DrawFunction_t _func)
+void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
 	func = _func;
+	animation_mode = _mode;
     if (array_new(&FiguresArray) != 0)
+	{
         return;
+	}
+	ResetAnimationTime();
+	animation_needed = 0;
     return;
 }
 
@@ -61,8 +68,37 @@ void IncAnimationTime(void)
 	{
 		array_get_at(FiguresArray, 0, (void**) &commf);
 		if (func && (commf->show_time < animation_time))
-			(func)(commf);
+		{
+			if (animation_mode)
+			{
+				animation_needed = 1;
+			}
+			else
+			{
+				(func)(commf);
+				array_remove_at(FiguresArray, 0, (void**) &commf);
+				umm_free(commf->name);
+				umm_free(commf);
+			}
+		}
 	}
+}
+
+void MainAnimationCycle(void)
+{
+    UserFigure_t *commf;
+	if (array_size(FiguresArray) > 0 && animation_needed && animation_mode)
+	{
+		array_get_at(FiguresArray, 0, (void**) &commf);
+		if (func && (commf->show_time < animation_time))
+		{
+			(func)(commf);
+			array_remove_at(FiguresArray, 0, (void**) &commf);
+			umm_free(commf->name);
+			umm_free(commf);
+		}
+	}
+	animation_needed = 0;
 }
 
 #define FULL_DATA_SIZE		(LED_WIDTH * 3 * LED_HEIGHT) / 8
@@ -71,7 +107,8 @@ void IncAnimationTime(void)
 #define SMALLAREA_DATA_SIZE	2
 
 int AddAnimationFigure(char _size_type, char	*_name,
-										uint32_t _show_time, uint8_t *_data)
+										uint32_t _show_time, uint8_t *_data, 
+										uint8_t _x, uint8_t _y)
 {
     int ret_val = 0;
     size_t strl = 0;
@@ -89,32 +126,47 @@ int AddAnimationFigure(char _size_type, char	*_name,
 		/* increment the number of supported commands.                 */
 		comm = (UserFigure_t *) umm_calloc(1, sizeof (UserFigure_t));
 		if (comm == NULL)
+		{
 			return 1;
+		}
 		comm->size_type = _size_type;
 		comm->show_time = _show_time;
+		comm->x = _x;
+		comm->y = _y;
 		strl = strlen(_name)+1;
 		comm->name = (char *) umm_malloc(strl);
+		if (comm->name == NULL)
+		{
+			umm_free(comm);
+			return 1;
+		}
 		memcpy(comm->name, _name, strl);
 		switch (_size_type)
 		{
 			case 0:
-				comm->data = (uint8_t *) umm_malloc(FULL_DATA_SIZE);
-				memcpy(comm->data, _data, FULL_DATA_SIZE);
+				comm->data = _data;
 				break;
 			case 1:
-				comm->data = (uint8_t *) umm_malloc(QUARTER_DATA_SIZE);
-				memcpy(comm->data, _data, QUARTER_DATA_SIZE);
+				comm->data = _data;
 				break;
 			case 2:
 				comm->data = (uint8_t *) umm_malloc(AREA_DATA_SIZE);
+				if (comm->data == NULL)
+				{
+					umm_free(comm->name);
+					umm_free(comm);
+					return 1;
+				}
 				memcpy(comm->data, _data, AREA_DATA_SIZE);
-				break;
-			case 3:
-				comm->data = (uint8_t *) umm_malloc(SMALLAREA_DATA_SIZE);
-				memcpy(comm->data, _data, SMALLAREA_DATA_SIZE);
 				break;
 			default:
 				comm->data = (uint8_t *) umm_malloc(SMALLAREA_DATA_SIZE);
+				if (comm->data == NULL)
+				{
+					umm_free(comm->name);
+					umm_free(comm);
+					return 1;
+				}
 				memcpy(comm->data, _data, SMALLAREA_DATA_SIZE);
 				break;
 		}
@@ -133,7 +185,10 @@ int AddAnimationFigure(char _size_type, char	*_name,
 		{
 			if (array_add_at(FiguresArray, (void *) comm, Index) != 0)
 			{
-				umm_free((void *) comm);
+				umm_free(comm->name);
+				if (_size_type > 1)
+					umm_free(comm->data);
+				umm_free(comm);
 				return 1;
 			}
 		}
@@ -141,7 +196,10 @@ int AddAnimationFigure(char _size_type, char	*_name,
 		{
 			if (array_add(FiguresArray, (void *) comm) != 0)
 			{
-				umm_free((void *) comm);
+				umm_free(comm->name);
+				if (_size_type > 1)
+					umm_free(comm->data);
+				umm_free(comm);
 				return 1;
 			}
 		}
@@ -164,7 +222,7 @@ int AnimationLine_RESET(uint8_t MediaType, ParameterList_t *TempParam,
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
-    InitCfgAnimLine(func);
+    InitCfgAnimLine(func, TIMELINE_INDEPENDENT_CYCLE_DRAW);
     return 0;
 }
 

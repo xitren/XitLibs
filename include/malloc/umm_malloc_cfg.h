@@ -65,7 +65,7 @@
 // ----------------------------------------------------------------------------
 // Size of the heap in bytes
 #ifdef SMALL
-#define UMM_MALLOC_CFG__HEAP_SIZE 128
+#define UMM_MALLOC_CFG__HEAP_SIZE 2048
 #else
 #define UMM_MALLOC_CFG__HEAP_SIZE 8192
 #endif
