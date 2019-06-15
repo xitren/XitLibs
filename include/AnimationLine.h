@@ -20,14 +20,26 @@ extern "C" {
 #define LED_WIDTH 16
 #define LED_HEIGHT 10
     
+#ifndef ANIM_SET_BIT
+    #define ANIM_SET_BIT(REG, BIT)     ((REG) |= (0x01 << BIT))
+#endif
+#ifndef ANIM_CLEAR_BIT
+    #define ANIM_CLEAR_BIT(REG, BIT)   ((REG) &= ~(0x01 << BIT))
+#endif
+#ifndef ANIM_READ_BIT
+    #define ANIM_READ_BIT(REG, BIT)    ((REG) & (0x01 << BIT))
+#endif
+    
 typedef struct _tagUserFigure_t
 {
-    char		size_type;	// 0 - full data	16 * 3 * 10
-					// 1 - quarter data	8 * 3 * 5
-					// 2 - area data	4 * 3 * 4
-					// 3 - small area data	2 * 3 * 2
+    char		size_type;	// 0 - full data	16 * 10 * 3
+					// 1 - quarter data	8 * 5 * 3
+					// 2 - area data	4 * 4 * 3
+					// 3 - small area data	2 * 2 * 3
     char		*name;
     uint32_t		show_time;
+    uint8_t		x;
+    uint8_t		y;
     uint8_t		*data;
 } UserFigure_t;
 

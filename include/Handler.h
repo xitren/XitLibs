@@ -9,6 +9,7 @@
 #include "InOutBuffer.h"
 #include "CommandModule.h"
 #include "StreamDataRecorder.h"
+#include "AnimationLine.h"
 #include "CSMACD.h"
 #include "LogModule.h"
 
