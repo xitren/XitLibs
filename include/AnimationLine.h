@@ -45,6 +45,7 @@ typedef struct _tagUserFigure_t
 					//	    uint8_t [2]
     char		*name;
     uint32_t		show_time;
+    uint32_t		permanent;
     uint8_t		x;
     uint8_t		y;
     uint8_t		*data;
@@ -68,7 +69,8 @@ int AnimationLine(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
         uint8_t *data, uint32_t *data_size, uint32_t buffer_size);
 int AddAnimationFigure(char _size_type, char *_name,
 				uint32_t _show_time, uint8_t *_data, 
-				uint8_t _x, uint8_t _y);
+				uint8_t _x, uint8_t _y, 
+				uint32_t _permanent);
 void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode);
 void ResetAnimationTime(void);
 void IncAnimationTime(void);

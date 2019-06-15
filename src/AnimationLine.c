@@ -76,8 +76,16 @@ void IncAnimationTime(void)
 			else
 			{
 				(func)(commf);
+				if (commf->permanent)
+					AddAnimationFigure(
+							commf->size_type, commf->name, 
+							commf->show_time + commf->permanent, commf->data,
+							commf->x, commf->y, commf->permanent
+					);
 				array_remove_at(FiguresArray, 0, (void**) &commf);
 				umm_free(commf->name);
+				if (commf->size_type > 1)
+					umm_free(commf->data);
 				umm_free(commf);
 			}
 		}
@@ -87,14 +95,22 @@ void IncAnimationTime(void)
 void MainAnimationCycle(void)
 {
     UserFigure_t *commf;
-	if (array_size(FiguresArray) > 0 && animation_needed && animation_mode)
+	if ((array_size(FiguresArray) > 0) && animation_needed && animation_mode)
 	{
 		array_get_at(FiguresArray, 0, (void**) &commf);
 		if (func && (commf->show_time < animation_time))
 		{
 			(func)(commf);
+			if (commf->permanent)
+				AddAnimationFigure(
+						commf->size_type, commf->name, 
+						commf->show_time + commf->permanent, commf->data,
+						commf->x, commf->y, commf->permanent
+				);
 			array_remove_at(FiguresArray, 0, (void**) &commf);
 			umm_free(commf->name);
+			if (commf->size_type > 1)
+				umm_free(commf->data);
 			umm_free(commf);
 		}
 	}
@@ -108,7 +124,8 @@ void MainAnimationCycle(void)
 
 int AddAnimationFigure(char _size_type, char	*_name,
 										uint32_t _show_time, uint8_t *_data, 
-										uint8_t _x, uint8_t _y)
+										uint8_t _x, uint8_t _y, 
+										uint32_t _permanent)
 {
     int ret_val = 0;
     size_t strl = 0;
@@ -133,6 +150,7 @@ int AddAnimationFigure(char _size_type, char	*_name,
 		comm->show_time = _show_time;
 		comm->x = _x;
 		comm->y = _y;
+		comm->permanent = _permanent;
 		strl = strlen(_name)+1;
 		comm->name = (char *) umm_malloc(strl);
 		if (comm->name == NULL)
