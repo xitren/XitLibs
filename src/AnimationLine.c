@@ -60,6 +60,19 @@ void ResetAnimationTime(void)
 	animation_time = 0;
 }
 
+void ResetAnimationLine(void)
+{
+    UserFigure_t *commf;
+	while (array_size(FiguresArray) > 0)
+	{
+		array_remove_at(FiguresArray, 0, (void**) &commf);
+		umm_free(commf->name);
+		if (commf->size_type > 1)
+			umm_free(commf->data);
+		umm_free(commf);
+	}
+}
+
 void IncAnimationTime(void)
 {
     UserFigure_t *commf;
