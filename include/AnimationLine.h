@@ -75,6 +75,7 @@ void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode);
 void ResetAnimationTime(void);
 void IncAnimationTime(void);
 void MainAnimationCycle(void);
+void ResetAnimationLine(void);
 /*============================================================================*/
 
 #ifdef __cplusplus
