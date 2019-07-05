@@ -83,6 +83,7 @@ typedef union {
 typedef union {
     unsigned char ui8[4];
     uint32_t ui32;
+    int32_t i32;
 } conv_uint32_bytes_t;
 
 typedef struct _tagParameter_t

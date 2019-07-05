@@ -1104,13 +1104,18 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
             }
         }
         conv_uint32_bytes_t converter;
+        int ip0 = 0, ip1 = 0, ip2 = 0, ip3 = 0;
         sscanf(
                 _ip,
-                "%d.%d.%d.%d",
-                (int *)&(converter.ui8[0]),
-                (int *)&(converter.ui8[1]),
-                (int *)&(converter.ui8[2]),
-                (int *)&(converter.ui8[3]));
+                "%u.%u.%u.%u",
+                &ip0,
+                &ip1,
+                &ip2,
+                &ip3);
+        converter.ui8[0] = (unsigned char)ip0;
+        converter.ui8[1] = (unsigned char)ip1;
+        converter.ui8[2] = (unsigned char)ip2;
+        converter.ui8[3] = (unsigned char)ip3;
         DBG_LOG_DEBUG("%s: line %d\n", __func__, __LINE__);
         add_parameter(&params, "ip", converter.ui32);
         DBG_LOG_DEBUG("%s: line %d\n", __func__, __LINE__);
