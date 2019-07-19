@@ -86,6 +86,8 @@ uint16_t PacketizeToSend(CSMACDController_t *controller,
     uint16_t CRC_MB = 0xFFFF;
     uint8_t *DATA = bytes;
     uint16_t N = size;
+//    DATA = bytes;
+    
     if (bytes == NULL)
         return 0;
     if (size == 0)
@@ -107,21 +109,26 @@ uint16_t PacketizeToSend(CSMACDController_t *controller,
     controller->msg_cnt++;
     controller->send_buffer[(controller->send_buffer_head++) % CIRCULAR_BUFFER_SIZE]
             = MSG_HEADER;
-    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (MSG_HEADER)];
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^
+            (MSG_HEADER)];
     controller->send_buffer[(controller->send_buffer_head++) % CIRCULAR_BUFFER_SIZE]
             = id;
-    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (id)];
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^
+            (id)];
     controller->send_buffer[(controller->send_buffer_head++) % CIRCULAR_BUFFER_SIZE]
             = (size >> 8) & 0xFF;
-    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ ((size << 8) & 0xFF)];
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^
+            ((size >> 8) & 0xFF)];
     controller->send_buffer[(controller->send_buffer_head++) % CIRCULAR_BUFFER_SIZE]
             = size & 0xFF;
-    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (size & 0xFF)];
+    CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^
+            (size & 0xFF)];
     while (N--)
     {
         controller->send_buffer[(controller->send_buffer_head++) % CIRCULAR_BUFFER_SIZE]
                 = (*DATA);
-        CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (*DATA++)];
+        CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^
+                (*DATA++)];
     }
     controller->send_buffer[(controller->send_buffer_head++) % CIRCULAR_BUFFER_SIZE]
             = (CRC_MB >> 8) & 0xFF;
