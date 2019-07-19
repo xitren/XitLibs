@@ -1,6 +1,6 @@
 // ----------------------------------------------------------------------------
 //
-// ConfigMem.c - Contains configuration registers and system API
+// AnimationLine.c - Contains animation system API
 //
 // ----------------------------------------------------------------------------
 //
@@ -44,20 +44,27 @@ void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
-	func = _func;
-	animation_mode = _mode;
-    if (array_new(&FiguresArray) != 0)
-	{
-        return;
-	}
-	ResetAnimationTime();
-	animation_needed = 0;
+    func = _func;
+    animation_mode = _mode;
+    if (FiguresArray != 0)
+    {
+        ResetAnimationLine();
+    }
+    else
+    {
+        if (array_new(&FiguresArray) != 0)
+        {
+            return;
+        }
+    }
+    ResetAnimationTime();
+    animation_needed = 0;
     return;
 }
 
 void ResetAnimationTime(void)
 {
-	animation_time = 0;
+    animation_time = 0;
 }
 
 void ResetAnimationLine(void)
