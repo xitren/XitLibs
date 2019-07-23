@@ -112,10 +112,10 @@ coap_rw_buffer_t *MessageHandlerIntIP( const uint8_t *buf, size_t buflen,
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
     int rc;
-    char ip[15];
+    char ip[16];
     conv_uint32_bytes_t ip_d;
     ip_d.ui32 = ipi;
-    snprintf(ip,16,"%hd.%hd.%hd.%hd",ip_d.ui8[0],ip_d.ui8[1],ip_d.ui8[2],ip_d.ui8[3]);
+    snprintf(ip, 16, "%u.%u.%u.%u", (unsigned int)ip_d.ui8[0], (unsigned int)ip_d.ui8[1], (unsigned int)ip_d.ui8[2], (unsigned int)ip_d.ui8[3]);
     uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
     memset((void *) &inpkt, 0, sizeof (coap_packet_t));
     /*==1= Parse package =================================================*/
