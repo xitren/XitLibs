@@ -71,11 +71,16 @@ int AddAnimationFigure(char _size_type, char *_name,
 				uint32_t _show_time, uint8_t *_data, 
 				uint8_t _x, uint8_t _y, 
 				uint32_t _permanent);
+int SetAnimationFigure(char _size_type, char	*_name,
+                                uint32_t _show_time, uint8_t *_data, 
+                                uint8_t _x, uint8_t _y, 
+                                uint32_t _permanent);
 void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode);
 void ResetAnimationTime(void);
 void IncAnimationTime(void);
 void MainAnimationCycle(void);
 void ResetAnimationLine(void);
+uint32_t GetAnimationTime(void);
 /*============================================================================*/
 
 #ifdef __cplusplus

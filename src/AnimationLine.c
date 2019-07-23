@@ -60,6 +60,11 @@ void ResetAnimationTime(void)
 	animation_time = 0;
 }
 
+uint32_t GetAnimationTime(void)
+{
+	return animation_time;
+}
+
 void ResetAnimationLine(void)
 {
     UserFigure_t *commf;
@@ -134,6 +139,25 @@ void MainAnimationCycle(void)
 #define QUARTER_DATA_SIZE	(LED_WIDTH * 3 * LED_HEIGHT) / 32
 #define AREA_DATA_SIZE		6
 #define SMALLAREA_DATA_SIZE	2
+
+int SetAnimationFigure(char _size_type, char	*_name,
+										uint32_t _show_time, uint8_t *_data, 
+										uint8_t _x, uint8_t _y, 
+										uint32_t _permanent)
+{
+    int ret_val = 0;
+    UserFigure_t comm;
+	comm.size_type = _size_type;
+	comm.show_time = _show_time;
+	comm.x = _x;
+	comm.y = _y;
+	comm.permanent = _permanent;
+	comm.name = "";
+	comm.data = _data;
+	if (func)
+		(func)(&comm);
+    return (ret_val);
+}
 
 int AddAnimationFigure(char _size_type, char	*_name,
 										uint32_t _show_time, uint8_t *_data, 
