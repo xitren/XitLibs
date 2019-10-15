@@ -2,6 +2,7 @@ INCLUDES := -Iinclude -Iinclude/coap -Iinclude/json -Iinclude/models \
 	-Iinclude/malloc -Itests
 
 #TOOL := gcc
+VERSION := 0.13
 TOOL := arm-none-eabi-gcc
 SRC_DIR := ./
 TEST_DIR := tests/
@@ -12,13 +13,15 @@ CFLAGS := -std=c99 -Werror -Wall -Wextra -Os \
 	-Wno-implicit-fallthrough \
 	-mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16 --specs=nosys.specs \
 	-Wno-int-conversion \
-	-fdata-sections -ffunction-sections
+	-fdata-sections -ffunction-sections \
+	-DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
 CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra -Os \
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
 	-Wno-implicit-fallthrough \
 	-mthumb -mcpu=cortex-m3 -mfloat-abi=soft --specs=nosys.specs \
 	-Wno-int-conversion -DSMALL \
-	-fdata-sections -ffunction-sections
+	-fdata-sections -ffunction-sections \
+	-DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
 #CFLAGS :=
 TFLAGS := 
 CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \

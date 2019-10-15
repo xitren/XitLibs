@@ -188,8 +188,8 @@ inline int Device_GET(uint8_t MediaType,
                     data_size_st = snprintf(
                             (char *) data,
                             buffer_size,
-                            "<DEVICE>%s</DEVICE>",
-                            device_name);
+                            "<DEVICE>%s</DEVICE>\n<VERSION>%s</VERSION>",
+                            device_name, VERSION);
                     data += data_size_st;
                     buffer_size -= data_size_st;
                     (*data_size) = data - data_st;
@@ -261,27 +261,14 @@ inline int Version_GET(uint8_t MediaType,
             {
                 case Media_XML:
                     current_coap_mediatype = Media_XML;
-                    if ( (major_version != 0) && (minor_version != 0) )
-                    {
-                        data_size_st = snprintf(
-                                (char *) data,
-                                buffer_size,
-                                "<VERSION>%d.%d</VERSION>",
-                                major_version, minor_version);
-                        data += data_size_st;
-                        buffer_size -= data_size_st;
-                        (*data_size) = data - data_st;
-                    } 
-                    else
-                    {
-                        data_size_st = snprintf(
-                                (char *) data,
-                                buffer_size,
-                                "<VERSION>UNSETTED</VERSION>");
-                        data += data_size_st;
-                        buffer_size -= data_size_st;
-                        (*data_size) = data - data_st;
-                    }
+					data_size_st = snprintf(
+							(char *) data,
+							buffer_size,
+							"<VERSION>%s</VERSION>",
+							VERSION);
+					data += data_size_st;
+					buffer_size -= data_size_st;
+					(*data_size) = data - data_st;
                     break;
                 default:
                     current_coap_mediatype = Media_XML;
