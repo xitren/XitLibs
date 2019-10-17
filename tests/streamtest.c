@@ -31,7 +31,7 @@ void test1() {
     printf("streamtest test 1\n");
     StreamRecorderCommand(Method_GET,Media_XML,&params,buffer_str,&size,100000);
     printf((char *)buffer_str);
-    printf("Message size: %d\n",size);
+    printf("Message size: %ld\n",size);
 }
 
 void test2() {
@@ -39,7 +39,7 @@ void test2() {
     StreamRecorderCommand(Method_GET,Media_TEXT,&params,buffer_str,&size,100000);
     printf((char *)buffer_str);
     printf("\n");
-    printf("Message size: %d\n",size);
+    printf("Message size: %ld\n",size);
 }
 
 void test3() {
@@ -49,14 +49,14 @@ void test3() {
             buffer_str[0],buffer_str[1],
             buffer_str[2],buffer_str[3]
             );
-    printf("Message size: %d\n",size);
+    printf("Message size: %ld\n",size);
 }
 
 void test4() {
     printf("streamtest test 4\n");
     StreamRecorderCommand(Method_GET,Media_JSON,&params,buffer_str,&size,100000);
     printf((char *)buffer_str);
-    printf("Message size: %d\n",size);
+    printf("Message size: %ld\n",size);
 }
 
 int main(int argc, char** argv) {
@@ -88,3 +88,4 @@ int main(int argc, char** argv) {
 
     return (EXIT_SUCCESS);
 }
+

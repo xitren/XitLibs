@@ -1,7 +1,7 @@
 INCLUDES := -Iinclude -Iinclude/coap -Iinclude/json -Iinclude/models \
 	-Iinclude/malloc -Itests
 
-#TOOL := gcc
+TEST_TOOL := gcc
 VERSION := 0.13
 TOOL := arm-none-eabi-gcc
 SRC_DIR := ./
@@ -23,7 +23,7 @@ CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra -Os \
 	-fdata-sections -ffunction-sections \
 	-DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
 #CFLAGS :=
-TFLAGS := 
+TFLAGS := -DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
 CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \
 	$(wildcard src/malloc/*.c) $(wildcard src/models/*.c)
 TSRC := $(wildcard tests/*.c)
@@ -43,10 +43,11 @@ all: $(NAME)
 	
 soft: 
 	make parallel CFLAGS='$(CFLAGS_SOFT)'
-
-test: parallel
+	
+test: 
+	make parallel CFLAGS='$(TFLAGS)' TOOL='$(TEST_TOOL)'
 	rm -rf $(TEXES)
-	make $(TEXES)
+	make $(TEXES) CFLAGS='$(TFLAGS)' TOOL='$(TEST_TOOL)'
 
 $(NAME): $(OBJS)
 	ar rcs $(AR_N) $^
@@ -67,3 +68,7 @@ fclean:
 	rm -rf $(OBJS) $(TOBJS) $(AR_N)
 clean:
 	rm -rf $(OBJS) $(TOBJS)
+
+
+
+

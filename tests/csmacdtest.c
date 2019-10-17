@@ -382,32 +382,35 @@ void test5()
 
 int main(int argc, char** argv)
 {
+	uint8_t id = 0x10;
     printf("%%SUITE_STARTING%% csmacdtest\n");
     printf("%%SUITE_STARTED%%\n");
 
-    csma_init(&controller, &Sender);
+    csma_init(&controller, &Sender, &id);
 
-//    printf("%%TEST_STARTED%% test1 (csmacdtest)\n");
-//    test1();
-//    printf("%%TEST_FINISHED%% time=0 test1 (csmacdtest) \n");
-//
-//    printf("%%TEST_STARTED%% test2 (csmacdtest)\n");
-//    test2();
-//    printf("%%TEST_FINISHED%% time=0 test2 (csmacdtest) \n");
-//
-//    printf("%%TEST_STARTED%% test3 (csmacdtest)\n");
-//    test3();
-//    printf("%%TEST_FINISHED%% time=0 test3 (csmacdtest) \n");
-//
-//    printf("%%TEST_STARTED%% test4 (csmacdtest)\n");
-//    test4();
-//    printf("%%TEST_FINISHED%% time=0 test4 (csmacdtest) \n");
-//    
-//    printf("%%TEST_STARTED%% test5 (csmacdtest)\n");
-//    test5();
-//    printf("%%TEST_FINISHED%% time=0 test5 (csmacdtest) \n");
+    printf("%%TEST_STARTED%% test1 (csmacdtest)\n");
+    test1();
+    printf("%%TEST_FINISHED%% time=0 test1 (csmacdtest) \n");
+
+    printf("%%TEST_STARTED%% test2 (csmacdtest)\n");
+    test2();
+    printf("%%TEST_FINISHED%% time=0 test2 (csmacdtest) \n");
+
+    printf("%%TEST_STARTED%% test3 (csmacdtest)\n");
+    test3();
+    printf("%%TEST_FINISHED%% time=0 test3 (csmacdtest) \n");
+
+    printf("%%TEST_STARTED%% test4 (csmacdtest)\n");
+    test4();
+    printf("%%TEST_FINISHED%% time=0 test4 (csmacdtest) \n");
+    
+    printf("%%TEST_STARTED%% test5 (csmacdtest)\n");
+    test5();
+    printf("%%TEST_FINISHED%% time=0 test5 (csmacdtest) \n");
 	
     printf("%%SUITE_FINISHED%% time=0\n");
 
     return (EXIT_SUCCESS);
 }
+
+
