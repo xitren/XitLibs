@@ -55,57 +55,55 @@ void coap_dumpHeader(coap_header_t *hdr)
 
 void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
 {
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-            __LINE__, __FILE__, __func__);
     if (buf == NULL)
     {
-        DBG_LOG_ERROR("%s: argument is NULL\n", __func__);
+        DBG_LOG_DEBUG("%s: argument is NULL\n", __func__);
         return;
     }
     if (bare)
     {
         while (buflen--)
         {
-            DBG_LOG_TRACE("%c%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_DEBUG("%c%s", *buf++, (buflen > 0) ? " " : "");
         }
     }
     else
     {
-        DBG_LOG_TRACE("Dump: \n");
+        DBG_LOG_DEBUG("Dump: \n");
         while (buflen--)
         {
-            DBG_LOG_TRACE("%c%s\n", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_DEBUG("%c%s\n", *buf++, (buflen > 0) ? " " : "");
         }
-        DBG_LOG_TRACE("\r\n\r");
+//        DBG_LOG_DEBUG("\r\n\r");
     }
 }
 
 void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
 {
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-            __LINE__, __FILE__, __func__);
+//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+//            __LINE__, __FILE__, __func__);
     if (buf == NULL)
     {
-        DBG_LOG_ERROR("%s: argument is NULL\n", __func__);
+        DBG_LOG_DEBUG("%s: argument is NULL\n", __func__);
         return;
     }
     if (bare)
     {
-        DBG_LOG_TRACE("Bare.\n");
+        DBG_LOG_DEBUG("Bare: ");
         for (; (buflen) > 0; buflen--)
         {
-            DBG_LOG_TRACE("%02X\n", *buf++);
+            DBG_LOG_DEBUG("%02X\n", *buf++);
         }
-        DBG_LOG_TRACE("\r\n\r");
+//        DBG_LOG_DEBUG("\r\n\r");
     }
     else
     {
-        DBG_LOG_TRACE("Dump: ");
+        DBG_LOG_DEBUG("Dump: ");
         while (buflen--)
         {
-            DBG_LOG_TRACE("%02X%s", *buf++, (buflen > 0) ? " " : "");
+            DBG_LOG_DEBUG("%02X%s", *buf++, (buflen > 0) ? " " : "");
         }
-        DBG_LOG_TRACE("\r\n\r");
+//        DBG_LOG_DEBUG("\r\n\r");
     }
 }
 
@@ -119,24 +117,26 @@ void coap_dumpOptions(coap_option_t *opts, size_t numopt)
         DBG_LOG_ERROR("%s: argument is NULL\n", __func__);
         return;
     }
-    DBG_LOG_DEBUG(" Options:\n");
+    DBG_LOG_DEBUG(" Options (%p):\n", opts);
     for (i = 0; i < numopt; i++)
     {
-        DBG_LOG_DEBUG("  0x%02X [ ", opts[i].num);
+        DBG_LOG_DEBUG(" (%p) ", &(opts[i]));
+        DBG_LOG_DEBUG("0x%02X [ ", opts[i].num);
         if (opts[i].buf.p == NULL)
         {
-            DBG_LOG_ERROR("opts[i].buf.p is NULL\n");
+            DBG_LOG_DEBUG("opts[i].buf.p is NULL\n");
             continue;
         }
-        coap_dump(opts[i].buf.p, opts[i].buf.len, true);
+        coap_dump(opts[i].buf.p, opts[i].buf.len, false);
         DBG_LOG_DEBUG(" ]\n");
     }
     for (i = 0; i < numopt; i++)
     {
-        DBG_LOG_DEBUG("  0x%02X [ ", opts[i].num);
+        DBG_LOG_DEBUG(" (%p) ", &(opts[i]));
+        DBG_LOG_DEBUG("0x%02X [ ", opts[i].num);
         if (opts[i].buf.p == NULL)
         {
-            DBG_LOG_ERROR("opts[i].buf.p is NULL\n");
+            DBG_LOG_DEBUG("opts[i].buf.p is NULL\n");
             continue;
         }
         coap_dump_char(opts[i].buf.p, opts[i].buf.len, true);
@@ -325,12 +325,19 @@ int coap_parseOption(coap_option_t *option, uint16_t *running_delta,
         DBG_LOG_ERROR("%s: argument is NULL\n", __func__);
         return 0;
     }
-    const uint8_t *p = *buf;
+    uint8_t *p = (uint8_t *)*buf;
     uint8_t headlen = 1;
     uint16_t len, delta;
+	
+	DBG_LOG_DEBUG("coap_parseOption ");
+    coap_dump(p, buflen, false);
+	DBG_LOG_DEBUG("\n");
 
     if (buflen < headlen) // too small
+	{
+		DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
         return COAP_ERR_OPTION_TOO_SHORT_FOR_HEADER;
+	}
 
     delta = (p[0] & 0xF0) >> 4;
     len = p[0] & 0x0F;
@@ -340,7 +347,10 @@ int coap_parseOption(coap_option_t *option, uint16_t *running_delta,
     {
         headlen++;
         if (buflen < headlen)
+		{
+			DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
             return COAP_ERR_OPTION_TOO_SHORT_FOR_HEADER;
+		}
         delta = p[1] + 13;
         p++;
     }
@@ -349,19 +359,28 @@ int coap_parseOption(coap_option_t *option, uint16_t *running_delta,
     {
         headlen += 2;
         if (buflen < headlen)
+		{
+			DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
             return COAP_ERR_OPTION_TOO_SHORT_FOR_HEADER;
+		}
         delta = ((p[1] << 8) | p[2]) + 269;
         p += 2;
     }
     else
         if (delta == 15)
-        return COAP_ERR_OPTION_DELTA_INVALID;
+		{
+			DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
+			return COAP_ERR_OPTION_DELTA_INVALID;
+		}
 
     if (len == 13)
     {
         headlen++;
         if (buflen < headlen)
+		{
+			DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
             return COAP_ERR_OPTION_TOO_SHORT_FOR_HEADER;
+		}
         len = p[1] + 13;
         p++;
     }
@@ -370,25 +389,35 @@ int coap_parseOption(coap_option_t *option, uint16_t *running_delta,
     {
         headlen += 2;
         if (buflen < headlen)
+		{
+			DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
             return COAP_ERR_OPTION_TOO_SHORT_FOR_HEADER;
+		}
         len = ((p[1] << 8) | p[2]) + 269;
         p += 2;
     }
     else
         if (len == 15)
-        return COAP_ERR_OPTION_LEN_INVALID;
+		{
+			DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
+			return COAP_ERR_OPTION_LEN_INVALID;
+		}
 
     if ((p + 1 + len) > (*buf + buflen))
+	{
+		DBG_LOG_TRACE("COAP_ERR_OPTION_TOO_BIG\n");
         return COAP_ERR_OPTION_TOO_BIG;
+	}
 
     option->num = delta + *running_delta;
-    option->buf.p = (uint8_t *)((unsigned int)p + 1);
+    option->buf.p = p + 1;
     option->buf.len = len;
+    coap_dump(option->buf.p, option->buf.len, false);
 
     // advance buf
     *buf = p + 1 + len;
     *running_delta += delta;
-
+	
     return 0;
 }
 
@@ -409,8 +438,13 @@ int coap_parseOptionsAndPayload(coap_option_t *options, uint8_t *numOptions, coa
     const uint8_t *p = buf + 4 + hdr->tkl;
     const uint8_t *end = buf + buflen;
     int rc;
+    coap_dump(p, buflen - (4 + hdr->tkl), false);
+	DBG_LOG_DEBUG("\n");
     if (p > end)
+	{
+		DBG_LOG_TRACE("COAP_ERR_OPTION_OVERRUNS_PACKET\n");
         return COAP_ERR_OPTION_OVERRUNS_PACKET; // out of bounds
+	}
 
     //coap_dump(p, end - p);
 
@@ -418,7 +452,10 @@ int coap_parseOptionsAndPayload(coap_option_t *options, uint8_t *numOptions, coa
     while ((optionIndex < *numOptions) && (p < end) && (*p != 0xFF))
     {
         if (0 != (rc = coap_parseOption(&options[optionIndex], &delta, &p, end - p)))
+		{
+			DBG_LOG_TRACE("coap_parseOption error\n");
             return rc;
+		}
         optionIndex++;
     }
     *numOptions = optionIndex;
@@ -433,6 +470,7 @@ int coap_parseOptionsAndPayload(coap_option_t *options, uint8_t *numOptions, coa
         payload->p = NULL;
         payload->len = 0;
     }
+	coap_dumpOptions(options, optionIndex);
 
     return 0;
 }
@@ -452,12 +490,17 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
     DBG_LOG_DEBUG("%s: %d bytes hash %04X.\n",
             __func__, buflen, CRC16ANSI((uint8_t *)buf, buflen));
 
+    coap_dump(buf, buflen, false);
+	DBG_LOG_DEBUG("\n");
     if (0 != (rc = coap_parseHeader(&pkt->hdr, buf, buflen)))
         return rc;
     if (0 != (rc = coap_parseToken(pkt->tok_p, &pkt->tok_len, &pkt->hdr, buf, buflen)))
         return rc;
     pkt->numopts = MAXOPT;
-    if (0 != (rc = coap_parseOptionsAndPayload(pkt->opts, &(pkt->numopts), &(pkt->payload), &pkt->hdr, buf, buflen)))
+    DBG_LOG_DEBUG("coap_parseOptionsAndPayload.\n");
+    if (0 != (rc = coap_parseOptionsAndPayload(
+			pkt->opts, &(pkt->numopts), &(pkt->payload), 
+			&pkt->hdr, buf, buflen)))
         return rc;
     DBG_LOG_DEBUG("coap_parseOptionsAndPayload %d bytes hash %04X.\n",
             pkt->payload.len, CRC16ANSI(pkt->payload.p, pkt->payload.len));

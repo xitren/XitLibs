@@ -87,7 +87,7 @@ inline int WellKnown_GET(uint8_t MediaType,
     int i = 0;
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
-    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    if ((TempParam))
     {
         if (ret_val >= 0)
         {
@@ -129,6 +129,7 @@ inline int WellKnown_GET(uint8_t MediaType,
     }
     else
     {
+        DBG_LOG_TRACE("NumberofParameters %d", TempParam->NumberofParameters);
         current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
@@ -172,7 +173,7 @@ inline int Device_GET(uint8_t MediaType,
     uint32_t data_size_st = 0;
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
-    if ((TempParam) && (TempParam->NumberofParameters > 0))
+    if ((TempParam))
     {
         if (ret_val >= 0)
         {
@@ -458,7 +459,8 @@ int add_parameter(ParameterList_t *params, char *strParam, uint32_t intParam)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
-    if ((params == NULL) || (strParam == NULL))
+    DBG_LOG_TRACE("dd.\n");
+    if ((params == 0) || (0 == NULL))
     {
         DBG_LOG_ERROR("%s: argument is NULL\n", __func__);
         return 0;

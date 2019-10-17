@@ -183,27 +183,87 @@ uint32_t msgs_streamer[][2] = {
 /*
  * Simple C Test Suite
  */
+uint8_t scratch_b1[] = {
+	0x40, 0x01, 0x00, 0x00, 0x61, 0x01, 0x5D, 0x05, 0x73, 0x74, 0x72, 0x65,
+	0x61, 0x6D, 0x64, 0x61, 0x74, 0x61, 0x72, 0x65,	0x63, 0x6F, 0x72, 0x64,
+	0x65, 0x72, 0x40
+};
+uint8_t scratch_b2[] = {
+    0x40, 0x01, 0xFC, 0xB0, 0xBD, 0x05, 0x73, 0x74, 0x72, 0x65, 0x61, 0x6D,
+    0x64, 0x61, 0x74, 0x61, 0x72, 0x65, 0x63, 0x6F, 0x72, 0x64, 0x65, 0x72,
+    0xC1, 0x06
+};
+uint8_t scratch_b3[] = {
+    0x40, 0x01, 0xFD, 0x5A, 0xBB, 0x2E, 0x77, 0x65, 0x6C, 0x6C, 0x2D, 0x6B,
+    0x6E, 0x6F, 0x77, 0x6E, 0x04, 0x63, 0x6F, 0x72, 0x65, 0xC1, 0x06
+};
+uint8_t scratch_b4[] = {
+	0x40, 0x01, 0x61, 0xBD, 0xB6, 0x64, 0x65, 0x76, 0x69, 0x63,
+    0x65, 0xC1, 0x06, 0x40
+};
+coap_rw_buffer_t input[4] = {
+	{scratch_b1, sizeof (scratch_b1)},
+	{scratch_b2, sizeof (scratch_b2)},
+	{scratch_b3, sizeof (scratch_b3)},
+	{scratch_b4, sizeof (scratch_b4)}
+};
+coap_rw_buffer_t *messg1, *messg2, *messg3;
 
 void testCoap_make_response()
 {
-    /*coap_rw_buffer_t *buff;
-    for (int i = 0; i < 25; i++)
-    {
-        buff = MessageHandler((const uint8_t *)msgs_streamer[i][0], msgs_streamer[i][1], "127.0.0.1", 4567);
-        if (buff != NULL)
-        {
-            continue;
-        }
-        printf(" %%TEST_FAILED%% time=0 testname=test2 (recvtest) message=error message sample\n");
-    }*/
+	int i,j=3;
+	for (j = 0;j < 4;j++)
+	{
+		for (i = 0;i < input[j].len;i++)
+		{
+			printf("%02X ", input[j].p[i]);
+		}
+		printf("\n");
+		for (i = 0;i < input[j].len;i++)
+		{
+			printf("%c", input[j].p[i]);
+		}
+		messg1 = MessageHandlerIntIP(
+				&(input[j].p[0]),
+				input[j].len,
+				0, 0
+		);
+		printf("\nAnswer\n");
+		for (i = 0;i < messg1->len;i++)
+		{
+			printf("%02X ", messg1->p[i]);
+		}
+		printf("\n");
+		for (i = 0;i < messg1->len;i++)
+		{
+			printf("%c", messg1->p[i]);
+		}
+		printf("\n=================================================\n");
+	}
 }
+
+uint8_t Sender(uint8_t output)
+{
+    printf("dd: %02X [%c]\n", output);
+    return output;
+}
+
+uint8_t id = 0x10;
+CSMACDController_t contr;
 
 int main(int argc, char** argv)
 {
     printf("%%SUITE_STARTING%% handlertest\n");
     printf("%%SUITE_STARTED%%\n");
+    csma_init(&contr, &Sender, &id);
     InitHandler(250, 8);
-
+	
+	int i;
+	for (i=0;i < 2;i++)
+	{
+		AddSample();
+	}
+		
     printf("%%TEST_STARTED%%  testCoap_make_response (handlertest)\n");
     testCoap_make_response();
     printf("%%TEST_FINISHED%% time=0 testCoap_make_response (handlertest)\n");

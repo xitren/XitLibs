@@ -187,6 +187,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
     uint32_t data_size_st = 0;
     uint32_t l = 0,i,k;
     uint32_t Data_sample[MAX_SAMPLE_SIZE];
+    DBG_LOG_DEBUG("buffer_size %u.\n", buffer_size)
     if ((TempParam))
     {
         if (MediaType == Media_FREE)
@@ -210,6 +211,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
         ret_val_t = get_parameter(TempParam,"to",(uint32_t*)&To);
         if ( (ret_val_f >= 0) && (ret_val_t >= 0) ) 
         {
+			DBG_LOG_DEBUG("buffer_size2 %s %u.\n", data_st, *data_size);
             last = circularbuffer_get_last_index(&buffer_test);
             first = circularbuffer_get_first_index(&buffer_test);
             DBG_LOG_TRACE("(last %d <=> first %d) \n",last,first);
@@ -403,6 +405,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                         }
                         break;
                     default:
+						DBG_LOG_TRACE("MEDIA_FORMAT_NOT_ALLOWED %d \n", MediaType);
                         current_coap_mediatype = Media_XML;
                         (*data_size) = snprintf(
                                 (char*)data, buffer_size,
@@ -413,6 +416,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
             else
             {
                 current_coap_mediatype = Media_XML;
+						DBG_LOG_TRACE("MEDIA_FORMAT_NOT_ALLOWED \n");
                 ret_val = INVALID_PARAMETERS_ERROR;
                 (*data_size) = snprintf(
                         (char*)data, buffer_size,
@@ -421,6 +425,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
             }
         }
         else
+		{
             switch (MediaType)
             {
                 case Media_JSON:
@@ -582,6 +587,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     circularbuffer_unreaded_items_nullify(&buffer_test);
                     break;
                 case Media_BYTE:
+			DBG_LOG_DEBUG("buffer_size3 %s %u.\n", data_st, *data_size);
                     current_coap_mediatype = Media_BYTE;
                     l = circularbuffer_unreaded_items_size(&buffer_test);
                     if (l > 0)
@@ -613,6 +619,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     circularbuffer_unreaded_items_nullify(&buffer_test);
                     break;
                 default:
+					DBG_LOG_TRACE("r MEDIA_FORMAT_NOT_ALLOWED %d \n", MediaType);
                     current_coap_mediatype = Media_XML;
                     (*data_size) = snprintf(
                             (char*)data, buffer_size,
@@ -620,10 +627,12 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                     );
                     break;
             }
+		}
         (*data_size) = data - data_st;
     }
     else
     {
+		DBG_LOG_TRACE("INVALID_PARAMETERS_ERROR \n");
         current_coap_mediatype = Media_XML;
         ret_val = INVALID_PARAMETERS_ERROR;
         (*data_size) = snprintf(
@@ -631,6 +640,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
                 "<INVALID_PARAMETERS_ERROR/>\r\n\r"
         );
     }
+    DBG_LOG_DEBUG("buffer_size %s %u.\n", data_st, *data_size)
     return(ret_val);
 }
 inline int StreamRecorderCommand_RESET(uint8_t MediaType, 

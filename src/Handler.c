@@ -134,6 +134,7 @@ coap_rw_buffer_t *MessageHandlerIntIP( const uint8_t *buf, size_t buflen,
         DBG_LOG_TRACE("header rc == %d\n",inpkt.hdr.code);
         if ((inpkt.hdr.code == COAP_METHOD_GET))
         {
+			DBG_LOG_TRACE("COAP_RSPCODE_CONTENT\n");
             coap_make_response(
                     &scratch,
                     &outpkt,
@@ -149,6 +150,7 @@ coap_rw_buffer_t *MessageHandlerIntIP( const uint8_t *buf, size_t buflen,
         }
         else
         {
+			DBG_LOG_TRACE("COAP_RSPCODE_CHANGED\n");
             coap_make_response(
                     &scratch,
                     &outpkt,
@@ -248,9 +250,10 @@ coap_rw_buffer_t *MessageHandlerTextIP( const uint8_t *buf, size_t buflen,
     DBG_LOG_TRACE("coap_handle_req return code rc == %d\n",rc);
     if (rc == 0)
     {
-        DBG_LOG_TRACE("header rc == %d\n",inpkt.hdr.code);
+        DBG_LOG_TRACE("header2 rc == %d\n",inpkt.hdr.code);
         if ((inpkt.hdr.code == COAP_METHOD_GET))
         {
+			DBG_LOG_TRACE("COAP_RSPCODE_CONTENT\n");
             coap_make_response(
                     &scratch,
                     &outpkt,
@@ -266,6 +269,7 @@ coap_rw_buffer_t *MessageHandlerTextIP( const uint8_t *buf, size_t buflen,
         }
         else
         {
+			DBG_LOG_TRACE("COAP_RSPCODE_CHANGED\n");
             coap_make_response(
                     &scratch,
                     &outpkt,
@@ -333,7 +337,7 @@ coap_rw_buffer_t *MessageHandlerTextIP( const uint8_t *buf, size_t buflen,
         }
     }
     /*==4= Build response package ========================================*/
-    DBG_LOG_TRACE("Build response package (size:%d)\n",outpkt.payload.len);
+    DBG_LOG_TRACE("Build response package (size:%d)\n", outpkt.payload.len);
     message.len = HANDLER_BUFFER_LENGTH;
     rc = coap_build(message.p, &message.len, &outpkt, NULL, NULL);
     /*==5= Transmitt package =============================================*/
