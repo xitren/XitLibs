@@ -459,8 +459,8 @@ int add_parameter(ParameterList_t *params, char *strParam, uint32_t intParam)
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
-    DBG_LOG_TRACE("dd.\n");
-    if ((params == 0) || (0 == NULL))
+    DBG_LOG_TRACE("%s .\n");
+    if ((params == 0))
     {
         DBG_LOG_ERROR("%s: argument is NULL\n", __func__);
         return 0;
