@@ -22,10 +22,10 @@ CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra -Os \
 	-Wno-int-conversion -DSMALL \
 	-fdata-sections -ffunction-sections \
 	-DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
-#CFLAGS += -DDEBUG -g
+CFLAGS += -DDEBUG -g
 
 TFLAGS := -DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
-#TFLAGS += -DDEBUG -g
+TFLAGS += -DDEBUG -g
 
 CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \
 	$(wildcard src/malloc/*.c) $(wildcard src/models/*.c)
@@ -55,7 +55,7 @@ test:
 test_handler: 
 	make parallel CFLAGS='$(TFLAGS)' TOOL='$(TEST_TOOL)'
 	rm -rf $(TEXES)
-	$(TEST_TOOL) $(INCLUDES) $(TFLAGS) tests/handlertest.c $(AR_N) -o htest.exe
+	$(TEST_TOOL) $(INCLUDES) $(TFLAGS) tests/handlertest.c $(AR_N) -lws2_32 -o htest.exe
 	./htest.exe
 
 $(NAME): $(OBJS)
@@ -78,3 +78,4 @@ fclean:
 clean:
 	rm -rf $(OBJS) $(TOBJS)
 	
+

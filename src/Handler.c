@@ -351,10 +351,20 @@ coap_rw_buffer_t *MessageHandlerTextIP( const uint8_t *buf, size_t buflen,
 coap_observer_buffer_t *StreamObserverHandler()
 {
     int rc;
+	static uint16_t nn;
+	uint8_t n_b[2];
+	coap_option_t opt_part;
     if (!IsObserved()){
         return 0;
     }
-    if ((uint32_t)GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
+    if ((uint32_t)GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize))
+	{
+		opt_part.num = COAP_OPTION_BLOCK2;
+		n_b[1] = nn & 0xFF;
+		n_b[0] = (nn >> 8) & 0xFF;
+		opt_part.buf.p = n_b;
+		opt_part.buf.len = 2;
+		nn++;
         DBG_LOG_TRACE(
                 "GetStreamDataReadyCnt (%d >= %d)\n",
                 GetStreamDataReadyCnt(),
@@ -371,7 +381,7 @@ coap_observer_buffer_t *StreamObserverHandler()
             coap_make_response(
                     &scratch,
                     &outpkt,
-                    0,
+                    &opt_part,
                     (uint8_t*) scratch.p,
                     scratch.len,
                     StreamGetObserverPacket()->hdr.id[0],
@@ -400,3 +410,6 @@ coap_observer_buffer_t *StreamObserverHandler()
     }
     return 0;
 }
+
+
+
