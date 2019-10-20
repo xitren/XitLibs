@@ -8,7 +8,7 @@ SRC_DIR := ./
 TEST_DIR := tests/
 AR_N := XitLib.a
 NAME := XitLib.a
-CFLAGS := -std=c99 -Werror -Wall -Wextra -Os \
+CFLAGS := -std=c99 -Wall -Wextra -Os \
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
 	-Wno-implicit-fallthrough \
 	-mthumb -mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv4-sp-d16 --specs=nosys.specs \

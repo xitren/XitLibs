@@ -43,7 +43,7 @@ static uint32_t power_amplitude[BUFFER_SAMPLE_SIZE-1] =
 static uint32_t signal_frequency[BUFFER_SAMPLE_SIZE-1] = {10,20,30,40,50,60,70};
 static uint8_t signal_type = 0;    
 static uint8_t observed = 0;
-static uint8_t media_type;
+static uint8_t media_type = Media_FREE;
 static uint32_t observer_ip;
 static uint32_t observer_port;
 /*============================================================================*/
@@ -853,5 +853,8 @@ int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType,
     return(ret_val);
 }
 /*============================================================================*/
+
+
+
 
 
