@@ -68,6 +68,10 @@ int IsObserved(void){
     return observed;
 }
 
+void setObserved(int _observer){
+    observed = _observer;
+}
+
 void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size, 
         uint32_t _sample_frequency, uint32_t _sample_size, uint32_t _signal_type)
 {
@@ -853,6 +857,7 @@ int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType,
     return(ret_val);
 }
 /*============================================================================*/
+
 
 
 

@@ -47,6 +47,7 @@ int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType,
         ParameterList_t *TempParam, uint8_t *data, 
         uint32_t *data_size, uint32_t buffer_size);
 int IsObserved(void);
+void setObserved(int _observer);
 /*============================================================================*/
 
 #ifdef __cplusplus
@@ -54,3 +55,4 @@ int IsObserved(void);
 #endif
 
 #endif
+

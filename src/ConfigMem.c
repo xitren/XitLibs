@@ -269,10 +269,10 @@ void InitCfgMem(void)
 
 inline void WriteMem(uint32_t _adr, uint32_t _val)
 {
-    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-            __LINE__, __FILE__, __func__);
-    DBG_LOG_TRACE("Address: %d (0x%02X); Value: %d (0x%08X).\n",
-            _adr, _adr, _val, _val);
+//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
+//            __LINE__, __FILE__, __func__);
+//    DBG_LOG_TRACE("Address: %d (0x%02X); Value: %d (0x%08X).\n",
+//            _adr, _adr, _val, _val);
     if (_adr < CFG_SIZE)
     {
         if (_adr <= REG_SHOW_BFR_TARG)
