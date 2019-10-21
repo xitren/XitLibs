@@ -2,7 +2,7 @@ INCLUDES := -Iinclude -Iinclude/coap -Iinclude/json -Iinclude/models \
 	-Iinclude/malloc -Iinclude/circular_printf -Itests
 
 TEST_TOOL := gcc
-VERSION := 0.13
+VERSION := 0.14
 TOOL := arm-none-eabi-gcc
 SRC_DIR := ./
 TEST_DIR := tests/
