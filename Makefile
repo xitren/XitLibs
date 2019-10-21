@@ -1,5 +1,5 @@
 INCLUDES := -Iinclude -Iinclude/coap -Iinclude/json -Iinclude/models \
-	-Iinclude/malloc -Itests
+	-Iinclude/malloc -Iinclude/circular_printf -Itests
 
 TEST_TOOL := gcc
 VERSION := 0.13
@@ -28,7 +28,8 @@ TFLAGS := -DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
 TFLAGS += -DDEBUG -g
 
 CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \
-	$(wildcard src/malloc/*.c) $(wildcard src/models/*.c)
+	$(wildcard src/malloc/*.c) $(wildcard src/models/*.c) \
+	$(wildcard src/circular_printf/*.c)
 TSRC := $(wildcard tests/*.c)
 OBJS := $(CSRC:.c=.o)
 TOBJS := $(TSRC:.c=.o)
