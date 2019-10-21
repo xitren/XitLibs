@@ -31,6 +31,7 @@ CSRC := $(wildcard src/*.c) $(wildcard src/coap/*.c) $(wildcard src/json/*.c) \
 	$(wildcard src/malloc/*.c) $(wildcard src/models/*.c) \
 	$(wildcard src/circular_printf/*.c)
 TSRC := $(wildcard tests/*.c)
+TSRC := $(filter-out tests/handlertest.c, $(TSRC))
 OBJS := $(CSRC:.c=.o)
 TOBJS := $(TSRC:.c=.o)
 TEXES := $(TSRC:.c=.exe)
