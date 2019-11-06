@@ -111,7 +111,7 @@ coap_rw_buffer_t *MessageHandlerIntIP( const uint8_t *buf, size_t buflen,
 {
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
                       __LINE__, __FILE__, __func__);
-    int rc;
+    int rc,i;
     char ip[16];
     conv_uint32_bytes_t ip_d;
     ip_d.ui32 = ipi;
@@ -135,18 +135,18 @@ coap_rw_buffer_t *MessageHandlerIntIP( const uint8_t *buf, size_t buflen,
         if ((inpkt.hdr.code == COAP_METHOD_GET))
         {
 			DBG_LOG_TRACE("COAP_RSPCODE_CONTENT\n");
-            coap_make_response(
-                    &scratch,
-                    &outpkt,
-                    0,
-                    (uint8_t*) scratch.p,
-                    scratch.len,
-                    inpkt.hdr.id[0],
-                    inpkt.hdr.id[1],
-                    inpkt.tok_p,
-                    inpkt.tok_len,
-                    COAP_RSPCODE_CONTENT,
-                    media_option);
+			coap_make_response(
+						&scratch,
+						&outpkt,
+						0,
+						(uint8_t*) scratch.p,
+						scratch.len,
+						inpkt.hdr.id[0],
+						inpkt.hdr.id[1],
+						inpkt.tok_p,
+						inpkt.tok_len,
+						COAP_RSPCODE_CONTENT,
+						media_option);
         }
         else
         {
@@ -359,12 +359,12 @@ coap_observer_buffer_t *StreamObserverHandler()
     }
     if ((uint32_t)GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize))
 	{
+		nn++;
 		opt_part.num = COAP_OPTION_BLOCK2;
 		n_b[1] = nn & 0xFF;
 		n_b[0] = (nn >> 8) & 0xFF;
 		opt_part.buf.p = n_b;
 		opt_part.buf.len = 2;
-		nn++;
         DBG_LOG_TRACE(
                 "GetStreamDataReadyCnt (%d >= %d)\n",
                 GetStreamDataReadyCnt(),
@@ -410,6 +410,25 @@ coap_observer_buffer_t *StreamObserverHandler()
     }
     return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

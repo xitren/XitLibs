@@ -69,10 +69,10 @@ void coap_dump_char(const uint8_t *buf, size_t buflen, bool bare)
     }
     else
     {
-        DBG_LOG_DEBUG("Dump: \n");
+//        printf("Dump: \n");
         while (buflen--)
         {
-            DBG_LOG_DEBUG("%c%s\n", *buf++, (buflen > 0) ? " " : "");
+//            printf("%c%s\n", *buf++, (buflen > 0) ? " " : "");
         }
 //        DBG_LOG_DEBUG("\r\n\r");
     }
@@ -89,19 +89,19 @@ void coap_dump(const uint8_t *buf, size_t buflen, bool bare)
     }
     if (bare)
     {
-        DBG_LOG_DEBUG("Bare: ");
+//        printf("Bare: ");
         for (; (buflen) > 0; buflen--)
         {
-            DBG_LOG_DEBUG("%02X\n", *buf++);
+//            printf("%02X\n", *buf++);
         }
 //        DBG_LOG_DEBUG("\r\n\r");
     }
     else
     {
-        DBG_LOG_DEBUG("Dump: ");
+//        printf("Dump: ");
         while (buflen--)
         {
-            DBG_LOG_DEBUG("%02X%s", *buf++, (buflen > 0) ? " " : "");
+//            printf("%02X%s", *buf++, (buflen > 0) ? " " : "");
         }
 //        DBG_LOG_DEBUG("\r\n\r");
     }
@@ -494,6 +494,7 @@ int coap_parse(coap_packet_t *pkt, const uint8_t *buf, size_t buflen)
 	DBG_LOG_DEBUG("\n");
     if (0 != (rc = coap_parseHeader(&pkt->hdr, buf, buflen)))
         return rc;
+	coap_dumpHeader(&pkt->hdr);
     if (0 != (rc = coap_parseToken(pkt->tok_p, &pkt->tok_len, &pkt->hdr, buf, buflen)))
         return rc;
     pkt->numopts = MAXOPT;
@@ -1266,3 +1267,6 @@ void coap_setup(void)
         return;
 }
 /*============================================================================*/
+
+
+
