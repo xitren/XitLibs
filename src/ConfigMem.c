@@ -320,6 +320,7 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
     DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
             __LINE__, __FILE__, __func__);
     int ret_val = 0;
+    int ret_val2 = 0;
     int Address = -1;
     int Value = -1;
 
@@ -330,6 +331,9 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
     if ((TempParam) && (TempParam->NumberofParameters > 0))
     {
         ret_val = get_parameter(TempParam, "address", (uint32_t *) &Address);
+        ret_val2 = get_parameter(TempParam, "value", (uint32_t *) &Value);
+        if (ret_val2 >= 0)
+            WriteMem(Address, Value);
         if (MediaType == Media_FREE)
             MediaType = Media_XML;
         DBG_LOG_TRACE("%s: %08X = %d\n", __func__, Address, Value);
@@ -474,10 +478,10 @@ int MemoryCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
             ret_val = MemoryCommand_GET(
                     MediaType, TempParam, data, data_size, buffer_size);
             break;
-        case Method_PUT:
-            ret_val = MemoryCommand_PUT(
-                    MediaType, TempParam, data, data_size, buffer_size);
-            break;
+//        case Method_PUT:
+//            ret_val = MemoryCommand_PUT(
+//                    MediaType, TempParam, data, data_size, buffer_size);
+//            break;
         default:
             current_coap_mediatype = Media_XML;
             ret_val = INVALID_PARAMETERS_ERROR;
