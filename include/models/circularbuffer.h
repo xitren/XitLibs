@@ -19,42 +19,41 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
-/* Private structures --------------------------------------------------------*/
-typedef struct _tagCircularBufferItem_t
-{
-   uint32_t             Channel[8];
-} CircularBufferItem_t;    
-typedef struct _tagCircularBuffer_t
-{
-   CircularBufferItem_t*        Storage;
-   uint32_t                     StorageSize;
-   uint32_t                     Head;
-   uint32_t                     Tail;
-   uint32_t                     Cycle;
-} CircularBuffer_t;
-/*============================================================================*/
 
-/* Public types --------------------------------------------------------------*/
-/*============================================================================*/
+	/* Private structures --------------------------------------------------------*/
+	typedef struct _tagCircularBufferItem_t {
+		uint32_t Channel[8];
+	} CircularBufferItem_t;
 
-/* Public function prototypes ------------------------------------------------*/
-enum cc_stat circularbuffer_new(CircularBuffer_t* st,
-                        CircularBufferItem_t* _storage, uint32_t _storage_size);
-enum cc_stat circularbuffer_push(CircularBuffer_t* st, CircularBufferItem_t *item);
-enum cc_stat circularbuffer_pull(CircularBuffer_t* st, CircularBufferItem_t *item);
-enum cc_stat circularbuffer_remove_all(CircularBuffer_t* st);
-enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, int index, 
-                                            CircularBufferItem_t *item);
-int circularbuffer_get_last_index(CircularBuffer_t* st);
-int circularbuffer_get_first_index(CircularBuffer_t* st);
-int circularbuffer_unreaded_items_size(CircularBuffer_t* st);
-int circularbuffer_unreaded_items_nullify(CircularBuffer_t* st);
-void increment_last_index(CircularBuffer_t* st, uint32_t inc_value);
-/*============================================================================*/
+	typedef struct _tagCircularBuffer_t {
+		CircularBufferItem_t* Storage;
+		uint32_t StorageSize;
+		uint32_t Head;
+		uint32_t Tail;
+		uint32_t Cycle;
+	} CircularBuffer_t;
+	/*============================================================================*/
 
-/* Public defines ------------------------------------------------------------*/
-/*============================================================================*/
+	/* Public types --------------------------------------------------------------*/
+	/*============================================================================*/
+
+	/* Public function prototypes ------------------------------------------------*/
+	enum cc_stat circularbuffer_new(CircularBuffer_t* st,
+					CircularBufferItem_t* _storage, uint32_t _storage_size);
+	enum cc_stat circularbuffer_push(CircularBuffer_t* st, CircularBufferItem_t *item);
+	enum cc_stat circularbuffer_pull(CircularBuffer_t* st, CircularBufferItem_t *item);
+	enum cc_stat circularbuffer_remove_all(CircularBuffer_t* st);
+	enum cc_stat circularbuffer_get_at(CircularBuffer_t* st, int index,
+					CircularBufferItem_t *item);
+	int circularbuffer_get_last_index(CircularBuffer_t* st);
+	int circularbuffer_get_first_index(CircularBuffer_t* st);
+	int circularbuffer_unreaded_items_size(CircularBuffer_t* st);
+	int circularbuffer_unreaded_items_nullify(CircularBuffer_t* st);
+	void increment_last_index(CircularBuffer_t* st, uint32_t inc_value);
+	/*============================================================================*/
+
+	/* Public defines ------------------------------------------------------------*/
+	/*============================================================================*/
 
 #ifdef __cplusplus
 }

@@ -20,16 +20,16 @@
  */
 uint8_t
 circular_buff_init(circular_buff_t* buff, void* buffdata, size_t size) {
-    if (buff == NULL || buffdata == NULL || size == 0) {
-        return 0;
-    }
+	if (buff == NULL || buffdata == NULL || size == 0) {
+		return 0;
+	}
 
-    BUF_MEMSET(buff, 0x00, sizeof(*buff));
+	BUF_MEMSET(buff, 0x00, sizeof (*buff));
 
-    buff->size = size;
-    buff->buff = buffdata;
+	buff->size = size;
+	buff->buff = buffdata;
 
-    return 1;
+	return 1;
 }
 
 /**
@@ -40,9 +40,9 @@ circular_buff_init(circular_buff_t* buff, void* buffdata, size_t size) {
  */
 void
 circular_buff_free(circular_buff_t* buff) {
-    if (BUF_IS_VALID(buff)) {
-        buff->buff = NULL;
-    }
+	if (BUF_IS_VALID(buff)) {
+		buff->buff = NULL;
+	}
 }
 
 /**
@@ -57,36 +57,36 @@ circular_buff_free(circular_buff_t* buff) {
  */
 size_t
 circular_buff_write(circular_buff_t* buff, const void* data, size_t btw) {
-    size_t tocopy, free;
-    const uint8_t* d = data;
+	size_t tocopy, free;
+	const uint8_t* d = data;
 
-    if (!BUF_IS_VALID(buff) || btw == 0) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff) || btw == 0) {
+		return 0;
+	}
 
-    /* Calculate maximum number of bytes available to write */
-    free = circular_buff_get_free(buff);
-    btw = BUF_MIN(free, btw);
-    if (btw == 0) {
-        return 0;
-    }
+	/* Calculate maximum number of bytes available to write */
+	free = circular_buff_get_free(buff);
+	btw = BUF_MIN(free, btw);
+	if (btw == 0) {
+		return 0;
+	}
 
-    /* Step 1: Write data to linear part of buffer */
-    tocopy = BUF_MIN(buff->size - buff->w, btw);
-    BUF_MEMCPY(&buff->buff[buff->w], d, tocopy);
-    buff->w += tocopy;
-    btw -= tocopy;
+	/* Step 1: Write data to linear part of buffer */
+	tocopy = BUF_MIN(buff->size - buff->w, btw);
+	BUF_MEMCPY(&buff->buff[buff->w], d, tocopy);
+	buff->w += tocopy;
+	btw -= tocopy;
 
-    /* Step 2: Write data to beginning of buffer (overflow part) */
-    if (btw > 0) {
-        BUF_MEMCPY(buff->buff, (void *)&d[tocopy], btw);
-        buff->w = btw;
-    }
+	/* Step 2: Write data to beginning of buffer (overflow part) */
+	if (btw > 0) {
+		BUF_MEMCPY(buff->buff, (void *) &d[tocopy], btw);
+		buff->w = btw;
+	}
 
-    if (buff->w >= buff->size) {
-        buff->w = 0;
-    }
-    return tocopy + btw;
+	if (buff->w >= buff->size) {
+		buff->w = 0;
+	}
+	return tocopy + btw;
 }
 
 /**
@@ -99,37 +99,37 @@ circular_buff_write(circular_buff_t* buff, const void* data, size_t btw) {
  */
 size_t
 circular_buff_read(circular_buff_t* buff, void* data, size_t btr) {
-    size_t tocopy, full;
-    uint8_t *d = data;
+	size_t tocopy, full;
+	uint8_t *d = data;
 
-    if (!BUF_IS_VALID(buff) || btr == 0) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff) || btr == 0) {
+		return 0;
+	}
 
-    /* Calculate maximum number of bytes available to read */
-    full = circular_buff_get_full(buff);
-    btr = BUF_MIN(full, btr);
-    if (btr == 0) {
-        return 0;
-    }
+	/* Calculate maximum number of bytes available to read */
+	full = circular_buff_get_full(buff);
+	btr = BUF_MIN(full, btr);
+	if (btr == 0) {
+		return 0;
+	}
 
-    /* Step 1: Read data from linear part of buffer */
-    tocopy = BUF_MIN(buff->size - buff->r, btr);
-    BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
-    buff->r += tocopy;
-    btr -= tocopy;
+	/* Step 1: Read data from linear part of buffer */
+	tocopy = BUF_MIN(buff->size - buff->r, btr);
+	BUF_MEMCPY(d, &buff->buff[buff->r], tocopy);
+	buff->r += tocopy;
+	btr -= tocopy;
 
-    /* Step 2: Read data from beginning of buffer (overflow part) */
-    if (btr > 0) {
-        BUF_MEMCPY(&d[tocopy], buff->buff, btr);
-        buff->r = btr;
-    }
+	/* Step 2: Read data from beginning of buffer (overflow part) */
+	if (btr > 0) {
+		BUF_MEMCPY(&d[tocopy], buff->buff, btr);
+		buff->r = btr;
+	}
 
-    /* Step 3: Check end of buffer */
-    if (buff->r >= buff->size) {
-        buff->r = 0;
-    }
-    return tocopy + btr;
+	/* Step 3: Check end of buffer */
+	if (buff->r >= buff->size) {
+		buff->r = 0;
+	}
+	return tocopy + btr;
 }
 
 /**
@@ -142,44 +142,44 @@ circular_buff_read(circular_buff_t* buff, void* data, size_t btr) {
  */
 size_t
 circular_buff_peek(circular_buff_t* buff, size_t skip_count, void* data, size_t btp) {
-    size_t full, tocopy, r;
-    uint8_t *d = data;
+	size_t full, tocopy, r;
+	uint8_t *d = data;
 
-    if (!BUF_IS_VALID(buff) || btp == 0) {
-        return 0;
-    }
-    
-    r = buff->r;
+	if (!BUF_IS_VALID(buff) || btp == 0) {
+		return 0;
+	}
 
-    /* Calculate maximum number of bytes available to read */
-    full = circular_buff_get_full(buff);
+	r = buff->r;
 
-    /* Skip beginning of buffer */
-    if (skip_count >= full) {
-        return 0;
-    }
-    r += skip_count;
-    full -= skip_count;
-    if (r >= buff->size) {
-        r -= buff->size;
-    }
+	/* Calculate maximum number of bytes available to read */
+	full = circular_buff_get_full(buff);
 
-    /* Check maximum number of bytes available to read after skip */
-    btp = BUF_MIN(full, btp);
-    if (btp == 0) {
-        return 0;
-    }
+	/* Skip beginning of buffer */
+	if (skip_count >= full) {
+		return 0;
+	}
+	r += skip_count;
+	full -= skip_count;
+	if (r >= buff->size) {
+		r -= buff->size;
+	}
 
-    /* Step 1: Read data from linear part of buffer */
-    tocopy = BUF_MIN(buff->size - r, btp);
-    BUF_MEMCPY(d, &buff->buff[r], tocopy);
-    btp -= tocopy;
+	/* Check maximum number of bytes available to read after skip */
+	btp = BUF_MIN(full, btp);
+	if (btp == 0) {
+		return 0;
+	}
 
-    /* Step 2: Read data from beginning of buffer (overflow part) */
-    if (btp > 0) {
-        BUF_MEMCPY(&d[tocopy], buff->buff, btp);
-    }
-    return tocopy + btp;
+	/* Step 1: Read data from linear part of buffer */
+	tocopy = BUF_MIN(buff->size - r, btp);
+	BUF_MEMCPY(d, &buff->buff[r], tocopy);
+	btp -= tocopy;
+
+	/* Step 2: Read data from beginning of buffer (overflow part) */
+	if (btp > 0) {
+		BUF_MEMCPY(&d[tocopy], buff->buff, btp);
+	}
+	return tocopy + btp;
 }
 
 /**
@@ -189,25 +189,25 @@ circular_buff_peek(circular_buff_t* buff, size_t skip_count, void* data, size_t 
  */
 size_t
 circular_buff_get_free(circular_buff_t* buff) {
-    size_t size, w, r;
+	size_t size, w, r;
 
-    if (!BUF_IS_VALID(buff)) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff)) {
+		return 0;
+	}
 
-    /* Use temporary values in case they are changed during operations */
-    w = buff->w;
-    r = buff->r;
-    if (w == r) {
-        size = buff->size;
-    } else if (r > w) {
-        size = r - w;
-    } else {
-        size = buff->size - (w - r);
-    }
+	/* Use temporary values in case they are changed during operations */
+	w = buff->w;
+	r = buff->r;
+	if (w == r) {
+		size = buff->size;
+	} else if (r > w) {
+		size = r - w;
+	} else {
+		size = buff->size - (w - r);
+	}
 
-    /* Buffer free size is always 1 less than actual size */
-    return size - 1;
+	/* Buffer free size is always 1 less than actual size */
+	return size - 1;
 }
 
 /**
@@ -217,23 +217,23 @@ circular_buff_get_free(circular_buff_t* buff) {
  */
 size_t
 circular_buff_get_full(circular_buff_t* buff) {
-    size_t w, r, size;
+	size_t w, r, size;
 
-    if (!BUF_IS_VALID(buff)) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff)) {
+		return 0;
+	}
 
-    /* Use temporary values in case they are changed during operations */
-    w = buff->w;
-    r = buff->r;
-    if (w == r) {
-        size = 0;
-    } else if (w > r) {
-        size = w - r;
-    } else {
-        size = buff->size - (r - w);
-    }
-    return size;
+	/* Use temporary values in case they are changed during operations */
+	w = buff->w;
+	r = buff->r;
+	if (w == r) {
+		size = 0;
+	} else if (w > r) {
+		size = w - r;
+	} else {
+		size = buff->size - (r - w);
+	}
+	return size;
 }
 
 /**
@@ -242,10 +242,10 @@ circular_buff_get_full(circular_buff_t* buff) {
  */
 void
 circular_buff_reset(circular_buff_t* buff) {
-    if (BUF_IS_VALID(buff)) {
-        buff->w = 0;
-        buff->r = 0;
-    }
+	if (BUF_IS_VALID(buff)) {
+		buff->w = 0;
+		buff->r = 0;
+	}
 }
 
 /**
@@ -255,10 +255,10 @@ circular_buff_reset(circular_buff_t* buff) {
  */
 void *
 circular_buff_get_linear_block_read_address(circular_buff_t* buff) {
-    if (!BUF_IS_VALID(buff)) {
-        return NULL;
-    }
-    return &buff->buff[buff->r];
+	if (!BUF_IS_VALID(buff)) {
+		return NULL;
+	}
+	return &buff->buff[buff->r];
 }
 
 /**
@@ -268,23 +268,23 @@ circular_buff_get_linear_block_read_address(circular_buff_t* buff) {
  */
 size_t
 circular_buff_get_linear_block_read_length(circular_buff_t* buff) {
-    size_t w, r, len;
+	size_t w, r, len;
 
-    if (!BUF_IS_VALID(buff)) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff)) {
+		return 0;
+	}
 
-    /* Use temporary values in case they are changed during operations */
-    w = buff->w;
-    r = buff->r;
-    if (w > r) {
-        len = w - r;
-    } else if (r > w) {
-        len = buff->size - r;
-    } else {
-        len = 0;
-    }
-    return len;
+	/* Use temporary values in case they are changed during operations */
+	w = buff->w;
+	r = buff->r;
+	if (w > r) {
+		len = w - r;
+	} else if (r > w) {
+		len = buff->size - r;
+	} else {
+		len = 0;
+	}
+	return len;
 }
 
 /**
@@ -297,18 +297,18 @@ circular_buff_get_linear_block_read_length(circular_buff_t* buff) {
  */
 size_t
 circular_buff_skip(circular_buff_t* buff, size_t len) {
-    size_t full;
+	size_t full;
 
-    if (!BUF_IS_VALID(buff) || len == 0) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff) || len == 0) {
+		return 0;
+	}
 
-    full = circular_buff_get_full(buff);       /* Get buffer used length */
-    buff->r += BUF_MIN(len, full);              /* Advance read pointer */
-    if (buff->r >= buff->size) {                /* Subtract possible overflow */
-        buff->r -= buff->size;
-    }
-    return len;
+	full = circular_buff_get_full(buff); /* Get buffer used length */
+	buff->r += BUF_MIN(len, full); /* Advance read pointer */
+	if (buff->r >= buff->size) { /* Subtract possible overflow */
+		buff->r -= buff->size;
+	}
+	return len;
 }
 
 /**
@@ -318,10 +318,10 @@ circular_buff_skip(circular_buff_t* buff, size_t len) {
  */
 void *
 circular_buff_get_linear_block_write_address(circular_buff_t* buff) {
-    if (!BUF_IS_VALID(buff)) {
-        return NULL;
-    }
-    return &buff->buff[buff->w];
+	if (!BUF_IS_VALID(buff)) {
+		return NULL;
+	}
+	return &buff->buff[buff->w];
 }
 
 /**
@@ -331,34 +331,34 @@ circular_buff_get_linear_block_write_address(circular_buff_t* buff) {
  */
 size_t
 circular_buff_get_linear_block_write_length(circular_buff_t* buff) {
-    size_t w, r, len;
+	size_t w, r, len;
 
-    if (!BUF_IS_VALID(buff)) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff)) {
+		return 0;
+	}
 
-    /* Use temporary values in case they are changed during operations */
-    w = buff->w;
-    r = buff->r;
-    if (w >= r) {
-        len = buff->size - w;
-        /*
-         * When read pointer is 0,
-         * maximal length is one less as if too many bytes 
-         * are written, buffer would be considered empty again (r == w)
-         */
-        if (r == 0) {
-            /*
-             * Cannot overflow:
-             * - If r is not 0, statement does not get called
-             * - buff->size cannot be 0 and if r is 0, len is greater 0
-             */
-            len--;
-        }
-    } else {
-        len = r - w - 1;
-    }
-    return len;
+	/* Use temporary values in case they are changed during operations */
+	w = buff->w;
+	r = buff->r;
+	if (w >= r) {
+		len = buff->size - w;
+		/*
+		 * When read pointer is 0,
+		 * maximal length is one less as if too many bytes 
+		 * are written, buffer would be considered empty again (r == w)
+		 */
+		if (r == 0) {
+			/*
+			 * Cannot overflow:
+			 * - If r is not 0, statement does not get called
+			 * - buff->size cannot be 0 and if r is 0, len is greater 0
+			 */
+			len--;
+		}
+	} else {
+		len = r - w - 1;
+	}
+	return len;
 }
 
 /**
@@ -372,18 +372,18 @@ circular_buff_get_linear_block_write_length(circular_buff_t* buff) {
  */
 size_t
 circular_buff_advance(circular_buff_t* buff, size_t len) {
-    size_t free;
+	size_t free;
 
-    if (!BUF_IS_VALID(buff) || len == 0) {
-        return 0;
-    }
+	if (!BUF_IS_VALID(buff) || len == 0) {
+		return 0;
+	}
 
-    free = circular_buff_get_free(buff);       /* Get buffer free length */
-    buff->w += BUF_MIN(len, free);              /* Advance write pointer */
-    if (buff->w >= buff->size) {                /* Subtract possible overflow */
-        buff->w -= buff->size;
-    }
-    return len;
+	free = circular_buff_get_free(buff); /* Get buffer free length */
+	buff->w += BUF_MIN(len, free); /* Advance write pointer */
+	if (buff->w >= buff->size) { /* Subtract possible overflow */
+		buff->w -= buff->size;
+	}
+	return len;
 }
 
 

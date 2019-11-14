@@ -17,19 +17,19 @@
 extern "C" {
 #endif
 
-/* Public structures ---------------------------------------------------------*/    
-typedef int (*ScheduleFunction_t)(void);
-/*============================================================================*/
+	/* Public structures ---------------------------------------------------------*/
+	typedef int (*ScheduleFunction_t)(void);
+	/*============================================================================*/
 
-/* Public variables ----------------------------------------------------------*/
-/*============================================================================*/
+	/* Public variables ----------------------------------------------------------*/
+	/*============================================================================*/
 
-/* Public function prototypes ------------------------------------------------*/
-void InitSchedule(void);
-void AddToSchedule(ScheduleFunction_t ScheduleFunction);
-void ClearSchedule(void);
-void ExecuteSchedule(void);
-/*============================================================================*/
+	/* Public function prototypes ------------------------------------------------*/
+	void InitSchedule(void);
+	void AddToSchedule(ScheduleFunction_t ScheduleFunction);
+	void ClearSchedule(void);
+	void ExecuteSchedule(void);
+	/*============================================================================*/
 
 #ifdef __cplusplus
 }

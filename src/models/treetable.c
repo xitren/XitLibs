@@ -1,24 +1,24 @@
 /*
-  Copyright (C) 2013-2014 Srđan Panić
+	Copyright (C) 2013-2014 Srđan Panić
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+ */
 #include "treetable.h"
 #include "umm_malloc.h"
 
@@ -26,46 +26,43 @@
 #define RB_BLACK 1
 #define RB_RED   0
 
-
 struct treetable_s {
-    RBNode *root;
-    RBNode *sentinel;
-    size_t  size;
+	RBNode *root;
+	RBNode *sentinel;
+	size_t size;
 
-    int    (*cmp)        (const void *k1, const void *k2);
-    void  *(*mem_alloc)  (size_t size);
-    void  *(*mem_calloc) (size_t blocks, size_t size);
-    void   (*mem_free)   (void *block);
+	int (*cmp) (const void *k1, const void *k2);
+	void *(*mem_alloc) (size_t size);
+	void *(*mem_calloc) (size_t blocks, size_t size);
+	void (*mem_free) (void *block);
 };
 
 
-static void rotate_left            (TreeTable *table, RBNode *n);
-static void rotate_right           (TreeTable *table, RBNode *n);
-static void rebalance_after_insert (TreeTable *table, RBNode *n);
-static void rebalance_after_delete (TreeTable *table, RBNode *n);
-static void remove_node            (TreeTable *table, RBNode *z);
-static void tree_destroy           (TreeTable *table, RBNode *s);
+static void rotate_left(TreeTable *table, RBNode *n);
+static void rotate_right(TreeTable *table, RBNode *n);
+static void rebalance_after_insert(TreeTable *table, RBNode *n);
+static void rebalance_after_delete(TreeTable *table, RBNode *n);
+static void remove_node(TreeTable *table, RBNode *z);
+static void tree_destroy(TreeTable *table, RBNode *s);
 
-static INLINE void  transplant     (TreeTable *table, RBNode *u, RBNode *v);
-static INLINE RBNode *tree_min     (TreeTable const * const table, RBNode *n);
-static INLINE RBNode *tree_max     (TreeTable const * const table, RBNode *n);
+static INLINE void transplant(TreeTable *table, RBNode *u, RBNode *v);
+static INLINE RBNode *tree_min(TreeTable const * const table, RBNode *n);
+static INLINE RBNode *tree_max(TreeTable const * const table, RBNode *n);
 
 static RBNode *get_tree_node_by_key(TreeTable const * const table, const void *key);
-static RBNode *get_successor_node  (TreeTable const * const table, RBNode *x);
+static RBNode *get_successor_node(TreeTable const * const table, RBNode *x);
 static RBNode *get_predecessor_node(TreeTable const * const table, RBNode *x);
-
 
 /**
  * Initializes the TreehTableConf structs fields to default values.
  *
  * @param[in] conf the struct that is being initialized
  */
-void treetable_conf_init(TreeTableConf *conf)
-{
-    conf->mem_alloc  = umm_malloc;
-    conf->mem_calloc = umm_calloc;
-    conf->mem_free   = umm_free;
-    conf->cmp        = cc_common_cmp_ptr;
+void treetable_conf_init(TreeTableConf *conf) {
+	conf->mem_alloc = umm_malloc;
+	conf->mem_calloc = umm_calloc;
+	conf->mem_free = umm_free;
+	conf->cmp = cc_common_cmp_ptr;
 }
 
 /**
@@ -77,12 +74,11 @@ void treetable_conf_init(TreeTableConf *conf)
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the memory
  * allocation for the new TreeTable failed.
  */
-enum cc_stat treetable_new(int (*cmp) (const void*, const void*), TreeTable **tt)
-{
-    TreeTableConf conf;
-    treetable_conf_init(&conf);
-    conf.cmp = cmp;
-    return treetable_new_conf(&conf, tt);
+enum cc_stat treetable_new(int (*cmp) (const void*, const void*), TreeTable **tt) {
+	TreeTableConf conf;
+	treetable_conf_init(&conf);
+	conf.cmp = cmp;
+	return treetable_new_conf(&conf, tt);
 }
 
 /**
@@ -98,32 +94,31 @@ enum cc_stat treetable_new(int (*cmp) (const void*, const void*), TreeTable **tt
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the memory
  * allocation for the new TreeTable structure failed.
  */
-enum cc_stat treetable_new_conf(TreeTableConf const * const conf, TreeTable **tt)
-{
-    TreeTable *table = conf->mem_calloc(1, sizeof(TreeTable));
+enum cc_stat treetable_new_conf(TreeTableConf const * const conf, TreeTable **tt) {
+	TreeTable *table = conf->mem_calloc(1, sizeof (TreeTable));
 
-    if (!table)
-        return CC_ERR_ALLOC;
+	if (!table)
+		return CC_ERR_ALLOC;
 
-    RBNode *sentinel = conf->mem_calloc(1, sizeof(RBNode));
+	RBNode *sentinel = conf->mem_calloc(1, sizeof (RBNode));
 
-    if (!sentinel) {
-        conf->mem_free(table);
-        return CC_ERR_ALLOC;
-    }
+	if (!sentinel) {
+		conf->mem_free(table);
+		return CC_ERR_ALLOC;
+	}
 
-    sentinel->color   = RB_BLACK;
+	sentinel->color = RB_BLACK;
 
-    table->size       = 0;
-    table->cmp        = conf->cmp;
-    table->mem_alloc  = conf->mem_alloc;
-    table->mem_calloc = conf->mem_calloc;
-    table->mem_free   = conf->mem_free;
-    table->root       = sentinel;
-    table->sentinel   = sentinel;
+	table->size = 0;
+	table->cmp = conf->cmp;
+	table->mem_alloc = conf->mem_alloc;
+	table->mem_calloc = conf->mem_calloc;
+	table->mem_free = conf->mem_free;
+	table->root = sentinel;
+	table->sentinel = sentinel;
 
-    *tt = table;
-    return CC_OK;
+	*tt = table;
+	return CC_OK;
 }
 
 /**
@@ -132,15 +127,14 @@ enum cc_stat treetable_new_conf(TreeTableConf const * const conf, TreeTable **tt
  * @param[in] table TreeTable to be destroyed.
  * @param[in] n root node of the sub tree that is being destroyed
  */
-static void tree_destroy(TreeTable *table, RBNode *n)
-{
-    if (n == table->sentinel)
-        return;
+static void tree_destroy(TreeTable *table, RBNode *n) {
+	if (n == table->sentinel)
+		return;
 
-    tree_destroy(table, n->left);
-    tree_destroy(table, n->right);
+	tree_destroy(table, n->left);
+	tree_destroy(table, n->right);
 
-    table->mem_free(n);
+	table->mem_free(n);
 }
 
 /**
@@ -150,12 +144,11 @@ static void tree_destroy(TreeTable *table, RBNode *n)
  *
  * @param[in] table TreeTable to be destroyed.
  */
-void treetable_destroy(TreeTable *table)
-{
-    tree_destroy(table, table->root);
+void treetable_destroy(TreeTable *table) {
+	tree_destroy(table, table->root);
 
-    table->mem_free(table->sentinel);
-    table->mem_free(table);
+	table->mem_free(table->sentinel);
+	table->mem_free(table);
 }
 
 /**
@@ -168,15 +161,14 @@ void treetable_destroy(TreeTable *table)
  *
  * @return CC_OK if the key was found, or CC_ERR_KEY_NOT_FOUND if not.
  */
-enum cc_stat treetable_get(TreeTable const * const table, const void *key, void **out)
-{
-    RBNode *node = get_tree_node_by_key(table, key);
+enum cc_stat treetable_get(TreeTable const * const table, const void *key, void **out) {
+	RBNode *node = get_tree_node_by_key(table, key);
 
-    if (!node)
-        return CC_ERR_KEY_NOT_FOUND;
+	if (!node)
+		return CC_ERR_KEY_NOT_FOUND;
 
-    *out = node->value;
-    return CC_OK;
+	*out = node->value;
+	return CC_OK;
 }
 
 /**
@@ -188,15 +180,14 @@ enum cc_stat treetable_get(TreeTable const * const table, const void *key, void 
  *
  * @return CC_OK if the key was found, or CC_ERR_VALUE_NOT_FOUND if not.
  */
-enum cc_stat treetable_get_first_value(TreeTable const * const table, void **out)
-{
-    RBNode *node = tree_min(table, table->root);
+enum cc_stat treetable_get_first_value(TreeTable const * const table, void **out) {
+	RBNode *node = tree_min(table, table->root);
 
-    if (node != table->sentinel) {
-        *out = node->value;
-        return CC_OK;
-    }
-    return CC_ERR_VALUE_NOT_FOUND;
+	if (node != table->sentinel) {
+		*out = node->value;
+		return CC_OK;
+	}
+	return CC_ERR_VALUE_NOT_FOUND;
 }
 
 /**
@@ -208,15 +199,14 @@ enum cc_stat treetable_get_first_value(TreeTable const * const table, void **out
  *
  * @return CC_OK if the key was found, or CC_ERR_VALUE_NOT_FOUND if not.
  */
-enum cc_stat treetable_get_last_value(TreeTable const * const table, void **out)
-{
-    RBNode *node = tree_max(table, table->root);
+enum cc_stat treetable_get_last_value(TreeTable const * const table, void **out) {
+	RBNode *node = tree_max(table, table->root);
 
-    if (node != table->sentinel) {
-        *out = node->value;
-        return CC_OK;
-    }
-    return CC_ERR_VALUE_NOT_FOUND;
+	if (node != table->sentinel) {
+		*out = node->value;
+		return CC_OK;
+	}
+	return CC_ERR_VALUE_NOT_FOUND;
 }
 
 /**
@@ -228,15 +218,14 @@ enum cc_stat treetable_get_last_value(TreeTable const * const table, void **out)
  *
  * @return CC_OK if the key was found, or CC_ERR_KEY_NOT_FOUND if not.
  */
-enum cc_stat treetable_get_first_key(TreeTable const * const table, void **out)
-{
-    RBNode *node = tree_min(table, table->root);
+enum cc_stat treetable_get_first_key(TreeTable const * const table, void **out) {
+	RBNode *node = tree_min(table, table->root);
 
-    if (node != table->sentinel) {
-        *out = node->key;
-        return CC_OK;
-    }
-    return CC_ERR_KEY_NOT_FOUND;
+	if (node != table->sentinel) {
+		*out = node->key;
+		return CC_OK;
+	}
+	return CC_ERR_KEY_NOT_FOUND;
 }
 
 /**
@@ -248,17 +237,15 @@ enum cc_stat treetable_get_first_key(TreeTable const * const table, void **out)
  *
  * @return CC_OK if the key was found, or CC_ERR_KEY_NOT_FOUND if not.
  */
-enum cc_stat treetable_get_last_key(TreeTable const * const table, void **out)
-{
-    RBNode *node = tree_max(table, table->root);
+enum cc_stat treetable_get_last_key(TreeTable const * const table, void **out) {
+	RBNode *node = tree_max(table, table->root);
 
-    if (node != table->sentinel) {
-        *out = node->key;
-        return CC_OK;
-    }
-    return CC_ERR_KEY_NOT_FOUND;
+	if (node != table->sentinel) {
+		*out = node->key;
+		return CC_OK;
+	}
+	return CC_ERR_KEY_NOT_FOUND;
 }
-
 
 /**
  * Gets the immediate successor of the specified key and sets the out
@@ -270,16 +257,15 @@ enum cc_stat treetable_get_last_key(TreeTable const * const table, void **out)
  *
  * @return CC_OK if the key was found, or CC_ERR_KEY_NOT_FOUND if not.
  */
-enum cc_stat treetable_get_greater_than(TreeTable const * const table, const void *key, void **out)
-{
-    RBNode *n = get_tree_node_by_key(table, key);
-    RBNode *s = get_successor_node(table, n);
+enum cc_stat treetable_get_greater_than(TreeTable const * const table, const void *key, void **out) {
+	RBNode *n = get_tree_node_by_key(table, key);
+	RBNode *s = get_successor_node(table, n);
 
-    if (n && s) {
-        *out = s->key;
-        return CC_OK;
-    }
-    return CC_ERR_KEY_NOT_FOUND;
+	if (n && s) {
+		*out = s->key;
+		return CC_OK;
+	}
+	return CC_ERR_KEY_NOT_FOUND;
 }
 
 /**
@@ -292,16 +278,15 @@ enum cc_stat treetable_get_greater_than(TreeTable const * const table, const voi
  *
  * @return CC_OK if the key was found, or CC_ERR_KEY_NOT_FOUND if not.
  */
-enum cc_stat treetable_get_lesser_than(TreeTable const * const table, const void *key, void **out)
-{
-    RBNode *n = get_tree_node_by_key(table, key);
-    RBNode *s = get_predecessor_node(table, n);
+enum cc_stat treetable_get_lesser_than(TreeTable const * const table, const void *key, void **out) {
+	RBNode *n = get_tree_node_by_key(table, key);
+	RBNode *s = get_predecessor_node(table, n);
 
-    if (n && s) {
-        *out = s->key;
-        return CC_OK;
-    }
-    return CC_ERR_KEY_NOT_FOUND;
+	if (n && s) {
+		*out = s->key;
+		return CC_OK;
+	}
+	return CC_ERR_KEY_NOT_FOUND;
 }
 
 /**
@@ -312,9 +297,8 @@ enum cc_stat treetable_get_lesser_than(TreeTable const * const table, const void
  *
  * @return the size of the table
  */
-size_t treetable_size(TreeTable const * const table)
-{
-    return table->size;
+size_t treetable_size(TreeTable const * const table) {
+	return table->size;
 }
 
 /**
@@ -325,14 +309,13 @@ size_t treetable_size(TreeTable const * const table)
  *
  * @return true if the table contains the key.
  */
-bool treetable_contains_key(TreeTable const * const table, const void *key)
-{
-    RBNode *node = get_tree_node_by_key(table, key);
+bool treetable_contains_key(TreeTable const * const table, const void *key) {
+	RBNode *node = get_tree_node_by_key(table, key);
 
-    if (node)
-        return true;
+	if (node)
+		return true;
 
-    return false;
+	return false;
 }
 
 /**
@@ -343,17 +326,16 @@ bool treetable_contains_key(TreeTable const * const table, const void *key)
  *
  * @return number of occurrences of the specified value.
  */
-size_t treetable_contains_value(TreeTable const * const table, const void *value)
-{
-    RBNode *node = tree_min(table, table->root);
+size_t treetable_contains_value(TreeTable const * const table, const void *value) {
+	RBNode *node = tree_min(table, table->root);
 
-    size_t o = 0;
-    while (node != table->sentinel) {
-        if (node->value == value)
-            o++;
-        node = get_successor_node(table, node);
-    }
-    return o;
+	size_t o = 0;
+	while (node != table->sentinel) {
+		if (node->value == value)
+			o++;
+		node = get_successor_node(table, node);
+	}
+	return o;
 }
 
 /**
@@ -369,51 +351,50 @@ size_t treetable_contains_value(TreeTable const * const table, const void *value
  * @return CC_OK if the operation was successful, or CC_ERR_ALLOC if the memory
  * allocation for the new element failed.
  */
-enum cc_stat treetable_add(TreeTable *table, void *key, void *val)
-{
-    RBNode *y = table->sentinel;
-    RBNode *x = table->root;
+enum cc_stat treetable_add(TreeTable *table, void *key, void *val) {
+	RBNode *y = table->sentinel;
+	RBNode *x = table->root;
 
-    int cmp;
-    while (x != table->sentinel) {
-        cmp = table->cmp(key, x->key);
-        y   = x;
+	int cmp;
+	while (x != table->sentinel) {
+		cmp = table->cmp(key, x->key);
+		y = x;
 
-        if (cmp < 0) {
-            x = x->left;
-        } else if (cmp > 0) {
-            x = x->right;
-        } else {
-            x->value = val;
-            return CC_OK;
-        }
-    }
-    RBNode *n = table->mem_alloc(sizeof(RBNode));
+		if (cmp < 0) {
+			x = x->left;
+		} else if (cmp > 0) {
+			x = x->right;
+		} else {
+			x->value = val;
+			return CC_OK;
+		}
+	}
+	RBNode *n = table->mem_alloc(sizeof (RBNode));
 
-    if (!n)
-        return CC_ERR_ALLOC;
+	if (!n)
+		return CC_ERR_ALLOC;
 
-    n->value  = val;
-    n->key    = key;
-    n->parent = y;
-    n->left   = table->sentinel;
-    n->right  = table->sentinel;
+	n->value = val;
+	n->key = key;
+	n->parent = y;
+	n->left = table->sentinel;
+	n->right = table->sentinel;
 
-    table->size++;
+	table->size++;
 
-    if (y == table->sentinel) {
-        table->root = n;
-        n->color    = RB_BLACK;
-    } else {
-        n->color = RB_RED;
-        if (table->cmp(key, y->key) < 0) {
-            y->left = n;
-        } else {
-            y->right = n;
-        }
-        rebalance_after_insert(table, n);
-    }
-    return CC_OK;
+	if (y == table->sentinel) {
+		table->root = n;
+		n->color = RB_BLACK;
+	} else {
+		n->color = RB_RED;
+		if (table->cmp(key, y->key) < 0) {
+			y->left = n;
+		} else {
+			y->right = n;
+		}
+		rebalance_after_insert(table, n);
+	}
+	return CC_OK;
 }
 
 /**
@@ -422,48 +403,46 @@ enum cc_stat treetable_add(TreeTable *table, void *key, void *val)
  * @param[in] table TreeTable that is being rebalanced
  * @param[in] z Node that was inserted
  */
-static void rebalance_after_insert(TreeTable *table, RBNode *z)
-{
-    RBNode *y;
+static void rebalance_after_insert(TreeTable *table, RBNode *z) {
+	RBNode *y;
 
-    while (z->parent->color == RB_RED) {
-        if (z->parent == z->parent->parent->left) {
-            y = z->parent->parent->right;
-            if (y->color == RB_RED) {
-                z->parent->color         = RB_BLACK;
-                y->color                 = RB_BLACK;
-                z->parent->parent->color = RB_RED;
-                z = z->parent->parent;
-            } else {
-                if (z == z->parent->right) {
-                    z = z->parent;
-                    rotate_left(table, z);
-                }
-                z->parent->color         = RB_BLACK;
-                z->parent->parent->color = RB_RED;
-                rotate_right(table, z->parent->parent);
-            }
-        } else {
-            y = z->parent->parent->left;
-            if (y->color == RB_RED) {
-                z->parent->color         = RB_BLACK;
-                y->color                 = RB_BLACK;
-                z->parent->parent->color = RB_RED;
-                z = z->parent->parent;
-            } else {
-                if (z == z->parent->left) {
-                    z = z->parent;
-                    rotate_right(table, z);
-                }
-                z->parent->color         = RB_BLACK;
-                z->parent->parent->color = RB_RED;
-                rotate_left(table, z->parent->parent);
-            }
-        }
-    }
-    table->root->color = RB_BLACK;
+	while (z->parent->color == RB_RED) {
+		if (z->parent == z->parent->parent->left) {
+			y = z->parent->parent->right;
+			if (y->color == RB_RED) {
+				z->parent->color = RB_BLACK;
+				y->color = RB_BLACK;
+				z->parent->parent->color = RB_RED;
+				z = z->parent->parent;
+			} else {
+				if (z == z->parent->right) {
+					z = z->parent;
+					rotate_left(table, z);
+				}
+				z->parent->color = RB_BLACK;
+				z->parent->parent->color = RB_RED;
+				rotate_right(table, z->parent->parent);
+			}
+		} else {
+			y = z->parent->parent->left;
+			if (y->color == RB_RED) {
+				z->parent->color = RB_BLACK;
+				y->color = RB_BLACK;
+				z->parent->parent->color = RB_RED;
+				z = z->parent->parent;
+			} else {
+				if (z == z->parent->left) {
+					z = z->parent;
+					rotate_right(table, z);
+				}
+				z->parent->color = RB_BLACK;
+				z->parent->parent->color = RB_RED;
+				rotate_left(table, z->parent->parent);
+			}
+		}
+	}
+	table->root->color = RB_BLACK;
 }
-
 
 /**
  * Rebalances the tale after a delete.
@@ -471,92 +450,88 @@ static void rebalance_after_insert(TreeTable *table, RBNode *z)
  * @param[in] table TreeTable that is being rebalanced
  * @param[in] z Node that comes after the deleted node
  */
-static void rebalance_after_delete(TreeTable *table, RBNode *x)
-{
-    RBNode *w;
+static void rebalance_after_delete(TreeTable *table, RBNode *x) {
+	RBNode *w;
 
-    while (x != table->root && x->color == RB_BLACK) {
-        if (x == x->parent->left) {
-            w = x->parent->right;
-            if (w->color == RB_RED) {
-                w->color = RB_BLACK;
-                x->parent->color = RB_RED;
-                rotate_left(table, x->parent);
-                w = x->parent->right;
-            }
-            if (w->left->color == RB_BLACK && w->right->color == RB_BLACK) {
-                w->color = RB_RED;
-                x = x->parent;
-            } else {
-                if (w->right->color == RB_BLACK) {
-                    w->left->color = RB_BLACK;
-                    w->color = RB_RED;
-                    rotate_right(table, w);
-                    w = x->parent->right;
-                }
-                w->color = x->parent->color;
-                x->parent->color = RB_BLACK;
-                w->right->color = RB_BLACK;
-                rotate_left(table, x->parent);
-                x = table->root;
-            }
-        } else {
-            w = x->parent->left;
-            if (w->color == RB_RED) {
-                w->color = RB_BLACK;
-                x->parent->color = RB_RED;
-                rotate_right(table, x->parent);
-                w = x->parent->left;
-            }
-            if (w->right->color == RB_BLACK && w->left->color == RB_BLACK) {
-                w->color = RB_RED;
-                x = x->parent;
-            } else {
-                if (w->left->color == RB_BLACK) {
-                    w->right->color = RB_BLACK;
-                    w->color = RB_RED;
-                    rotate_left(table, w);
-                    w = x->parent->left;
-                }
-                w->color = x->parent->color;
-                x->parent->color = RB_BLACK;
-                w->left->color = RB_BLACK;
-                rotate_right(table, x->parent);
-                x = table->root;
-            }
-        }
-    }
-    x->color = RB_BLACK;
+	while (x != table->root && x->color == RB_BLACK) {
+		if (x == x->parent->left) {
+			w = x->parent->right;
+			if (w->color == RB_RED) {
+				w->color = RB_BLACK;
+				x->parent->color = RB_RED;
+				rotate_left(table, x->parent);
+				w = x->parent->right;
+			}
+			if (w->left->color == RB_BLACK && w->right->color == RB_BLACK) {
+				w->color = RB_RED;
+				x = x->parent;
+			} else {
+				if (w->right->color == RB_BLACK) {
+					w->left->color = RB_BLACK;
+					w->color = RB_RED;
+					rotate_right(table, w);
+					w = x->parent->right;
+				}
+				w->color = x->parent->color;
+				x->parent->color = RB_BLACK;
+				w->right->color = RB_BLACK;
+				rotate_left(table, x->parent);
+				x = table->root;
+			}
+		} else {
+			w = x->parent->left;
+			if (w->color == RB_RED) {
+				w->color = RB_BLACK;
+				x->parent->color = RB_RED;
+				rotate_right(table, x->parent);
+				w = x->parent->left;
+			}
+			if (w->right->color == RB_BLACK && w->left->color == RB_BLACK) {
+				w->color = RB_RED;
+				x = x->parent;
+			} else {
+				if (w->left->color == RB_BLACK) {
+					w->right->color = RB_BLACK;
+					w->color = RB_RED;
+					rotate_left(table, w);
+					w = x->parent->left;
+				}
+				w->color = x->parent->color;
+				x->parent->color = RB_BLACK;
+				w->left->color = RB_BLACK;
+				rotate_right(table, x->parent);
+				x = table->root;
+			}
+		}
+	}
+	x->color = RB_BLACK;
 }
 
-static INLINE void transplant(TreeTable *table, RBNode *u, RBNode *v)
-{
-    if (u->parent == table->sentinel)
-        table->root = v;
-    else if (u == u->parent->left)
-        u->parent->left = v;
-    else
-        u->parent->right = v;
+static INLINE void transplant(TreeTable *table, RBNode *u, RBNode *v) {
+	if (u->parent == table->sentinel)
+		table->root = v;
+	else if (u == u->parent->left)
+		u->parent->left = v;
+	else
+		u->parent->right = v;
 
-    v->parent = u->parent;
+	v->parent = u->parent;
 }
 
-static INLINE RBNode *tree_min(TreeTable const * const table, RBNode *n)
-{
-    RBNode *s = table->sentinel;
+static INLINE RBNode *tree_min(TreeTable const * const table, RBNode *n) {
+	RBNode *s = table->sentinel;
 
-    while (n->left != s)
-        n = n->left;
-    return n;
+	while (n->left != s)
+		n = n->left;
+	return n;
 }
 
-static INLINE RBNode *tree_max(TreeTable const * const table, RBNode *n)
-{
-    RBNode *s = table->sentinel;
+static INLINE RBNode *tree_max(TreeTable const * const table, RBNode *n) {
+	RBNode *s = table->sentinel;
 
-    while (n->right != s)
-        n = n->right;
-    return n;
+	while (n->right != s)
+		n = n->right;
+	return n;
 }
 
 /**
@@ -565,40 +540,39 @@ static INLINE RBNode *tree_max(TreeTable const * const table, RBNode *n)
  * @param[in] table the table on which this operation is performed
  * @param[in] z the node that is being removed
  */
-static void remove_node(TreeTable *table, RBNode *z)
-{
-    RBNode *x;
-    RBNode *y = z;
+static void remove_node(TreeTable *table, RBNode *z) {
+	RBNode *x;
+	RBNode *y = z;
 
-    int y_color = y->color;
+	int y_color = y->color;
 
-    if (z->left == table->sentinel) {
-        x = z->right;
-        transplant(table, z, z->right);
-    } else if (z->right == table->sentinel) {
-        x = z->left;
-        transplant(table, z, z->left);
-    } else {
-        y = tree_min(table, z->right);
-        y_color = y->color;
-        x = y->right;
-        if (y->parent == z) {
-            x->parent = y;
-        } else {
-            transplant(table, y, y->right);
-            y->right = z->right;
-            y->right->parent = y;
-        }
-        transplant(table, z, y);
-        y->left = z->left;
-        y->left->parent = y;
-        y->color = z->color;
-    }
-    if (y_color == RB_BLACK)
-        rebalance_after_delete(table, x);
+	if (z->left == table->sentinel) {
+		x = z->right;
+		transplant(table, z, z->right);
+	} else if (z->right == table->sentinel) {
+		x = z->left;
+		transplant(table, z, z->left);
+	} else {
+		y = tree_min(table, z->right);
+		y_color = y->color;
+		x = y->right;
+		if (y->parent == z) {
+			x->parent = y;
+		} else {
+			transplant(table, y, y->right);
+			y->right = z->right;
+			y->right->parent = y;
+		}
+		transplant(table, z, y);
+		y->left = z->left;
+		y->left->parent = y;
+		y->color = z->color;
+	}
+	if (y_color == RB_BLACK)
+		rebalance_after_delete(table, x);
 
-    table->mem_free(z);
-    table->size--;
+	table->mem_free(z);
+	table->size--;
 }
 
 /**
@@ -613,18 +587,17 @@ static void remove_node(TreeTable *table, RBNode *z)
  * @return CC_OK if the mapping was successfully removed, or CC_ERR_KEY_NOT_FOUND
  * if the key was not found.
  */
-enum cc_stat treetable_remove(TreeTable *table, void *key, void **out)
-{
-    RBNode *node = get_tree_node_by_key(table, key);
+enum cc_stat treetable_remove(TreeTable *table, void *key, void **out) {
+	RBNode *node = get_tree_node_by_key(table, key);
 
-    if (!node)
-        return CC_ERR_KEY_NOT_FOUND;
+	if (!node)
+		return CC_ERR_KEY_NOT_FOUND;
 
-    if (out)
-        *out = node->value;
+	if (out)
+		*out = node->value;
 
-    remove_node(table, node);
-    return CC_OK;
+	remove_node(table, node);
+	return CC_OK;
 }
 
 /**
@@ -638,18 +611,17 @@ enum cc_stat treetable_remove(TreeTable *table, void *key, void **out)
  * @return CC_OK if the mapping was successfully removed, or CC_ERR_KEY_NOT_FOUND
  * if the key was not found.
  */
-enum cc_stat treetable_remove_first(TreeTable *table, void **out)
-{
-    if (table->size == 0)
-        return CC_ERR_KEY_NOT_FOUND;
+enum cc_stat treetable_remove_first(TreeTable *table, void **out) {
+	if (table->size == 0)
+		return CC_ERR_KEY_NOT_FOUND;
 
-    RBNode *node = tree_min(table, table->root);
+	RBNode *node = tree_min(table, table->root);
 
-    if (out)
-        *out = node->value;
+	if (out)
+		*out = node->value;
 
-    remove_node(table, node);
-    return CC_OK;
+	remove_node(table, node);
+	return CC_OK;
 }
 
 /**
@@ -663,18 +635,17 @@ enum cc_stat treetable_remove_first(TreeTable *table, void **out)
  * @return CC_OK if the mapping was successfully removed, or CC_ERR_KEY_NOT_FOUND
  * if the key was not found.
  */
-enum cc_stat treetable_remove_last(TreeTable *table, void **out)
-{
-    RBNode *node = tree_max(table, table->root);
+enum cc_stat treetable_remove_last(TreeTable *table, void **out) {
+	RBNode *node = tree_max(table, table->root);
 
-    if (!node)
-        return CC_ERR_KEY_NOT_FOUND;
+	if (!node)
+		return CC_ERR_KEY_NOT_FOUND;
 
-    if (out)
-        *out = node->value;
+	if (out)
+		*out = node->value;
 
-    remove_node(table, node);
-    return CC_OK;
+	remove_node(table, node);
+	return CC_OK;
 }
 
 /**
@@ -682,11 +653,10 @@ enum cc_stat treetable_remove_last(TreeTable *table, void **out)
  *
  * @param[in] table the table from which all entries are to be removed
  */
-void treetable_remove_all(TreeTable *table)
-{
-    tree_destroy(table, table->root);
-    table->size = 0;
-    table->root = table->sentinel;
+void treetable_remove_all(TreeTable *table) {
+	tree_destroy(table, table->root);
+	table->size = 0;
+	table->root = table->sentinel;
 }
 
 /**
@@ -696,26 +666,25 @@ void treetable_remove_all(TreeTable *table)
  * @param[in] table the table on which this operation is performed
  * @param[in] x the node around which this operation is performed
  */
-static void rotate_right(TreeTable *table, RBNode *x)
-{
-    RBNode *y = x->left;
+static void rotate_right(TreeTable *table, RBNode *x) {
+	RBNode *y = x->left;
 
-    x->left = y->right;
+	x->left = y->right;
 
-    if (y->right != table->sentinel)
-        y->right->parent = x;
+	if (y->right != table->sentinel)
+		y->right->parent = x;
 
-    y->parent = x->parent;
+	y->parent = x->parent;
 
-    if (x->parent == table->sentinel)
-        table->root = y;
-    else if (x == x->parent->right)
-        x->parent->right = y;
-    else
-        x->parent->left = y;
+	if (x->parent == table->sentinel)
+		table->root = y;
+	else if (x == x->parent->right)
+		x->parent->right = y;
+	else
+		x->parent->left = y;
 
-    y->right  = x;
-    x->parent = y;
+	y->right = x;
+	x->parent = y;
 }
 
 /**
@@ -725,26 +694,25 @@ static void rotate_right(TreeTable *table, RBNode *x)
  * @param[in] table the table on which this operation is performed
  * @param[in] x the node around which this operation is performed
  */
-static void rotate_left(TreeTable *table, RBNode *x)
-{
-    RBNode *y = x->right;
+static void rotate_left(TreeTable *table, RBNode *x) {
+	RBNode *y = x->right;
 
-    x->right = y->left;
+	x->right = y->left;
 
-    if (y->left != table->sentinel)
-        y->left->parent = x;
+	if (y->left != table->sentinel)
+		y->left->parent = x;
 
-    y->parent = x->parent;
+	y->parent = x->parent;
 
-    if (x->parent == table->sentinel)
-        table->root = y;
-    else if (x == x->parent->left)
-        x->parent->left = y;
-    else
-        x->parent->right = y;
+	if (x->parent == table->sentinel)
+		table->root = y;
+	else if (x == x->parent->left)
+		x->parent->left = y;
+	else
+		x->parent->right = y;
 
-    y->left   = x;
-    x->parent = y;
+	y->left = x;
+	x->parent = y;
 }
 
 /**
@@ -755,27 +723,26 @@ static void rotate_left(TreeTable *table, RBNode *x)
  *
  * @return tree node associated with the key
  */
-static RBNode *get_tree_node_by_key(TreeTable const * const table, const void *key)
-{
-    if (table->size == 0)
-        return NULL;
+static RBNode *get_tree_node_by_key(TreeTable const * const table, const void *key) {
+	if (table->size == 0)
+		return NULL;
 
-    RBNode *n = table->root;
-    RBNode *s = table->sentinel;
+	RBNode *n = table->root;
+	RBNode *s = table->sentinel;
 
-    int cmp;
-    do {
-        cmp = table->cmp(key, n->key);
+	int cmp;
+	do {
+		cmp = table->cmp(key, n->key);
 
-        if (cmp < 0)
-            n = n->left;
-        else if (cmp > 0)
-            n = n->right;
-        else
-            return n;
-    } while (n != s && cmp != 0);
+		if (cmp < 0)
+			n = n->left;
+		else if (cmp > 0)
+			n = n->right;
+		else
+			return n;
+	} while (n != s && cmp != 0);
 
-    return NULL;
+	return NULL;
 }
 
 /**
@@ -786,21 +753,20 @@ static RBNode *get_tree_node_by_key(TreeTable const * const table, const void *k
  *
  * @return successor node of x
  */
-static RBNode *get_successor_node(TreeTable const * const table, RBNode *x)
-{
-    if (x == NULL)
-        return NULL;
+static RBNode *get_successor_node(TreeTable const * const table, RBNode *x) {
+	if (x == NULL)
+		return NULL;
 
-    if (x->right != table->sentinel)
-        return tree_min(table, x->right);
+	if (x->right != table->sentinel)
+		return tree_min(table, x->right);
 
-    RBNode *y = x->parent;
+	RBNode *y = x->parent;
 
-    while (y != table->sentinel && x == y->right) {
-        x = y;
-        y = y->parent;
-    }
-    return y;
+	while (y != table->sentinel && x == y->right) {
+		x = y;
+		y = y->parent;
+	}
+	return y;
 }
 
 /**
@@ -811,21 +777,20 @@ static RBNode *get_successor_node(TreeTable const * const table, RBNode *x)
  *
  * @return predecessor node of x
  */
-static RBNode *get_predecessor_node(TreeTable const * const table, RBNode *x)
-{
-    if (x == NULL)
-        return NULL;
+static RBNode *get_predecessor_node(TreeTable const * const table, RBNode *x) {
+	if (x == NULL)
+		return NULL;
 
-    if (x->left != table->sentinel)
-        return tree_max(table, x->left);
+	if (x->left != table->sentinel)
+		return tree_max(table, x->left);
 
-    RBNode *y = x->parent;
+	RBNode *y = x->parent;
 
-    while (y != table->sentinel && x == y->left) {
-        x = y;
-        y = y->parent;
-    }
-    return y;
+	while (y != table->sentinel && x == y->left) {
+		x = y;
+		y = y->parent;
+	}
+	return y;
 }
 
 /**
@@ -837,14 +802,13 @@ static RBNode *get_predecessor_node(TreeTable const * const table, RBNode *x)
  * @param[in] table the table on which this operation is being performed
  * @param[in] fn the operation function that is invoked on each key of the table
  */
-void treetable_foreach_key(TreeTable *table, void (*fn) (const void *k))
-{
-    RBNode *n = tree_min(table, table->root);
+void treetable_foreach_key(TreeTable *table, void (*fn) (const void *k)) {
+	RBNode *n = tree_min(table, table->root);
 
-    while (n != table->sentinel) {
-        fn(n->key);
-        n = get_successor_node(table, n);
-    }
+	while (n != table->sentinel) {
+		fn(n->key);
+		n = get_successor_node(table, n);
+	}
 }
 
 /**
@@ -854,14 +818,13 @@ void treetable_foreach_key(TreeTable *table, void (*fn) (const void *k))
  * @param[in] fn the operation function that is invoked on each value of the
  *               table
  */
-void treetable_foreach_value(TreeTable *table, void (*fn) (void *k))
-{
-    RBNode *n = tree_min(table, table->root);
+void treetable_foreach_value(TreeTable *table, void (*fn) (void *k)) {
+	RBNode *n = tree_min(table, table->root);
 
-    while (n != table->sentinel) {
-        fn(n->value);
-        n = get_successor_node(table, n);
-    }
+	while (n != table->sentinel) {
+		fn(n->value);
+		n = get_successor_node(table, n);
+	}
 }
 
 /**
@@ -870,11 +833,10 @@ void treetable_foreach_value(TreeTable *table, void (*fn) (void *k))
  * @param[in] iter the iterator that is being initialized
  * @param[in] table the table over whose entries the iterator is going to iterate
  */
-void treetable_iter_init(TreeTableIter *iter, TreeTable *table)
-{
-    iter->table   = table;
-    iter->current = table->sentinel;
-    iter->next    = tree_min(table, table->root);
+void treetable_iter_init(TreeTableIter *iter, TreeTable *table) {
+	iter->table = table;
+	iter->current = table->sentinel;
+	iter->next = tree_min(table, table->root);
 }
 
 /**
@@ -887,18 +849,17 @@ void treetable_iter_init(TreeTableIter *iter, TreeTable *table)
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the TreeTable has been reached.
  */
-enum cc_stat treetable_iter_next(TreeTableIter *iter, TreeTableEntry *entry)
-{
-    if (iter->next == iter->table->sentinel)
-        return CC_ITER_END;
+enum cc_stat treetable_iter_next(TreeTableIter *iter, TreeTableEntry *entry) {
+	if (iter->next == iter->table->sentinel)
+		return CC_ITER_END;
 
-    entry->value  = iter->next->value;
-    entry->key    = iter->next->key;
+	entry->value = iter->next->value;
+	entry->key = iter->next->key;
 
-    iter->current = iter->next;
-    iter->next    = get_successor_node(iter->table, iter->current);
+	iter->current = iter->next;
+	iter->next = get_successor_node(iter->table, iter->current);
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -916,75 +877,73 @@ enum cc_stat treetable_iter_next(TreeTableIter *iter, TreeTableEntry *entry)
  * @return CC_OK if the entry was successfully removed, or
  * CC_ERR_KEY_NOT_FOUND if the entry was already removed.
  */
-enum cc_stat treetable_iter_remove(TreeTableIter *iter, void **out)
-{
-    if (!iter->current)
-        return CC_ERR_KEY_NOT_FOUND;
+enum cc_stat treetable_iter_remove(TreeTableIter *iter, void **out) {
+	if (!iter->current)
+		return CC_ERR_KEY_NOT_FOUND;
 
-    if (out)
-        *out = iter->current->value;
+	if (out)
+		*out = iter->current->value;
 
-    remove_node(iter->table, iter->current);
-    iter->current = NULL;
+	remove_node(iter->table, iter->current);
+	iter->current = NULL;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 
 #ifdef DEBUG
-static int treetable_test(TreeTable *table, RBNode *node, int *nb)
-{
-    if (node == table->sentinel) {
-        *nb = 1;
-        return RB_ERROR_OK;
-    }
-    /* check tree order */
-    if (node->left != table->sentinel) {
-        int cmp = table->cmp(node->left->key, node->key);
-        if (cmp >= 0)
-            return RB_ERROR_TREE_STRUCTURE;
-    }
-    if (node->right != table->sentinel) {
-        int cmp = table->cmp(node->right->key, node->key);
-        if (cmp <= 0)
-            return RB_ERROR_TREE_STRUCTURE;
-    }
 
-    /* check red rule */
-    if (node->color == RB_RED && node->parent->color == RB_RED) {
-        return RB_ERROR_CONSECUTIVE_RED;
-    }
+static int treetable_test(TreeTable *table, RBNode *node, int *nb) {
+	if (node == table->sentinel) {
+		*nb = 1;
+		return RB_ERROR_OK;
+	}
+	/* check tree order */
+	if (node->left != table->sentinel) {
+		int cmp = table->cmp(node->left->key, node->key);
+		if (cmp >= 0)
+			return RB_ERROR_TREE_STRUCTURE;
+	}
+	if (node->right != table->sentinel) {
+		int cmp = table->cmp(node->right->key, node->key);
+		if (cmp <= 0)
+			return RB_ERROR_TREE_STRUCTURE;
+	}
 
-    int nb_left;
-    int nb_right;
+	/* check red rule */
+	if (node->color == RB_RED && node->parent->color == RB_RED) {
+		return RB_ERROR_CONSECUTIVE_RED;
+	}
 
-    int left_err = treetable_test(table, node->left, &nb_left);
+	int nb_left;
+	int nb_right;
 
-    /* propagate the descendant errors all the way up */
-    if (left_err != RB_ERROR_OK)
-        return left_err;
+	int left_err = treetable_test(table, node->left, &nb_left);
 
-    int right_err = treetable_test(table, node->right, &nb_right);
+	/* propagate the descendant errors all the way up */
+	if (left_err != RB_ERROR_OK)
+		return left_err;
 
-    if (right_err != RB_ERROR_OK)
-        return right_err;
+	int right_err = treetable_test(table, node->right, &nb_right);
 
-    /* check black rule */
-    if (nb_left != nb_right)
-        return RB_ERROR_BLACK_HEIGHT;
+	if (right_err != RB_ERROR_OK)
+		return right_err;
 
-    if (node->color == RB_BLACK)
-        *nb = nb_left + 1;
-    else
-        *nb = nb_left;
+	/* check black rule */
+	if (nb_left != nb_right)
+		return RB_ERROR_BLACK_HEIGHT;
 
-    return RB_ERROR_OK;
+	if (node->color == RB_BLACK)
+		*nb = nb_left + 1;
+	else
+		*nb = nb_left;
+
+	return RB_ERROR_OK;
 }
 
-int treetable_assert_rb_rules(TreeTable *table)
-{
-    int x;
-    int status = treetable_test(table, table->root, &x);
-    return status;
+int treetable_assert_rb_rules(TreeTable *table) {
+	int x;
+	int status = treetable_test(table, table->root, &x);
+	return status;
 }
 #endif

@@ -17,35 +17,35 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-    
-/* Public defines ------------------------------------------------------------*/
-/*============================================================================*/
-    
-/* External variable ---------------------------------------------------------*/
-extern const char* global_link_syncro[][2];
-/*============================================================================*/
 
-/* Public function prototypes ------------------------------------------------*/
-void FreeCycle(void);
-uint32_t GetCycle(void);
-uint32_t GetMaxCycle(void);
-uint32_t GetPercent(void);
-void SetClock(int _clock);
-uint32_t GetClock(void);
-void ClockHandler(void);
-int CalculationPercentCycles(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, 
-        uint32_t *data_size, uint32_t buffer_size);
-int ClockCommand(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, 
-        uint32_t *data_size, uint32_t buffer_size);
-int CalculationMaxCycles(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, 
-        uint32_t *data_size, uint32_t buffer_size);
-int CalculationFreeCycles(uint8_t Method, uint8_t MediaType, 
-        ParameterList_t *TempParam, uint8_t *data, 
-        uint32_t *data_size, uint32_t buffer_size);
-/*============================================================================*/
+	/* Public defines ------------------------------------------------------------*/
+	/*============================================================================*/
+
+	/* External variable ---------------------------------------------------------*/
+	extern const char* global_link_syncro[][2];
+	/*============================================================================*/
+
+	/* Public function prototypes ------------------------------------------------*/
+	void FreeCycle(void);
+	uint32_t GetCycle(void);
+	uint32_t GetMaxCycle(void);
+	uint32_t GetPercent(void);
+	void SetClock(int _clock);
+	uint32_t GetClock(void);
+	void ClockHandler(void);
+	int CalculationPercentCycles(uint8_t Method, uint8_t MediaType,
+					ParameterList_t *TempParam, uint8_t *data,
+					uint32_t *data_size, uint32_t buffer_size);
+	int ClockCommand(uint8_t Method, uint8_t MediaType,
+					ParameterList_t *TempParam, uint8_t *data,
+					uint32_t *data_size, uint32_t buffer_size);
+	int CalculationMaxCycles(uint8_t Method, uint8_t MediaType,
+					ParameterList_t *TempParam, uint8_t *data,
+					uint32_t *data_size, uint32_t buffer_size);
+	int CalculationFreeCycles(uint8_t Method, uint8_t MediaType,
+					ParameterList_t *TempParam, uint8_t *data,
+					uint32_t *data_size, uint32_t buffer_size);
+	/*============================================================================*/
 
 #ifdef __cplusplus
 }

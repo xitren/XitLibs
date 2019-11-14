@@ -1,33 +1,33 @@
 /*
-  Copyright (C) 2013-2014 Srđan Panić
+	Copyright (C) 2013-2014 Srđan Panić
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+ */
 #include "queue.h"
 #include "umm_malloc.h"
 
 struct queue_s {
-    Deque *d;
+	Deque *d;
 
-    void *(*mem_alloc)  (size_t size);
-    void *(*mem_calloc) (size_t blocks, size_t size);
-    void  (*mem_free)   (void *block);
+	void *(*mem_alloc) (size_t size);
+	void *(*mem_calloc) (size_t blocks, size_t size);
+	void (*mem_free) (void *block);
 };
 
 /**
@@ -35,9 +35,8 @@ struct queue_s {
  *
  * @param[in, out] conf the configuration struct that is being initialized
  */
-void queue_conf_init(QueueConf *conf)
-{
-    deque_conf_init(conf);
+void queue_conf_init(QueueConf *conf) {
+	deque_conf_init(conf);
 }
 
 /**
@@ -48,11 +47,10 @@ void queue_conf_init(QueueConf *conf)
  * @return  CC_OK if the creation was successful, or CC_ERR_ALLOC if the
  * memory allocation for the new Queue structure failed.
  */
-enum cc_stat queue_new(Queue **queue)
-{
-    QueueConf conf;
-    queue_conf_init(&conf);
-    return queue_new_conf(&conf, queue);
+enum cc_stat queue_new(Queue **queue) {
+	QueueConf conf;
+	queue_conf_init(&conf);
+	return queue_new_conf(&conf, queue);
 }
 
 /**
@@ -69,29 +67,28 @@ enum cc_stat queue_new(Queue **queue)
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the memory
  * allocation for the new Queue structure failed.
  */
-enum cc_stat queue_new_conf(QueueConf const * const conf, Queue **q)
-{
-    Queue *queue = conf->mem_calloc(1, sizeof(Queue));
+enum cc_stat queue_new_conf(QueueConf const * const conf, Queue **q) {
+	Queue *queue = conf->mem_calloc(1, sizeof (Queue));
 
-    if (!queue)
-        return CC_ERR_ALLOC;
+	if (!queue)
+		return CC_ERR_ALLOC;
 
-    Deque *deque;
-    deque_new_conf(conf, &deque);
+	Deque *deque;
+	deque_new_conf(conf, &deque);
 
-    if (!deque) {
-        conf->mem_free(queue);
-        return CC_ERR_ALLOC;
-    }
+	if (!deque) {
+		conf->mem_free(queue);
+		return CC_ERR_ALLOC;
+	}
 
-    queue->d          = deque;
-    queue->mem_alloc  = conf->mem_alloc;
-    queue->mem_calloc = conf->mem_calloc;
-    queue->mem_free   = conf->mem_free;
+	queue->d = deque;
+	queue->mem_alloc = conf->mem_alloc;
+	queue->mem_calloc = conf->mem_calloc;
+	queue->mem_free = conf->mem_free;
 
-    *q = queue;
+	*q = queue;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -99,10 +96,9 @@ enum cc_stat queue_new_conf(QueueConf const * const conf, Queue **q)
  *
  * @param[in] queue the queue that is to be destroyed
  */
-void queue_destroy(Queue *queue)
-{
-    deque_destroy(queue->d);
-    queue->mem_free(queue);
+void queue_destroy(Queue *queue) {
+	deque_destroy(queue->d);
+	queue->mem_free(queue);
 }
 
 /**
@@ -113,10 +109,9 @@ void queue_destroy(Queue *queue)
  *
  * @param[in] queue the queue that is to be destroyed
  */
-void queue_destroy_free(Queue *queue)
-{
-    deque_destroy_free(queue->d);
-    free(queue);
+void queue_destroy_free(Queue *queue) {
+	deque_destroy_free(queue->d);
+	free(queue);
 }
 
 /**
@@ -129,9 +124,8 @@ void queue_destroy_free(Queue *queue)
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the
  * Queue is empty.
  */
-enum cc_stat queue_peek(Queue const * const queue, void **out)
-{
-    return deque_get_last(queue->d, out);
+enum cc_stat queue_peek(Queue const * const queue, void **out) {
+	return deque_get_last(queue->d, out);
 }
 
 /**
@@ -144,9 +138,8 @@ enum cc_stat queue_peek(Queue const * const queue, void **out)
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the
  * Queue is empty.
  */
-enum cc_stat queue_poll(Queue *queue, void **out)
-{
-    return deque_remove_last(queue->d, out);
+enum cc_stat queue_poll(Queue *queue, void **out) {
+	return deque_remove_last(queue->d, out);
 }
 
 /**
@@ -159,9 +152,8 @@ enum cc_stat queue_poll(Queue *queue, void **out)
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC
  * if the memory allocation for the new element failed.
  */
-enum cc_stat queue_enqueue(Queue *queue, void *element)
-{
-    return deque_add_first(queue->d, element);
+enum cc_stat queue_enqueue(Queue *queue, void *element) {
+	return deque_add_first(queue->d, element);
 }
 
 /**
@@ -172,9 +164,8 @@ enum cc_stat queue_enqueue(Queue *queue, void *element)
  *
  * @return the number of elements within the queue.
  */
-size_t queue_size(Queue const * const queue)
-{
-    return deque_size(queue->d);
+size_t queue_size(Queue const * const queue) {
+	return deque_size(queue->d);
 }
 
 /**
@@ -183,9 +174,8 @@ size_t queue_size(Queue const * const queue)
  * @param[in] queue the queue on which this operation is performed
  * @param[in] fn the operation function that is to be invoked on each queue element
  */
-void queue_foreach(Queue *queue, void (*fn) (void*))
-{
-    deque_foreach(queue->d, fn);
+void queue_foreach(Queue *queue, void (*fn) (void*)) {
+	deque_foreach(queue->d, fn);
 }
 
 /**
@@ -194,9 +184,8 @@ void queue_foreach(Queue *queue, void (*fn) (void*))
  * @param[in] iter the iterator that is being initialized
  * @param[in] queue the queue to iterate over
  */
-void queue_iter_init(QueueIter *iter, Queue *queue)
-{
-    deque_iter_init(&(iter->i), queue->d);
+void queue_iter_init(QueueIter *iter, Queue *queue) {
+	deque_iter_init(&(iter->i), queue->d);
 }
 
 /**
@@ -209,9 +198,8 @@ void queue_iter_init(QueueIter *iter, Queue *queue)
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the Queue has been reached.
  */
-enum cc_stat queue_iter_next(QueueIter *iter, void **out)
-{
-    return deque_iter_next(&(iter->i), out);
+enum cc_stat queue_iter_next(QueueIter *iter, void **out) {
+	return deque_iter_next(&(iter->i), out);
 }
 
 /**
@@ -230,9 +218,8 @@ enum cc_stat queue_iter_next(QueueIter *iter, void **out)
  * @return  CC_OK if the element was replaced successfully, or
  * CC_ERR_OUT_OF_RANGE.
  */
-enum cc_stat queue_iter_replace(QueueIter *iter, void *replacement, void **out)
-{
-    return deque_iter_replace(&(iter->i), replacement, out);
+enum cc_stat queue_iter_replace(QueueIter *iter, void *replacement, void **out) {
+	return deque_iter_replace(&(iter->i), replacement, out);
 }
 
 /**
@@ -242,9 +229,8 @@ enum cc_stat queue_iter_replace(QueueIter *iter, void *replacement, void **out)
  * @param[in] q1   first queue
  * @param[in] q2   second queue
  */
-void queue_zip_iter_init(QueueZipIter *iter, Queue *q1, Queue *q2)
-{
-    deque_zip_iter_init(&(iter->i), q1->d, q2->d);
+void queue_zip_iter_init(QueueZipIter *iter, Queue *q1, Queue *q2) {
+	deque_zip_iter_init(&(iter->i), q1->d, q2->d);
 }
 
 /**
@@ -257,9 +243,8 @@ void queue_zip_iter_init(QueueZipIter *iter, Queue *q1, Queue *q2)
  * @return CC_OK if a next element pair is returned, or CC_ITER_END if the end
  * of one of the queues has been reached.
  */
-enum cc_stat queue_zip_iter_next(QueueZipIter *iter, void **out1, void **out2)
-{
-    return deque_zip_iter_next(&(iter->i), out1, out2);
+enum cc_stat queue_zip_iter_next(QueueZipIter *iter, void **out1, void **out2) {
+	return deque_zip_iter_next(&(iter->i), out1, out2);
 }
 
 /**
@@ -274,7 +259,6 @@ enum cc_stat queue_zip_iter_next(QueueZipIter *iter, void **out1, void **out2)
  *
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE.
  */
-enum cc_stat queue_zip_iter_replace(QueueZipIter *iter, void *e1, void *e2, void **out1, void **out2)
-{
-    return deque_zip_iter_replace(&(iter->i), e1, e2, out1, out2);
+enum cc_stat queue_zip_iter_replace(QueueZipIter *iter, void *e1, void *e2, void **out1, void **out2) {
+	return deque_zip_iter_replace(&(iter->i), e1, e2, out1, out2);
 }

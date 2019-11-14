@@ -4,8 +4,7 @@
 #include "circular_functions.h"
 #include <math.h>
 
-char	*get_base8_string(char flag)
-{
+char *get_base8_string(char flag) {
 	char *bptr;
 
 	if ((flag & (F_PLUS)))
@@ -17,8 +16,7 @@ char	*get_base8_string(char flag)
 	return (bptr);
 }
 
-char	*get_base16x_string(char flag)
-{
+char *get_base16x_string(char flag) {
 	char *bptr;
 
 	if ((flag & (F_PLUS)))
@@ -30,8 +28,7 @@ char	*get_base16x_string(char flag)
 	return (bptr);
 }
 
-char	*get_base16xx_string(char flag)
-{
+char *get_base16xx_string(char flag) {
 	char *bptr;
 
 	if ((flag & (F_PLUS)))
@@ -43,8 +40,7 @@ char	*get_base16xx_string(char flag)
 	return (bptr);
 }
 
-char	*get_base10_string(char flag)
-{
+char *get_base10_string(char flag) {
 	char *bptr;
 
 	if ((flag & (F_PLUS | F_SPACE)))
@@ -56,24 +52,17 @@ char	*get_base10_string(char flag)
 	return (bptr);
 }
 
-char	*get_not(char *buff, size_t *max, double pre_calcs)
-{
-	if (pre_calcs == INFINITY)
-	{
+char *get_not(char *buff, size_t *max, double pre_calcs) {
+	if (pre_calcs == INFINITY) {
 		(*max) -= 4;
 		strcpy(buff + (*max), "inf");
-	}
-	else if (pre_calcs == -INFINITY)
-	{
+	} else if (pre_calcs == -INFINITY) {
 		(*max) -= 5;
 		strcpy(buff + (*max), "-inf");
-	}
-	else if (isnan(pre_calcs))
-	{
+	} else if (isnan(pre_calcs)) {
 		(*max) -= 4;
 		strcpy(buff + (*max), "nan");
-	}
-	else
+	} else
 		return (0);
 	return (buff + (*max));
 }

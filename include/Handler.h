@@ -20,12 +20,12 @@
 extern "C" {
 #endif
 
-void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size);
-coap_rw_buffer_t *MessageHandlerTextIP(const uint8_t *buf, size_t buflen, char *ip, uint32_t port);
-coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen, uint32_t ipi, uint32_t port);
-coap_observer_buffer_t *StreamObserverHandler();
-void timer1sHandler(CSMACDController_t *controller);
-void timerSampleFreqHandler(void);
+	void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size);
+	coap_rw_buffer_t *MessageHandlerTextIP(const uint8_t *buf, size_t buflen, char *ip, uint32_t port);
+	coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen, uint32_t ipi, uint32_t port);
+	coap_observer_buffer_t *StreamObserverHandler();
+	void timer1sHandler(CSMACDController_t *controller);
+	void timerSampleFreqHandler(void);
 
 #ifdef __cplusplus
 }
