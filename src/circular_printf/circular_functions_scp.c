@@ -4,10 +4,10 @@
 #include "circular_functions.h"
 #include "circular_printf.h"
 
-char			*my_put_perc(char *buff, va_list *valist, t_circular_printf_flags *fl)
+char *my_put_perc(char *buff, va_list *valist, t_circular_printf_flags *fl)
 {
-	size_t	max;
-	char	*p;
+	size_t max;
+	char *p;
 
 	max = BUFF_PRINT - 1;
 	buff[(max)--] = 0;
@@ -19,16 +19,16 @@ char			*my_put_perc(char *buff, va_list *valist, t_circular_printf_flags *fl)
 		p = put_str_align_left(buff, 0, &max, fl->min_width);
 	else
 		p = put_str_align_right(buff, 0, &max, fl->min_width);
-	fl = (t_circular_printf_flags *)valist;
-	valist = (va_list *)fl;
+	fl = (t_circular_printf_flags *) valist;
+	valist = (va_list *) fl;
 	return (p);
 }
 
-char			*my_put_s(char *buff, va_list *valist, t_circular_printf_flags *fl)
+char *my_put_s(char *buff, va_list *valist, t_circular_printf_flags *fl)
 {
-	size_t	max;
-	size_t	mm;
-	char	*p;
+	size_t max;
+	size_t mm;
+	char *p;
 
 	max = BUFF_PRINT - 1;
 	p = va_arg(*valist, char *);
@@ -50,7 +50,7 @@ char			*my_put_s(char *buff, va_list *valist, t_circular_printf_flags *fl)
 	return (put_str_align(buff, &max, fl));
 }
 
-static char		*put_char_align_left(char *buffer, size_t alr,
+static char *put_char_align_left(char *buffer, size_t alr,
 		size_t *max, size_t min_width)
 {
 	alr = 1;
@@ -62,15 +62,15 @@ static char		*put_char_align_left(char *buffer, size_t alr,
 	return (buffer);
 }
 
-char			*my_put_c(char *buff, va_list *valist, t_circular_printf_flags *fl)
+char *my_put_c(char *buff, va_list *valist, t_circular_printf_flags *fl)
 {
-	size_t	max;
-	char	*p;
-	char	d;
+	size_t max;
+	char *p;
+	char d;
 
 	max = BUFF_PRINT - 1;
 	buff[(max)--] = 0;
-	buff[(max)] = (char)va_arg(*valist, int);
+	buff[(max)] = (char) va_arg(*valist, int);
 	d = buff[(max)];
 	if (buff[(max)] == 0 && fl->min_width && fl->min_width_par)
 		fl->min_width--;
@@ -83,21 +83,20 @@ char			*my_put_c(char *buff, va_list *valist, t_circular_printf_flags *fl)
 			p = put_str_align_left(buff, 0, &(max), fl->min_width);
 		else
 			p = put_char_align_left(buff, max, &(max), fl->min_width);
-	}
-	else
+	} else
 		p = put_str_align_right(buff, 0, &max, fl->min_width);
 	if (d == 0)
 		fl->tt = BUFF_PRINT - 1 - max;
 	return (p);
 }
 
-char			*my_put_p(char *buff, va_list *valist, t_circular_printf_flags *fl)
+char *my_put_p(char *buff, va_list *valist, t_circular_printf_flags *fl)
 {
-	unsigned long long int	d;
-	size_t					max;
+	unsigned long long int d;
+	size_t max;
 
 	max = BUFF_PRINT - 1;
-	d = (unsigned long long int)va_arg(*valist, void *);
+	d = (unsigned long long int) va_arg(*valist, void *);
 	if (!((d == 0) && (fl->precision_par == 1) && (fl->precision == 0)))
 		put_unsnum_to_str(buff, &max,
 			get_base16x_string(fl->flags) + 1, d);

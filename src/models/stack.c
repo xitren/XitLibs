@@ -1,37 +1,36 @@
 /*
-  Copyright (C) 2013-2014 Srđan Panić
+	Copyright (C) 2013-2014 Srđan Panić
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+ */
 #include "array.h"
 #include "stack.h"
 #include "umm_malloc.h"
 
+struct stack_s
+{
+	Array *v;
 
-struct stack_s {
-    Array *v;
-
-    void *(*mem_alloc)  (size_t size);
-    void *(*mem_calloc) (size_t blocks, size_t size);
-    void  (*mem_free)   (void *block);
+	void *(*mem_alloc) (size_t size);
+	void *(*mem_calloc) (size_t blocks, size_t size);
+	void (*mem_free) (void *block);
 };
-
 
 /**
  * Initializes the fields of the StackConf struct to default values.
@@ -40,7 +39,7 @@ struct stack_s {
  */
 void stack_conf_init(StackConf *conf)
 {
-    array_conf_init(conf);
+	array_conf_init(conf);
 }
 
 /**
@@ -53,9 +52,9 @@ void stack_conf_init(StackConf *conf)
  */
 enum cc_stat stack_new(Stack **out)
 {
-    StackConf conf;
-    stack_conf_init(&conf);
-    return stack_new_conf(&conf, out);
+	StackConf conf;
+	stack_conf_init(&conf);
+	return stack_new_conf(&conf, out);
 }
 
 /**
@@ -76,25 +75,27 @@ enum cc_stat stack_new(Stack **out)
  */
 enum cc_stat stack_new_conf(StackConf const * const conf, Stack **out)
 {
-    Stack *stack = conf->mem_calloc(1, sizeof(Stack));
+	Stack *stack = conf->mem_calloc(1, sizeof (Stack));
 
-    if (!stack)
-        return CC_ERR_ALLOC;
+	if (!stack)
+		return CC_ERR_ALLOC;
 
-    stack->mem_alloc  = conf->mem_alloc;
-    stack->mem_calloc = conf->mem_calloc;
-    stack->mem_free   = conf->mem_free;
+	stack->mem_alloc = conf->mem_alloc;
+	stack->mem_calloc = conf->mem_calloc;
+	stack->mem_free = conf->mem_free;
 
-    Array *array;
-    enum cc_stat status;
-    if ((status = array_new_conf(conf, &array)) == CC_OK) {
-        stack->v = array;
-    } else {
-        conf->mem_free(stack);
-        return status;
-    }
-    *out = stack;
-    return CC_OK;
+	Array *array;
+	enum cc_stat status;
+	if ((status = array_new_conf(conf, &array)) == CC_OK)
+	{
+		stack->v = array;
+	} else
+	{
+		conf->mem_free(stack);
+		return status;
+	}
+	*out = stack;
+	return CC_OK;
 }
 
 /**
@@ -105,8 +106,8 @@ enum cc_stat stack_new_conf(StackConf const * const conf, Stack **out)
  */
 void stack_destroy(Stack *stack)
 {
-    array_destroy(stack->v);
-    stack->mem_free(stack);
+	array_destroy(stack->v);
+	stack->mem_free(stack);
 }
 
 /**
@@ -119,8 +120,8 @@ void stack_destroy(Stack *stack)
  */
 void stack_destroy_free(Stack *stack)
 {
-    array_destroy_free(stack->v);
-    free(stack);
+	array_destroy_free(stack->v);
+	free(stack);
 }
 
 /**
@@ -134,7 +135,7 @@ void stack_destroy_free(Stack *stack)
  */
 enum cc_stat stack_push(Stack *stack, void *element)
 {
-    return array_add(stack->v, element);
+	return array_add(stack->v, element);
 }
 
 /**
@@ -149,7 +150,7 @@ enum cc_stat stack_push(Stack *stack, void *element)
  */
 enum cc_stat stack_peek(Stack *stack, void **out)
 {
-    return array_get_last(stack->v, out);
+	return array_get_last(stack->v, out);
 }
 
 /**
@@ -165,7 +166,7 @@ enum cc_stat stack_peek(Stack *stack, void **out)
  */
 enum cc_stat stack_pop(Stack *stack, void **out)
 {
-    return array_remove_last(stack->v, out);
+	return array_remove_last(stack->v, out);
 }
 
 /**
@@ -177,7 +178,7 @@ enum cc_stat stack_pop(Stack *stack, void **out)
  */
 size_t stack_size(Stack *stack)
 {
-    return array_size(stack->v);
+	return array_size(stack->v);
 }
 
 /**
@@ -189,7 +190,7 @@ size_t stack_size(Stack *stack)
  */
 void stack_map(Stack *stack, void (*fn) (void *))
 {
-    array_map(stack->v, fn);
+	array_map(stack->v, fn);
 }
 
 /**
@@ -200,7 +201,7 @@ void stack_map(Stack *stack, void (*fn) (void *))
  */
 void stack_iter_init(StackIter *iter, Stack *s)
 {
-    array_iter_init(&(iter->i), s->v);
+	array_iter_init(&(iter->i), s->v);
 }
 
 /**
@@ -215,7 +216,7 @@ void stack_iter_init(StackIter *iter, Stack *s)
  */
 enum cc_stat stack_iter_next(StackIter *iter, void **out)
 {
-    return array_iter_next(&(iter->i), out);
+	return array_iter_next(&(iter->i), out);
 }
 
 /**
@@ -236,7 +237,7 @@ enum cc_stat stack_iter_next(StackIter *iter, void **out)
  */
 enum cc_stat stack_iter_replace(StackIter *iter, void *element, void **out)
 {
-    return array_iter_replace(&(iter->i), element, out);
+	return array_iter_replace(&(iter->i), element, out);
 }
 
 /**
@@ -248,7 +249,7 @@ enum cc_stat stack_iter_replace(StackIter *iter, void *element, void **out)
  */
 void stack_zip_iter_init(StackZipIter *iter, Stack *s1, Stack *s2)
 {
-    array_zip_iter_init(&(iter->i), s1->v, s2->v);
+	array_zip_iter_init(&(iter->i), s1->v, s2->v);
 }
 
 /**
@@ -263,7 +264,7 @@ void stack_zip_iter_init(StackZipIter *iter, Stack *s1, Stack *s2)
  */
 enum cc_stat stack_zip_iter_next(StackZipIter *iter, void **out1, void **out2)
 {
-    return array_zip_iter_next(&(iter->i), out1, out2);
+	return array_zip_iter_next(&(iter->i), out1, out2);
 }
 
 /**
@@ -280,5 +281,5 @@ enum cc_stat stack_zip_iter_next(StackZipIter *iter, void **out1, void **out2)
  */
 enum cc_stat stack_zip_iter_replace(StackZipIter *iter, void *e1, void *e2, void **out1, void **out2)
 {
-    return array_zip_iter_replace(&(iter->i), e1, e2, out1, out2);
+	return array_zip_iter_replace(&(iter->i), e1, e2, out1, out2);
 }

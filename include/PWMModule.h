@@ -15,14 +15,14 @@
 extern "C" {
 #endif
 
-/* Public function prototypes ------------------------------------------------*/
-void SetLedsUnderPWM(void);
-void IncPWM(void);
-void ChangeLedsCode(void);
-void SetCStatLedsUnderPWM(uint8_t qred,uint8_t qgreen,uint8_t qblue);
-void SetServo1UnderPWM(uint8_t c);
-void SetServo2UnderPWM(uint8_t c);
-/*============================================================================*/
+	/* Public function prototypes ------------------------------------------------*/
+	void SetLedsUnderPWM(void);
+	void IncPWM(void);
+	void ChangeLedsCode(void);
+	void SetCStatLedsUnderPWM(uint8_t qred, uint8_t qgreen, uint8_t qblue);
+	void SetServo1UnderPWM(uint8_t c);
+	void SetServo2UnderPWM(uint8_t c);
+	/*============================================================================*/
 
 #ifdef __cplusplus
 }

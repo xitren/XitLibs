@@ -4,7 +4,7 @@
 #include "circular_functions.h"
 #include "circular_printf.h"
 
-static void	strprep(char *src, char cs, char cr)
+static void strprep(char *src, char cs, char cr)
 {
 	while ((*src) != 0)
 	{
@@ -14,11 +14,11 @@ static void	strprep(char *src, char cs, char cr)
 	}
 }
 
-char		*my_put_d(char *buff, va_list *valist, t_circular_printf_flags *fl)
+char *my_put_d(char *buff, va_list *valist, t_circular_printf_flags *fl)
 {
-	long long int	d;
-	char			*p;
-	size_t			max;
+	long long int d;
+	char *p;
+	size_t max;
 
 	max = BUFF_PRINT - 1;
 	d = get_signed_varg(valist, fl);
@@ -40,7 +40,7 @@ char		*my_put_d(char *buff, va_list *valist, t_circular_printf_flags *fl)
 	return (p);
 }
 
-void		get_last(char *p[3], t_circular_printf_flags *fl,
+void get_last(char *p[3], t_circular_printf_flags *fl,
 		unsigned long cnt[5])
 {
 	cnt[0]++;

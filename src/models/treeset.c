@@ -1,34 +1,35 @@
 /*
-  Copyright (C) 2013-2014 Srđan Panić
+	Copyright (C) 2013-2014 Srđan Panić
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+ */
 #include "treeset.h"
 #include "umm_malloc.h"
 
-struct treeset_s {
-    TreeTable *t;
-    int       *dummy;
+struct treeset_s
+{
+	TreeTable *t;
+	int *dummy;
 
-    void *(*mem_alloc)  (size_t size);
-    void *(*mem_calloc) (size_t blocks, size_t size);
-    void  (*mem_free)   (void *block);
+	void *(*mem_alloc) (size_t size);
+	void *(*mem_calloc) (size_t blocks, size_t size);
+	void (*mem_free) (void *block);
 };
 
 /**
@@ -38,7 +39,7 @@ struct treeset_s {
  */
 void treeset_conf_init(TreeSetConf *conf)
 {
-    treetable_conf_init(conf);
+	treetable_conf_init(conf);
 }
 
 /**
@@ -52,10 +53,10 @@ void treeset_conf_init(TreeSetConf *conf)
  */
 enum cc_stat treeset_new(int (*cmp) (const void*, const void*), TreeSet **set)
 {
-    TreeSetConf conf;
-    treeset_conf_init(&conf);
-    conf.cmp = cmp;
-    return treeset_new_conf(&conf, set);
+	TreeSetConf conf;
+	treeset_conf_init(&conf);
+	conf.cmp = cmp;
+	return treeset_new_conf(&conf, set);
 }
 
 /**
@@ -73,26 +74,27 @@ enum cc_stat treeset_new(int (*cmp) (const void*, const void*), TreeSet **set)
  */
 enum cc_stat treeset_new_conf(TreeSetConf const * const conf, TreeSet **tset)
 {
-    TreeSet *set = conf->mem_calloc(1, sizeof(TreeSet));
+	TreeSet *set = conf->mem_calloc(1, sizeof (TreeSet));
 
-    if (!set)
-        return CC_ERR_ALLOC;
+	if (!set)
+		return CC_ERR_ALLOC;
 
-    TreeTable *table;
-    enum cc_stat s = treetable_new_conf(conf, &table);
+	TreeTable *table;
+	enum cc_stat s = treetable_new_conf(conf, &table);
 
-    if (s != CC_OK) {
-        conf->mem_free(set);
-        return s;
-    }
-    set->t          = table;
-    set->dummy      = (int*) 1;
-    set->mem_alloc  = conf->mem_alloc;
-    set->mem_calloc = conf->mem_calloc;
-    set->mem_free   = conf->mem_free;
+	if (s != CC_OK)
+	{
+		conf->mem_free(set);
+		return s;
+	}
+	set->t = table;
+	set->dummy = (int*) 1;
+	set->mem_alloc = conf->mem_alloc;
+	set->mem_calloc = conf->mem_calloc;
+	set->mem_free = conf->mem_free;
 
-    *tset = set;
-    return CC_OK;
+	*tset = set;
+	return CC_OK;
 }
 
 /**
@@ -102,8 +104,8 @@ enum cc_stat treeset_new_conf(TreeSetConf const * const conf, TreeSet **tset)
  */
 void treeset_destroy(TreeSet *set)
 {
-    treetable_destroy(set->t);
-    set->mem_free(set);
+	treetable_destroy(set->t);
+	set->mem_free(set);
 }
 
 /**
@@ -117,7 +119,7 @@ void treeset_destroy(TreeSet *set)
  */
 enum cc_stat treeset_add(TreeSet *set, void *element)
 {
-    return treetable_add(set->t, element, set->dummy);
+	return treetable_add(set->t, element, set->dummy);
 }
 
 /**
@@ -134,10 +136,10 @@ enum cc_stat treeset_add(TreeSet *set, void *element)
  */
 enum cc_stat treeset_remove(TreeSet *set, void *element, void **out)
 {
-    if (treetable_remove(set->t, element, out) == CC_ERR_KEY_NOT_FOUND)
-        return CC_ERR_VALUE_NOT_FOUND;
+	if (treetable_remove(set->t, element, out) == CC_ERR_KEY_NOT_FOUND)
+		return CC_ERR_VALUE_NOT_FOUND;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -147,7 +149,7 @@ enum cc_stat treeset_remove(TreeSet *set, void *element, void **out)
  */
 void treeset_remove_all(TreeSet *set)
 {
-    treetable_remove_all(set->t);
+	treetable_remove_all(set->t);
 }
 
 /**
@@ -160,10 +162,10 @@ void treeset_remove_all(TreeSet *set)
  */
 enum cc_stat treeset_get_first(TreeSet *set, void **out)
 {
-    if (treetable_get_first_key(set->t, out) == CC_ERR_KEY_NOT_FOUND)
-        return CC_ERR_VALUE_NOT_FOUND;
+	if (treetable_get_first_key(set->t, out) == CC_ERR_KEY_NOT_FOUND)
+		return CC_ERR_VALUE_NOT_FOUND;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -176,10 +178,10 @@ enum cc_stat treeset_get_first(TreeSet *set, void **out)
  */
 enum cc_stat treeset_get_last(TreeSet *set, void **out)
 {
-    if (treetable_get_last_key(set->t, out) == CC_ERR_KEY_NOT_FOUND)
-        return CC_ERR_VALUE_NOT_FOUND;
+	if (treetable_get_last_key(set->t, out) == CC_ERR_KEY_NOT_FOUND)
+		return CC_ERR_VALUE_NOT_FOUND;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -193,10 +195,10 @@ enum cc_stat treeset_get_last(TreeSet *set, void **out)
  */
 enum cc_stat treeset_get_greater_than(TreeSet *set, void *element, void **out)
 {
-    if (treetable_get_greater_than(set->t, element, out) == CC_ERR_KEY_NOT_FOUND)
-        return CC_ERR_VALUE_NOT_FOUND;
+	if (treetable_get_greater_than(set->t, element, out) == CC_ERR_KEY_NOT_FOUND)
+		return CC_ERR_VALUE_NOT_FOUND;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -210,10 +212,10 @@ enum cc_stat treeset_get_greater_than(TreeSet *set, void *element, void **out)
  */
 enum cc_stat treeset_get_lesser_than(TreeSet *set, void *element, void **out)
 {
-    if (treetable_get_lesser_than(set->t, element, out) == CC_ERR_KEY_NOT_FOUND)
-        return CC_ERR_VALUE_NOT_FOUND;
+	if (treetable_get_lesser_than(set->t, element, out) == CC_ERR_KEY_NOT_FOUND)
+		return CC_ERR_VALUE_NOT_FOUND;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -226,7 +228,7 @@ enum cc_stat treeset_get_lesser_than(TreeSet *set, void *element, void **out)
  */
 bool treeset_contains(TreeSet *set, void *element)
 {
-    return treetable_contains_key(set->t, element);
+	return treetable_contains_key(set->t, element);
 }
 
 /**
@@ -238,7 +240,7 @@ bool treeset_contains(TreeSet *set, void *element)
  */
 size_t treeset_size(TreeSet *set)
 {
-    return treetable_size(set->t);
+	return treetable_size(set->t);
 }
 
 /**
@@ -250,7 +252,7 @@ size_t treeset_size(TreeSet *set)
  */
 void treeset_foreach(TreeSet *set, void (*fn) (const void*))
 {
-    treetable_foreach_key(set->t, fn);
+	treetable_foreach_key(set->t, fn);
 }
 
 /**
@@ -261,7 +263,7 @@ void treeset_foreach(TreeSet *set, void (*fn) (const void*))
  */
 void treeset_iter_init(TreeSetIter *iter, TreeSet *set)
 {
-    treetable_iter_init(&(iter->i), set->t);
+	treetable_iter_init(&(iter->i), set->t);
 }
 
 /**
@@ -276,13 +278,13 @@ void treeset_iter_init(TreeSetIter *iter, TreeSet *set)
  */
 enum cc_stat treeset_iter_next(TreeSetIter *iter, void **element)
 {
-    TreeTableEntry entry;
+	TreeTableEntry entry;
 
-    if (treetable_iter_next(&(iter->i), &entry) != CC_OK)
-        return CC_ITER_END;
+	if (treetable_iter_next(&(iter->i), &entry) != CC_OK)
+		return CC_ITER_END;
 
-    *element = entry.key;
-    return CC_OK;
+	*element = entry.key;
+	return CC_OK;
 }
 
 /**
@@ -302,5 +304,5 @@ enum cc_stat treeset_iter_next(TreeSetIter *iter, void **element)
  */
 enum cc_stat treeset_iter_remove(TreeSetIter *iter, void **out)
 {
-    return treetable_iter_remove(&(iter->i), out);
+	return treetable_iter_remove(&(iter->i), out);
 }

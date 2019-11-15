@@ -1,33 +1,34 @@
 /*
-  Copyright (C) 2013-2014 Srđan Panić
+	Copyright (C) 2013-2014 Srđan Panić
 
-  Permission is hereby granted, free of charge, to any person obtaining a copy
-  of this software and associated documentation files (the "Software"), to deal
-  in the Software without restriction, including without limitation the rights
-  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-  copies of the Software, and to permit persons to whom the Software is
-  furnished to do so, subject to the following conditions:
+	Permission is hereby granted, free of charge, to any person obtaining a copy
+	of this software and associated documentation files (the "Software"), to deal
+	in the Software without restriction, including without limitation the rights
+	to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+	copies of the Software, and to permit persons to whom the Software is
+	furnished to do so, subject to the following conditions:
 
-  The above copyright notice and this permission notice shall be included in
-  all copies or substantial portions of the Software.
+	The above copyright notice and this permission notice shall be included in
+	all copies or substantial portions of the Software.
 
-  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-  THE SOFTWARE.
-*/
+	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+	IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+	FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+	AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+	LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+	OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+	THE SOFTWARE.
+ */
 #include "hashset.h"
 
-struct hashset_s {
-    HashTable *table;
-    int       *dummy;
+struct hashset_s
+{
+	HashTable *table;
+	int *dummy;
 
-    void *(*mem_alloc)  (size_t size);
-    void *(*mem_calloc) (size_t blocks, size_t size);
-    void  (*mem_free)   (void *block);
+	void *(*mem_alloc) (size_t size);
+	void *(*mem_calloc) (size_t blocks, size_t size);
+	void (*mem_free) (void *block);
 };
 
 /**
@@ -37,7 +38,7 @@ struct hashset_s {
  */
 void hashset_conf_init(HashSetConf *conf)
 {
-    hashtable_conf_init(conf);
+	hashtable_conf_init(conf);
 }
 
 /**
@@ -50,9 +51,9 @@ void hashset_conf_init(HashSetConf *conf)
  */
 enum cc_stat hashset_new(HashSet **hs)
 {
-    HashSetConf hsc;
-    hashset_conf_init(&hsc);
-    return hashset_new_conf(&hsc, hs);
+	HashSetConf hsc;
+	hashset_conf_init(&hsc);
+	return hashset_new_conf(&hsc, hs);
 }
 
 /**
@@ -70,29 +71,30 @@ enum cc_stat hashset_new(HashSet **hs)
  */
 enum cc_stat hashset_new_conf(HashSetConf const * const conf, HashSet **hs)
 {
-    HashSet *set = conf->mem_calloc(1, sizeof(HashSet));
+	HashSet *set = conf->mem_calloc(1, sizeof (HashSet));
 
-    if (!set)
-        return CC_ERR_ALLOC;
+	if (!set)
+		return CC_ERR_ALLOC;
 
-    HashTable *table;
-    enum cc_stat stat = hashtable_new_conf(conf, &table);
+	HashTable *table;
+	enum cc_stat stat = hashtable_new_conf(conf, &table);
 
-    if (stat != CC_OK) {
-        conf->mem_free(set);
-        return stat;
-    }
+	if (stat != CC_OK)
+	{
+		conf->mem_free(set);
+		return stat;
+	}
 
-    set->table      = table;
-    set->mem_alloc  = conf->mem_alloc;
-    set->mem_calloc = conf->mem_calloc;
-    set->mem_free   = conf->mem_free;
+	set->table = table;
+	set->mem_alloc = conf->mem_alloc;
+	set->mem_calloc = conf->mem_calloc;
+	set->mem_free = conf->mem_free;
 
-    /* A dummy pointer that is never actually dereferenced
-    *  that must not be null.*/
-    set->dummy = (int*) 1;
-    *hs = set;
-    return CC_OK;
+	/* A dummy pointer that is never actually dereferenced
+	 *  that must not be null.*/
+	set->dummy = (int*) 1;
+	*hs = set;
+	return CC_OK;
 }
 
 /**
@@ -103,8 +105,8 @@ enum cc_stat hashset_new_conf(HashSetConf const * const conf, HashSet **hs)
  */
 void hashset_destroy(HashSet *set)
 {
-    hashtable_destroy(set->table);
-    set->mem_free(set);
+	hashtable_destroy(set->table);
+	set->mem_free(set);
 }
 
 /**
@@ -118,7 +120,7 @@ void hashset_destroy(HashSet *set)
  */
 enum cc_stat hashset_add(HashSet *set, void *element)
 {
-    return hashtable_add(set->table, element, set->dummy);
+	return hashtable_add(set->table, element, set->dummy);
 }
 
 /**
@@ -135,7 +137,7 @@ enum cc_stat hashset_add(HashSet *set, void *element)
  */
 enum cc_stat hashset_remove(HashSet *set, void *element, void **out)
 {
-    return hashtable_remove(set->table, element, out);
+	return hashtable_remove(set->table, element, out);
 }
 
 /**
@@ -145,7 +147,7 @@ enum cc_stat hashset_remove(HashSet *set, void *element, void **out)
  */
 void hashset_remove_all(HashSet *set)
 {
-    hashtable_remove_all(set->table);
+	hashtable_remove_all(set->table);
 }
 
 /**
@@ -158,7 +160,7 @@ void hashset_remove_all(HashSet *set)
  */
 bool hashset_contains(HashSet *set, void *element)
 {
-    return hashtable_contains_key(set->table, element);
+	return hashtable_contains_key(set->table, element);
 }
 
 /**
@@ -170,7 +172,7 @@ bool hashset_contains(HashSet *set, void *element)
  */
 size_t hashset_size(HashSet *set)
 {
-    return hashtable_size(set->table);
+	return hashtable_size(set->table);
 }
 
 /**
@@ -182,7 +184,7 @@ size_t hashset_size(HashSet *set)
  */
 size_t hashset_capacity(HashSet *set)
 {
-    return hashtable_capacity(set->table);
+	return hashtable_capacity(set->table);
 }
 
 /**
@@ -194,7 +196,7 @@ size_t hashset_capacity(HashSet *set)
  */
 void hashset_foreach(HashSet *set, void (*fn) (const void *e))
 {
-    hashtable_foreach_key(set->table, fn);
+	hashtable_foreach_key(set->table, fn);
 }
 
 /**
@@ -205,7 +207,7 @@ void hashset_foreach(HashSet *set, void (*fn) (const void *e))
  */
 void hashset_iter_init(HashSetIter *iter, HashSet *set)
 {
-    hashtable_iter_init(&(iter->iter), set->table);
+	hashtable_iter_init(&(iter->iter), set->table);
 }
 
 /**
@@ -220,16 +222,16 @@ void hashset_iter_init(HashSetIter *iter, HashSet *set)
  */
 enum cc_stat hashset_iter_next(HashSetIter *iter, void **out)
 {
-    TableEntry *entry;
-    enum cc_stat status = hashtable_iter_next(&(iter->iter), &entry);
+	TableEntry *entry;
+	enum cc_stat status = hashtable_iter_next(&(iter->iter), &entry);
 
-    if (status != CC_OK)
-        return status;
+	if (status != CC_OK)
+		return status;
 
-    if (out)
-        *out = entry->key;
+	if (out)
+		*out = entry->key;
 
-    return CC_OK;
+	return CC_OK;
 }
 
 /**
@@ -249,5 +251,5 @@ enum cc_stat hashset_iter_next(HashSetIter *iter, void **out)
  */
 enum cc_stat hashset_iter_remove(HashSetIter *iter, void **out)
 {
-    return hashtable_iter_remove(&(iter->iter), out);
+	return hashtable_iter_remove(&(iter->iter), out);
 }

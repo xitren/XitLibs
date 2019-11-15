@@ -49,46 +49,46 @@
 
 /* Public defines ------------------------------------------------------------*/
 #define NO_LOGGER_ERROR                            (-1)  /* Denotes that no   */
-                                                         /* error was         */
-                                                         /* specified on the  */
-                                                         /* buffer.           */
+/* error was         */
+/* specified on the  */
+/* buffer.           */
 #define NO_LOGGER_SPACE                            (-3)  /* Denotes that the  */
-                                                         /* buffer specified  */
-                                                         /* was no            */
-                                                         /* space.            */
+/* buffer specified  */
+/* was no            */
+/* space.            */
 #define MEMORY_LOGGER LOGGER_SIZE*STRING_SIZE+8
 
 #ifdef DEBUG
-    #define DBG_LOG_TRACE( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 6); }
-    #define DBG_LOG_DEBUG( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 5); }
-    #define DBG_LOG_CRITICAL( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 4); }
-    #define DBG_LOG_ERROR( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 3); }
-    #define DBG_LOG_WARNING( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 2); }
-    #define DBG_LOG_INFO( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 1); }
-    #define DBG_LOG_FORCE( force, format, ... ) { if (force) { size_glob = snprintf(buf_glob, STRING_SIZE, format, ## __VA_ARGS__); AddToLog(buf_glob, size_glob, 1); } }
+#define DBG_LOG_TRACE( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 6); }
+#define DBG_LOG_DEBUG( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 5); }
+#define DBG_LOG_CRITICAL( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 4); }
+#define DBG_LOG_ERROR( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 3); }
+#define DBG_LOG_WARNING( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 2); }
+#define DBG_LOG_INFO( format, ... ) { size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  ); AddToLog(buf_glob, size_glob, 1); }
+#define DBG_LOG_FORCE( force, format, ... ) { if (force) { size_glob = snprintf(buf_glob, STRING_SIZE, format, ## __VA_ARGS__); AddToLog(buf_glob, size_glob, 1); } }
 #else
-    #define DBG_LOG_TRACE( format, ... ) 
-    #define DBG_LOG_DEBUG( format, ... ) 
-    #define DBG_LOG_CRITICAL( format, ... ) 
-    #define DBG_LOG_ERROR( format, ... ) 
-    #define DBG_LOG_WARNING( format, ... ) 
-    #define DBG_LOG_INFO( format, ... ) 
-    #define DBG_LOG_FORCE( force, format, ... ) {if(force) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 1 );}}
+#define DBG_LOG_TRACE( format, ... ) 
+#define DBG_LOG_DEBUG( format, ... ) 
+#define DBG_LOG_CRITICAL( format, ... ) 
+#define DBG_LOG_ERROR( format, ... ) 
+#define DBG_LOG_WARNING( format, ... ) 
+#define DBG_LOG_INFO( format, ... ) 
+#define DBG_LOG_FORCE( force, format, ... ) {if(force) {size_glob = snprintf( buf_glob, STRING_SIZE, format, ## __VA_ARGS__  );AddToLog( buf_glob, size_glob, 1 );}}
 #endif
 /*============================================================================*/
 
 #ifdef __cplusplus
 extern "C" {
 #endif
-  
-/* Public function prototypes ------------------------------------------------*/
-extern char buf_glob[128];
-extern uint32_t size_glob;
-/*============================================================================*/
 
-/* Public function prototypes ------------------------------------------------*/
-int AddToLog(const char *str, uint32_t N, int lvl);
-/*============================================================================*/
+	/* Public function prototypes ------------------------------------------------*/
+	extern char buf_glob[128];
+	extern uint32_t size_glob;
+	/*============================================================================*/
+
+	/* Public function prototypes ------------------------------------------------*/
+	int AddToLog(const char *str, uint32_t N, int lvl);
+	/*============================================================================*/
 
 #ifdef __cplusplus
 }

@@ -21,7 +21,7 @@ extern "C" {
 #if defined(CPU) && (!defined(PLATFORM_WINDOWS) && !defined(PLATFORM_LINUX)) && !defined(MC)
 #error "Please define platform: PLATFORM_WINDOWS or PLATFORM_LINUX or MC"
 #endif
-    
+
 #if !defined(__CMDMODULE_H__)
 #error "Please add CommandModule.h"
 #endif
@@ -78,9 +78,9 @@ extern "C" {
 #error "Please add UpdateModule.h"
 #endif
 
-//#if !defined(GENERATORMODULE_H)
-//#error "Please add generatorModule.h"
-//#endif
+	//#if !defined(GENERATORMODULE_H)
+	//#error "Please add generatorModule.h"
+	//#endif
 
 #if !defined(__FUNCPARAMS_H__)
 #error "Please add xitlibtypes.h"
