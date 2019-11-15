@@ -61,16 +61,19 @@ int StreamRecorderLastCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-int IsObserved(void) {
+int IsObserved(void)
+{
 	return observed;
 }
 
-void setObserved(int _observer) {
+void setObserved(int _observer)
+{
 	observed = _observer;
 }
 
 void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size,
-		uint32_t _sample_frequency, uint32_t _sample_size, uint32_t _signal_type) {
+		uint32_t _sample_frequency, uint32_t _sample_size, uint32_t _signal_type)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	sample_frequency = _sample_frequency;
@@ -83,18 +86,23 @@ void InitStreamRecorder(CircularBufferItem_t* _storage, uint32_t _storage_size,
 			);
 }
 
-void AddSample(void) {
+void AddSample(void)
+{
 	//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 	//                      __LINE__, __FILE__, __func__);
 	int i;
 	uint32_t Data_sample[MAX_SAMPLE_SIZE];
-	if (signal_type == 1) {
-		for (i = 0; i < BUFFER_SAMPLE_SIZE; i++) {
+	if (signal_type == 1)
+	{
+		for (i = 0; i < BUFFER_SAMPLE_SIZE; i++)
+		{
 			uint32_t selAD = (ReadMem(REG_ADC_ORDER) >> (i * 4)) & 0x0000000F;
-			if (selAD < 8) {
+			if (selAD < 8)
+			{
 				//                DBG_LOG_TRACE("i = %d: %d \n",i,ReadMem(REG_ADC_CH1+selAD));
 				Data_sample[i] = ReadMem(REG_ADC_CH1 + selAD);
-			} else if (selAD < 11) {
+			} else if (selAD < 11)
+			{
 				//                DBG_LOG_TRACE("i = %d: %d \n",i,ReadMem(REG_ADC_CHA+selAD));
 				selAD -= 8;
 				Data_sample[i] = ReadMem(REG_ADC_CHA + selAD);
@@ -104,8 +112,10 @@ void AddSample(void) {
 	} else if (signal_type == 2)
 		for (i = 0; i < 4; i++)
 			Data_sample[i] = (int32_t) ReadMem(REG_ACCEL_X + i);
-	else if (signal_type == 3) {
-	} else {
+	else if (signal_type == 3)
+	{
+	} else
+	{
 		double phase = (TwoPi * circularbuffer_get_first_index(&buffer_test))
 				/ sample_frequency;
 		Data_sample[0] = ReadMem(REG_ADC_CHA);
@@ -124,28 +134,34 @@ void AddSample(void) {
 	return;
 }
 
-int GetStreamDataReadyCnt(void) {
+int GetStreamDataReadyCnt(void)
+{
 	return circularbuffer_unreaded_items_size(&buffer_test);
 }
 
-void ClearStreamRecorder(void) {
+void ClearStreamRecorder(void)
+{
 	circularbuffer_remove_all(&buffer_test);
 }
 
-uint32_t StreamGetObserverIp() {
+uint32_t StreamGetObserverIp()
+{
 	return observer_ip;
 }
 
-uint32_t StreamGetObserverPort() {
+uint32_t StreamGetObserverPort()
+{
 	return observer_port;
 }
 
-coap_packet_t* StreamGetObserverPacket() {
+coap_packet_t* StreamGetObserverPacket()
+{
 	return &observe_pkt;
 }
 
 int StreamGetObserverData(uint8_t *data, uint32_t *data_size,
-		uint32_t buffer_size, uint32_t iter_s) {
+		uint32_t buffer_size, uint32_t iter_s)
+{
 	ParameterList_t TempParam;
 	TempParam.NumberofParameters = 0;
 	if (observed < 1)
@@ -159,7 +175,8 @@ int StreamGetObserverData(uint8_t *data, uint32_t *data_size,
 }
 
 inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
@@ -175,17 +192,20 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 	uint32_t l = 0, i, k;
 	uint32_t Data_sample[MAX_SAMPLE_SIZE];
 	DBG_LOG_DEBUG("buffer_size %u.\n", buffer_size)
-	if ((TempParam)) {
+	if ((TempParam))
+	{
 		if (MediaType == Media_FREE)
 			MediaType = Media_BYTE;
 		ret_val_f = get_parameter(TempParam, "observe", (uint32_t*) & Observer);
-		if ((ret_val_f >= 0)) {
+		if ((ret_val_f >= 0))
+		{
 			DBG_LOG_DEBUG("Found observer property.\n")
 			ret_val_f = get_parameter(TempParam, "ip", (uint32_t*) & From);
 			ret_val_t = get_parameter(TempParam, "port", (uint32_t*) & To);
 			observed = Observer;
 			media_type = MediaType;
-			if ((Observer >= 0) && (ret_val_f >= 0) && (ret_val_t >= 0)) {
+			if ((Observer >= 0) && (ret_val_f >= 0) && (ret_val_t >= 0))
+			{
 				memcpy(&observe_pkt, current_packet, sizeof (coap_packet_t));
 				observer_ip = From;
 				observer_port = To;
@@ -193,13 +213,15 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 		}
 		ret_val_f = get_parameter(TempParam, "from", (uint32_t*) & From);
 		ret_val_t = get_parameter(TempParam, "to", (uint32_t*) & To);
-		if ((ret_val_f >= 0) && (ret_val_t >= 0)) {
+		if ((ret_val_f >= 0) && (ret_val_t >= 0))
+		{
 			DBG_LOG_DEBUG("buffer_size2 %s %u.\n", data_st, *data_size);
 			last = circularbuffer_get_last_index(&buffer_test);
 			first = circularbuffer_get_first_index(&buffer_test);
 			DBG_LOG_TRACE("(last %d <=> first %d) \n", last, first);
 			if ((last <= From) && (To <= first) && (From <= To))
-				switch (MediaType) {
+				switch (MediaType)
+				{
 					case Media_JSON:
 						current_coap_mediatype = Media_JSON;
 						data_size_st = snprintf(
@@ -210,14 +232,17 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 						buffer_size -= data_size_st;
 						l = circularbuffer_unreaded_items_size(&buffer_test);
 						DBG_LOG_TRACE("(circularbuffer_unreaded_items_size %d) \n", l);
-						if (l > 0) {
+						if (l > 0)
+						{
 							last = From;
 							first = To;
-							for (i = last; i < first; i++) {
+							for (i = last; i < first; i++)
+							{
 								circularbuffer_get_at(
 										&buffer_test, i, (void*) Data_sample
 										);
-								if (i != last) {
+								if (i != last)
+								{
 									data_size_st = snprintf(
 											(char*) data, buffer_size,
 											",\n"
@@ -233,7 +258,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 										);
 								data += data_size_st;
 								buffer_size -= data_size_st;
-								for (k = 0; k < (sample_size - 1); k++) {
+								for (k = 0; k < (sample_size - 1); k++)
+								{
 									DBG_LOG_TRACE("%d \n", Data_sample[k]);
 									data_size_st = snprintf(
 											(char*) data, buffer_size,
@@ -268,10 +294,12 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 						data += data_size_st;
 						buffer_size -= data_size_st;
 						l = circularbuffer_unreaded_items_size(&buffer_test);
-						if (l > 0) {
+						if (l > 0)
+						{
 							last = From;
 							first = To;
-							for (i = last; i < first; i++) {
+							for (i = last; i < first; i++)
+							{
 								circularbuffer_get_at(
 										&buffer_test, i,
 										(void*) Data_sample
@@ -283,7 +311,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 										);
 								data += data_size_st;
 								buffer_size -= data_size_st;
-								for (k = 0; k < (sample_size); k++) {
+								for (k = 0; k < (sample_size); k++)
+								{
 									data_size_st = snprintf(
 											(char*) data, buffer_size,
 											" ch%lu=\"%lu\"",
@@ -300,7 +329,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 								data += data_size_st;
 								buffer_size -= data_size_st;
 							}
-						} else {
+						} else
+						{
 							data_size_st = snprintf(
 									(char*) data, buffer_size,
 									"<NO_DATA>"
@@ -318,10 +348,12 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 					case Media_TEXT:
 						current_coap_mediatype = Media_TEXT;
 						l = circularbuffer_unreaded_items_size(&buffer_test);
-						if (l > 0) {
+						if (l > 0)
+						{
 							last = From;
 							first = To;
-							for (i = last; i < first; i++) {
+							for (i = last; i < first; i++)
+							{
 								circularbuffer_get_at(
 										&buffer_test, i, (void*) Data_sample
 										);
@@ -332,7 +364,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 										);
 								data += data_size_st;
 								buffer_size -= data_size_st;
-								for (k = 0; k < (sample_size); k++) {
+								for (k = 0; k < (sample_size); k++)
+								{
 									data_size_st = snprintf(
 											(char*) data, buffer_size,
 											" %lu",
@@ -347,11 +380,13 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 					case Media_BYTE:
 						current_coap_mediatype = Media_BYTE;
 						l = circularbuffer_unreaded_items_size(&buffer_test);
-						if (l > 0) {
+						if (l > 0)
+						{
 							last = From;
 							first = To;
 							for (i = last; (i < first)
-									&& (buffer_size > ((sample_size + 1) * sizeof (uint32_t))); i++) {
+									&& (buffer_size > ((sample_size + 1) * sizeof (uint32_t))); i++)
+							{
 								memcpy(
 										(void*) data,
 										(void*) &i,
@@ -380,7 +415,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 								"<MEDIA_FORMAT_NOT_ALLOWED/>\r\n\r"
 								);
 						break;
-				} else {
+				} else
+			{
 				current_coap_mediatype = Media_XML;
 				DBG_LOG_TRACE("MEDIA_FORMAT_NOT_ALLOWED \n");
 				ret_val = INVALID_PARAMETERS_ERROR;
@@ -389,8 +425,10 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 						"<INVALID_PARAMETERS_ERROR/>\r\n\r"
 						);
 			}
-		} else {
-			switch (MediaType) {
+		} else
+		{
+			switch (MediaType)
+			{
 				case Media_JSON:
 					current_coap_mediatype = Media_JSON;
 					data_size_st = snprintf(
@@ -401,14 +439,17 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 					buffer_size -= data_size_st;
 					l = circularbuffer_unreaded_items_size(&buffer_test);
 					DBG_LOG_TRACE("circularbuffer_unreaded_items_size %d \n", l);
-					if (l > 0) {
+					if (l > 0)
+					{
 						last = circularbuffer_get_last_index(&buffer_test);
 						first = circularbuffer_get_first_index(&buffer_test);
-						for (i = last; i < first; i++) {
+						for (i = last; i < first; i++)
+						{
 							circularbuffer_get_at(
 									&buffer_test, i, (void*) Data_sample
 									);
-							if (i != last) {
+							if (i != last)
+							{
 								data_size_st = snprintf(
 										(char*) data, buffer_size,
 										",\n"
@@ -424,7 +465,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 							//                            DBG_LOG_TRACE("2sample %d \n",i);
 							data += data_size_st;
 							buffer_size -= data_size_st;
-							for (k = 0; k < (sample_size - 1); k++) {
+							for (k = 0; k < (sample_size - 1); k++)
+							{
 								//                                DBG_LOG_TRACE("%d \n",Data_sample[k]);
 								data_size_st = snprintf(
 										(char*) data, buffer_size,
@@ -460,10 +502,12 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 					data += data_size_st;
 					buffer_size -= data_size_st;
 					l = circularbuffer_unreaded_items_size(&buffer_test);
-					if (l > 0) {
+					if (l > 0)
+					{
 						last = circularbuffer_get_last_index(&buffer_test);
 						first = circularbuffer_get_first_index(&buffer_test);
-						for (i = last; i < first; i++) {
+						for (i = last; i < first; i++)
+						{
 							circularbuffer_get_at(
 									&buffer_test, i, (void*) Data_sample
 									);
@@ -474,7 +518,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 									);
 							data += data_size_st;
 							buffer_size -= data_size_st;
-							for (k = 0; k < (sample_size); k++) {
+							for (k = 0; k < (sample_size); k++)
+							{
 								data_size_st = snprintf(
 										(char*) data, buffer_size,
 										" ch%lu=\"%lu\"",
@@ -491,7 +536,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 							data += data_size_st;
 							buffer_size -= data_size_st;
 						}
-					} else {
+					} else
+					{
 						data_size_st = snprintf(
 								(char*) data, buffer_size,
 								"<NO_DATA>"
@@ -510,10 +556,12 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 				case Media_TEXT:
 					current_coap_mediatype = Media_TEXT;
 					l = circularbuffer_unreaded_items_size(&buffer_test);
-					if (l > 0) {
+					if (l > 0)
+					{
 						last = circularbuffer_get_last_index(&buffer_test);
 						first = circularbuffer_get_first_index(&buffer_test);
-						for (i = last; i < first; i++) {
+						for (i = last; i < first; i++)
+						{
 							circularbuffer_get_at(
 									&buffer_test, i, (void*) Data_sample
 									);
@@ -524,7 +572,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 									);
 							data += data_size_st;
 							buffer_size -= data_size_st;
-							for (k = 0; k < (sample_size); k++) {
+							for (k = 0; k < (sample_size); k++)
+							{
 								data_size_st = snprintf(
 										(char*) data, buffer_size,
 										" %lu",
@@ -541,11 +590,13 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 					DBG_LOG_DEBUG("buffer_size3 %s %u.\n", data_st, *data_size);
 					current_coap_mediatype = Media_BYTE;
 					l = circularbuffer_unreaded_items_size(&buffer_test);
-					if (l > 0) {
+					if (l > 0)
+					{
 						last = circularbuffer_get_last_index(&buffer_test);
 						first = circularbuffer_get_first_index(&buffer_test);
 						for (i = last; (i < first)
-								&& (buffer_size > ((sample_size + 1) * sizeof (uint32_t))); i++) {
+								&& (buffer_size > ((sample_size + 1) * sizeof (uint32_t))); i++)
+						{
 							memcpy(
 									(void*) data,
 									(void*) &i,
@@ -578,7 +629,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 			}
 		}
 		(*data_size) = data - data_st;
-	} else {
+	} else
+	{
 		DBG_LOG_TRACE("INVALID_PARAMETERS_ERROR \n");
 		current_coap_mediatype = Media_XML;
 		ret_val = INVALID_PARAMETERS_ERROR;
@@ -593,7 +645,8 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 
 inline int StreamRecorderCommand_RESET(uint8_t MediaType,
 		ParameterList_t *TempParam, uint8_t *data,
-		uint32_t *data_size, uint32_t buffer_size) {
+		uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
@@ -603,11 +656,13 @@ inline int StreamRecorderCommand_RESET(uint8_t MediaType,
 
 int StreamRecorderCommand(uint8_t Method, uint8_t MediaType,
 		ParameterList_t *TempParam, uint8_t *data,
-		uint32_t *data_size, uint32_t buffer_size) {
+		uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
-	switch (Method) {
+	switch (Method)
+	{
 		case Method_GET:
 			ret_val = StreamRecorderCommand_GET(
 					MediaType, TempParam, data, data_size, buffer_size
@@ -632,17 +687,21 @@ int StreamRecorderCommand(uint8_t Method, uint8_t MediaType,
 
 inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType,
 		ParameterList_t *TempParam, uint8_t *data,
-		uint32_t *data_size, uint32_t buffer_size) {
+		uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
 	int Value = -1;
 
-	if ((TempParam) && (TempParam->NumberofParameters > 0)) {
-		if (ret_val >= 0) {
+	if ((TempParam) && (TempParam->NumberofParameters > 0))
+	{
+		if (ret_val >= 0)
+		{
 			if (MediaType == Media_FREE)
 				MediaType = Media_XML;
-			switch (MediaType) {
+			switch (MediaType)
+			{
 				case Media_XML:
 					current_coap_mediatype = Media_XML;
 					(*data_size) = snprintf(
@@ -673,7 +732,8 @@ inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType,
 					break;
 			}
 		}
-	} else {
+	} else
+	{
 		current_coap_mediatype = Media_XML;
 		ret_val = INVALID_PARAMETERS_ERROR;
 		(*data_size) = snprintf(
@@ -686,17 +746,21 @@ inline int StreamRecorderCurrentCommand_GET(uint8_t MediaType,
 
 inline int StreamRecorderLastCommand_GET(uint8_t MediaType,
 		ParameterList_t *TempParam, uint8_t *data,
-		uint32_t *data_size, uint32_t buffer_size) {
+		uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
 	int Value = -1;
 
-	if ((TempParam) && (TempParam->NumberofParameters > 0)) {
-		if (ret_val >= 0) {
+	if ((TempParam) && (TempParam->NumberofParameters > 0))
+	{
+		if (ret_val >= 0)
+		{
 			if (MediaType == Media_FREE)
 				MediaType = Media_XML;
-			switch (MediaType) {
+			switch (MediaType)
+			{
 				case Media_XML:
 					current_coap_mediatype = Media_XML;
 					(*data_size) = snprintf(
@@ -727,7 +791,8 @@ inline int StreamRecorderLastCommand_GET(uint8_t MediaType,
 					break;
 			}
 		}
-	} else {
+	} else
+	{
 		current_coap_mediatype = Media_XML;
 		ret_val = INVALID_PARAMETERS_ERROR;
 		(*data_size) = snprintf(
@@ -740,11 +805,13 @@ inline int StreamRecorderLastCommand_GET(uint8_t MediaType,
 
 int StreamRecorderCurrentCommand(uint8_t Method, uint8_t MediaType,
 		ParameterList_t *TempParam, uint8_t *data,
-		uint32_t *data_size, uint32_t buffer_size) {
+		uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
-	switch (Method) {
+	switch (Method)
+	{
 		case Method_GET:
 			ret_val = StreamRecorderCurrentCommand_GET(
 					MediaType, TempParam, data, data_size, buffer_size
@@ -764,11 +831,13 @@ int StreamRecorderCurrentCommand(uint8_t Method, uint8_t MediaType,
 
 int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType,
 		ParameterList_t *TempParam, uint8_t *data,
-		uint32_t *data_size, uint32_t buffer_size) {
+		uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
-	switch (Method) {
+	switch (Method)
+	{
 		case Method_GET:
 			ret_val = StreamRecorderLastCommand_GET(
 					MediaType, TempParam, data, data_size, buffer_size

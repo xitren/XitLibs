@@ -511,18 +511,22 @@
 
 #ifndef CPU
 
-UMM_H_ATTPACKPRE typedef struct umm_ptr_t {
+UMM_H_ATTPACKPRE typedef struct umm_ptr_t
+{
 	unsigned short int next;
 	unsigned short int prev;
 } UMM_H_ATTPACKSUF umm_ptr;
 
-UMM_H_ATTPACKPRE typedef struct umm_block_t {
+UMM_H_ATTPACKPRE typedef struct umm_block_t
+{
 
-	union {
+	union
+	{
 		umm_ptr used;
 	} header;
 
-	union {
+	union
+	{
 		umm_ptr free;
 		unsigned char data[4];
 	} body;
@@ -582,7 +586,8 @@ const unsigned short int umm_numblocks = sizeof (umm_heap) / sizeof (umm_block);
 
 UMM_HEAP_INFO heapInfo;
 
-void *umm_info(void *ptr, int force) {
+void *umm_info(void *ptr, int force)
+{
 
 	unsigned short int blockNo = 0;
 
@@ -612,13 +617,15 @@ void *umm_info(void *ptr, int force) {
 
 	blockNo = UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK;
 
-	while (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK) {
+	while (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK)
+	{
 		++heapInfo.totalEntries;
 		heapInfo.totalBlocks += (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK) - blockNo;
 
 		// Is this a free block?
 
-		if (UMM_NBLOCK(blockNo) & UMM_FREELIST_MASK) {
+		if (UMM_NBLOCK(blockNo) & UMM_FREELIST_MASK)
+		{
 			++heapInfo.freeEntries;
 			heapInfo.freeBlocks += (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK) - blockNo;
 
@@ -633,7 +640,8 @@ void *umm_info(void *ptr, int force) {
 
 			// Does this block address match the ptr we may be trying to free?
 
-			if (ptr == &UMM_BLOCK(blockNo)) {
+			if (ptr == &UMM_BLOCK(blockNo))
+			{
 
 				// Release the critical section...
 				//
@@ -641,7 +649,8 @@ void *umm_info(void *ptr, int force) {
 
 				return ( ptr);
 			}
-		} else {
+		} else
+		{
 			++heapInfo.usedEntries;
 			heapInfo.usedBlocks += (UMM_NBLOCK(blockNo) & UMM_BLOCKNO_MASK) - blockNo;
 
@@ -690,7 +699,8 @@ void *umm_info(void *ptr, int force) {
 
 // ----------------------------------------------------------------------------
 
-static unsigned short int umm_blocks(size_t size) {
+static unsigned short int umm_blocks(size_t size)
+{
 
 	// The calculation of the block size is not too difficult, but there are
 	// a few little things that we need to be mindful of.
@@ -714,7 +724,8 @@ static unsigned short int umm_blocks(size_t size) {
 
 static void umm_make_new_block(unsigned short int c,
 		unsigned short int blocks,
-		unsigned short int freemask) {
+		unsigned short int freemask)
+{
 
 	UMM_NBLOCK(c + blocks) = UMM_NBLOCK(c) & UMM_BLOCKNO_MASK;
 	UMM_PBLOCK(c + blocks) = c;
@@ -725,7 +736,8 @@ static void umm_make_new_block(unsigned short int c,
 
 // ----------------------------------------------------------------------------
 
-static void umm_disconnect_from_free_list(unsigned short int c) {
+static void umm_disconnect_from_free_list(unsigned short int c)
+{
 	// Disconnect this block from the FREE list
 
 	UMM_NFREE(UMM_PFREE(c)) = UMM_NFREE(c);
@@ -738,9 +750,11 @@ static void umm_disconnect_from_free_list(unsigned short int c) {
 
 // ----------------------------------------------------------------------------
 
-static void umm_assimilate_up(unsigned short int c) {
+static void umm_assimilate_up(unsigned short int c)
+{
 
-	if (UMM_NBLOCK(UMM_NBLOCK(c)) & UMM_FREELIST_MASK) {
+	if (UMM_NBLOCK(UMM_NBLOCK(c)) & UMM_FREELIST_MASK)
+	{
 		// The next block is a free block, so assimilate up and remove it from
 		// the free list
 
@@ -759,7 +773,8 @@ static void umm_assimilate_up(unsigned short int c) {
 
 // ----------------------------------------------------------------------------
 
-static unsigned short int umm_assimilate_down(unsigned short int c, unsigned short int freemask) {
+static unsigned short int umm_assimilate_down(unsigned short int c, unsigned short int freemask)
+{
 
 	UMM_NBLOCK(UMM_PBLOCK(c)) = UMM_NBLOCK(c) | freemask;
 	UMM_PBLOCK(UMM_NBLOCK(c)) = UMM_PBLOCK(c);
@@ -769,7 +784,8 @@ static unsigned short int umm_assimilate_down(unsigned short int c, unsigned sho
 
 // ----------------------------------------------------------------------------
 
-void umm_free(void *ptr) {
+void umm_free(void *ptr)
+{
 
 	unsigned short int c;
 
@@ -777,7 +793,8 @@ void umm_free(void *ptr) {
 
 	// If we're being asked to free a NULL pointer, well that's just silly!
 
-	if ((void *) 0 == ptr) {
+	if ((void *) 0 == ptr)
+	{
 		DBG_LOG_DEBUG("free a null pointer -> do nothing\n");
 
 		return;
@@ -806,12 +823,14 @@ void umm_free(void *ptr) {
 
 	// Then assimilate with the previous block if possible
 
-	if (UMM_NBLOCK(UMM_PBLOCK(c)) & UMM_FREELIST_MASK) {
+	if (UMM_NBLOCK(UMM_PBLOCK(c)) & UMM_FREELIST_MASK)
+	{
 
 		DBG_LOG_DEBUG("Assimilate down to next block, which is FREE\n");
 
 		c = umm_assimilate_down(c, UMM_FREELIST_MASK);
-	} else {
+	} else
+	{
 		// The previous block is not a free block, so add this one to the head
 		// of the free list
 
@@ -832,9 +851,11 @@ void umm_free(void *ptr) {
 	// fragmentation. I'm not sure that it's worth including but I've left it
 	// here for posterity.
 
-	if (0 == UMM_NBLOCK(UMM_NBLOCK(c) & UMM_BLOCKNO_MASK)) {
+	if (0 == UMM_NBLOCK(UMM_NBLOCK(c) & UMM_BLOCKNO_MASK))
+	{
 
-		if (UMM_PBLOCK(UMM_NBLOCK(c) & UMM_BLOCKNO_MASK) != UMM_PFREE(UMM_NBLOCK(c) & UMM_BLOCKNO_MASK)) {
+		if (UMM_PBLOCK(UMM_NBLOCK(c) & UMM_BLOCKNO_MASK) != UMM_PFREE(UMM_NBLOCK(c) & UMM_BLOCKNO_MASK))
+		{
 			UMM_NFREE(UMM_PFREE(UMM_NBLOCK(c) & UMM_BLOCKNO_MASK)) = c;
 			UMM_NFREE(UMM_PFREE(c)) = UMM_NFREE(c);
 			UMM_PFREE(UMM_NFREE(c)) = UMM_PFREE(c);
@@ -853,7 +874,8 @@ void umm_free(void *ptr) {
 
 // ----------------------------------------------------------------------------
 
-void *umm_malloc(size_t size) {
+void *umm_malloc(size_t size)
+{
 
 	unsigned short int blocks;
 	/* volatile --COMMENTED BY DFRANK because the version from FreeRTOS doesn't have it*/
@@ -869,7 +891,8 @@ void *umm_malloc(size_t size) {
 	// then reduce the size by 1 byte so that the subsequent calculations on
 	// the number of blocks to allocate are easier...
 
-	if (0 == size) {
+	if (0 == size)
+	{
 		DBG_LOG_DEBUG("malloc a block of 0 bytes -> do nothing\n");
 
 		return ( (void *) NULL);
@@ -892,7 +915,8 @@ void *umm_malloc(size_t size) {
 	bestBlock = UMM_NFREE(0);
 	bestSize = 0x7FFF;
 
-	while (UMM_NFREE(cf)) {
+	while (UMM_NFREE(cf))
+	{
 		blockSize = (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK) - cf;
 
 		DBG_LOG_TRACE("Looking at block %6i size %6i\n", cf, blockSize);
@@ -902,7 +926,8 @@ void *umm_malloc(size_t size) {
 		if ((blockSize >= blocks))
 			break;
 #elif defined UMM_BEST_FIT
-		if ((blockSize >= blocks) && (blockSize < bestSize)) {
+		if ((blockSize >= blocks) && (blockSize < bestSize))
+		{
 			bestBlock = cf;
 			bestSize = blockSize;
 		}
@@ -911,18 +936,21 @@ void *umm_malloc(size_t size) {
 		cf = UMM_NFREE(cf);
 	}
 
-	if (0x7FFF != bestSize) {
+	if (0x7FFF != bestSize)
+	{
 		cf = bestBlock;
 		blockSize = bestSize;
 	}
 
-	if (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK) {
+	if (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK)
+	{
 		// This is an existing block in the memory heap, we just need to split off
 		// what we need, unlink it from the free list and mark it as in use, and
 		// link the rest of the block back into the freelist as if it was a new
 		// block on the free list...
 
-		if (blockSize == blocks) {
+		if (blockSize == blocks)
+		{
 			// It's an exact fit and we don't neet to split off a block.
 			DBG_LOG_DEBUG("Allocating %6i blocks starting at %6i - exact\n", blocks, cf);
 
@@ -930,7 +958,8 @@ void *umm_malloc(size_t size) {
 
 			umm_disconnect_from_free_list(cf);
 
-		} else {
+		} else
+		{
 			// It's not an exact fit and we need to split off a block.
 			DBG_LOG_DEBUG("Allocating %6i blocks starting at %6i - existing\n", blocks, cf);
 
@@ -938,13 +967,15 @@ void *umm_malloc(size_t size) {
 
 			cf += blockSize - blocks;
 		}
-	} else {
+	} else
+	{
 		// We're at the end of the heap - allocate a new block, but check to see if
 		// there's enough memory left for the requested block! Actually, we may need
 		// one more than that if we're initializing the umm_heap for the first
 		// time, which happens in the next conditional...
 
-		if (UMM_NUMBLOCKS <= cf + blocks + 1) {
+		if (UMM_NUMBLOCKS <= cf + blocks + 1)
+		{
 			DBG_LOG_DEBUG("Can't allocate %5i blocks at %5i\n", blocks, cf);
 
 			// Release the critical section...
@@ -958,7 +989,8 @@ void *umm_malloc(size_t size) {
 		// that the BSS is set to 0 on startup. We should rarely get to the end of
 		// the free list so this is the "cheapest" place to put the initialization!
 
-		if (0 == cf) {
+		if (0 == cf)
+		{
 			DBG_LOG_DEBUG("Initializing malloc free block pointer\n");
 			UMM_NBLOCK(0) = 1;
 			UMM_NFREE(0) = 1;
@@ -986,7 +1018,8 @@ void *umm_malloc(size_t size) {
 
 // ----------------------------------------------------------------------------
 
-void *umm_calloc(size_t num, size_t sizen) {
+void *umm_calloc(size_t num, size_t sizen)
+{
 
 	unsigned short int blocks;
 	/* volatile --COMMENTED BY DFRANK because the version from FreeRTOS doesn't have it*/
@@ -1003,7 +1036,8 @@ void *umm_calloc(size_t num, size_t sizen) {
 	// the number of blocks to allocate are easier...
 
 	size_t size = sizen * num;
-	if (0 == size) {
+	if (0 == size)
+	{
 		DBG_LOG_DEBUG("malloc a block of 0 bytes -> do nothing\n");
 
 		return ( (void *) NULL);
@@ -1026,7 +1060,8 @@ void *umm_calloc(size_t num, size_t sizen) {
 	bestBlock = UMM_NFREE(0);
 	bestSize = 0x7FFF;
 
-	while (UMM_NFREE(cf)) {
+	while (UMM_NFREE(cf))
+	{
 		blockSize = (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK) - cf;
 
 		DBG_LOG_DEBUG("Looking at block %6i size %6i\n", cf, blockSize);
@@ -1036,7 +1071,8 @@ void *umm_calloc(size_t num, size_t sizen) {
 		if ((blockSize >= blocks))
 			break;
 #elif defined UMM_BEST_FIT
-		if ((blockSize >= blocks) && (blockSize < bestSize)) {
+		if ((blockSize >= blocks) && (blockSize < bestSize))
+		{
 			bestBlock = cf;
 			bestSize = blockSize;
 		}
@@ -1045,18 +1081,21 @@ void *umm_calloc(size_t num, size_t sizen) {
 		cf = UMM_NFREE(cf);
 	}
 
-	if (0x7FFF != bestSize) {
+	if (0x7FFF != bestSize)
+	{
 		cf = bestBlock;
 		blockSize = bestSize;
 	}
 
-	if (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK) {
+	if (UMM_NBLOCK(cf) & UMM_BLOCKNO_MASK)
+	{
 		// This is an existing block in the memory heap, we just need to split off
 		// what we need, unlink it from the free list and mark it as in use, and
 		// link the rest of the block back into the freelist as if it was a new
 		// block on the free list...
 
-		if (blockSize == blocks) {
+		if (blockSize == blocks)
+		{
 			// It's an exact fit and we don't neet to split off a block.
 			DBG_LOG_DEBUG("Allocating %6i blocks starting at %6i - exact\n", blocks, cf);
 
@@ -1064,7 +1103,8 @@ void *umm_calloc(size_t num, size_t sizen) {
 
 			umm_disconnect_from_free_list(cf);
 
-		} else {
+		} else
+		{
 			// It's not an exact fit and we need to split off a block.
 			DBG_LOG_DEBUG("Allocating %6i blocks starting at %6i - existing\n", blocks, cf);
 
@@ -1072,13 +1112,15 @@ void *umm_calloc(size_t num, size_t sizen) {
 
 			cf += blockSize - blocks;
 		}
-	} else {
+	} else
+	{
 		// We're at the end of the heap - allocate a new block, but check to see if
 		// there's enough memory left for the requested block! Actually, we may need
 		// one more than that if we're initializing the umm_heap for the first
 		// time, which happens in the next conditional...
 
-		if (UMM_NUMBLOCKS <= cf + blocks + 1) {
+		if (UMM_NUMBLOCKS <= cf + blocks + 1)
+		{
 			DBG_LOG_DEBUG("Can't allocate %5i blocks at %5i\n", blocks, cf);
 
 			// Release the critical section...
@@ -1092,7 +1134,8 @@ void *umm_calloc(size_t num, size_t sizen) {
 		// that the BSS is set to 0 on startup. We should rarely get to the end of
 		// the free list so this is the "cheapest" place to put the initialization!
 
-		if (0 == cf) {
+		if (0 == cf)
+		{
 			DBG_LOG_DEBUG("Initializing malloc free block pointer\n");
 			UMM_NBLOCK(0) = 1;
 			UMM_NFREE(0) = 1;
@@ -1122,7 +1165,8 @@ void *umm_calloc(size_t num, size_t sizen) {
 
 // ----------------------------------------------------------------------------
 
-void *umm_realloc(void *ptr, size_t size) {
+void *umm_realloc(void *ptr, size_t size)
+{
 
 	unsigned short int blocks;
 	/*char buf_local[60];*/
@@ -1138,7 +1182,8 @@ void *umm_realloc(void *ptr, size_t size) {
 	// of malloc() returns a NULL pointer, which is OK as far as the ANSI C
 	// standard is concerned.
 
-	if (((void *) NULL == ptr)) {
+	if (((void *) NULL == ptr))
+	{
 		DBG_LOG_DEBUG("realloc the NULL pointer - call malloc()\n");
 
 		return ( umm_malloc(size));
@@ -1148,7 +1193,8 @@ void *umm_realloc(void *ptr, size_t size) {
 	// we should do with it. If the size is 0, then the ANSI C standard says that
 	// we should operate the same as free.
 
-	if (0 == size) {
+	if (0 == size)
+	{
 		DBG_LOG_DEBUG("realloc to 0 size, just free the block\n");
 
 		umm_free(ptr);
@@ -1185,7 +1231,8 @@ void *umm_realloc(void *ptr, size_t size) {
 	// of memory, and we know how much new memory we want, and we know the original
 	// block size...
 
-	if (blockSize == blocks) {
+	if (blockSize == blocks)
+	{
 		// This space intentionally left blank - return the original pointer!
 
 		DBG_LOG_DEBUG("realloc the same size block - %i, do nothing\n", blocks);
@@ -1211,7 +1258,8 @@ void *umm_realloc(void *ptr, size_t size) {
 	// either fit the request exactly, or be larger than the request.
 
 	if ((UMM_NBLOCK(UMM_PBLOCK(c)) & UMM_FREELIST_MASK) &&
-			(blocks <= (UMM_NBLOCK(c) - UMM_PBLOCK(c)))) {
+			(blocks <= (UMM_NBLOCK(c) - UMM_PBLOCK(c))))
+	{
 
 		// Check if the resulting block would be big enough...
 
@@ -1240,12 +1288,14 @@ void *umm_realloc(void *ptr, size_t size) {
 
 	blockSize = (UMM_NBLOCK(c) - c);
 
-	if (blockSize == blocks) {
+	if (blockSize == blocks)
+	{
 		// This space intentionally left blank - return the original pointer!
 
 		DBG_LOG_DEBUG("realloc the same size block - %i, do nothing\n", blocks);
 
-	} else if (blockSize > blocks) {
+	} else if (blockSize > blocks)
+	{
 		// New block is smaller than the old block, so just make a new block
 		// at the end of this one and put it up on the free list...
 
@@ -1254,7 +1304,8 @@ void *umm_realloc(void *ptr, size_t size) {
 		umm_make_new_block(c, blocks, 0);
 
 		umm_free((void *) &UMM_DATA(c + blocks));
-	} else {
+	} else
+	{
 		// New block is bigger than the old block...
 
 		void *oldptr = ptr;
@@ -1264,7 +1315,8 @@ void *umm_realloc(void *ptr, size_t size) {
 		// Now umm_malloc() a new/ one, copy the old data to the new block, and
 		// free up the old block, but only if the malloc was sucessful!
 
-		if ((ptr = umm_malloc(size))) {
+		if ((ptr = umm_malloc(size)))
+		{
 			memcpy(ptr, oldptr, curSize);
 		}
 

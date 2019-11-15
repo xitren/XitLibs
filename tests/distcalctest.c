@@ -26,7 +26,8 @@ ParameterList_t params;
  * Simple C Test Suite
  */
 
-void test1() {
+void test1()
+{
 	printf("distcalctest test 1\n");
 	size = 1000;
 	ClockCommand(Method_GET, Media_XML, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -63,7 +64,8 @@ void test1() {
 	printf("Message size: %d\n", size);
 }
 
-void test2() {
+void test2()
+{
 	printf("distcalctest test 2\n");
 	size = 1000;
 	CalculationFreeCycles(Method_GET, Media_XML, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -85,7 +87,8 @@ void test2() {
 	printf("Message size: %d\n", size);
 }
 
-void test3() {
+void test3()
+{
 	printf("distcalctest test 3\n");
 	size = 1000;
 	CalculationMaxCycles(Method_GET, Media_XML, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -107,7 +110,8 @@ void test3() {
 	printf("Message size: %d\n", size);
 }
 
-void test4() {
+void test4()
+{
 	printf("distcalctest test 4\n");
 	size = 1000;
 	CalculationPercentCycles(Method_GET, Media_XML, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -129,7 +133,8 @@ void test4() {
 	printf("Message size: %d\n", size);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	printf("%%SUITE_STARTING%% distcalctest\n");
 	printf("%%SUITE_STARTED%%\n");
 

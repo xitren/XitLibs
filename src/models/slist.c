@@ -22,7 +22,8 @@
 #include "slist.h"
 #include "umm_malloc.h"
 
-struct slist_s {
+struct slist_s
+{
 	size_t size;
 	SNode *head;
 	SNode *tail;
@@ -45,7 +46,8 @@ static enum cc_stat get_node(SList *list, void *element, SNode **node, SNode **p
  *
  * @param[in] conf the SListConf struct that is being initialized.
  */
-void slist_conf_init(SListConf *conf) {
+void slist_conf_init(SListConf *conf)
+{
 	conf->mem_alloc = malloc;
 	conf->mem_calloc = calloc;
 	conf->mem_free = free;
@@ -59,7 +61,8 @@ void slist_conf_init(SListConf *conf) {
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the
  * memory allocation for the new SList structure failed.
  */
-enum cc_stat slist_new(SList **out) {
+enum cc_stat slist_new(SList **out)
+{
 	SListConf conf;
 	slist_conf_init(&conf);
 	return slist_new_conf(&conf, out);
@@ -80,7 +83,8 @@ enum cc_stat slist_new(SList **out) {
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the
  * memory allocation for the new SList structure failed.
  */
-enum cc_stat slist_new_conf(SListConf const * const conf, SList **out) {
+enum cc_stat slist_new_conf(SListConf const * const conf, SList **out)
+{
 	SList *list = conf->mem_calloc(1, sizeof (SList));
 
 	if (!list)
@@ -99,7 +103,8 @@ enum cc_stat slist_new_conf(SListConf const * const conf, SList **out) {
  *
  * @param[in] list SList that is to be destroyed
  */
-void slist_destroy(SList *list) {
+void slist_destroy(SList *list)
+{
 	slist_remove_all(list);
 	list->mem_free(list);
 }
@@ -113,7 +118,8 @@ void slist_destroy(SList *list) {
  *
  * @param[in] list SList that is to be destroyed
  */
-void slist_destroy_free(SList *list) {
+void slist_destroy_free(SList *list)
+{
 	slist_remove_all_free(list);
 	list->mem_free(list);
 }
@@ -128,7 +134,8 @@ void slist_destroy_free(SList *list) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element has failed.
  */
-enum cc_stat slist_add(SList *list, void *element) {
+enum cc_stat slist_add(SList *list, void *element)
+{
 	return slist_add_last(list, element);
 }
 
@@ -142,7 +149,8 @@ enum cc_stat slist_add(SList *list, void *element) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element has failed.
  */
-enum cc_stat slist_add_first(SList *list, void *element) {
+enum cc_stat slist_add_first(SList *list, void *element)
+{
 	SNode *node = list->mem_calloc(1, sizeof (SNode));
 
 	if (!node)
@@ -150,10 +158,12 @@ enum cc_stat slist_add_first(SList *list, void *element) {
 
 	node->data = element;
 
-	if (list->size == 0) {
+	if (list->size == 0)
+	{
 		list->head = node;
 		list->tail = node;
-	} else {
+	} else
+	{
 		node->next = list->head;
 		list->head = node;
 	}
@@ -171,7 +181,8 @@ enum cc_stat slist_add_first(SList *list, void *element) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element has failed.
  */
-enum cc_stat slist_add_last(SList *list, void *element) {
+enum cc_stat slist_add_last(SList *list, void *element)
+{
 	SNode *node = list->mem_calloc(1, sizeof (SNode));
 
 	if (!node)
@@ -179,10 +190,12 @@ enum cc_stat slist_add_last(SList *list, void *element) {
 
 	node->data = element;
 
-	if (list->size == 0) {
+	if (list->size == 0)
+	{
 		list->head = node;
 		list->tail = node;
-	} else {
+	} else
+	{
 		list->tail->next = node;
 		list->tail = node;
 	}
@@ -206,7 +219,8 @@ enum cc_stat slist_add_last(SList *list, void *element) {
  * the specified index was not in range, or CC_ERR_ALLOC if the memory
  * allocation for the new element failed.
  */
-enum cc_stat slist_add_at(SList *list, void *element, size_t index) {
+enum cc_stat slist_add_at(SList *list, void *element, size_t index)
+{
 	SNode *prev = NULL;
 	SNode *node = NULL;
 
@@ -222,10 +236,12 @@ enum cc_stat slist_add_at(SList *list, void *element, size_t index) {
 
 	new->data = element;
 
-	if (!prev) {
+	if (!prev)
+	{
 		new->next = list->head;
 		list->head = new;
-	} else {
+	} else
+	{
 		SNode *tmp = prev->next;
 		prev->next = new;
 		new->next = tmp;
@@ -245,7 +261,8 @@ enum cc_stat slist_add_at(SList *list, void *element, size_t index) {
  * @return CC_OK if the elements where successfully added, or CC_ERR_ALLOC if
  * the memory allocation for the new elements failed.
  */
-enum cc_stat slist_add_all(SList *list1, SList *list2) {
+enum cc_stat slist_add_all(SList *list1, SList *list2)
+{
 	if (list2->size == 0)
 		return CC_OK;
 
@@ -255,10 +272,12 @@ enum cc_stat slist_add_all(SList *list1, SList *list2) {
 	if (!link_all_externally(list2, &head, &tail))
 		return CC_ERR_ALLOC;
 
-	if (list1->size == 0) {
+	if (list1->size == 0)
+	{
 		list1->head = head;
 		list1->tail = tail;
-	} else {
+	} else
+	{
 		list1->tail->next = head;
 		list1->tail = tail;
 	}
@@ -281,7 +300,8 @@ enum cc_stat slist_add_all(SList *list1, SList *list2) {
  * CC_ERR_INDEX_OUT_OF_BOUNDS if the index was out of range, or
  * CC_ERR_ALLOC if the memory allocation for the new elements failed.
  */
-enum cc_stat slist_add_all_at(SList *list1, SList *list2, size_t index) {
+enum cc_stat slist_add_all_at(SList *list1, SList *list2, size_t index)
+{
 	if (list2->size == 0)
 		return CC_OK;
 
@@ -299,10 +319,12 @@ enum cc_stat slist_add_all_at(SList *list1, SList *list2, size_t index) {
 	if (!link_all_externally(list2, &head, &tail))
 		return CC_ERR_ALLOC;
 
-	if (!prev) {
+	if (!prev)
+	{
 		tail->next = node;
 		list1->head = head;
-	} else {
+	} else
+	{
 		prev->next = head;
 		tail->next = node;
 	}
@@ -323,15 +345,19 @@ enum cc_stat slist_add_all_at(SList *list1, SList *list2, size_t index) {
  *
  * @return true if the operation was successful
  */
-static bool link_all_externally(SList *list, SNode **h, SNode **t) {
+static bool link_all_externally(SList *list, SNode **h, SNode **t)
+{
 	SNode *ins = list->head;
 
 	size_t i;
-	for (i = 0; i < list->size; i++) {
+	for (i = 0; i < list->size; i++)
+	{
 		SNode *new = list->mem_calloc(1, sizeof (SNode));
 
-		if (!new) {
-			while (*h) {
+		if (!new)
+		{
+			while (*h)
+			{
 				SNode *tmp = (*h)->next;
 				list->mem_free(*h);
 				*h = tmp;
@@ -341,10 +367,12 @@ static bool link_all_externally(SList *list, SNode **h, SNode **t) {
 
 		new->data = ins->data;
 
-		if (!*h) {
+		if (!*h)
+		{
 			*h = new;
 			*t = new;
-		} else {
+		} else
+		{
 			(*t)->next = new;
 			*t = new;
 		}
@@ -364,14 +392,17 @@ static bool link_all_externally(SList *list, SNode **h, SNode **t) {
  *
  * @return CC_OK if the elements were successfully moved
  */
-enum cc_stat slist_splice(SList *list1, SList *list2) {
+enum cc_stat slist_splice(SList *list1, SList *list2)
+{
 	if (list2->size == 0)
 		return CC_OK;
 
-	if (list1->size == 0) {
+	if (list1->size == 0)
+	{
 		list1->head = list2->head;
 		list1->tail = list2->tail;
-	} else {
+	} else
+	{
 		list1->tail->next = list2->head;
 		list1->tail = list2->tail;
 	}
@@ -398,7 +429,8 @@ enum cc_stat slist_splice(SList *list1, SList *list2) {
  * @return CC_OK if the elements were successfully moved, CC_ERR_OUT_OF_RANGE if
  * the index was not in range,
  */
-enum cc_stat slist_splice_at(SList *list1, SList *list2, size_t index) {
+enum cc_stat slist_splice_at(SList *list1, SList *list2, size_t index)
+{
 	if (list2->size == 0)
 		return CC_OK;
 
@@ -429,14 +461,18 @@ enum cc_stat slist_splice_at(SList *list1, SList *list2, size_t index) {
  * @param[in] left the node after which the elements are being added
  * @param[in] right the node behind which the elements are being added
  */
-static INLINE void splice_between(SList *l1, SList *l2, SNode *base, SNode *end) {
-	if (!base) {
+static INLINE void splice_between(SList *l1, SList *l2, SNode *base, SNode *end)
+{
+	if (!base)
+	{
 		l2->tail->next = l1->head;
 		l1->head = l2->head;
-	} else if (!end) {
+	} else if (!end)
+	{
 		l1->tail->next = l2->head;
 		l1->tail = l2->tail;
-	} else {
+	} else
+	{
 		base->next = l2->head;
 		l2->tail->next = end;
 	}
@@ -459,7 +495,8 @@ static INLINE void splice_between(SList *l1, SList *l2, SNode *base, SNode *end)
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND if the element was not found.
  */
-enum cc_stat slist_remove(SList *list, void *element, void **out) {
+enum cc_stat slist_remove(SList *list, void *element, void **out)
+{
 	SNode *prev = NULL;
 	SNode *node = NULL;
 
@@ -490,7 +527,8 @@ enum cc_stat slist_remove(SList *list, void *element, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_OUT_OF_RANGE
  * if the index was out of range.
  */
-enum cc_stat slist_remove_at(SList *list, size_t index, void **out) {
+enum cc_stat slist_remove_at(SList *list, size_t index, void **out)
+{
 	SNode *prev = NULL;
 	SNode *node = NULL;
 
@@ -518,7 +556,8 @@ enum cc_stat slist_remove_at(SList *list, size_t index, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_VALUE_NOT_FOUND
  * if the list is empty.
  */
-enum cc_stat slist_remove_first(SList *list, void **out) {
+enum cc_stat slist_remove_first(SList *list, void **out)
+{
 	if (list->size == 0)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -541,7 +580,8 @@ enum cc_stat slist_remove_first(SList *list, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_VALUE_NOT_FOUND
  * if the list is empty.
  */
-enum cc_stat slist_remove_last(SList *list, void **out) {
+enum cc_stat slist_remove_last(SList *list, void **out)
+{
 	if (list->size == 0)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -569,10 +609,12 @@ enum cc_stat slist_remove_last(SList *list, void **out) {
  * @return CC_OK if the elements were successfully removed, or CC_ERR_VALUE_NOT_FOUND
  * if the list was already empty.
  */
-enum cc_stat slist_remove_all(SList *list) {
+enum cc_stat slist_remove_all(SList *list)
+{
 	bool unlinked = unlink_all(list, false);
 
-	if (unlinked) {
+	if (unlinked)
+	{
 		list->head = NULL;
 		list->tail = NULL;
 		return CC_OK;
@@ -592,10 +634,12 @@ enum cc_stat slist_remove_all(SList *list) {
  * @return CC_OK if the element were successfully removed and freed, or
  * CC_ERR_VALUE_NOT_FOUND if the list was already empty.
  */
-enum cc_stat slist_remove_all_free(SList *list) {
+enum cc_stat slist_remove_all_free(SList *list)
+{
 	bool unlinked = unlink_all(list, true);
 
-	if (unlinked) {
+	if (unlinked)
+	{
 		list->head = NULL;
 		list->tail = NULL;
 		return CC_OK;
@@ -617,7 +661,8 @@ enum cc_stat slist_remove_all_free(SList *list) {
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE
  *         if the index was out of range.
  */
-enum cc_stat slist_replace_at(SList *list, void *element, size_t index, void **out) {
+enum cc_stat slist_replace_at(SList *list, void *element, size_t index, void **out)
+{
 	SNode *prev = NULL;
 	SNode *node = NULL;
 
@@ -644,7 +689,8 @@ enum cc_stat slist_replace_at(SList *list, void *element, size_t index, void **o
  *
  * @return CC_OK if the element was found, or CC_ERR_VALUE_NOT_FOUND if not.
  */
-enum cc_stat slist_get_first(SList *list, void **out) {
+enum cc_stat slist_get_first(SList *list, void **out)
+{
 	if (list->size == 0)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -662,7 +708,8 @@ enum cc_stat slist_get_first(SList *list, void **out) {
  *
  * @return CC_OK if the element was found, or CC_ERR_VALUE_NOT_FOUND if not.
  */
-enum cc_stat slist_get_last(SList *list, void **out) {
+enum cc_stat slist_get_last(SList *list, void **out)
+{
 	if (list->size == 0)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -683,7 +730,8 @@ enum cc_stat slist_get_last(SList *list, void **out) {
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the index
  * was out of range.
  */
-enum cc_stat slist_get_at(SList *list, size_t index, void **out) {
+enum cc_stat slist_get_at(SList *list, size_t index, void **out)
+{
 	SNode *prev = NULL;
 	SNode *node = NULL;
 
@@ -704,7 +752,8 @@ enum cc_stat slist_get_at(SList *list, size_t index, void **out) {
  *
  * @return The number of elements contained in the specified SList.
  */
-size_t slist_size(SList *list) {
+size_t slist_size(SList *list)
+{
 	return list->size;
 }
 
@@ -713,7 +762,8 @@ size_t slist_size(SList *list) {
  *
  * @param[in] list SList that is being reversed
  */
-void slist_reverse(SList *list) {
+void slist_reverse(SList *list)
+{
 	if (list->size == 0 || list->size == 1)
 		return;
 
@@ -723,7 +773,8 @@ void slist_reverse(SList *list) {
 
 	list->tail = list->head;
 
-	while (flip) {
+	while (flip)
+	{
 		next = flip->next;
 		flip->next = prev;
 		prev = flip;
@@ -756,7 +807,8 @@ void slist_reverse(SList *list) {
  * if the specified index range is invalid, or CC_ERR_ALLOC if the memory allocation
  * for the new sublist failed.
  */
-enum cc_stat slist_sublist(SList *list, size_t from, size_t to, SList **out) {
+enum cc_stat slist_sublist(SList *list, size_t from, size_t to, SList **out)
+{
 	if (from > to || to >= list->size)
 		return CC_ERR_INVALID_RANGE;
 
@@ -771,15 +823,18 @@ enum cc_stat slist_sublist(SList *list, size_t from, size_t to, SList **out) {
 
 	status = get_node_at(list, from, &node, &base);
 
-	if (status != CC_OK) {
+	if (status != CC_OK)
+	{
 		slist_destroy(sub);
 		return status;
 	}
 
 	size_t i;
-	for (i = from; i <= to; i++) {
+	for (i = from; i <= to; i++)
+	{
 		status = slist_add(sub, node->data);
-		if (status != CC_OK) {
+		if (status != CC_OK)
+		{
 			slist_destroy(sub);
 			return status;
 		}
@@ -803,7 +858,8 @@ enum cc_stat slist_sublist(SList *list, size_t from, size_t to, SList **out) {
  * @return CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat slist_copy_shallow(SList *list, SList **out) {
+enum cc_stat slist_copy_shallow(SList *list, SList **out)
+{
 	SList *copy;
 	enum cc_stat status = slist_new(&copy);
 
@@ -812,9 +868,11 @@ enum cc_stat slist_copy_shallow(SList *list, SList **out) {
 
 	SNode *node = list->head;
 
-	while (node) {
+	while (node)
+	{
 		status = slist_add(copy, node->data);
-		if (status != CC_OK) {
+		if (status != CC_OK)
+		{
 			slist_destroy(copy);
 			return status;
 		}
@@ -841,7 +899,8 @@ enum cc_stat slist_copy_shallow(SList *list, SList **out) {
  * @return CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat slist_copy_deep(SList *list, void *(*cp) (void*), SList **out) {
+enum cc_stat slist_copy_deep(SList *list, void *(*cp) (void*), SList **out)
+{
 	SList *copy;
 	enum cc_stat status = slist_new(&copy);
 
@@ -850,9 +909,11 @@ enum cc_stat slist_copy_deep(SList *list, void *(*cp) (void*), SList **out) {
 
 	SNode *node = list->head;
 
-	while (node) {
+	while (node)
+	{
 		status = slist_add(copy, cp(node->data));
-		if (status != CC_OK) {
+		if (status != CC_OK)
+		{
 			slist_destroy(copy);
 			return status;
 		}
@@ -871,7 +932,8 @@ enum cc_stat slist_copy_deep(SList *list, void *(*cp) (void*), SList **out) {
  *
  * @return number of found matches
  */
-size_t slist_contains(SList *list, void *element) {
+size_t slist_contains(SList *list, void *element)
+{
 	return slist_contains_value(list, element, cc_common_cmp_ptr);
 }
 
@@ -885,11 +947,13 @@ size_t slist_contains(SList *list, void *element) {
  *
  * @return number of occurrences of the value
  */
-size_t slist_contains_value(SList *list, void *element, int (*cmp) (const void*, const void*)) {
+size_t slist_contains_value(SList *list, void *element, int (*cmp) (const void*, const void*))
+{
 	SNode *node = list->head;
 	size_t e_count = 0;
 
-	while (node) {
+	while (node)
+	{
 		if (cmp(node->data, element) == 0)
 			e_count++;
 		node = node->next;
@@ -907,12 +971,15 @@ size_t slist_contains_value(SList *list, void *element, int (*cmp) (const void*,
  *
  * @return CC_OK if the index was found, or CC_OUT_OF_RANGE if not.
  */
-enum cc_stat slist_index_of(SList *list, void *element, size_t *index) {
+enum cc_stat slist_index_of(SList *list, void *element, size_t *index)
+{
 	SNode *node = list->head;
 
 	size_t i = 0;
-	while (node) {
-		if (node->data == element) {
+	while (node)
+	{
+		if (node->data == element)
+		{
 			*index = i;
 			return CC_OK;
 		}
@@ -934,7 +1001,8 @@ enum cc_stat slist_index_of(SList *list, void *element, size_t *index) {
  * @return CC_OK if the array was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the new array failed.
  */
-enum cc_stat slist_to_array(SList *list, void ***out) {
+enum cc_stat slist_to_array(SList *list, void ***out)
+{
 	void **array = list->mem_alloc(list->size * sizeof (void*));
 
 	if (!array)
@@ -943,7 +1011,8 @@ enum cc_stat slist_to_array(SList *list, void ***out) {
 	SNode *node = list->head;
 
 	size_t i;
-	for (i = 0; i < list->size; i++) {
+	for (i = 0; i < list->size; i++)
+	{
 		array[i] = node->data;
 		node = node->next;
 	}
@@ -971,7 +1040,8 @@ enum cc_stat slist_to_array(SList *list, void ***out) {
  * @return CC_OK if the sort was performed successfully, or CC_ERR_ALLOC
  * if the sort could not allocate enough memory to performed the sort.
  */
-enum cc_stat slist_sort(SList *list, int (*cmp) (void const *e1, void const *e2)) {
+enum cc_stat slist_sort(SList *list, int (*cmp) (void const *e1, void const *e2))
+{
 	if (list->size == 1)
 		return CC_OK;
 
@@ -986,7 +1056,8 @@ enum cc_stat slist_sort(SList *list, int (*cmp) (void const *e1, void const *e2)
 	qsort(elements, list->size, sizeof (void*), cmp);
 
 	size_t i;
-	for (i = 0; i < list->size; i++) {
+	for (i = 0; i < list->size; i++)
+	{
 		node->data = elements[i];
 		node = node->next;
 	}
@@ -1002,10 +1073,12 @@ enum cc_stat slist_sort(SList *list, int (*cmp) (void const *e1, void const *e2)
  * @param[in] op the operation function that is to be invoked on each list
  *               element
  */
-void slist_foreach(SList *list, void (*op) (void *)) {
+void slist_foreach(SList *list, void (*op) (void *))
+{
 	SNode *n = list->head;
 
-	while (n) {
+	while (n)
+	{
 		op(n->data);
 		n = n->next;
 	}
@@ -1025,7 +1098,8 @@ void slist_foreach(SList *list, void (*op) (void *)) {
  * if the SList is empty, or CC_ERR_ALLOC if the memory allocation for the
  * new SList failed.
  */
-enum cc_stat slist_filter(SList *list, bool(*pred) (const void*), SList **out) {
+enum cc_stat slist_filter(SList *list, bool(*pred) (const void*), SList **out)
+{
 	if (slist_size(list) == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -1036,8 +1110,10 @@ enum cc_stat slist_filter(SList *list, bool(*pred) (const void*), SList **out) {
 		return CC_ERR_ALLOC;
 
 	SNode *curr = list->head;
-	while (curr) {
-		if (pred(curr->data)) {
+	while (curr)
+	{
+		if (pred(curr->data))
+		{
 			slist_add(filtered, curr->data);
 		}
 
@@ -1059,19 +1135,23 @@ enum cc_stat slist_filter(SList *list, bool(*pred) (const void*), SList **out) {
  * @return CC_OK if the Slist was filtered successfully, or CC_ERR_OUT_OF_RANGE
  * if the Slist is empty.
  */
-enum cc_stat slist_filter_mut(SList *list, bool(*pred) (const void*)) {
+enum cc_stat slist_filter_mut(SList *list, bool(*pred) (const void*))
+{
 	if (slist_size(list) == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
 	SNode *curr = list->head;
 	SNode *next = NULL, *prev = NULL;
 
-	while (curr) {
+	while (curr)
+	{
 		next = curr->next;
 
-		if (!pred(curr->data)) {
+		if (!pred(curr->data))
+		{
 			unlink(list, curr, prev);
-		} else {
+		} else
+		{
 			prev = curr;
 		}
 		curr = next;
@@ -1086,7 +1166,8 @@ enum cc_stat slist_filter_mut(SList *list, bool(*pred) (const void*)) {
  * @param[in] iter the iterator that is being initialized
  * @param[in] list SList to iterate over
  */
-void slist_iter_init(SListIter *iter, SList *list) {
+void slist_iter_init(SListIter *iter, SList *list)
+{
 	iter->index = 0;
 	iter->list = list;
 	iter->current = NULL;
@@ -1109,7 +1190,8 @@ void slist_iter_init(SListIter *iter, SList *list) {
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND
  */
-enum cc_stat slist_iter_remove(SListIter *iter, void **out) {
+enum cc_stat slist_iter_remove(SListIter *iter, void **out)
+{
 	if (!iter->current)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1137,7 +1219,8 @@ enum cc_stat slist_iter_remove(SListIter *iter, void **out) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC
  * if the memory allocation for the new element failed.
  */
-enum cc_stat slist_iter_add(SListIter *iter, void *element) {
+enum cc_stat slist_iter_add(SListIter *iter, void *element)
+{
 	SNode *new_node = iter->list->mem_calloc(1, sizeof (SNode));
 
 	if (!new_node)
@@ -1172,7 +1255,8 @@ enum cc_stat slist_iter_add(SListIter *iter, void *element) {
  * @return CC_OK if the element was replaced successfully, or
  * CC_ERR_VALUE_NOT_FOUND
  */
-enum cc_stat slist_iter_replace(SListIter *iter, void *element, void **out) {
+enum cc_stat slist_iter_replace(SListIter *iter, void *element, void **out)
+{
 	if (!iter->current)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1195,7 +1279,8 @@ enum cc_stat slist_iter_replace(SListIter *iter, void *element, void **out) {
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the list has been reached.
  */
-enum cc_stat slist_iter_next(SListIter *iter, void **out) {
+enum cc_stat slist_iter_next(SListIter *iter, void **out)
+{
 	if (!iter->next)
 		return CC_ITER_END;
 
@@ -1221,7 +1306,8 @@ enum cc_stat slist_iter_next(SListIter *iter, void **out) {
  *
  * @return the index
  */
-size_t slist_iter_index(SListIter *iter) {
+size_t slist_iter_index(SListIter *iter)
+{
 	return iter->index - 1;
 }
 
@@ -1232,7 +1318,8 @@ size_t slist_iter_index(SListIter *iter) {
  * @param[in] l1   First SList
  * @param[in] l2   Second SList
  */
-void slist_zip_iter_init(SListZipIter *iter, SList *l1, SList *l2) {
+void slist_zip_iter_init(SListZipIter *iter, SList *l1, SList *l2)
+{
 	iter->index = 0;
 	iter->l1 = l1;
 	iter->l2 = l2;
@@ -1254,7 +1341,8 @@ void slist_zip_iter_init(SListZipIter *iter, SList *l1, SList *l2) {
  * @return CC_OK if a next element pair is returned, or CC_ITER_END if the end of one
  * of the lists has been reached.
  */
-enum cc_stat slist_zip_iter_next(SListZipIter *iter, void **out1, void **out2) {
+enum cc_stat slist_zip_iter_next(SListZipIter *iter, void **out1, void **out2)
+{
 	if (!iter->l1_next || !iter->l2_next)
 		return CC_ITER_END;
 
@@ -1296,7 +1384,8 @@ enum cc_stat slist_zip_iter_next(SListZipIter *iter, void **out1, void **out2) {
  * @return CC_OK if the element pair was successfully added to the slists, or
  * CC_ERR_ALLOC if the memory allocation for the new elements failed.
  */
-enum cc_stat slist_zip_iter_add(SListZipIter *iter, void *e1, void *e2) {
+enum cc_stat slist_zip_iter_add(SListZipIter *iter, void *e1, void *e2)
+{
 	SNode *new_node1 = iter->l1->mem_calloc(1, sizeof (SNode));
 
 	if (!new_node1)
@@ -1304,7 +1393,8 @@ enum cc_stat slist_zip_iter_add(SListZipIter *iter, void *e1, void *e2) {
 
 	SNode *new_node2 = iter->l2->mem_calloc(1, sizeof (SNode));
 
-	if (!new_node2) {
+	if (!new_node2)
+	{
 		iter->l1->mem_free(new_node1);
 		return CC_ERR_ALLOC;
 	}
@@ -1344,7 +1434,8 @@ enum cc_stat slist_zip_iter_add(SListZipIter *iter, void *e1, void *e2) {
  *
  * @return CC_OK of the element was successfully removed, or CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat slist_zip_iter_remove(SListZipIter *iter, void **out1, void **out2) {
+enum cc_stat slist_zip_iter_remove(SListZipIter *iter, void **out1, void **out2)
+{
 	if (!iter->l1_current || !iter->l2_current)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1380,7 +1471,8 @@ enum cc_stat slist_zip_iter_remove(SListZipIter *iter, void **out1, void **out2)
  *
  * @return CC_OK of the element was successfully replaced, or CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat slist_zip_iter_replace(SListZipIter *iter, void *e1, void *e2, void **out1, void **out2) {
+enum cc_stat slist_zip_iter_replace(SListZipIter *iter, void *e1, void *e2, void **out1, void **out2)
+{
 	if (!iter->l1_current || !iter->l2_current)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1406,7 +1498,8 @@ enum cc_stat slist_zip_iter_replace(SListZipIter *iter, void *e1, void *e2, void
  *
  * @return current iterator index
  */
-size_t slist_zip_iter_index(SListZipIter *iter) {
+size_t slist_zip_iter_index(SListZipIter *iter)
+{
 	return iter->index - 1;
 }
 
@@ -1420,7 +1513,8 @@ size_t slist_zip_iter_index(SListZipIter *iter) {
  *
  * @return the data that was at this node
  */
-static void *unlink(SList *list, SNode *node, SNode *prev) {
+static void *unlink(SList *list, SNode *node, SNode *prev)
+{
 	void *data = node->data;
 
 	if (prev)
@@ -1446,13 +1540,15 @@ static void *unlink(SList *list, SNode *node, SNode *prev) {
  *
  * @return false if the list is already y empty, otherwise returns true
  */
-static bool unlink_all(SList *list, bool freed) {
+static bool unlink_all(SList *list, bool freed)
+{
 	if (list->size == 0)
 		return false;
 
 	SNode *n = list->head;
 
-	while (n) {
+	while (n)
+	{
 		SNode *tmp = n->next;
 
 		if (freed)
@@ -1479,7 +1575,8 @@ static bool unlink_all(SList *list, bool freed) {
  * was out of range.
  */
 static enum cc_stat
-get_node_at(SList *list, size_t index, SNode **node, SNode **prev) {
+get_node_at(SList *list, size_t index, SNode **node, SNode **prev)
+{
 	if (index >= list->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -1487,7 +1584,8 @@ get_node_at(SList *list, size_t index, SNode **node, SNode **prev) {
 	*prev = NULL;
 
 	size_t i;
-	for (i = 0; i < index; i++) {
+	for (i = 0; i < index; i++)
+	{
 		*prev = *node;
 		*node = (*node)->next;
 	}
@@ -1508,11 +1606,13 @@ get_node_at(SList *list, size_t index, SNode **node, SNode **prev) {
  * @return CC_OK if the node was found, or CC_ERR_VALUE_NOT_FOUND if not.
  */
 static enum cc_stat
-get_node(SList *list, void *element, SNode **node, SNode **prev) {
+get_node(SList *list, void *element, SNode **node, SNode **prev)
+{
 	*node = list->head;
 	*prev = NULL;
 
-	while (*node) {
+	while (*node)
+	{
 		if ((*node)->data == element)
 			return CC_OK;
 

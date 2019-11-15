@@ -72,7 +72,8 @@ int MemoryCommand_RESET(uint8_t MediaType, ParameterList_t *TempParam,
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-void InitCfgMem(void) {
+void InitCfgMem(void)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	config_reg[REG_Led_Ch_T1] = 1;
@@ -259,44 +260,52 @@ void InitCfgMem(void) {
 
 	int i;
 	config_reg[REG_CRC] = 0;
-	for (i = 0; i <= REG_SHOW_BFR_TARG; i++) {
+	for (i = 0; i <= REG_SHOW_BFR_TARG; i++)
+	{
 		config_reg[REG_CRC] ^= (config_reg[i] ^ crc_table[i]);
 	}
 	return;
 }
 
-inline void WriteMem(uint32_t _adr, uint32_t _val) {
+inline void WriteMem(uint32_t _adr, uint32_t _val)
+{
 	//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 	//            __LINE__, __FILE__, __func__);
 	//    DBG_LOG_TRACE("Address: %d (0x%02X); Value: %d (0x%08X).\n",
 	//            _adr, _adr, _val, _val);
-	if (_adr < CFG_SIZE) {
+	if (_adr < CFG_SIZE)
+	{
 		if (_adr <= REG_SHOW_BFR_TARG)
 			config_reg[REG_CRC] ^= (config_reg[_adr] ^ crc_table[_adr]);
 		config_reg[_adr] = _val;
 		if (_adr <= REG_SHOW_BFR_TARG)
 			config_reg[REG_CRC] ^= (_val ^ crc_table[_adr]);
-	} else {
+	} else
+	{
 		DBG_LOG_WARNING("Memory address greater than CFG.\n");
 	}
 	return;
 }
 
-inline uint32_t ReadMem(uint32_t _adr) {
+inline uint32_t ReadMem(uint32_t _adr)
+{
 	//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 	//            __LINE__, __FILE__, __func__);
-	if (_adr < CFG_SIZE) {
+	if (_adr < CFG_SIZE)
+	{
 		//        DBG_LOG_TRACE("%s: Address: %d (0x%02X); Value: %d (0x%08X).\n",
 		//                __func__, _adr, _adr, config_reg[_adr], config_reg[_adr]);
 		return config_reg[_adr];
-	} else {
+	} else
+	{
 		DBG_LOG_WARNING("Memory address greater than CFG.\n");
 	}
 	return 0;
 }
 
 inline int MemoryCommand_RESET(uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	InitCfgMem();
@@ -304,7 +313,8 @@ inline int MemoryCommand_RESET(uint8_t MediaType, ParameterList_t *TempParam,
 }
 
 inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
@@ -316,7 +326,8 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
 			__func__,
 			(unsigned int) TempParam,
 			TempParam->NumberofParameters);
-	if ((TempParam) && (TempParam->NumberofParameters > 0)) {
+	if ((TempParam) && (TempParam->NumberofParameters > 0))
+	{
 		ret_val = get_parameter(TempParam, "address", (uint32_t *) & Address);
 		ret_val2 = get_parameter(TempParam, "value", (uint32_t *) & Value);
 		if (ret_val2 >= 0)
@@ -324,10 +335,12 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
 		if (MediaType == Media_FREE)
 			MediaType = Media_XML;
 		DBG_LOG_TRACE("%s: %08X = %d\n", __func__, Address, Value);
-		if (ret_val >= 0) {
+		if (ret_val >= 0)
+		{
 			ret_val = 0;
 			DBG_LOG_TRACE("%s: Gen res %d\n", __func__, MediaType);
-			switch (MediaType) {
+			switch (MediaType)
+			{
 				case Media_XML:
 					current_coap_mediatype = Media_XML;
 					(*data_size) = snprintf(
@@ -362,7 +375,8 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
 					break;
 			}
 		}
-	} else {
+	} else
+	{
 		current_coap_mediatype = Media_XML;
 		ret_val = INVALID_PARAMETERS_ERROR;
 		(*data_size) = snprintf(
@@ -374,7 +388,8 @@ inline int MemoryCommand_GET(uint8_t MediaType, ParameterList_t *TempParam,
 }
 
 inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s).\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val1 = 0;
@@ -382,7 +397,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 	int Address = -1;
 	int Value = -1;
 
-	if ((TempParam) && (TempParam->NumberofParameters > 0)) {
+	if ((TempParam) && (TempParam->NumberofParameters > 0))
+	{
 		ret_val1 = get_parameter(TempParam, "address", (uint32_t *) & Address);
 		ret_val2 = get_parameter(TempParam, "value", (uint32_t *) & Value);
 		if (ret_val2 >= 0)
@@ -390,7 +406,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 		if (MediaType == Media_FREE)
 			MediaType = Media_XML;
 		data[*data_size - 1] = 0;
-		switch (MediaType) {
+		switch (MediaType)
+		{
 			case Media_XML:
 				current_coap_mediatype = Media_XML;
 				ret_val2 = sscanf(
@@ -401,7 +418,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 						"</MEMORY>\r\n\r",
 						&Address,
 						&Value);
-				if (ret_val2 > 1) {
+				if (ret_val2 > 1)
+				{
 					ret_val2 = INVALID_PARAMETERS_ERROR;
 					return ret_val2;
 				}
@@ -410,7 +428,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 				ret_val1 = get_parameter(TempParam,
 						"address",
 						(uint32_t *) & Address);
-				if (ret_val2 > 1) {
+				if (ret_val2 > 1)
+				{
 					ret_val2 = INVALID_PARAMETERS_ERROR;
 					return ret_val2;
 				}
@@ -418,7 +437,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 						(char *) data,
 						"%d",
 						&Value);
-				if (ret_val2 > 0) {
+				if (ret_val2 > 0)
+				{
 					ret_val2 = INVALID_PARAMETERS_ERROR;
 					return ret_val2;
 				}
@@ -430,7 +450,8 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 				break;
 		}
 		WriteMem(Address, Value);
-	} else {
+	} else
+	{
 		current_coap_mediatype = Media_XML;
 		ret_val1 = INVALID_PARAMETERS_ERROR;
 	}
@@ -438,11 +459,13 @@ inline int MemoryCommand_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 }
 
 int MemoryCommand(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s).\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
-	switch (Method) {
+	switch (Method)
+	{
 		case Method_RESET:
 			ret_val = MemoryCommand_RESET(
 					MediaType, TempParam, data, data_size, buffer_size);

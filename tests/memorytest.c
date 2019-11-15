@@ -26,7 +26,8 @@ ParameterList_t params;
  * Simple C Test Suite
  */
 
-void test1() {
+void test1()
+{
 	printf("memorytest test 1\n");
 	size = 1000;
 	MemoryCommand(Method_GET, Media_XML, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -35,7 +36,8 @@ void test1() {
 	MemoryCommand(Method_PUT, Media_XML, &params, buffer_test, (uint32_t *) & size, 1000);
 }
 
-void test2() {
+void test2()
+{
 	printf("memorytest test 2\n");
 	size = 1000;
 	MemoryCommand(Method_GET, Media_TEXT, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -45,7 +47,8 @@ void test2() {
 	MemoryCommand(Method_PUT, Media_TEXT, &params, buffer_test, (uint32_t *) & size, 1000);
 }
 
-void test3() {
+void test3()
+{
 	printf("memorytest test 3\n");
 	size = 1000;
 	MemoryCommand(Method_GET, Media_BYTE, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -56,7 +59,8 @@ void test3() {
 	printf("Message size: %d\n", size);
 }
 
-void test4() {
+void test4()
+{
 	printf("memorytest test 4\n");
 	size = 1000;
 	MemoryCommand(Method_GET, Media_JSON, &params, buffer_test, (uint32_t *) & size, 1000);
@@ -64,7 +68,8 @@ void test4() {
 	printf("Message size: %d\n", size);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	printf("%%SUITE_STARTING%% memorytest\n");
 	printf("%%SUITE_STARTED%%\n");
 

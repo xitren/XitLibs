@@ -4,7 +4,8 @@
 #include "circular_functions.h"
 #include "circular_printf.h"
 
-char *my_put_x(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_x(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	unsigned long long int d;
 	size_t max;
 
@@ -20,7 +21,8 @@ char *my_put_x(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 		put_prefix_x_to_str(buff, &max);
 	if ((fl->min_width_par == 1) && (fl->flags & (F_ZERO))
 			&& (fl->precision_par != 1)
-			&& !(fl->flags & (F_MINUS))) {
+			&& !(fl->flags & (F_MINUS)))
+	{
 		put_str_align_zeros(buff, 0, &max, fl->min_width);
 		if ((fl->flags & F_SHARP) && (d != 0))
 			put_prefix_x_mod_to_str(buff, &max);
@@ -28,7 +30,8 @@ char *my_put_x(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 	return (put_str_align(buff, &max, fl));
 }
 
-char *my_put_xx(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_xx(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	unsigned long long int d;
 	size_t max;
 
@@ -44,7 +47,8 @@ char *my_put_xx(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 		put_prefix_xx_to_str(buff, &max);
 	if ((fl->min_width_par == 1) && (fl->flags & (F_ZERO))
 			&& (fl->precision_par != 1)
-			&& !(fl->flags & (F_MINUS))) {
+			&& !(fl->flags & (F_MINUS)))
+	{
 		put_str_align_zeros(buff, 0, &max, fl->min_width);
 		if ((fl->flags & F_SHARP) && (d != 0))
 			put_prefix_xx_mod_to_str(buff, &max);

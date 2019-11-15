@@ -4,7 +4,8 @@
 #include "circular_printf.h"
 #include "circular_functions.h"
 
-char *put_str_align(char *buff, size_t *max, t_circular_printf_flags *fl) {
+char *put_str_align(char *buff, size_t *max, t_circular_printf_flags *fl)
+{
 	char *p;
 
 	if (fl->flags & F_MINUS)
@@ -15,19 +16,23 @@ char *put_str_align(char *buff, size_t *max, t_circular_printf_flags *fl) {
 }
 
 char *put_str_space_before(char *buffer,
-		size_t *max, char f) {
-	if (f && ((*max) > 0)) {
+		size_t *max, char f)
+{
+	if (f && ((*max) > 0))
+	{
 		buffer[--(*max)] = ' ';
 	}
 	return (buffer + (*max));
 }
 
 char *put_str_align_zeros(char *buffer, size_t alr,
-		size_t *max, size_t prec) {
+		size_t *max, size_t prec)
+{
 	char sign;
 
 	sign = buffer[(*max)];
-	if (alr == 0) {
+	if (alr == 0)
+	{
 		if ((sign == '-' || sign == '+'))
 			alr = strlen(buffer + (*max));
 		else
@@ -47,7 +52,8 @@ char *put_str_align_zeros(char *buffer, size_t alr,
 }
 
 char *put_str_align_right(char *buffer, size_t alr,
-		size_t *max, size_t min_width) {
+		size_t *max, size_t min_width)
+{
 	if (alr == 0)
 		alr = strlen(buffer + (*max));
 	if (min_width > alr)
@@ -64,7 +70,8 @@ char *put_str_align_right(char *buffer, size_t alr,
 }
 
 char *put_str_align_left(char *buffer, size_t alr,
-		size_t *max, size_t min_width) {
+		size_t *max, size_t min_width)
+{
 	if (alr == 0)
 		alr = strlen(buffer + (*max));
 	if (min_width > alr)

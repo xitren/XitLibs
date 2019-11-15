@@ -16,15 +16,18 @@ extern uint32_t StreamGetObserverIp();
 extern uint32_t StreamGetObserverPort();
 extern coap_packet_t* StreamGetObserverPacket();
 
-void timer1sHandler(CSMACDController_t *controller) {
+void timer1sHandler(CSMACDController_t *controller)
+{
 	csma_clock_cycle(controller);
 }
 
-void timerSampleFreqHandler(void) {
+void timerSampleFreqHandler(void)
+{
 	AddSample();
 }
 
-void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size) {
+void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	InitCfgMem();
@@ -84,8 +87,10 @@ void InitHandler(const uint32_t sample_frequency, const uint32_t sample_size) {
 			);
 }
 
-uint8_t GetCoapFromMediaType() {
-	switch (current_coap_mediatype) {
+uint8_t GetCoapFromMediaType()
+{
+	switch (current_coap_mediatype)
+	{
 		case Media_TEXT:
 			return COAP_CONTENTTYPE_TEXT_PLAIN;
 		case Media_BYTE:
@@ -102,7 +107,8 @@ uint8_t GetCoapFromMediaType() {
 }
 
 coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen,
-		uint32_t ipi, uint32_t port) {
+		uint32_t ipi, uint32_t port)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int rc, i;
@@ -123,9 +129,11 @@ coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen,
 	/*==3= Build response content ========================================*/
 	media_option = GetCoapFromMediaType();
 	DBG_LOG_TRACE("coap_handle_req return code rc == %d\n", rc);
-	if (rc == 0) {
+	if (rc == 0)
+	{
 		DBG_LOG_TRACE("header rc == %d\n", inpkt.hdr.code);
-		if ((inpkt.hdr.code == COAP_METHOD_GET)) {
+		if ((inpkt.hdr.code == COAP_METHOD_GET))
+		{
 			DBG_LOG_TRACE("COAP_RSPCODE_CONTENT\n");
 			coap_make_response(
 					&scratch,
@@ -139,7 +147,8 @@ coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen,
 					inpkt.tok_len,
 					COAP_RSPCODE_CONTENT,
 					media_option);
-		} else {
+		} else
+		{
 			DBG_LOG_TRACE("COAP_RSPCODE_CHANGED\n");
 			coap_make_response(
 					&scratch,
@@ -154,9 +163,11 @@ coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen,
 					COAP_RSPCODE_CHANGED,
 					media_option);
 		}
-	} else {
+	} else
+	{
 		scratch.len = HANDLER_BUFFER_LENGTH;
-		switch (rc) {
+		switch (rc)
+		{
 			case INVALID_PARAMETERS_ERROR:
 				DBG_LOG_TRACE("Answer INVALID_PARAMETERS_ERROR\n");
 				coap_make_response(
@@ -209,14 +220,16 @@ coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen,
 	message.len = HANDLER_BUFFER_LENGTH;
 	rc = coap_build(message.p, &message.len, &outpkt, NULL, NULL);
 	/*==5= Transmitt package =============================================*/
-	if (rc == 0) {
+	if (rc == 0)
+	{
 		return &message;
 	}
 	return (NULL);
 }
 
 coap_rw_buffer_t *MessageHandlerTextIP(const uint8_t *buf, size_t buflen,
-		char *ip, uint32_t port) {
+		char *ip, uint32_t port)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int rc;
@@ -233,9 +246,11 @@ coap_rw_buffer_t *MessageHandlerTextIP(const uint8_t *buf, size_t buflen,
 	/*==3= Build response content ========================================*/
 	media_option = GetCoapFromMediaType();
 	DBG_LOG_TRACE("coap_handle_req return code rc == %d\n", rc);
-	if (rc == 0) {
+	if (rc == 0)
+	{
 		DBG_LOG_TRACE("header2 rc == %d\n", inpkt.hdr.code);
-		if ((inpkt.hdr.code == COAP_METHOD_GET)) {
+		if ((inpkt.hdr.code == COAP_METHOD_GET))
+		{
 			DBG_LOG_TRACE("COAP_RSPCODE_CONTENT\n");
 			coap_make_response(
 					&scratch,
@@ -249,7 +264,8 @@ coap_rw_buffer_t *MessageHandlerTextIP(const uint8_t *buf, size_t buflen,
 					inpkt.tok_len,
 					COAP_RSPCODE_CONTENT,
 					media_option);
-		} else {
+		} else
+		{
 			DBG_LOG_TRACE("COAP_RSPCODE_CHANGED\n");
 			coap_make_response(
 					&scratch,
@@ -264,9 +280,11 @@ coap_rw_buffer_t *MessageHandlerTextIP(const uint8_t *buf, size_t buflen,
 					COAP_RSPCODE_CHANGED,
 					media_option);
 		}
-	} else {
+	} else
+	{
 		scratch.len = HANDLER_BUFFER_LENGTH;
-		switch (rc) {
+		switch (rc)
+		{
 			case INVALID_PARAMETERS_ERROR:
 				DBG_LOG_TRACE("Answer INVALID_PARAMETERS_ERROR\n");
 				coap_make_response(
@@ -319,21 +337,25 @@ coap_rw_buffer_t *MessageHandlerTextIP(const uint8_t *buf, size_t buflen,
 	message.len = HANDLER_BUFFER_LENGTH;
 	rc = coap_build(message.p, &message.len, &outpkt, NULL, NULL);
 	/*==5= Transmitt package =============================================*/
-	if (rc == 0) {
+	if (rc == 0)
+	{
 		return &message;
 	}
 	return (NULL);
 }
 
-coap_observer_buffer_t *StreamObserverHandler() {
+coap_observer_buffer_t *StreamObserverHandler()
+{
 	int rc;
 	static uint16_t nn;
 	uint8_t n_b[2];
 	coap_option_t opt_part;
-	if (!IsObserved()) {
+	if (!IsObserved())
+	{
 		return 0;
 	}
-	if ((uint32_t) GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize)) {
+	if ((uint32_t) GetStreamDataReadyCnt() >= ReadMem(REG_EEG_PocketSize))
+	{
 		nn++;
 		opt_part.num = COAP_OPTION_BLOCK2;
 		n_b[1] = nn & 0xFF;
@@ -351,7 +373,8 @@ coap_observer_buffer_t *StreamObserverHandler() {
 				HANDLER_BUFFER_LENGTH,
 				ReadMem(REG_EEG_PocketSize)
 				);
-		if (i >= 0) {
+		if (i >= 0)
+		{
 			uint8_t media_option = GetCoapFromMediaType();
 			coap_make_response(
 					&scratch,
@@ -375,7 +398,8 @@ coap_observer_buffer_t *StreamObserverHandler() {
 					observer_message.p, &observer_message.len,
 					&outpkt, NULL, NULL
 					);
-			if (rc == 0) {
+			if (rc == 0)
+			{
 				observer_message.ip = StreamGetObserverIp();
 				observer_message.port = StreamGetObserverPort();
 				return &observer_message;

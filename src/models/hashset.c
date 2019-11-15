@@ -21,7 +21,8 @@
  */
 #include "hashset.h"
 
-struct hashset_s {
+struct hashset_s
+{
 	HashTable *table;
 	int *dummy;
 
@@ -35,7 +36,8 @@ struct hashset_s {
  *
  * @param[in, out] conf the configuration struct that is being initialized
  */
-void hashset_conf_init(HashSetConf *conf) {
+void hashset_conf_init(HashSetConf *conf)
+{
 	hashtable_conf_init(conf);
 }
 
@@ -47,7 +49,8 @@ void hashset_conf_init(HashSetConf *conf) {
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the memory
  * allocation for the new HashSet failed.
  */
-enum cc_stat hashset_new(HashSet **hs) {
+enum cc_stat hashset_new(HashSet **hs)
+{
 	HashSetConf hsc;
 	hashset_conf_init(&hsc);
 	return hashset_new_conf(&hsc, hs);
@@ -66,7 +69,8 @@ enum cc_stat hashset_new(HashSet **hs) {
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the memory
  * allocation for the new HashSet structure failed.
  */
-enum cc_stat hashset_new_conf(HashSetConf const * const conf, HashSet **hs) {
+enum cc_stat hashset_new_conf(HashSetConf const * const conf, HashSet **hs)
+{
 	HashSet *set = conf->mem_calloc(1, sizeof (HashSet));
 
 	if (!set)
@@ -75,7 +79,8 @@ enum cc_stat hashset_new_conf(HashSetConf const * const conf, HashSet **hs) {
 	HashTable *table;
 	enum cc_stat stat = hashtable_new_conf(conf, &table);
 
-	if (stat != CC_OK) {
+	if (stat != CC_OK)
+	{
 		conf->mem_free(set);
 		return stat;
 	}
@@ -98,7 +103,8 @@ enum cc_stat hashset_new_conf(HashSetConf const * const conf, HashSet **hs) {
  *
  * @param[in] table HashSet to be destroyed.
  */
-void hashset_destroy(HashSet *set) {
+void hashset_destroy(HashSet *set)
+{
 	hashtable_destroy(set->table);
 	set->mem_free(set);
 }
@@ -112,7 +118,8 @@ void hashset_destroy(HashSet *set) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC
  * if the memory allocation failed.
  */
-enum cc_stat hashset_add(HashSet *set, void *element) {
+enum cc_stat hashset_add(HashSet *set, void *element)
+{
 	return hashtable_add(set->table, element, set->dummy);
 }
 
@@ -128,7 +135,8 @@ enum cc_stat hashset_add(HashSet *set, void *element) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_VALUE_NOT_FOUND
  * if the value was not found.
  */
-enum cc_stat hashset_remove(HashSet *set, void *element, void **out) {
+enum cc_stat hashset_remove(HashSet *set, void *element, void **out)
+{
 	return hashtable_remove(set->table, element, out);
 }
 
@@ -137,7 +145,8 @@ enum cc_stat hashset_remove(HashSet *set, void *element, void **out) {
  *
  * @param set the set from which all elements are being removed
  */
-void hashset_remove_all(HashSet *set) {
+void hashset_remove_all(HashSet *set)
+{
 	hashtable_remove_all(set->table);
 }
 
@@ -149,7 +158,8 @@ void hashset_remove_all(HashSet *set) {
  *
  * @return true if the specified element is an element of the set
  */
-bool hashset_contains(HashSet *set, void *element) {
+bool hashset_contains(HashSet *set, void *element)
+{
 	return hashtable_contains_key(set->table, element);
 }
 
@@ -160,7 +170,8 @@ bool hashset_contains(HashSet *set, void *element) {
  *
  * @return the size of the set
  */
-size_t hashset_size(HashSet *set) {
+size_t hashset_size(HashSet *set)
+{
 	return hashtable_size(set->table);
 }
 
@@ -171,7 +182,8 @@ size_t hashset_size(HashSet *set) {
  *
  * @return the capacity of the set
  */
-size_t hashset_capacity(HashSet *set) {
+size_t hashset_capacity(HashSet *set)
+{
 	return hashtable_capacity(set->table);
 }
 
@@ -182,7 +194,8 @@ size_t hashset_capacity(HashSet *set) {
  * @param[in] fn the operation function that is invoked on each element of the
  *               set
  */
-void hashset_foreach(HashSet *set, void (*fn) (const void *e)) {
+void hashset_foreach(HashSet *set, void (*fn) (const void *e))
+{
 	hashtable_foreach_key(set->table, fn);
 }
 
@@ -192,7 +205,8 @@ void hashset_foreach(HashSet *set, void (*fn) (const void *e)) {
  * @param[in] iter the iterator that is being initialized
  * @param[in] set the set on which this iterator will operate
  */
-void hashset_iter_init(HashSetIter *iter, HashSet *set) {
+void hashset_iter_init(HashSetIter *iter, HashSet *set)
+{
 	hashtable_iter_init(&(iter->iter), set->table);
 }
 
@@ -206,7 +220,8 @@ void hashset_iter_init(HashSetIter *iter, HashSet *set) {
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the HashSet has been reached.
  */
-enum cc_stat hashset_iter_next(HashSetIter *iter, void **out) {
+enum cc_stat hashset_iter_next(HashSetIter *iter, void **out)
+{
 	TableEntry *entry;
 	enum cc_stat status = hashtable_iter_next(&(iter->iter), &entry);
 
@@ -234,6 +249,7 @@ enum cc_stat hashset_iter_next(HashSetIter *iter, void **out) {
  * @return CC_OK if the entry was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat hashset_iter_remove(HashSetIter *iter, void **out) {
+enum cc_stat hashset_iter_remove(HashSetIter *iter, void **out)
+{
 	return hashtable_iter_remove(&(iter->iter), out);
 }

@@ -5,7 +5,8 @@
 #include "circular_printf.h"
 #include <stdio.h>
 
-static void *memalloc(size_t size) {
+static void *memalloc(size_t size)
+{
 	void *ptr;
 
 	if (size == 0)
@@ -17,20 +18,23 @@ static void *memalloc(size_t size) {
 	return (ptr);
 }
 
-t_circular_printf_list *circular_lstnew_non_cpy(void const *content, size_t content_size) {
+t_circular_printf_list *circular_lstnew_non_cpy(void const *content, size_t content_size)
+{
 	t_circular_printf_list *new;
 
 	new = (t_circular_printf_list*) memalloc(sizeof (t_circular_printf_list));
 	if (!new)
 		return (0);
-	if (content) {
+	if (content)
+	{
 		new->content = (void *) content;
 		new->content_size = content_size;
 	}
 	return (new);
 }
 
-void circular_lstremove(t_circular_printf_list **alst, t_circular_printf_list *item) {
+void circular_lstremove(t_circular_printf_list **alst, t_circular_printf_list *item)
+{
 	t_circular_printf_list *new;
 	t_circular_printf_list *top;
 
@@ -40,7 +44,8 @@ void circular_lstremove(t_circular_printf_list **alst, t_circular_printf_list *i
 		return;
 	new = 0;
 	top = *alst;
-	while (top) {
+	while (top)
+	{
 		if (top == item)
 			break;
 		new = top;
@@ -53,15 +58,18 @@ void circular_lstremove(t_circular_printf_list **alst, t_circular_printf_list *i
 	free(top);
 }
 
-t_circular_printf_list *circular_lstnew(void const *content, size_t content_size) {
+t_circular_printf_list *circular_lstnew(void const *content, size_t content_size)
+{
 	t_circular_printf_list *new;
 
 	new = (t_circular_printf_list*) memalloc(sizeof (t_circular_printf_list));
 	if (!new)
 		return (0);
-	if (content) {
+	if (content)
+	{
 		new->content = memalloc(content_size);
-		if (!(new->content)) {
+		if (!(new->content))
+		{
 			free(new);
 			return (0);
 		}
@@ -71,12 +79,14 @@ t_circular_printf_list *circular_lstnew(void const *content, size_t content_size
 	return (new);
 }
 
-void circular_lstfree(t_circular_printf_list **alst) {
+void circular_lstfree(t_circular_printf_list **alst)
+{
 	t_circular_printf_list *tmplst;
 
 	if (!alst)
 		return;
-	while (*alst) {
+	while (*alst)
+	{
 		tmplst = (*alst)->next;
 		free(*alst);
 		*alst = tmplst;
@@ -84,25 +94,29 @@ void circular_lstfree(t_circular_printf_list **alst) {
 	*alst = 0;
 }
 
-void circular_lstend(t_circular_printf_list **alst, t_circular_printf_list *new) {
+void circular_lstend(t_circular_printf_list **alst, t_circular_printf_list *new)
+{
 	t_circular_printf_list *pre;
 	t_circular_printf_list *lst;
 
 	if (!new)
 		return;
-	if (!*alst) {
+	if (!*alst)
+	{
 		(*alst) = new;
 		return;
 	}
 	lst = (*alst);
-	while (lst) {
+	while (lst)
+	{
 		pre = lst;
 		lst = lst->next;
 	}
 	pre->next = new;
 }
 
-void circular_lstdelone(t_circular_printf_list **alst, void (*del)(void *, size_t)) {
+void circular_lstdelone(t_circular_printf_list **alst, void (*del)(void *, size_t))
+{
 	if (!alst || !del)
 		return;
 	if (!(*alst))
@@ -112,12 +126,14 @@ void circular_lstdelone(t_circular_printf_list **alst, void (*del)(void *, size_
 	*alst = 0;
 }
 
-void circular_lstdel(t_circular_printf_list **alst, void (*del)(void*, size_t)) {
+void circular_lstdel(t_circular_printf_list **alst, void (*del)(void*, size_t))
+{
 	t_circular_printf_list *tmplst;
 
 	if (!alst || !del)
 		return;
-	while (*alst) {
+	while (*alst)
+	{
 		tmplst = (*alst)->next;
 		del((*alst)->content, (*alst)->content_size);
 		free(*alst);
@@ -126,20 +142,24 @@ void circular_lstdel(t_circular_printf_list **alst, void (*del)(void*, size_t)) 
 	*alst = NULL;
 }
 
-void circular_lstadd(t_circular_printf_list **alst, t_circular_printf_list *new) {
-	if (alst && new) {
+void circular_lstadd(t_circular_printf_list **alst, t_circular_printf_list *new)
+{
+	if (alst && new)
+	{
 		new->next = *alst;
 		*alst = new;
 	}
 }
 
-static unsigned long strnchr(const char *s, int c, size_t size) {
+static unsigned long strnchr(const char *s, int c, size_t size)
+{
 	unsigned long i;
 
 	i = 0;
 	if (!s)
 		return (0);
-	while (s[i] != 0 && size--) {
+	while (s[i] != 0 && size--)
+	{
 		if (s[i] == (unsigned char) c)
 			return (i);
 		i++;
@@ -147,14 +167,17 @@ static unsigned long strnchr(const char *s, int c, size_t size) {
 	return (0);
 }
 
-int circular_lstchr(t_circular_printf_list *lst, char ch, size_t *xy) {
+int circular_lstchr(t_circular_printf_list *lst, char ch, size_t *xy)
+{
 	size_t sr;
 	size_t r;
 
 	sr = 0;
-	while (lst) {
+	while (lst)
+	{
 		if ((r = strnchr(lst->content, ch, lst->content_size + 1))
-				|| (((char *) lst->content)[0] == '\n')) {
+				|| (((char *) lst->content)[0] == '\n'))
+		{
 			sr += r;
 			*xy = sr;
 			return (1);
@@ -166,7 +189,8 @@ int circular_lstchr(t_circular_printf_list *lst, char ch, size_t *xy) {
 	return (0);
 }
 
-void set_functions(t_ptrfunc g_tab[]) {
+void set_functions(t_ptrfunc g_tab[])
+{
 	g_tab['%'] = &my_put_perc;
 	g_tab['d'] = &my_put_d;
 	g_tab['i'] = &my_put_d;
@@ -180,7 +204,8 @@ void set_functions(t_ptrfunc g_tab[]) {
 	g_tab['p'] = &my_put_p;
 }
 
-long long get_signed_varg(va_list *valist, t_circular_printf_flags *fl) {
+long long get_signed_varg(va_list *valist, t_circular_printf_flags *fl)
+{
 	if ((fl->length & F_SHORT) && (fl->length & F_SHORT2))
 		return (long long) ((char) va_arg(*valist, int));
 	if ((fl->length & F_SHORT))
@@ -192,7 +217,8 @@ long long get_signed_varg(va_list *valist, t_circular_printf_flags *fl) {
 	return (long long) va_arg(*valist, int);
 }
 
-unsigned long long get_unsigned_varg(va_list *valist, t_circular_printf_flags *fl) {
+unsigned long long get_unsigned_varg(va_list *valist, t_circular_printf_flags *fl)
+{
 	if ((fl->length & F_SHORT) && (fl->length & F_SHORT2))
 		return (long long) ((unsigned char) va_arg(*valist, unsigned int));
 	if ((fl->length & F_SHORT))
@@ -204,13 +230,15 @@ unsigned long long get_unsigned_varg(va_list *valist, t_circular_printf_flags *f
 	return (long long) va_arg(*valist, unsigned int);
 }
 
-long double get_double_varg(va_list *valist, t_circular_printf_flags *fl) {
+long double get_double_varg(va_list *valist, t_circular_printf_flags *fl)
+{
 	if ((fl->length & F_UPCASE))
 		return (long double) va_arg(*valist, long double);
 	return (long double) va_arg(*valist, double);
 }
 
-char *my_put_un(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_un(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	size_t max;
 	char *p;
 
@@ -218,7 +246,8 @@ char *my_put_un(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 	buff[(max)--] = 0;
 	buff[(max)] = fl->parameter;
 	if ((fl->min_width_par == 1) && (fl->flags & (F_ZERO))
-			&& !(fl->flags & (F_MINUS))) {
+			&& !(fl->flags & (F_MINUS)))
+	{
 		p = put_str_align_zeros(buff, 0, &max, fl->min_width);
 	}
 	if (fl->flags & F_MINUS)

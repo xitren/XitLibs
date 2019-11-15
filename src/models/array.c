@@ -26,7 +26,8 @@
 #define DEFAULT_CAPACITY 8
 #define DEFAULT_EXPANSION_FACTOR 2
 
-struct array_s {
+struct array_s
+{
 	size_t size;
 	size_t capacity;
 	float exp_factor;
@@ -47,7 +48,8 @@ static enum cc_stat expand_capacity(Array *ar);
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the
  * memory allocation for the new Array structure failed.
  */
-enum cc_stat array_new(Array **out) {
+enum cc_stat array_new(Array **out)
+{
 	ArrayConf c;
 	array_conf_init(&c);
 	return array_new_conf(&c, out);
@@ -69,7 +71,8 @@ enum cc_stat array_new(Array **out) {
  * the above mentioned condition is not met, or CC_ERR_ALLOC if the memory
  * allocation for the new Array structure failed.
  */
-enum cc_stat array_new_conf(ArrayConf const * const conf, Array **out) {
+enum cc_stat array_new_conf(ArrayConf const * const conf, Array **out)
+{
 	float ex;
 
 	/* The expansion factor must be greater than one for the
@@ -91,7 +94,8 @@ enum cc_stat array_new_conf(ArrayConf const * const conf, Array **out) {
 
 	void **buff = conf->mem_alloc(conf->capacity * sizeof (void*));
 
-	if (!buff) {
+	if (!buff)
+	{
 		conf->mem_free(ar);
 		return CC_ERR_ALLOC;
 	}
@@ -112,7 +116,8 @@ enum cc_stat array_new_conf(ArrayConf const * const conf, Array **out) {
  *
  * @param[in, out] conf ArrayConf structure that is being initialized
  */
-void array_conf_init(ArrayConf *conf) {
+void array_conf_init(ArrayConf *conf)
+{
 	conf->exp_factor = DEFAULT_EXPANSION_FACTOR;
 	conf->capacity = DEFAULT_CAPACITY;
 	conf->mem_alloc = umm_malloc;
@@ -125,7 +130,8 @@ void array_conf_init(ArrayConf *conf) {
  *
  * @param[in] ar the array that is to be destroyed
  */
-void array_destroy(Array *ar) {
+void array_destroy(Array *ar)
+{
 	ar->mem_free(ar->buffer);
 	ar->mem_free(ar);
 }
@@ -139,7 +145,8 @@ void array_destroy(Array *ar) {
  *
  * @param[in] ar the array that is being destroyed
  */
-void array_destroy_free(Array *ar) {
+void array_destroy_free(Array *ar)
+{
 	size_t i;
 	for (i = 0; i < ar->size; i++)
 		ar->mem_free(ar->buffer[i]);
@@ -158,8 +165,10 @@ void array_destroy_free(Array *ar) {
  * memory allocation for the new element failed, or CC_ERR_MAX_CAPACITY if the
  * array is already at maximum capacity.
  */
-enum cc_stat array_add(Array *ar, void *element) {
-	if (ar->size >= ar->capacity) {
+enum cc_stat array_add(Array *ar, void *element)
+{
+	if (ar->size >= ar->capacity)
+	{
 		enum cc_stat status = expand_capacity(ar);
 		if (status != CC_OK)
 			return status;
@@ -187,14 +196,16 @@ enum cc_stat array_add(Array *ar, void *element) {
  * allocation for the new element failed, or CC_ERR_MAX_CAPACITY if the
  * array is already at maximum capacity.
  */
-enum cc_stat array_add_at(Array *ar, void *element, size_t index) {
+enum cc_stat array_add_at(Array *ar, void *element, size_t index)
+{
 	if (index == ar->size)
 		return array_add(ar, element);
 
 	if ((ar->size == 0 && index != 0) || index > (ar->size - 1))
 		return CC_ERR_OUT_OF_RANGE;
 
-	if (ar->size >= ar->capacity) {
+	if (ar->size >= ar->capacity)
+	{
 		enum cc_stat status = expand_capacity(ar);
 		if (status != CC_OK)
 			return status;
@@ -226,7 +237,8 @@ enum cc_stat array_add_at(Array *ar, void *element, size_t index) {
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE
  *         if the index was out of range.
  */
-enum cc_stat array_replace_at(Array *ar, void *element, size_t index, void **out) {
+enum cc_stat array_replace_at(Array *ar, void *element, size_t index, void **out)
+{
 	if (index >= ar->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -250,14 +262,16 @@ enum cc_stat array_replace_at(Array *ar, void *element, size_t index, void **out
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND if the element was not found.
  */
-enum cc_stat array_remove(Array *ar, void *element, void **out) {
+enum cc_stat array_remove(Array *ar, void *element, void **out)
+{
 	size_t index;
 	enum cc_stat status = array_index_of(ar, element, &index);
 
 	if (status == CC_ERR_OUT_OF_RANGE)
 		return CC_ERR_VALUE_NOT_FOUND;
 
-	if (index != ar->size - 1) {
+	if (index != ar->size - 1)
+	{
 		size_t block_size = (ar->size - index) * sizeof (void*);
 
 		memmove(&(ar->buffer[index]),
@@ -285,14 +299,16 @@ enum cc_stat array_remove(Array *ar, void *element, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_OUT_OF_RANGE
  * if the index was out of range.
  */
-enum cc_stat array_remove_at(Array *ar, size_t index, void **out) {
+enum cc_stat array_remove_at(Array *ar, size_t index, void **out)
+{
 	if (index >= ar->size)
 		return CC_ERR_OUT_OF_RANGE;
 
 	if (out)
 		*out = ar->buffer[index];
 
-	if (index != ar->size - 1) {
+	if (index != ar->size - 1)
+	{
 		size_t block_size = (ar->size - index) * sizeof (void*);
 
 		memmove(&(ar->buffer[index]),
@@ -315,7 +331,8 @@ enum cc_stat array_remove_at(Array *ar, size_t index, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_OUT_OF_RANGE
  * if the Array is already empty.
  */
-enum cc_stat array_remove_last(Array *ar, void **out) {
+enum cc_stat array_remove_last(Array *ar, void **out)
+{
 	return array_remove_at(ar, ar->size - 1, out);
 }
 
@@ -325,7 +342,8 @@ enum cc_stat array_remove_last(Array *ar, void **out) {
  *
  * @param[in] ar array from which all elements are to be removed
  */
-void array_remove_all(Array *ar) {
+void array_remove_all(Array *ar)
+{
 	ar->size = 0;
 }
 
@@ -335,7 +353,8 @@ void array_remove_all(Array *ar) {
  *
  * @param[in] ar array from which all elements are to be removed
  */
-void array_remove_all_free(Array *ar) {
+void array_remove_all_free(Array *ar)
+{
 	size_t i;
 	for (i = 0; i < ar->size; i++)
 		umm_free(ar->buffer[i]);
@@ -354,7 +373,8 @@ void array_remove_all_free(Array *ar) {
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the index
  * was out of range.
  */
-enum cc_stat array_get_at(Array *ar, size_t index, void **out) {
+enum cc_stat array_get_at(Array *ar, size_t index, void **out)
+{
 	if (index >= ar->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -372,7 +392,8 @@ enum cc_stat array_get_at(Array *ar, size_t index, void **out) {
  * @return CC_OK if the element was found, or CC_ERR_VALUE_NOT_FOUND if the
  * Array is empty.
  */
-enum cc_stat array_get_last(Array *ar, void **out) {
+enum cc_stat array_get_last(Array *ar, void **out)
+{
 	if (ar->size == 0)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -388,7 +409,8 @@ enum cc_stat array_get_last(Array *ar, void **out) {
  *
  * @return array's internal buffer.
  */
-const void * const* array_get_buffer(Array *ar) {
+const void * const* array_get_buffer(Array *ar)
+{
 	return (const void* const*) ar->buffer;
 }
 
@@ -403,10 +425,13 @@ const void * const* array_get_buffer(Array *ar) {
  *
  * @return CC_OK if the index was found, or CC_OUT_OF_RANGE if not.
  */
-enum cc_stat array_index_of(Array *ar, void *element, size_t *index) {
+enum cc_stat array_index_of(Array *ar, void *element, size_t *index)
+{
 	size_t i;
-	for (i = 0; i < ar->size; i++) {
-		if (ar->buffer[i] == element) {
+	for (i = 0; i < ar->size; i++)
+	{
+		if (ar->buffer[i] == element)
+		{
 			*index = i;
 			return CC_OK;
 		}
@@ -436,7 +461,8 @@ enum cc_stat array_index_of(Array *ar, void *element, size_t *index) {
  * if the specified index range is invalid, or CC_ERR_ALLOC if the memory allocation
  * for the new subarray failed.
  */
-enum cc_stat array_subarray(Array *ar, size_t b, size_t e, Array **out) {
+enum cc_stat array_subarray(Array *ar, size_t b, size_t e, Array **out)
+{
 	if (b > e || e >= ar->size)
 		return CC_ERR_INVALID_RANGE;
 
@@ -446,7 +472,8 @@ enum cc_stat array_subarray(Array *ar, size_t b, size_t e, Array **out) {
 		return CC_ERR_ALLOC;
 
 	/* Try to allocate the buffer */
-	if (!(sub_ar->buffer = ar->mem_alloc(ar->capacity * sizeof (void*)))) {
+	if (!(sub_ar->buffer = ar->mem_alloc(ar->capacity * sizeof (void*))))
+	{
 		ar->mem_free(sub_ar);
 		return CC_ERR_ALLOC;
 	}
@@ -478,13 +505,15 @@ enum cc_stat array_subarray(Array *ar, size_t b, size_t e, Array **out) {
  * @return CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat array_copy_shallow(Array *ar, Array **out) {
+enum cc_stat array_copy_shallow(Array *ar, Array **out)
+{
 	Array *copy = ar->mem_alloc(sizeof (Array));
 
 	if (!copy)
 		return CC_ERR_ALLOC;
 
-	if (!(copy->buffer = ar->mem_calloc(ar->capacity, sizeof (void*)))) {
+	if (!(copy->buffer = ar->mem_calloc(ar->capacity, sizeof (void*))))
+	{
 		ar->mem_free(copy);
 		return CC_ERR_ALLOC;
 	}
@@ -518,13 +547,15 @@ enum cc_stat array_copy_shallow(Array *ar, Array **out) {
  * @return CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat array_copy_deep(Array *ar, void *(*cp) (void *), Array **out) {
+enum cc_stat array_copy_deep(Array *ar, void *(*cp) (void *), Array **out)
+{
 	Array *copy = ar->mem_alloc(sizeof (Array));
 
 	if (!copy)
 		return CC_ERR_ALLOC;
 
-	if (!(copy->buffer = ar->mem_calloc(ar->capacity, sizeof (void*)))) {
+	if (!(copy->buffer = ar->mem_calloc(ar->capacity, sizeof (void*))))
+	{
 		ar->mem_free(copy);
 		return CC_ERR_ALLOC;
 	}
@@ -556,7 +587,8 @@ enum cc_stat array_copy_deep(Array *ar, void *(*cp) (void *), Array **out) {
  * @return CC_OK if the Array was filtered successfully, or CC_ERR_OUT_OF_RANGE
  * if the Array is empty.
  */
-enum cc_stat array_filter_mut(Array *ar, bool(*pred) (const void*)) {
+enum cc_stat array_filter_mut(Array *ar, bool(*pred) (const void*))
+{
 	if (ar->size == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -566,13 +598,17 @@ enum cc_stat array_filter_mut(Array *ar, bool(*pred) (const void*)) {
 
 	/* Look for clusters of non matching elements before moving
 	 * in order to minimize the number of memmoves */
-	for (i = ar->size - 1; i != ((size_t) - 1); i--) {
-		if (!pred(ar->buffer[i])) {
+	for (i = ar->size - 1; i != ((size_t) - 1); i--)
+	{
+		if (!pred(ar->buffer[i]))
+		{
 			rm++;
 			continue;
 		}
-		if (rm > 0) {
-			if (keep > 0) {
+		if (rm > 0)
+		{
+			if (keep > 0)
+			{
 				size_t block_size = keep * sizeof (void*);
 				memmove(&(ar->buffer[i + 1]),
 						&(ar->buffer[i + 1 + rm]),
@@ -584,7 +620,8 @@ enum cc_stat array_filter_mut(Array *ar, bool(*pred) (const void*)) {
 		keep++;
 	}
 	/* Remove any remaining elements*/
-	if (rm > 0) {
+	if (rm > 0)
+	{
 		size_t block_size = keep * sizeof (void*);
 		memmove(&(ar->buffer[0]),
 				&(ar->buffer[rm]),
@@ -609,7 +646,8 @@ enum cc_stat array_filter_mut(Array *ar, bool(*pred) (const void*)) {
  * if the Array is empty, or CC_ERR_ALLOC if the memory allocation for the
  * new Array failed.
  */
-enum cc_stat array_filter(Array *ar, bool(*pred) (const void*), Array **out) {
+enum cc_stat array_filter(Array *ar, bool(*pred) (const void*), Array **out)
+{
 	if (ar->size == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -618,7 +656,8 @@ enum cc_stat array_filter(Array *ar, bool(*pred) (const void*), Array **out) {
 	if (!filtered)
 		return CC_ERR_ALLOC;
 
-	if (!(filtered->buffer = ar->mem_calloc(ar->capacity, sizeof (void*)))) {
+	if (!(filtered->buffer = ar->mem_calloc(ar->capacity, sizeof (void*))))
+	{
 		ar->mem_free(filtered);
 		return CC_ERR_ALLOC;
 	}
@@ -632,8 +671,10 @@ enum cc_stat array_filter(Array *ar, bool(*pred) (const void*), Array **out) {
 
 	size_t f = 0;
 	size_t i = 0;
-	for (i = 0; i < ar->size; i++) {
-		if (pred(ar->buffer[i])) {
+	for (i = 0; i < ar->size; i++)
+	{
+		if (pred(ar->buffer[i]))
+		{
 			filtered->buffer[f++] = ar->buffer[i];
 			filtered->size++;
 		}
@@ -648,10 +689,12 @@ enum cc_stat array_filter(Array *ar, bool(*pred) (const void*), Array **out) {
  *
  * @param[in] ar array that is being reversed
  */
-void array_reverse(Array *ar) {
+void array_reverse(Array *ar)
+{
 	size_t i;
 	size_t j;
-	for (i = 0, j = ar->size - 1; i < (ar->size - 1) / 2; i++, j--) {
+	for (i = 0, j = ar->size - 1; i < (ar->size - 1) / 2; i++, j--)
+	{
 		void *tmp = ar->buffer[i];
 		ar->buffer[i] = ar->buffer[j];
 		ar->buffer[j] = tmp;
@@ -668,7 +711,8 @@ void array_reverse(Array *ar) {
  * @return CC_OK if the capacity was trimmed successfully, or CC_ERR_ALLOC if
  * the reallocation failed.
  */
-enum cc_stat array_trim_capacity(Array *ar) {
+enum cc_stat array_trim_capacity(Array *ar)
+{
 	if (ar->size == ar->capacity)
 		return CC_OK;
 
@@ -696,7 +740,8 @@ enum cc_stat array_trim_capacity(Array *ar) {
  *
  * @return the number of occurrences of the element.
  */
-size_t array_contains(Array *ar, void *element) {
+size_t array_contains(Array *ar, void *element)
+{
 	return array_contains_value(ar, element, cc_common_cmp_ptr);
 }
 
@@ -710,10 +755,12 @@ size_t array_contains(Array *ar, void *element) {
  *
  * @return the number of occurrences of the value.
  */
-size_t array_contains_value(Array *ar, void *element, int (*cmp) (const void*, const void*)) {
+size_t array_contains_value(Array *ar, void *element, int (*cmp) (const void*, const void*))
+{
 	size_t o = 0;
 	size_t i;
-	for (i = 0; i < ar->size; i++) {
+	for (i = 0; i < ar->size; i++)
+	{
 		if (cmp(element, ar->buffer[i]) == 0)
 			o++;
 	}
@@ -728,7 +775,8 @@ size_t array_contains_value(Array *ar, void *element, int (*cmp) (const void*, c
  *
  * @return the the number of element within the Array.
  */
-size_t array_size(Array *ar) {
+size_t array_size(Array *ar)
+{
 	return ar->size;
 }
 
@@ -740,7 +788,8 @@ size_t array_size(Array *ar) {
  *
  * @return the capacity of the Array.
  */
-size_t array_capacity(Array *ar) {
+size_t array_capacity(Array *ar)
+{
 	return ar->capacity;
 }
 
@@ -775,7 +824,8 @@ size_t array_capacity(Array *ar) {
  *                0 if the elements are equal and > 0 if the second goes
  *                before the first
  */
-void array_sort(Array *ar, int (*cmp) (const void*, const void*)) {
+void array_sort(Array *ar, int (*cmp) (const void*, const void*))
+{
 	qsort(ar->buffer, ar->size, sizeof (void*), cmp);
 }
 
@@ -791,7 +841,8 @@ void array_sort(Array *ar, int (*cmp) (const void*, const void*)) {
  * the memory allocation for the new buffer failed, or CC_ERR_MAX_CAPACITY
  * if the array is already at maximum capacity.
  */
-static enum cc_stat expand_capacity(Array *ar) {
+static enum cc_stat expand_capacity(Array *ar)
+{
 	if (ar->capacity == CC_MAX_ELEMENTS)
 		return CC_ERR_MAX_CAPACITY;
 
@@ -824,7 +875,8 @@ static enum cc_stat expand_capacity(Array *ar) {
  * @param[in] fn operation function that is to be invoked on each Array
  *               element
  */
-void array_map(Array *ar, void (*fn) (void *e)) {
+void array_map(Array *ar, void (*fn) (void *e))
+{
 	size_t i;
 	for (i = 0; i < ar->size; i++)
 		fn(ar->buffer[i]);
@@ -840,8 +892,10 @@ void array_map(Array *ar, void (*fn) (void *e)) {
  *               element
  * @param[in] result the pointer which will collect the end result
  */
-void array_reduce(Array *ar, void (*fn) (void*, void*, void*), void *result) {
-	if (ar->size == 1) {
+void array_reduce(Array *ar, void (*fn) (void*, void*, void*), void *result)
+{
+	if (ar->size == 1)
+	{
 		fn(ar->buffer[0], NULL, result);
 		return;
 	}
@@ -859,7 +913,8 @@ void array_reduce(Array *ar, void (*fn) (void*, void*, void*), void *result) {
  * @param[in] iter the iterator that is being initialized
  * @param[in] ar the array to iterate over
  */
-void array_iter_init(ArrayIter *iter, Array *ar) {
+void array_iter_init(ArrayIter *iter, Array *ar)
+{
 	iter->ar = ar;
 	iter->index = 0;
 	iter->last_removed = false;
@@ -875,7 +930,8 @@ void array_iter_init(ArrayIter *iter, Array *ar) {
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the Array has been reached.
  */
-enum cc_stat array_iter_next(ArrayIter *iter, void **out) {
+enum cc_stat array_iter_next(ArrayIter *iter, void **out)
+{
 	if (iter->index >= iter->ar->size)
 		return CC_ITER_END;
 
@@ -902,10 +958,12 @@ enum cc_stat array_iter_next(ArrayIter *iter, void **out) {
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat array_iter_remove(ArrayIter *iter, void **out) {
+enum cc_stat array_iter_remove(ArrayIter *iter, void **out)
+{
 	enum cc_stat status = CC_ERR_VALUE_NOT_FOUND;
 
-	if (!iter->last_removed) {
+	if (!iter->last_removed)
+	{
 		status = array_remove_at(iter->ar, iter->index - 1, out);
 		if (status == CC_OK)
 			iter->last_removed = true;
@@ -928,7 +986,8 @@ enum cc_stat array_iter_remove(ArrayIter *iter, void **out) {
  * memory allocation for the new element failed, or CC_ERR_MAX_CAPACITY if
  * the array is already at maximum capacity.
  */
-enum cc_stat array_iter_add(ArrayIter *iter, void *element) {
+enum cc_stat array_iter_add(ArrayIter *iter, void *element)
+{
 	return array_add_at(iter->ar, element, iter->index++);
 }
 
@@ -948,7 +1007,8 @@ enum cc_stat array_iter_add(ArrayIter *iter, void *element) {
  * @return CC_OK if the element was replaced successfully, or
  * CC_ERR_OUT_OF_RANGE.
  */
-enum cc_stat array_iter_replace(ArrayIter *iter, void *element, void **out) {
+enum cc_stat array_iter_replace(ArrayIter *iter, void *element, void **out)
+{
 	return array_replace_at(iter->ar, element, iter->index - 1, out);
 }
 
@@ -964,7 +1024,8 @@ enum cc_stat array_iter_replace(ArrayIter *iter, void *element, void **out) {
  *
  * @return the index.
  */
-size_t array_iter_index(ArrayIter *iter) {
+size_t array_iter_index(ArrayIter *iter)
+{
 	return iter->index - 1;
 }
 
@@ -975,7 +1036,8 @@ size_t array_iter_index(ArrayIter *iter) {
  * @param[in] ar1  first array
  * @param[in] ar2  second array
  */
-void array_zip_iter_init(ArrayZipIter *iter, Array *ar1, Array *ar2) {
+void array_zip_iter_init(ArrayZipIter *iter, Array *ar1, Array *ar2)
+{
 	iter->ar1 = ar1;
 	iter->ar2 = ar2;
 	iter->index = 0;
@@ -992,7 +1054,8 @@ void array_zip_iter_init(ArrayZipIter *iter, Array *ar1, Array *ar2) {
  * @return CC_OK if a next element pair is returned, or CC_ITER_END if the end of one
  * of the arrays has been reached.
  */
-enum cc_stat array_zip_iter_next(ArrayZipIter *iter, void **out1, void **out2) {
+enum cc_stat array_zip_iter_next(ArrayZipIter *iter, void **out1, void **out2)
+{
 	if (iter->index >= iter->ar1->size || iter->index >= iter->ar2->size)
 		return CC_ITER_END;
 
@@ -1017,11 +1080,13 @@ enum cc_stat array_zip_iter_next(ArrayZipIter *iter, void **out1, void **out2) {
  * state of the iterator is invalid, or CC_ERR_VALUE_NOT_FOUND if the element was
  * already removed.
  */
-enum cc_stat array_zip_iter_remove(ArrayZipIter *iter, void **out1, void **out2) {
+enum cc_stat array_zip_iter_remove(ArrayZipIter *iter, void **out1, void **out2)
+{
 	if ((iter->index - 1) >= iter->ar1->size || (iter->index - 1) >= iter->ar2->size)
 		return CC_ERR_OUT_OF_RANGE;
 
-	if (!iter->last_removed) {
+	if (!iter->last_removed)
+	{
 		array_remove_at(iter->ar1, iter->index - 1, out1);
 		array_remove_at(iter->ar2, iter->index - 1, out2);
 		iter->last_removed = true;
@@ -1043,7 +1108,8 @@ enum cc_stat array_zip_iter_remove(ArrayZipIter *iter, void **out1, void **out2)
  * @return CC_OK if the element pair was successfully added to the arrays, or
  * CC_ERR_ALLOC if the memory allocation for the new elements failed.
  */
-enum cc_stat array_zip_iter_add(ArrayZipIter *iter, void *e1, void *e2) {
+enum cc_stat array_zip_iter_add(ArrayZipIter *iter, void *e1, void *e2)
+{
 	size_t index = iter->index++;
 	Array *ar1 = iter->ar1;
 	Array *ar2 = iter->ar2;
@@ -1071,7 +1137,8 @@ enum cc_stat array_zip_iter_add(ArrayZipIter *iter, void *e1, void *e2) {
  *
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE.
  */
-enum cc_stat array_zip_iter_replace(ArrayZipIter *iter, void *e1, void *e2, void **out1, void **out2) {
+enum cc_stat array_zip_iter_replace(ArrayZipIter *iter, void *e1, void *e2, void **out1, void **out2)
+{
 	if ((iter->index - 1) >= iter->ar1->size || (iter->index - 1) >= iter->ar2->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -1088,6 +1155,7 @@ enum cc_stat array_zip_iter_replace(ArrayZipIter *iter, void *e1, void *e2, void
  *
  * @return current iterator index.
  */
-size_t array_zip_iter_index(ArrayZipIter *iter) {
+size_t array_zip_iter_index(ArrayZipIter *iter)
+{
 	return iter->index - 1;
 }

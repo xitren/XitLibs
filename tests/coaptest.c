@@ -190,7 +190,8 @@ static uint8_t _msg_test_get_reg2[] = {
 
 uint32_t *msgs_streamer[28][2];
 
-void init_strm(void) {
+void init_strm(void)
+{
 	msgs_streamer[0][0] = (uint32_t *) _msg_test_get_wellknown;
 	msgs_streamer[0][1] = (uint32_t *) (sizeof (_msg_test_get_wellknown) / sizeof (uint32_t));
 
@@ -264,13 +265,15 @@ uint8_t message_b_test[4096];
 coap_rw_buffer_t scratch_test = {scratch_b_test, sizeof (scratch_b_test)};
 coap_rw_buffer_t message_test = {message_b_test, sizeof (message_b_test)};
 
-void test1() {
+void test1()
+{
 	init_strm();
 	int rc;
 	uint32_t i, j;
 	printf("**** ---------------------- coaptest test 1 ---------------------- ****\n");
 	uint8_t media_option = COAP_CONTENTTYPE_APPLICATION_XML;
-	for (i = 0; i < 28; i++) {
+	for (i = 0; i < 28; i++)
+	{
 		printf("**** ---------------------- coaptest test 1: %d ---------------------- ****\n", i);
 		memset((void *) &inpkt_test, 0, sizeof (coap_packet_t));
 		/*==1= Parse package =================================================*/
@@ -282,7 +285,8 @@ void test1() {
 		if (rc == 0)
 			rc = coap_handle_req(&scratch_test, &inpkt_test, &outpkt_test, 0, "127.0.0.1", 4567);
 		/*==3= Build response content ========================================*/
-		switch (current_coap_mediatype) {
+		switch (current_coap_mediatype)
+		{
 			case Media_TEXT:
 				media_option = COAP_CONTENTTYPE_TEXT_PLAIN;
 				break;
@@ -302,7 +306,8 @@ void test1() {
 				media_option = COAP_CONTENTTYPE_APPLICATION_XML;
 				break;
 		}
-		if (rc == 0) {
+		if (rc == 0)
+		{
 			if ((inpkt_test.hdr.code == COAP_METHOD_GET))
 				coap_make_response(&scratch_test, &outpkt_test, 0,
 					(uint8_t*) scratch_test.p, scratch_test.len,
@@ -315,8 +320,10 @@ void test1() {
 					inpkt_test.hdr.id[0], inpkt_test.hdr.id[1],
 					inpkt_test.tok_p, inpkt_test.tok_len, COAP_RSPCODE_CHANGED,
 					media_option);
-		} else {
-			switch (rc) {
+		} else
+		{
+			switch (rc)
+			{
 				case INVALID_PARAMETERS_ERROR:
 					coap_make_response(&scratch_test, &outpkt_test, 0,
 							(uint8_t*) scratch_test.p, scratch_test.len,
@@ -345,9 +352,11 @@ void test1() {
 		rc = coap_build(message_test.p, &message_test.len, &outpkt_test, NULL, NULL);
 		/*==5= Transmitt package =============================================*/
 		printf("\n\r\n\r\n\r");
-		if (rc == 0) {
+		if (rc == 0)
+		{
 			printf("Dump:");
-			for (j = 0; j < message_test.len; j++) {
+			for (j = 0; j < message_test.len; j++)
+			{
 				printf(" %02X", message_test.p[j]);
 			}
 			printf("\n");
@@ -390,7 +399,8 @@ uint8_t scratch_b10[] = {
 	0x63, 0x6F, 0x72, 0x64, 0x65, 0x72
 };
 
-void test2() {
+void test2()
+{
 	int rc;
 	uint32_t i, j;
 	printf("coaptest test 2\n");
@@ -422,7 +432,8 @@ void test2() {
 
 CircularBufferItem_t file[48];
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	printf("%%SUITE_STARTING%% coaptest\n");
 	printf("%%SUITE_STARTED%%\n");
 

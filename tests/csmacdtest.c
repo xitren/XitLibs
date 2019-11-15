@@ -25,7 +25,8 @@ uint8_t msg[] = {
 	0x32, 0x33, 0x21, 0x68, 0xF2, 0x22
 };
 
-uint8_t Sender(uint8_t output) {
+uint8_t Sender(uint8_t output)
+{
 	printf(" %02X", output);
 	return output;
 }
@@ -166,7 +167,8 @@ static const uint32_t msg_test_delete_stream_from_to[] = {
 
 uint32_t *msgs_streamer[25][2];
 
-void init_strm(void) {
+void init_strm(void)
+{
 	msgs_streamer[0][0] = (uint32_t *) msg_test_get_memory;
 	msgs_streamer[0][1] = (uint32_t *) (sizeof (msg_test_get_memory) / sizeof (uint32_t));
 	msgs_streamer[1][0] = (uint32_t *) msg_test_post_memory;
@@ -226,7 +228,8 @@ void init_strm(void) {
  * Simple C Test Suite
  */
 
-void test1() {
+void test1()
+{
 	uint16_t CRC_MB = 0xFFFF;
 	uint8_t ID = 0;
 	uint8_t DATA[10];
@@ -250,7 +253,8 @@ void test1() {
 		printf(" %%TEST_FAILED%% time=0 testname=test1 (recvtest) message=error message sample\n");
 }
 
-void test2() {
+void test2()
+{
 	uint16_t CRC_MB = 0xFFFF;
 	uint8_t ID = 0;
 	uint8_t DATA[10];
@@ -283,7 +287,8 @@ void test2() {
 		printf(" %%TEST_FAILED%% time=0 testname=test2 (recvtest) message=error message sample\n");
 }
 
-void test3() {
+void test3()
+{
 	printf("sendtest test 1\n");
 	PacketizeToSend(&controller, msg, 0x21, 6);
 	while (csma_sender(&controller) != CSMACD_WAIT);
@@ -294,7 +299,8 @@ void test3() {
 	printf("\n");
 }
 
-void test4() {
+void test4()
+{
 	printf("sendtest test 2\n");
 	PacketizeToSend(&controller, msg, 0x21, 12);
 	while (csma_sender(&controller) != CSMACD_WAIT);
@@ -305,13 +311,15 @@ void test4() {
 	printf("\n");
 }
 
-void test5() {
+void test5()
+{
 	init_strm();
 	uint8_t ID = 0;
 	uint8_t DATA[1024];
 	printf("recvtest test 5\n");
 	uint32_t i;
-	for (i = 0; i < 25; i++) {
+	for (i = 0; i < 25; i++)
+	{
 		uint32_t j, k = 0;
 		uint32_t *payload = msgs_streamer[i][0];
 		uint16_t length = (uint16_t) msgs_streamer[i][1];
@@ -331,7 +339,8 @@ void test5() {
 		load[k++] = 0x00;
 		load[k++] = (uint8_t) length;
 		printf("--------- length : %02X\n", (uint8_t) length);
-		for (j = 0; j < ((size_t) msgs_streamer[i][1]); j++) {
+		for (j = 0; j < ((size_t) msgs_streamer[i][1]); j++)
+		{
 			printf("--------- : %02X\n", (uint8_t) payload[j]);
 		}
 		csma_receiver(&controller, load[0]);
@@ -348,7 +357,8 @@ void test5() {
 		csma_main_cycle(&controller, &ID, DATA);
 		csma_main_cycle(&controller, &ID, DATA);
 		csma_main_cycle(&controller, &ID, DATA);
-		for (j = 0; j < length; j++) {
+		for (j = 0; j < length; j++)
+		{
 			load[k++] = (uint8_t) payload[j];
 			csma_receiver(&controller, (uint8_t) payload[j]);
 		}
@@ -364,13 +374,15 @@ void test5() {
 		if ((ID != 0x20)
 				|| (DATA[0] != payload[0])
 				|| (DATA[3] != payload[3])
-				|| (DATA[5] != payload[5])) {
+				|| (DATA[5] != payload[5]))
+		{
 			printf(" %%TEST_FAILED%% time=0 testname=test5 (recvtest) message=Packet number of %d: length packet is %u\n", i, (uint32_t) msgs_streamer[i][1]);
 		}
 	}
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	uint8_t id = 0x10;
 	printf("%%SUITE_STARTING%% csmacdtest\n");
 	printf("%%SUITE_STARTED%%\n");

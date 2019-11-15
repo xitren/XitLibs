@@ -25,7 +25,8 @@ uint32_t size_glob;
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-inline int AddToLog(const char *str, uint32_t N, int lvl) {
+inline int AddToLog(const char *str, uint32_t N, int lvl)
+{
 	printf("<%d>: %s", lvl, str);
 	return 0;
 }

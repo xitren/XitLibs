@@ -56,14 +56,18 @@ coap_rw_buffer_t input[4] = {
 };
 coap_rw_buffer_t *messg1, *messg2, *messg3;
 
-void testCoap_make_response() {
+void testCoap_make_response()
+{
 	int i, j = 3;
-	for (j = 0; j < 4; j++) {
-		for (i = 0; i < input[j].len; i++) {
+	for (j = 0; j < 4; j++)
+	{
+		for (i = 0; i < input[j].len; i++)
+		{
 			printf("%02X ", input[j].p[i]);
 		}
 		printf("\n");
-		for (i = 0; i < input[j].len; i++) {
+		for (i = 0; i < input[j].len; i++)
+		{
 			printf("%c", input[j].p[i]);
 		}
 		messg1 = MessageHandlerIntIP(
@@ -72,18 +76,21 @@ void testCoap_make_response() {
 				0, 0
 				);
 		printf("\nAnswer\n");
-		for (i = 0; i < messg1->len; i++) {
+		for (i = 0; i < messg1->len; i++)
+		{
 			printf("%02X ", messg1->p[i]);
 		}
 		printf("\n");
-		for (i = 0; i < messg1->len; i++) {
+		for (i = 0; i < messg1->len; i++)
+		{
 			printf("%c", messg1->p[i]);
 		}
 		printf("\n=================================================\n");
 	}
 }
 
-uint8_t Sender(uint8_t output) {
+uint8_t Sender(uint8_t output)
+{
 	printf("dd: %02X [%c]\n", output);
 	return output;
 }
@@ -93,10 +100,12 @@ CSMACDController_t contr;
 SOCKADDR_IN SenderAddr;
 int SenderAddrSize = sizeof (SenderAddr);
 
-DWORD WINAPI ThreadData(LPVOID lpParameter) {
+DWORD WINAPI ThreadData(LPVOID lpParameter)
+{
 	int i;
 	int ptr = 0;
-	while (1) {
+	while (1)
+	{
 		Sleep(100); // Sleep three seconds
 		// Request ownership of the critical section.
 		EnterCriticalSection(&CriticalSection);
@@ -109,22 +118,27 @@ DWORD WINAPI ThreadData(LPVOID lpParameter) {
 	return 1;
 }
 
-DWORD WINAPI ThreadProc(LPVOID lpParameter) {
+DWORD WINAPI ThreadProc(LPVOID lpParameter)
+{
 	int i;
 	int ptr = 0;
-	while (1) {
+	while (1)
+	{
 		Sleep(500); // Sleep three seconds
 		// Request ownership of the critical section.
 		EnterCriticalSection(&CriticalSection);
 
 		messg3 = (coap_rw_buffer_t *) StreamObserverHandler();
-		if (messg3 != 0) {
+		if (messg3 != 0)
+		{
 			printf("\nAnswer\n");
-			for (i = 0; i < messg3->len; i++) {
+			for (i = 0; i < messg3->len; i++)
+			{
 				printf("%02X ", messg3->p[i]);
 			}
 			printf("\n");
-			for (i = 0; i < messg3->len; i++) {
+			for (i = 0; i < messg3->len; i++)
+			{
 				printf("%c", messg3->p[i]);
 			}
 			printf("\n=================================================\n");
@@ -136,7 +150,8 @@ DWORD WINAPI ThreadProc(LPVOID lpParameter) {
 					0,
 					(struct sockaddr *) &SenderAddr,
 					SenderAddrSize
-					) < 0) {
+					) < 0)
+			{
 				perror("sendto failed");
 				return 0;
 			}
@@ -148,7 +163,8 @@ DWORD WINAPI ThreadProc(LPVOID lpParameter) {
 	return 1;
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	WSADATA wsaData;
 	SOCKADDR_IN ReceiverAddr;
 	int Port = PORT;
@@ -164,7 +180,8 @@ int main(int argc, char** argv) {
 			0x00000400))
 		return -1;
 	// Initialize Winsock version 2.2
-	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0) {
+	if (WSAStartup(MAKEWORD(2, 2), &wsaData) != 0)
+	{
 		printf("Server: WSAStartup failed with error %ld\n", WSAGetLastError());
 		return -1;
 	} else
@@ -172,7 +189,8 @@ int main(int argc, char** argv) {
 
 	// Create a new socket to receive datagrams on.
 	ReceivingSocket = socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP);
-	if (ReceivingSocket == INVALID_SOCKET) {
+	if (ReceivingSocket == INVALID_SOCKET)
+	{
 		printf("Server: Error at socket(): %ld\n", WSAGetLastError());
 		// Clean up
 		WSACleanup();
@@ -191,7 +209,8 @@ int main(int argc, char** argv) {
 	ReceiverAddr.sin_addr.s_addr = htonl(0);
 	// Associate the address information with the socket using bind.
 	// At this point you can receive datagrams on your bound socket.
-	if (bind(ReceivingSocket, (SOCKADDR *) & ReceiverAddr, sizeof (ReceiverAddr)) == SOCKET_ERROR) {
+	if (bind(ReceivingSocket, (SOCKADDR *) & ReceiverAddr, sizeof (ReceiverAddr)) == SOCKET_ERROR)
+	{
 		printf("Server: bind() failed! Error: %ld.\n", WSAGetLastError());
 		// Close the socket
 		closesocket(ReceivingSocket);
@@ -216,25 +235,30 @@ int main(int argc, char** argv) {
 	InitHandler(250, 8);
 
 	HANDLE thread1 = CreateThread(NULL, 0, ThreadProc, NULL, 0, NULL);
-	if (thread1) {
+	if (thread1)
+	{
 		// Optionally do stuff, such as wait on the thread.
 	}
 
 	HANDLE thread2 = CreateThread(NULL, 0, ThreadData, NULL, 0, NULL);
-	if (thread2) {
+	if (thread2)
+	{
 		// Optionally do stuff, such as wait on the thread.
 	}
 
-	while (1) {
+	while (1)
+	{
 		// Call recvfrom() to get it then display the received data...
 		ByteReceived = recvfrom(ReceivingSocket, ReceiveBuf, 1024,
 				0, (SOCKADDR *) & SenderAddr, &SenderAddrSize);
 		// Request ownership of the critical section.
 		EnterCriticalSection(&CriticalSection);
-		if (ByteReceived > 0) {
+		if (ByteReceived > 0)
+		{
 			printf("Server: Total Bytes received: %d\n", ByteReceived);
 			printf("Bare:\n");
-			for (i = 0; i < buff->len; i++) {
+			for (i = 0; i < buff->len; i++)
+			{
 				printf("0x%02X, ", buff->p[i]);
 			}
 			//            printf("Server: The data is \"%s\"\n", ReceiveBuf);
@@ -249,11 +273,13 @@ int main(int argc, char** argv) {
 		printf("Server: Sending IP used: %s\n", inet_ntoa(SenderAddr.sin_addr));
 		printf("Server: Sending port used: %d\n", htons(SenderAddr.sin_port));
 
-		for (i = 0; i < ByteReceived; i++) {
+		for (i = 0; i < ByteReceived; i++)
+		{
 			printf("%02X ", ReceiveBuf[i]);
 		}
 		printf("\n");
-		for (i = 0; i < ByteReceived; i++) {
+		for (i = 0; i < ByteReceived; i++)
+		{
 			printf("%c", ReceiveBuf[i]);
 		}
 		messg1 = MessageHandlerIntIP(
@@ -262,11 +288,13 @@ int main(int argc, char** argv) {
 				0, 0
 				);
 		printf("\nAnswer\n");
-		for (i = 0; i < messg1->len; i++) {
+		for (i = 0; i < messg1->len; i++)
+		{
 			printf("%02X ", messg1->p[i]);
 		}
 		printf("\n");
-		for (i = 0; i < messg1->len; i++) {
+		for (i = 0; i < messg1->len; i++)
+		{
 			printf("%c", messg1->p[i]);
 		}
 		printf("\n=================================================\n");
@@ -290,7 +318,8 @@ int main(int argc, char** argv) {
 				0,
 				(struct sockaddr *) &SenderAddr,
 				SenderAddrSize
-				) < 0) {
+				) < 0)
+		{
 			perror("sendto failed");
 			return 0;
 		}

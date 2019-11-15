@@ -23,7 +23,8 @@
 #include "stack.h"
 #include "umm_malloc.h"
 
-struct stack_s {
+struct stack_s
+{
 	Array *v;
 
 	void *(*mem_alloc) (size_t size);
@@ -36,7 +37,8 @@ struct stack_s {
  *
  * @param[in, out] conf StackConf structure that is being initialized
  */
-void stack_conf_init(StackConf *conf) {
+void stack_conf_init(StackConf *conf)
+{
 	array_conf_init(conf);
 }
 
@@ -48,7 +50,8 @@ void stack_conf_init(StackConf *conf) {
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the
  * memory allocation for the new Stack structure failed.
  */
-enum cc_stat stack_new(Stack **out) {
+enum cc_stat stack_new(Stack **out)
+{
 	StackConf conf;
 	stack_conf_init(&conf);
 	return stack_new_conf(&conf, out);
@@ -70,7 +73,8 @@ enum cc_stat stack_new(Stack **out) {
  * the above mentioned condition is not met, or CC_ERR_ALLOC if the memory
  * allocation for the new Stack structure failed.
  */
-enum cc_stat stack_new_conf(StackConf const * const conf, Stack **out) {
+enum cc_stat stack_new_conf(StackConf const * const conf, Stack **out)
+{
 	Stack *stack = conf->mem_calloc(1, sizeof (Stack));
 
 	if (!stack)
@@ -82,9 +86,11 @@ enum cc_stat stack_new_conf(StackConf const * const conf, Stack **out) {
 
 	Array *array;
 	enum cc_stat status;
-	if ((status = array_new_conf(conf, &array)) == CC_OK) {
+	if ((status = array_new_conf(conf, &array)) == CC_OK)
+	{
 		stack->v = array;
-	} else {
+	} else
+	{
 		conf->mem_free(stack);
 		return status;
 	}
@@ -98,7 +104,8 @@ enum cc_stat stack_new_conf(StackConf const * const conf, Stack **out) {
  *
  * @param[in] stack the Stack to be destroyed
  */
-void stack_destroy(Stack *stack) {
+void stack_destroy(Stack *stack)
+{
 	array_destroy(stack->v);
 	stack->mem_free(stack);
 }
@@ -111,7 +118,8 @@ void stack_destroy(Stack *stack) {
  *
  * @param[in] stack the stack to be destroyed
  */
-void stack_destroy_free(Stack *stack) {
+void stack_destroy_free(Stack *stack)
+{
 	array_destroy_free(stack->v);
 	free(stack);
 }
@@ -125,7 +133,8 @@ void stack_destroy_free(Stack *stack) {
  * @return CC_OK if the element was successfully pushed, or CC_ERR_ALLOC
  * if the memory allocation for the new element failed.
  */
-enum cc_stat stack_push(Stack *stack, void *element) {
+enum cc_stat stack_push(Stack *stack, void *element)
+{
 	return array_add(stack->v, element);
 }
 
@@ -139,7 +148,8 @@ enum cc_stat stack_push(Stack *stack, void *element) {
  * @return CC_OK if the element was found, or CC_ERR_VALUE_NOT_FOUND if the
  * Stack is empty.
  */
-enum cc_stat stack_peek(Stack *stack, void **out) {
+enum cc_stat stack_peek(Stack *stack, void **out)
+{
 	return array_get_last(stack->v, out);
 }
 
@@ -154,7 +164,8 @@ enum cc_stat stack_peek(Stack *stack, void **out) {
  * @return CC_OK if the element was successfully popped, or CC_ERR_OUT_OF_RANGE
  * if the Stack is already empty.
  */
-enum cc_stat stack_pop(Stack *stack, void **out) {
+enum cc_stat stack_pop(Stack *stack, void **out)
+{
 	return array_remove_last(stack->v, out);
 }
 
@@ -165,7 +176,8 @@ enum cc_stat stack_pop(Stack *stack, void **out) {
  *
  * @return the number of Stack elements.
  */
-size_t stack_size(Stack *stack) {
+size_t stack_size(Stack *stack)
+{
 	return array_size(stack->v);
 }
 
@@ -176,7 +188,8 @@ size_t stack_size(Stack *stack) {
  * @param[in] fn the operation function that is to be invoked on each
  *               element of the Stack
  */
-void stack_map(Stack *stack, void (*fn) (void *)) {
+void stack_map(Stack *stack, void (*fn) (void *))
+{
 	array_map(stack->v, fn);
 }
 
@@ -186,7 +199,8 @@ void stack_map(Stack *stack, void (*fn) (void *)) {
  * @param[in] iter the iterator that is being initialized
  * @param[in] s the stack to iterate over
  */
-void stack_iter_init(StackIter *iter, Stack *s) {
+void stack_iter_init(StackIter *iter, Stack *s)
+{
 	array_iter_init(&(iter->i), s->v);
 }
 
@@ -200,7 +214,8 @@ void stack_iter_init(StackIter *iter, Stack *s) {
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the Stack has been reached.
  */
-enum cc_stat stack_iter_next(StackIter *iter, void **out) {
+enum cc_stat stack_iter_next(StackIter *iter, void **out)
+{
 	return array_iter_next(&(iter->i), out);
 }
 
@@ -220,7 +235,8 @@ enum cc_stat stack_iter_next(StackIter *iter, void **out) {
  * @return  CC_OK if the element was replaced successfully, or
  * CC_ERR_OUT_OF_RANGE.
  */
-enum cc_stat stack_iter_replace(StackIter *iter, void *element, void **out) {
+enum cc_stat stack_iter_replace(StackIter *iter, void *element, void **out)
+{
 	return array_iter_replace(&(iter->i), element, out);
 }
 
@@ -231,7 +247,8 @@ enum cc_stat stack_iter_replace(StackIter *iter, void *element, void **out) {
  * @param[in] s1   first Stack
  * @param[in] s2   second Stack
  */
-void stack_zip_iter_init(StackZipIter *iter, Stack *s1, Stack *s2) {
+void stack_zip_iter_init(StackZipIter *iter, Stack *s1, Stack *s2)
+{
 	array_zip_iter_init(&(iter->i), s1->v, s2->v);
 }
 
@@ -245,7 +262,8 @@ void stack_zip_iter_init(StackZipIter *iter, Stack *s1, Stack *s2) {
  * @return CC_OK if a next element pair is returned, or CC_ITER_END if the end
  * of one of the stacks has been reached.
  */
-enum cc_stat stack_zip_iter_next(StackZipIter *iter, void **out1, void **out2) {
+enum cc_stat stack_zip_iter_next(StackZipIter *iter, void **out1, void **out2)
+{
 	return array_zip_iter_next(&(iter->i), out1, out2);
 }
 
@@ -261,6 +279,7 @@ enum cc_stat stack_zip_iter_next(StackZipIter *iter, void **out1, void **out2) {
  *
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE.
  */
-enum cc_stat stack_zip_iter_replace(StackZipIter *iter, void *e1, void *e2, void **out1, void **out2) {
+enum cc_stat stack_zip_iter_replace(StackZipIter *iter, void *e1, void *e2, void **out1, void **out2)
+{
 	return array_zip_iter_replace(&(iter->i), e1, e2, out1, out2);
 }

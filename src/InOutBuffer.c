@@ -19,14 +19,16 @@
 /*============================================================================*/
 
 /* Private structures --------------------------------------------------------*/
-typedef struct _tagReceiveDeque_t {
+typedef struct _tagReceiveDeque_t
+{
 	uint8_t *Msg;
 	uint32_t Size;
 	uint32_t Ip;
 	uint32_t Port;
 } ReceiveDeque_t;
 
-typedef struct _tagTransmiteDeque_t {
+typedef struct _tagTransmiteDeque_t
+{
 	uint8_t *Msg;
 	uint32_t Size;
 	uint32_t Ip;
@@ -40,7 +42,8 @@ static Deque *TransmiteDeque;
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-int InitBuffer() {
+int InitBuffer()
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = NO_BUFFER_ERROR;
@@ -51,17 +54,20 @@ int InitBuffer() {
 	return (ret_val);
 }
 
-int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port) {
+int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
+{
 	int ret_val = NO_BUFFER_ERROR;
 	ReceiveDeque_t *comm;
 
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
-	if ((msg == NULL)) {
+	if ((msg == NULL))
+	{
 		DBG_LOG_ERROR("msg argument is NULL\n");
 		return 0;
 	}
-	if ((msg != 0) && (size > 0)) {
+	if ((msg != 0) && (size > 0))
+	{
 		comm = (ReceiveDeque_t *) umm_calloc(1, sizeof (ReceiveDeque_t));
 		DBG_LOG_TRACE("ReceiveDeque_t allocated.\n");
 		comm->Msg = (uint8_t *) umm_calloc(size, sizeof (uint8_t));
@@ -72,7 +78,8 @@ int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port) 
 		comm->Ip = ip;
 		comm->Port = port;
 		DBG_LOG_TRACE("Parameters setted.\n");
-		if (deque_add_last(ReceiveDeque, (void *) comm) != 0) {
+		if (deque_add_last(ReceiveDeque, (void *) comm) != 0)
+		{
 			umm_free((void *) comm);
 			return BUFFER_ERROR;
 		}
@@ -83,21 +90,25 @@ int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port) 
 	return (ret_val);
 }
 
-int ProceedReceive(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port) {
+int ProceedReceive(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port)
+{
 	int ret_val = NO_BUFFER_ERROR;
 	ReceiveDeque_t *comm;
 
 	//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 	//                      __LINE__, __FILE__, __func__);
-	if ((msg == NULL) || (size == NULL) || (ip == NULL) || (port == NULL)) {
+	if ((msg == NULL) || (size == NULL) || (ip == NULL) || (port == NULL))
+	{
 		DBG_LOG_ERROR("ProceedReceive argument is NULL\n");
 		return 0;
 	}
-	if ((ReceiveDeque == NULL)) {
+	if ((ReceiveDeque == NULL))
+	{
 		DBG_LOG_ERROR("ReceiveDeque is NULL\n");
 		return 0;
 	}
-	if (deque_size(ReceiveDeque) > 0) {
+	if (deque_size(ReceiveDeque) > 0)
+	{
 		DBG_LOG_INFO("Receive Proceed, %d left. \n",
 				(int) deque_size(ReceiveDeque));
 		deque_remove_first(ReceiveDeque, (void**) &comm);
@@ -113,17 +124,20 @@ int ProceedReceive(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port) {
 	return (ret_val);
 }
 
-int AddToTransmite(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port) {
+int AddToTransmite(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
+{
 	int ret_val = NO_BUFFER_ERROR;
 	TransmiteDeque_t *comm;
 
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
-	if ((msg == NULL)) {
+	if ((msg == NULL))
+	{
 		DBG_LOG_ERROR("msg argument is NULL\n");
 		return 0;
 	}
-	if ((msg != 0) && (size > 0)) {
+	if ((msg != 0) && (size > 0))
+	{
 		comm = (TransmiteDeque_t *) umm_calloc(1, sizeof (TransmiteDeque_t));
 		DBG_LOG_TRACE("ReceiveDeque_t allocated.\n");
 		comm->Msg = (uint8_t *) umm_calloc(size, sizeof (uint8_t));
@@ -134,7 +148,8 @@ int AddToTransmite(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port
 		comm->Ip = ip;
 		comm->Port = port;
 		DBG_LOG_TRACE("Parameters setted.\n");
-		if (deque_add_last(TransmiteDeque, (void *) comm) != 0) {
+		if (deque_add_last(TransmiteDeque, (void *) comm) != 0)
+		{
 			umm_free((void *) comm);
 			return BUFFER_ERROR;
 		}
@@ -145,21 +160,25 @@ int AddToTransmite(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port
 	return (ret_val);
 }
 
-int ProceedTransmite(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port) {
+int ProceedTransmite(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port)
+{
 	int ret_val = NO_BUFFER_ERROR;
 	TransmiteDeque_t *comm;
 
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
-	if ((msg == NULL) || (size == NULL) || (ip == NULL) || (port == NULL)) {
+	if ((msg == NULL) || (size == NULL) || (ip == NULL) || (port == NULL))
+	{
 		DBG_LOG_ERROR("ProceedReceive argument is NULL\n");
 		return 0;
 	}
-	if ((TransmiteDeque == NULL)) {
+	if ((TransmiteDeque == NULL))
+	{
 		DBG_LOG_ERROR("ReceiveDeque is NULL\n");
 		return 0;
 	}
-	if (deque_size(TransmiteDeque) > 0) {
+	if (deque_size(TransmiteDeque) > 0)
+	{
 		DBG_LOG_INFO("Receive Proceed, %d left. \n",
 				(int) deque_size(TransmiteDeque));
 		deque_remove_first(TransmiteDeque, (void**) &comm);
@@ -175,15 +194,18 @@ int ProceedTransmite(uint8_t *msg, uint32_t *size, uint32_t *ip, uint32_t *port)
 	return (ret_val);
 }
 
-int ClearBuffer() {
+int ClearBuffer()
+{
 	int ret_val = NO_BUFFER_ERROR;
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
-	if ((ReceiveDeque == NULL)) {
+	if ((ReceiveDeque == NULL))
+	{
 		return BUFFER_ERROR;
 	}
 	deque_remove_all_free(ReceiveDeque);
-	if ((TransmiteDeque == NULL)) {
+	if ((TransmiteDeque == NULL))
+	{
 		return BUFFER_ERROR;
 	}
 	deque_remove_all_free(TransmiteDeque);

@@ -22,7 +22,8 @@
 #include "list.h"
 #include "umm_malloc.h"
 
-struct list_s {
+struct list_s
+{
 	size_t size;
 	Node *head;
 	Node *tail;
@@ -50,7 +51,8 @@ static enum cc_stat add_all_to_empty(List *l1, List *l2);
  *
  * @param[in] conf the configuration struct that is being initialized
  */
-void list_conf_init(ListConf *conf) {
+void list_conf_init(ListConf *conf)
+{
 	conf->mem_alloc = umm_malloc;
 	conf->mem_calloc = umm_calloc;
 	conf->mem_free = umm_free;
@@ -64,7 +66,8 @@ void list_conf_init(ListConf *conf) {
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if
  * the memory allocation for the new List failed.
  */
-enum cc_stat list_new(List **out) {
+enum cc_stat list_new(List **out)
+{
 	ListConf lc;
 	list_conf_init(&lc);
 	return list_new_conf(&lc, out);
@@ -84,7 +87,8 @@ enum cc_stat list_new(List **out) {
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the
  * memory allocation for the new List structure failed.
  */
-enum cc_stat list_new_conf(ListConf const * const conf, List **out) {
+enum cc_stat list_new_conf(ListConf const * const conf, List **out)
+{
 	List *list = conf->mem_calloc(1, sizeof (List));
 
 	if (!list)
@@ -103,7 +107,8 @@ enum cc_stat list_new_conf(ListConf const * const conf, List **out) {
  *
  * @param[in] list list that is to be destroyed
  */
-void list_destroy(List *list) {
+void list_destroy(List *list)
+{
 	if (list->size > 0)
 		list_remove_all(list);
 
@@ -119,7 +124,8 @@ void list_destroy(List *list) {
  *
  * @param[in] list list that is to be destroyed
  */
-void list_destroy_free(List *list) {
+void list_destroy_free(List *list)
+{
 	list_remove_all_free(list);
 	list->mem_free(list);
 }
@@ -134,7 +140,8 @@ void list_destroy_free(List *list) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element failed.
  */
-enum cc_stat list_add(List *list, void *element) {
+enum cc_stat list_add(List *list, void *element)
+{
 	return list_add_last(list, element);
 }
 
@@ -148,7 +155,8 @@ enum cc_stat list_add(List *list, void *element) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element failed.
  */
-enum cc_stat list_add_first(List *list, void *element) {
+enum cc_stat list_add_first(List *list, void *element)
+{
 	Node *node = list->mem_calloc(1, sizeof (Node));
 
 	if (node == NULL)
@@ -156,10 +164,12 @@ enum cc_stat list_add_first(List *list, void *element) {
 
 	node->data = element;
 
-	if (list->size == 0) {
+	if (list->size == 0)
+	{
 		list->head = node;
 		list->tail = node;
-	} else {
+	} else
+	{
 		node->next = list->head;
 		list->head->prev = node;
 		list->head = node;
@@ -178,7 +188,8 @@ enum cc_stat list_add_first(List *list, void *element) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element failed.
  */
-enum cc_stat list_add_last(List *list, void *element) {
+enum cc_stat list_add_last(List *list, void *element)
+{
 	Node *node = list->mem_calloc(1, sizeof (Node));
 
 	if (node == NULL)
@@ -186,10 +197,12 @@ enum cc_stat list_add_last(List *list, void *element) {
 
 	node->data = element;
 
-	if (list->size == 0) {
+	if (list->size == 0)
+	{
 		list->head = node;
 		list->tail = node;
-	} else {
+	} else
+	{
 		node->prev = list->tail;
 		list->tail->next = node;
 		list->tail = node;
@@ -213,7 +226,8 @@ enum cc_stat list_add_last(List *list, void *element) {
  * the specified index was not in range, or CC_ERR_ALLOC if the memory
  * allocation for the new element failed.
  */
-enum cc_stat list_add_at(List *list, void *element, size_t index) {
+enum cc_stat list_add_at(List *list, void *element, size_t index)
+{
 	Node *base;
 	enum cc_stat stat = get_node_at(list, index, &base);
 
@@ -246,7 +260,8 @@ enum cc_stat list_add_at(List *list, void *element, size_t index) {
  * @return CC_OK if the elements where successfully added, or CC_ERR_ALLOC if
  * the memory allocation for the new elements failed.
  */
-enum cc_stat list_add_all(List *list1, List *list2) {
+enum cc_stat list_add_all(List *list1, List *list2)
+{
 	if (list1->size == 0)
 		return add_all_to_empty(list1, list2);
 
@@ -262,7 +277,8 @@ enum cc_stat list_add_all(List *list1, List *list2) {
  * @return CC_OK if the element were successfully added, or CC_ERR_ALLOC if
  * the memory allocation for the new elements failed.
  */
-static enum cc_stat add_all_to_empty(List *list1, List *list2) {
+static enum cc_stat add_all_to_empty(List *list1, List *list2)
+{
 	if (list2->size == 0)
 		return CC_OK;
 
@@ -292,7 +308,8 @@ static enum cc_stat add_all_to_empty(List *list1, List *list2) {
  * CC_ERR_INDEX_OUT_OF_BOUNDS if the index was out of range, or
  * CC_ERR_ALLOC if the memory allocation for the new elements failed.
  */
-enum cc_stat list_add_all_at(List *list1, List *list2, size_t index) {
+enum cc_stat list_add_all_at(List *list1, List *list2, size_t index)
+{
 	if (list2->size == 0)
 		return CC_OK;
 
@@ -318,15 +335,18 @@ enum cc_stat list_add_all_at(List *list1, List *list2, size_t index) {
 	else
 		get_node_at(list1, index - 1, &base);
 
-	if (!end) {
+	if (!end)
+	{
 		list1->tail->next = head;
 		head->prev = list1->tail;
 		list1->tail = tail;
-	} else if (!base) {
+	} else if (!base)
+	{
 		list1->head->prev = tail;
 		tail->next = list1->head;
 		list1->head = head;
-	} else {
+	} else
+	{
 		head->prev = base;
 		base->next = head;
 		tail->next = end;
@@ -349,15 +369,19 @@ enum cc_stat list_add_all_at(List *list1, List *list2, size_t index) {
  *
  * @return true if the operation was successful, false otherwise.
  */
-static bool link_all_externally(List *list, Node **h, Node **t) {
+static bool link_all_externally(List *list, Node **h, Node **t)
+{
 	Node *insert = list->head;
 
 	size_t i;
-	for (i = 0; i < list->size; i++) {
+	for (i = 0; i < list->size; i++)
+	{
 		Node *new = list->mem_calloc(1, sizeof (Node));
 
-		if (!new) {
-			while (*h) {
+		if (!new)
+		{
+			while (*h)
+			{
 				Node *tmp = (*h)->next;
 				list->mem_free(*h);
 				*h = tmp;
@@ -367,10 +391,12 @@ static bool link_all_externally(List *list, Node **h, Node **t) {
 
 		new->data = insert->data;
 
-		if (!*h) {
+		if (!*h)
+		{
 			*h = new;
 			*t = new;
-		} else {
+		} else
+		{
 			(*t)->next = new;
 			new->prev = *t;
 			*t = new;
@@ -392,7 +418,8 @@ static bool link_all_externally(List *list, Node **h, Node **t) {
  * @return CC_OK if the elements were successfully moved, or CC_ERR_OUT_OF_RANGE
  * if the index was not in range.
  */
-enum cc_stat list_splice(List *list1, List *list2) {
+enum cc_stat list_splice(List *list1, List *list2)
+{
 	return list_splice_at(list1, list2, list1->size);
 }
 
@@ -410,14 +437,16 @@ enum cc_stat list_splice(List *list1, List *list2) {
  * @return CC_OK if the elements were successfully moved, or CC_ERR_OUT_OF_RANGE
  * if the index was not in range.
  */
-enum cc_stat list_splice_at(List *list1, List *list2, size_t index) {
+enum cc_stat list_splice_at(List *list1, List *list2, size_t index)
+{
 	if (list2->size == 0)
 		return CC_OK;
 
 	if (index > list1->size)
 		return CC_ERR_OUT_OF_RANGE;
 
-	if (list1->size == 0) {
+	if (list1->size == 0)
+	{
 		// TODO move to splice_between
 		list1->head = list2->head;
 		list1->tail = list2->tail;
@@ -454,16 +483,20 @@ enum cc_stat list_splice_at(List *list1, List *list2, size_t index) {
  * @param[in] left the node after which the element are being added
  * @param[in] right the node behind which the elements are being added
  */
-static void splice_between(List *l1, List *l2, Node *left, Node *right) {
-	if (!left) {
+static void splice_between(List *l1, List *l2, Node *left, Node *right)
+{
+	if (!left)
+	{
 		l1->head->prev = l2->tail;
 		l2->tail->next = l1->head;
 		l1->head = l2->head;
-	} else if (!right) {
+	} else if (!right)
+	{
 		l1->tail->next = l2->head;
 		l2->head->prev = l1->tail;
 		l1->tail = l2->tail;
-	} else {
+	} else
+	{
 		left->next = l2->head;
 		l2->head->prev = left;
 		right->prev = l2->tail;
@@ -489,7 +522,8 @@ static void splice_between(List *l1, List *l2, Node *left, Node *right) {
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND if the element was not found.
  */
-enum cc_stat list_remove(List *list, void *element, void **out) {
+enum cc_stat list_remove(List *list, void *element, void **out)
+{
 	Node *node = get_node(list, element);
 
 	if (!node)
@@ -516,7 +550,8 @@ enum cc_stat list_remove(List *list, void *element, void **out) {
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_OUT_OF_RANGE if the index was out of range.
  */
-enum cc_stat list_remove_at(List *list, size_t index, void **out) {
+enum cc_stat list_remove_at(List *list, size_t index, void **out)
+{
 	Node *node;
 	enum cc_stat status = get_node_at(list, index, &node);
 
@@ -541,7 +576,8 @@ enum cc_stat list_remove_at(List *list, size_t index, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_VALUE_NOT_FOUND
  * if the List is already empty.
  */
-enum cc_stat list_remove_first(List *list, void **out) {
+enum cc_stat list_remove_first(List *list, void **out)
+{
 	if (!list->size)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -564,7 +600,8 @@ enum cc_stat list_remove_first(List *list, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_VALUE_NOT_FOUND
  * if the List is already empty.
  */
-enum cc_stat list_remove_last(List *list, void **out) {
+enum cc_stat list_remove_last(List *list, void **out)
+{
 	if (!list->size)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -584,10 +621,12 @@ enum cc_stat list_remove_last(List *list, void **out) {
  * @return CC_OK if the elements were successfully removed, or CC_ERR_VALUE_NOT_FOUND
  *  if the list was already empty.
  */
-enum cc_stat list_remove_all(List *list) {
+enum cc_stat list_remove_all(List *list)
+{
 	bool unlinked = unlink_all(list, false);
 
-	if (unlinked) {
+	if (unlinked)
+	{
 		list->head = NULL;
 		list->tail = NULL;
 		return CC_OK;
@@ -608,10 +647,12 @@ enum cc_stat list_remove_all(List *list) {
  * @return CC_OK if the elements were successfully removed and freed, or
  * CC_ERR_VALUE_NOT_FOUND if the list was already empty.
  */
-enum cc_stat list_remove_all_free(List *list) {
+enum cc_stat list_remove_all_free(List *list)
+{
 	bool unlinked = unlink_all(list, true);
 
-	if (unlinked) {
+	if (unlinked)
+	{
 		list->head = NULL;
 		list->tail = NULL;
 		return CC_OK;
@@ -631,11 +672,13 @@ enum cc_stat list_remove_all_free(List *list) {
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE
  * if the index was out of range.
  */
-enum cc_stat list_replace_at(List *list, void *element, size_t index, void **out) {
+enum cc_stat list_replace_at(List *list, void *element, size_t index, void **out)
+{
 	Node *node;
 	enum cc_stat status = get_node_at(list, index, &node);
 
-	if (status == CC_OK) {
+	if (status == CC_OK)
+	{
 		void *old = node->data;
 		node->data = element;
 		if (out)
@@ -654,7 +697,8 @@ enum cc_stat list_replace_at(List *list, void *element, size_t index, void **out
  *
  * @return CC_OK if the element was found, or CC_ERR_VALUE_NOT_FOUND if not.
  */
-enum cc_stat list_get_first(List *list, void **out) {
+enum cc_stat list_get_first(List *list, void **out)
+{
 	if (list->size == 0)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -671,7 +715,8 @@ enum cc_stat list_get_first(List *list, void **out) {
  *
  * @return CC_OK if the element was found, or CC_ERR_VALUE_NOT_FOUND if not.
  */
-enum cc_stat list_get_last(List *list, void **out) {
+enum cc_stat list_get_last(List *list, void **out)
+{
 	if (list->size == 0)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -691,7 +736,8 @@ enum cc_stat list_get_last(List *list, void **out) {
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the index
  * was out of range.
  */
-enum cc_stat list_get_at(List *list, size_t index, void **out) {
+enum cc_stat list_get_at(List *list, size_t index, void **out)
+{
 	Node *node;
 	enum cc_stat status = get_node_at(list, index, &node);
 
@@ -706,7 +752,8 @@ enum cc_stat list_get_at(List *list, size_t index, void **out) {
  *
  * @param[in] list list that is being reversed
  */
-void list_reverse(List *list) {
+void list_reverse(List *list)
+{
 	if (list->size == 0 || list->size == 1)
 		return;
 
@@ -717,7 +764,8 @@ void list_reverse(List *list) {
 	Node *right = list->tail;
 
 	size_t i;
-	for (i = 0; i < list->size / 2; i++) {
+	for (i = 0; i < list->size / 2; i++)
+	{
 		Node *tmpl = left->next;
 		Node *tmpr = right->prev;
 
@@ -752,7 +800,8 @@ void list_reverse(List *list) {
  * if the specified index range is invalid, or CC_ERR_ALLOC if the memory allocation
  * for the new sublist failed.
  */
-enum cc_stat list_sublist(List *list, size_t b, size_t e, List **out) {
+enum cc_stat list_sublist(List *list, size_t b, size_t e, List **out)
+{
 	if (b > e || e >= list->size)
 		return CC_ERR_INVALID_RANGE;
 
@@ -771,15 +820,18 @@ enum cc_stat list_sublist(List *list, size_t b, size_t e, List **out) {
 	Node *node;
 	status = get_node_at(list, b, &node);
 
-	if (status != CC_OK) {
+	if (status != CC_OK)
+	{
 		list->mem_free(sub);
 		return status;
 	}
 
 	size_t i;
-	for (i = b; i <= e; i++) {
+	for (i = b; i <= e; i++)
+	{
 		status = list_add(sub, node->data);
-		if (status != CC_OK) {
+		if (status != CC_OK)
+		{
 			list_destroy(sub);
 			return status;
 		}
@@ -803,7 +855,8 @@ enum cc_stat list_sublist(List *list, size_t b, size_t e, List **out) {
  * @return CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat list_copy_shallow(List *list, List **out) {
+enum cc_stat list_copy_shallow(List *list, List **out)
+{
 	ListConf conf;
 
 	conf.mem_alloc = list->mem_alloc;
@@ -818,13 +871,16 @@ enum cc_stat list_copy_shallow(List *list, List **out) {
 
 	Node *node = list->head;
 
-	if (!node) {
+	if (!node)
+	{
 		*out = copy;
 		return CC_OK;
 	}
-	while (node) {
+	while (node)
+	{
 		status = list_add(copy, node->data);
-		if (status != CC_OK) {
+		if (status != CC_OK)
+		{
 			list_destroy(copy);
 			return status;
 		}
@@ -848,7 +904,8 @@ enum cc_stat list_copy_shallow(List *list, List **out) {
  * @return  CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat list_copy_deep(List *list, void *(*cp) (void *e1), List **out) {
+enum cc_stat list_copy_deep(List *list, void *(*cp) (void *e1), List **out)
+{
 	ListConf conf;
 
 	conf.mem_alloc = list->mem_alloc;
@@ -863,14 +920,17 @@ enum cc_stat list_copy_deep(List *list, void *(*cp) (void *e1), List **out) {
 
 	Node *node = list->head;
 
-	if (!node) {
+	if (!node)
+	{
 		*out = copy;
 		return CC_OK;
 	}
 
-	while (node) {
+	while (node)
+	{
 		status = list_add(copy, cp(node->data));
-		if (status != CC_OK) {
+		if (status != CC_OK)
+		{
 			list_destroy(copy);
 			return status;
 		}
@@ -892,7 +952,8 @@ enum cc_stat list_copy_deep(List *list, void *(*cp) (void *e1), List **out) {
  * @return CC_OK if the array was successfully created, CC_ERR_INVALID_RANGE if the
  * list is emtpy, or CC_ERR_ALLOC if the memory allocation for the new array failed.
  */
-enum cc_stat list_to_array(List *list, void ***out) {
+enum cc_stat list_to_array(List *list, void ***out)
+{
 	if (list->size == 0)
 		return CC_ERR_INVALID_RANGE;
 
@@ -904,7 +965,8 @@ enum cc_stat list_to_array(List *list, void ***out) {
 	Node *node = list->head;
 
 	size_t i;
-	for (i = 0; i < list->size; i++) {
+	for (i = 0; i < list->size; i++)
+	{
 		array[i] = node->data;
 		node = node->next;
 	}
@@ -921,7 +983,8 @@ enum cc_stat list_to_array(List *list, void ***out) {
  *
  * @return number of matches found.
  */
-size_t list_contains(List *list, void *element) {
+size_t list_contains(List *list, void *element)
+{
 	return list_contains_value(list, element, cc_common_cmp_ptr);
 }
 
@@ -936,11 +999,13 @@ size_t list_contains(List *list, void *element) {
  *
  * @return number of matches found.
  */
-size_t list_contains_value(List *list, void *element, int (*cmp) (const void*, const void*)) {
+size_t list_contains_value(List *list, void *element, int (*cmp) (const void*, const void*))
+{
 	Node *node = list->head;
 	size_t e_count = 0;
 
-	while (node) {
+	while (node)
+	{
 		if (cmp(node->data, element) == 0)
 			e_count++;
 		node = node->next;
@@ -961,12 +1026,15 @@ size_t list_contains_value(List *list, void *element, int (*cmp) (const void*, c
  *
  * @return CC_OK if the index was found, or CC_OUT_OF_RANGE if not.
  */
-enum cc_stat list_index_of(List *list, void *element, int (*cmp) (const void*, const void*), size_t *index) {
+enum cc_stat list_index_of(List *list, void *element, int (*cmp) (const void*, const void*), size_t *index)
+{
 	Node *node = list->head;
 	size_t i = 0;
 
-	while (node) {
-		if (cmp(node->data, element) == 0) {
+	while (node)
+	{
+		if (cmp(node->data, element) == 0)
+		{
 			*index = i;
 			return CC_OK;
 		}
@@ -983,7 +1051,8 @@ enum cc_stat list_index_of(List *list, void *element, int (*cmp) (const void*, c
  *
  * @return the number of the elements contained in the specified list.
  */
-size_t list_size(List *list) {
+size_t list_size(List *list)
+{
 	return list->size;
 }
 
@@ -1007,7 +1076,8 @@ size_t list_size(List *list) {
  * @return CC_OK if the sort was performed successfully, or CC_ERR_ALLOC
  * if it could not allocate enough memory to perform the sort.
  */
-enum cc_stat list_sort(List *list, int (*cmp) (void const *e1, void const *e2)) {
+enum cc_stat list_sort(List *list, int (*cmp) (void const *e1, void const *e2))
+{
 	void **elements;
 	enum cc_stat status = list_to_array(list, &elements);
 
@@ -1019,7 +1089,8 @@ enum cc_stat list_sort(List *list, int (*cmp) (void const *e1, void const *e2)) 
 	qsort(elements, list->size, sizeof (void*), cmp);
 
 	size_t i;
-	for (i = 0; i < list->size; i++) {
+	for (i = 0; i < list->size; i++)
+	{
 		node->data = elements[i];
 		node = node->next;
 	}
@@ -1045,7 +1116,8 @@ static void merge(Node**, Node**, size_t, size_t, int (*cmp) (void const *e1, vo
  *                0 if the elements are equal and > 0 if the second goes
  *                before the first
  */
-void list_sort_in_place(List *list, int (*cmp) (void const *e1, void const *e2)) {
+void list_sort_in_place(List *list, int (*cmp) (void const *e1, void const *e2))
+{
 	split(list, list->head, list->size, cmp);
 }
 
@@ -1059,7 +1131,8 @@ void list_sort_in_place(List *list, int (*cmp) (void const *e1, void const *e2))
  *
  * @return
  */
-static Node *split(List *list, Node *b, size_t size, int (*cmp) (void const*, void const*)) {
+static Node *split(List *list, Node *b, size_t size, int (*cmp) (void const*, void const*))
+{
 	if (size < 2)
 		return b;
 
@@ -1102,7 +1175,8 @@ static Node *split(List *list, Node *b, size_t size, int (*cmp) (void const*, vo
  *@param[in]      cmp    the comparator function
  */
 static INLINE void merge(Node **left, Node **right, size_t l_size,
-		size_t r_size, int (*cmp) (void const*, void const*)) {
+		size_t r_size, int (*cmp) (void const*, void const*))
+{
 	size_t size = r_size + l_size;
 	size_t l = 0; /* Number of processed elements from the left partition */
 	size_t r = 0; /* NUmber of processed elements from the right partition. */
@@ -1111,17 +1185,21 @@ static INLINE void merge(Node **left, Node **right, size_t l_size,
 	Node *r_part = *right;
 
 	size_t i;
-	for (i = 0; i < size; i++) {
+	for (i = 0; i < size; i++)
+	{
 		int c = cmp(&(l_part->data), &(r_part->data));
 
-		if ((c < 0 || c == 0)) {
+		if ((c < 0 || c == 0))
+		{
 			/* The two partitions are already sorted. */
-			if (i == 0 && size == 2) {
+			if (i == 0 && size == 2)
+			{
 				break;
 			}
 			/* If all the elements on the left side are in place,
 				 all the elements on the right must be as well. */
-			if (l == l_size) {
+			if (l == l_size)
+			{
 				/* Quickly advance the right pointer to the end for
 				 * the remainder of r and exit.*/
 				for (; r < r_size - 1; r++)
@@ -1131,12 +1209,14 @@ static INLINE void merge(Node **left, Node **right, size_t l_size,
 			}
 			l_part = l_part->next;
 			l++;
-		} else {
+		} else
+		{
 			Node *tmp = (r_part)->next;
 			link_behind(l_part, r_part);
 			/* The elements are swapped. Now set head and tail and
 			 * exit the loop. */
-			if (i == 0 && size == 2) {
+			if (i == 0 && size == 2)
+			{
 				*right = l_part;
 				*left = r_part;
 				break;
@@ -1144,7 +1224,8 @@ static INLINE void merge(Node **left, Node **right, size_t l_size,
 			r++;
 			/* All right partition elements are now behind the left
 			 * partition elements.*/
-			if (r == r_size) {
+			if (r == r_size)
+			{
 				/* Quickly advance the left partition pointer and set
 				 * the rightmost element as the new head. */
 				for (; l < l_size - 1; l++)
@@ -1152,7 +1233,8 @@ static INLINE void merge(Node **left, Node **right, size_t l_size,
 				*right = l_part;
 				break;
 			}
-			if (i == 0) {
+			if (i == 0)
+			{
 				*left = r_part;
 			}
 			r_part = tmp;
@@ -1168,10 +1250,12 @@ static INLINE void merge(Node **left, Node **right, size_t l_size,
  * @param[in] op the operation function that is to be invoked on each list
  *               element
  */
-void list_foreach(List *list, void (*op) (void *e)) {
+void list_foreach(List *list, void (*op) (void *e))
+{
 	Node *n = list->head;
 
-	while (n) {
+	while (n)
+	{
 		op(n->data);
 		n = n->next;
 	}
@@ -1188,17 +1272,20 @@ void list_foreach(List *list, void (*op) (void *e)) {
  * @return CC_OK if the list was filtered successfully, or CC_ERR_OUT_OF_RANGE
  * if the List is empty.
  */
-enum cc_stat list_filter_mut(List *list, bool(*pred) (const void*)) {
+enum cc_stat list_filter_mut(List *list, bool(*pred) (const void*))
+{
 	if (list_size(list) == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
 	Node *curr = list->head;
 	Node *next = NULL;
 
-	while (curr) {
+	while (curr)
+	{
 		next = curr->next;
 
-		if (!pred(curr->data)) {
+		if (!pred(curr->data))
+		{
 			unlink(list, curr);
 		}
 		curr = next;
@@ -1221,7 +1308,8 @@ enum cc_stat list_filter_mut(List *list, bool(*pred) (const void*)) {
  * if the list is empty, or CC_ERR_ALLOC if the memory allocation for the
  * new list failed.
  */
-enum cc_stat list_filter(List *list, bool(*pred) (const void*), List **out) {
+enum cc_stat list_filter(List *list, bool(*pred) (const void*), List **out)
+{
 	if (list_size(list) == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -1233,8 +1321,10 @@ enum cc_stat list_filter(List *list, bool(*pred) (const void*), List **out) {
 
 	Node *curr = list->head;
 
-	while (curr) {
-		if (pred(curr->data)) {
+	while (curr)
+	{
+		if (pred(curr->data))
+		{
 			list_add(filtered, curr->data);
 		}
 		curr = curr->next;
@@ -1251,7 +1341,8 @@ enum cc_stat list_filter(List *list, bool(*pred) (const void*), List **out) {
  * @param[in] iter the iterator that is being initialized
  * @param[in] list list to iterate over
  */
-void list_iter_init(ListIter *iter, List *list) {
+void list_iter_init(ListIter *iter, List *list)
+{
 	iter->index = 0;
 	iter->list = list;
 	iter->last = NULL;
@@ -1273,7 +1364,8 @@ void list_iter_init(ListIter *iter, List *list) {
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat list_iter_remove(ListIter *iter, void **out) {
+enum cc_stat list_iter_remove(ListIter *iter, void **out)
+{
 	if (!iter->last)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1299,7 +1391,8 @@ enum cc_stat list_iter_remove(ListIter *iter, void **out) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC
  * if the memory allocation for the new element failed.
  */
-enum cc_stat list_iter_add(ListIter *iter, void *element) {
+enum cc_stat list_iter_add(ListIter *iter, void *element)
+{
 	Node *new_node = iter->list->mem_calloc(1, sizeof (Node));
 
 	if (!new_node)
@@ -1334,7 +1427,8 @@ enum cc_stat list_iter_add(ListIter *iter, void *element) {
  * @return CC_OK if the element was replaced successfully, or
  * CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat list_iter_replace(ListIter *iter, void *element, void **out) {
+enum cc_stat list_iter_replace(ListIter *iter, void *element, void **out)
+{
 	if (!iter->last)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1354,7 +1448,8 @@ enum cc_stat list_iter_replace(ListIter *iter, void *element, void **out) {
  *
  * @return the index.
  */
-size_t list_iter_index(ListIter *iter) {
+size_t list_iter_index(ListIter *iter)
+{
 	return iter->index - 1;
 }
 
@@ -1368,7 +1463,8 @@ size_t list_iter_index(ListIter *iter) {
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the list has been reached.
  */
-enum cc_stat list_iter_next(ListIter *iter, void **out) {
+enum cc_stat list_iter_next(ListIter *iter, void **out)
+{
 	if (!iter->next)
 		return CC_ITER_END;
 
@@ -1389,7 +1485,8 @@ enum cc_stat list_iter_next(ListIter *iter, void **out) {
  * @param[in] iter the iterator
  * @param[in] list list on which this iterator will operate
  */
-void list_diter_init(ListIter *iter, List *list) {
+void list_diter_init(ListIter *iter, List *list)
+{
 	iter->index = list->size;
 	iter->list = list;
 	iter->last = NULL;
@@ -1410,7 +1507,8 @@ void list_diter_init(ListIter *iter, List *list) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC
  * if the memory allocation for the new element failed.
  */
-enum cc_stat list_diter_add(ListIter *iter, void *element) {
+enum cc_stat list_diter_add(ListIter *iter, void *element)
+{
 	Node *new_node = iter->list->mem_calloc(1, sizeof (Node));
 
 	if (!new_node)
@@ -1443,7 +1541,8 @@ enum cc_stat list_diter_add(ListIter *iter, void *element) {
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat list_diter_remove(ListIter *iter, void **out) {
+enum cc_stat list_diter_remove(ListIter *iter, void **out)
+{
 	if (!iter->last)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1472,7 +1571,8 @@ enum cc_stat list_diter_remove(ListIter *iter, void **out) {
  * @return CC_OK if the element was replaced successfully, or
  * CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat list_diter_replace(ListIter *iter, void *element, void **out) {
+enum cc_stat list_diter_replace(ListIter *iter, void *element, void **out)
+{
 	if (!iter->last)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1492,7 +1592,8 @@ enum cc_stat list_diter_replace(ListIter *iter, void *element, void **out) {
  *
  * @return the index.
  */
-size_t list_diter_index(ListIter *iter) {
+size_t list_diter_index(ListIter *iter)
+{
 	return iter->index - 1;
 }
 
@@ -1506,7 +1607,8 @@ size_t list_diter_index(ListIter *iter) {
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the list has been reached.
  */
-enum cc_stat list_diter_next(ListIter *iter, void **out) {
+enum cc_stat list_diter_next(ListIter *iter, void **out)
+{
 	if (!iter->next)
 		return CC_ITER_END;
 
@@ -1527,7 +1629,8 @@ enum cc_stat list_diter_next(ListIter *iter, void **out) {
  * @param[in] l1   first list
  * @param[in] l2   second list
  */
-void list_zip_iter_init(ListZipIter *iter, List *l1, List *l2) {
+void list_zip_iter_init(ListZipIter *iter, List *l1, List *l2)
+{
 	iter->index = 0;
 	iter->l1 = l1;
 	iter->l2 = l2;
@@ -1547,7 +1650,8 @@ void list_zip_iter_init(ListZipIter *iter, List *l1, List *l2) {
  * @return CC_OK if a next element pair is returned, or CC_ITER_END if the end of one
  * of the lists has been reached.
  */
-enum cc_stat list_zip_iter_next(ListZipIter *iter, void **out1, void **out2) {
+enum cc_stat list_zip_iter_next(ListZipIter *iter, void **out1, void **out2)
+{
 	if (!iter->l1_next || !iter->l2_next)
 		return CC_ITER_END;
 
@@ -1582,7 +1686,8 @@ enum cc_stat list_zip_iter_next(ListZipIter *iter, void **out1, void **out2) {
  * @return CC_OK if the element pair was successfully added to the lists, or
  * CC_ERR_ALLOC if the memory allocation for the new elements failed.
  */
-enum cc_stat list_zip_iter_add(ListZipIter *iter, void *e1, void *e2) {
+enum cc_stat list_zip_iter_add(ListZipIter *iter, void *e1, void *e2)
+{
 	Node *new_node1 = iter->l1->mem_calloc(1, sizeof (Node));
 
 	if (!new_node1)
@@ -1590,7 +1695,8 @@ enum cc_stat list_zip_iter_add(ListZipIter *iter, void *e1, void *e2) {
 
 	Node *new_node2 = iter->l2->mem_calloc(1, sizeof (Node));
 
-	if (!new_node2) {
+	if (!new_node2)
+	{
 		iter->l1->mem_free(new_node1);
 		return CC_ERR_ALLOC;
 	}
@@ -1627,7 +1733,8 @@ enum cc_stat list_zip_iter_add(ListZipIter *iter, void *e1, void *e2) {
  *
  * @return CC_OK if the element was removed successfully, or CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat list_zip_iter_remove(ListZipIter *iter, void **out1, void **out2) {
+enum cc_stat list_zip_iter_remove(ListZipIter *iter, void **out1, void **out2)
+{
 	if (!iter->l1_last || !iter->l2_last)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1661,7 +1768,8 @@ enum cc_stat list_zip_iter_remove(ListZipIter *iter, void **out1, void **out2) {
  *
  * @return CC_OK if the element was replaced successfully, or CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat list_zip_iter_replace(ListZipIter *iter, void *e1, void *e2, void **out1, void **out2) {
+enum cc_stat list_zip_iter_replace(ListZipIter *iter, void *e1, void *e2, void **out1, void **out2)
+{
 	if (!iter->l1_last || !iter->l2_last)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1687,7 +1795,8 @@ enum cc_stat list_zip_iter_replace(ListZipIter *iter, void *e1, void *e2, void *
  *
  * @return current iterator index.
  */
-size_t list_zip_iter_index(ListZipIter *iter) {
+size_t list_zip_iter_index(ListZipIter *iter)
+{
 	return iter->index - 1;
 }
 
@@ -1699,7 +1808,8 @@ size_t list_zip_iter_index(ListZipIter *iter) {
  * @param[in] ins  the node that is being linked behind the <code>base</code>
  *                 node
  */
-static void link_behind(Node * const base, Node *ins) {
+static void link_behind(Node * const base, Node *ins)
+{
 	/* link the gap */
 	if (ins->next != NULL)
 		ins->next->prev = ins->prev;
@@ -1708,11 +1818,13 @@ static void link_behind(Node * const base, Node *ins) {
 		ins->prev->next = ins->next;
 
 	/* link behind */
-	if (base->prev == NULL) {
+	if (base->prev == NULL)
+	{
 		ins->prev = NULL;
 		ins->next = base;
 		base->prev = ins;
-	} else {
+	} else
+	{
 		ins->prev = base->prev;
 		ins->prev->next = ins;
 		ins->next = base;
@@ -1728,18 +1840,21 @@ static void link_behind(Node * const base, Node *ins) {
  * @param[in] ins  the node that is being linked in front the <code>base</code>
  *                 node
  */
-static void link_after(Node *base, Node *ins) {
+static void link_after(Node *base, Node *ins)
+{
 	if (ins->next)
 		ins->next->prev = ins->prev;
 
 	if (ins->prev)
 		ins->prev->next = ins->next;
 
-	if (!base->next) {
+	if (!base->next)
+	{
 		ins->prev = base;
 		base->next = ins;
 		ins->next = NULL;
-	} else {
+	} else
+	{
 		ins->next = base->next;
 		ins->next->prev = ins;
 		ins->prev = base;
@@ -1753,9 +1868,11 @@ static void link_after(Node *base, Node *ins) {
  * @param[in] n1 the first node
  * @param[in] n2 the second node
  */
-static void swap(Node *n1, Node *n2) {
+static void swap(Node *n1, Node *n2)
+{
 	/* A special case is when the nodes are next to each other */
-	if (n1->next == n2 || n2->next == n1) {
+	if (n1->next == n2 || n2->next == n1)
+	{
 		swap_adjacent(n1, n2);
 		return;
 	}
@@ -1793,8 +1910,10 @@ static void swap(Node *n1, Node *n2) {
  * @param[in] n1 the first node
  * @param[in] n2 the second node
  */
-static void swap_adjacent(Node *n1, Node *n2) {
-	if (n1->next == n2) {
+static void swap_adjacent(Node *n1, Node *n2)
+{
+	if (n1->next == n2)
+	{
 		if (n2->next)
 			n2->next->prev = n1;
 
@@ -1810,7 +1929,8 @@ static void swap_adjacent(Node *n1, Node *n2) {
 		return;
 	}
 
-	if (n2->next == n1) {
+	if (n2->next == n1)
+	{
 		if (n1->next)
 			n1->next->prev = n2;
 
@@ -1835,7 +1955,8 @@ static void swap_adjacent(Node *n1, Node *n2) {
  *
  * @return the data that was at this node.
  */
-static void *unlink(List *list, Node *node) {
+static void *unlink(List *list, Node *node)
+{
 	void *data = node->data;
 
 	if (node->prev != NULL)
@@ -1865,13 +1986,15 @@ static void *unlink(List *list, Node *node) {
  *
  * @return false if the list is already empty, otherwise returns true.
  */
-static bool unlink_all(List *list, bool freed) {
+static bool unlink_all(List *list, bool freed)
+{
 	if (list->size == 0)
 		return false;
 
 	Node *node = list->head;
 
-	while (node) {
+	while (node)
+	{
 		Node *tmp = node->next;
 
 		if (freed)
@@ -1891,18 +2014,21 @@ static bool unlink_all(List *list, bool freed) {
  *
  * @return CC_OK if the node was found, or CC_ERR_OUT_OF_RANGE if not.
  */
-static enum cc_stat get_node_at(List *list, size_t index, Node **out) {
+static enum cc_stat get_node_at(List *list, size_t index, Node **out)
+{
 	if (!list || index >= list->size)
 		return CC_ERR_OUT_OF_RANGE;
 
 	size_t i;
 	Node *node = NULL;
 
-	if (index < list->size / 2) {
+	if (index < list->size / 2)
+	{
 		node = list->head;
 		for (i = 0; i < index; i++)
 			node = node->next;
-	} else {
+	} else
+	{
 		node = list->tail;
 		for (i = list->size - 1; i > index; i--)
 			node = node->prev;
@@ -1921,9 +2047,11 @@ static enum cc_stat get_node_at(List *list, size_t index, Node **out) {
  *
  * @return the node associated with the specified element.
  */
-static Node *get_node(List *list, void *element) {
+static Node *get_node(List *list, void *element)
+{
 	Node *node = list->head;
-	while (node) {
+	while (node)
+	{
 		if (cc_common_cmp_ptr(node->data, element) == 0)
 			return node;
 		node = node->next;

@@ -25,7 +25,8 @@
 #define DEFAULT_CAPACITY 8
 #define DEFAULT_EXPANSION_FACTOR 2
 
-struct deque_s {
+struct deque_s
+{
 	size_t size;
 	size_t capacity;
 	size_t first;
@@ -50,7 +51,8 @@ static enum cc_stat expand_capacity(Deque *deque);
  * @return CC_OK if the creation was successful, or CC_ERR_ALLOC if the
  * memory allocation for the new Deque structure failed.
  */
-enum cc_stat deque_new(Deque **deque) {
+enum cc_stat deque_new(Deque **deque)
+{
 	DequeConf conf;
 	deque_conf_init(&conf);
 	return deque_new_conf(&conf, deque);
@@ -71,13 +73,15 @@ enum cc_stat deque_new(Deque **deque) {
  * the above mentioned condition is not met, or CC_ERR_ALLOC if the memory
  * allocation for the new Deque structure failed.
  */
-enum cc_stat deque_new_conf(DequeConf const * const conf, Deque **d) {
+enum cc_stat deque_new_conf(DequeConf const * const conf, Deque **d)
+{
 	Deque *deque = conf->mem_calloc(1, sizeof (Deque));
 
 	if (!deque)
 		return CC_ERR_ALLOC;
 
-	if (!(deque->buffer = conf->mem_alloc(conf->capacity * sizeof (void*)))) {
+	if (!(deque->buffer = conf->mem_alloc(conf->capacity * sizeof (void*))))
+	{
 		conf->mem_free(deque);
 		return CC_ERR_ALLOC;
 	}
@@ -99,7 +103,8 @@ enum cc_stat deque_new_conf(DequeConf const * const conf, Deque **d) {
  *
  * @param[in, out] conf DequeConf structure that is being initialized
  */
-void deque_conf_init(DequeConf *conf) {
+void deque_conf_init(DequeConf *conf)
+{
 	conf->capacity = DEFAULT_CAPACITY;
 	conf->mem_alloc = umm_malloc;
 	conf->mem_calloc = umm_calloc;
@@ -111,7 +116,8 @@ void deque_conf_init(DequeConf *conf) {
  *
  * @param[in] deque Deque that is to be destroyed
  */
-void deque_destroy(Deque *deque) {
+void deque_destroy(Deque *deque)
+{
 	deque->mem_free(deque->buffer);
 	deque->mem_free(deque);
 }
@@ -125,7 +131,8 @@ void deque_destroy(Deque *deque) {
  *
  * @param[in] deque Deque that is to be destroyed
  */
-void deque_destroy_free(Deque *deque) {
+void deque_destroy_free(Deque *deque)
+{
 	deque_remove_all_free(deque);
 	deque_destroy(deque);
 }
@@ -140,7 +147,8 @@ void deque_destroy_free(Deque *deque) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element has failed.
  */
-enum cc_stat deque_add(Deque *deque, void *element) {
+enum cc_stat deque_add(Deque *deque, void *element)
+{
 	return deque_add_last(deque, element);
 }
 
@@ -153,7 +161,8 @@ enum cc_stat deque_add(Deque *deque, void *element) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element has failed.
  */
-enum cc_stat deque_add_first(Deque *deque, void *element) {
+enum cc_stat deque_add_first(Deque *deque, void *element)
+{
 	if (deque->size >= deque->capacity && expand_capacity(deque) != CC_OK)
 		return CC_ERR_ALLOC;
 
@@ -173,7 +182,8 @@ enum cc_stat deque_add_first(Deque *deque, void *element) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC if the
  * memory allocation for the new element has failed.
  */
-enum cc_stat deque_add_last(Deque *deque, void *element) {
+enum cc_stat deque_add_last(Deque *deque, void *element)
+{
 	if (deque->capacity == deque->size && expand_capacity(deque) != CC_OK)
 		return CC_ERR_ALLOC;
 
@@ -197,7 +207,8 @@ enum cc_stat deque_add_last(Deque *deque, void *element) {
  * the specified index was not in range, or CC_ERR_ALLOC if the memory
  * allocation for the new element failed.
  */
-enum cc_stat deque_add_at(Deque *deque, void *element, size_t index) {
+enum cc_stat deque_add_at(Deque *deque, void *element, size_t index)
+{
 	if (index >= deque->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -215,8 +226,10 @@ enum cc_stat deque_add_at(Deque *deque, void *element, size_t index) {
 	if (index == c)
 		return deque_add_last(deque, element);
 
-	if (index <= (deque->size / 2) - 1) {
-		if (p < f || f == 0) {
+	if (index <= (deque->size / 2) - 1)
+	{
+		if (p < f || f == 0)
+		{
 			/* _________________________________
 			 * | 1 | 2 | 3 | 4 | 5 | . | . | 6 |
 			 * ---------------------------------
@@ -229,25 +242,30 @@ enum cc_stat deque_add_at(Deque *deque, void *element, size_t index) {
 
 			void *e_first = deque->buffer[0];
 
-			if (f != 0) {
+			if (f != 0)
+			{
 				memmove(&(deque->buffer[f - 1]),
 						&(deque->buffer[f]),
 						r_move * sizeof (void*));
 			}
-			if (p != 0) {
+			if (p != 0)
+			{
 				memmove(&(deque->buffer[0]),
 						&(deque->buffer[1]),
 						l_move * sizeof (void*));
 			}
 			deque->buffer[c] = e_first;
-		} else {
+		} else
+		{
 			memmove(&(deque->buffer[f - 1]),
 					&(deque->buffer[f]),
 					index * sizeof (void*));
 		}
 		deque->first = (deque->first - 1) & c;
-	} else {
-		if (p > l || l == c) {
+	} else
+	{
+		if (p > l || l == c)
+		{
 			/* _________________________________
 			 * | 1 | . | . | 6 | 5 | 4 | 3 | 2 |
 			 * ---------------------------------
@@ -257,18 +275,21 @@ enum cc_stat deque_add_at(Deque *deque, void *element, size_t index) {
 			 */
 			void* e_last = deque->buffer[c];
 
-			if (p != c) {
+			if (p != c)
+			{
 				memmove(&(deque->buffer[p + 1]),
 						&(deque->buffer[p]),
 						(c - p) * sizeof (void*));
 			}
-			if (l != c) {
+			if (l != c)
+			{
 				memmove(&(deque->buffer[1]),
 						&(deque->buffer[0]),
 						(l + 1) * sizeof (void*));
 			}
 			deque->buffer[0] = e_last;
-		} else {
+		} else
+		{
 			memmove(&(deque->buffer[p + 1]),
 					&(deque->buffer[p]),
 					(deque->size - index) * sizeof (void*));
@@ -295,7 +316,8 @@ enum cc_stat deque_add_at(Deque *deque, void *element, size_t index) {
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE
  *         if the index was out of range.
  */
-enum cc_stat deque_replace_at(Deque *deque, void *element, size_t index, void **out) {
+enum cc_stat deque_replace_at(Deque *deque, void *element, size_t index, void **out)
+{
 	if (index >= deque->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -321,7 +343,8 @@ enum cc_stat deque_replace_at(Deque *deque, void *element, size_t index, void **
  * @return CC_OK if the element was successfully removed, or
  * CC_ERR_VALUE_NOT_FOUND if the element was not found.
  */
-enum cc_stat deque_remove(Deque *deque, void *element, void **out) {
+enum cc_stat deque_remove(Deque *deque, void *element, void **out)
+{
 	size_t index;
 	enum cc_stat status = deque_index_of(deque, element, &index);
 
@@ -344,7 +367,8 @@ enum cc_stat deque_remove(Deque *deque, void *element, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_OUT_OF_RANGE
  * if the index was out of range.
  */
-enum cc_stat deque_remove_at(Deque *deque, size_t index, void **out) {
+enum cc_stat deque_remove_at(Deque *deque, size_t index, void **out)
+{
 	if (index >= deque->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -361,43 +385,53 @@ enum cc_stat deque_remove_at(Deque *deque, size_t index, void **out) {
 	if (index == c)
 		return deque_remove_last(deque, out);
 
-	if (index <= (deque->size / 2) - 1) {
-		if (p < f) {
+	if (index <= (deque->size / 2) - 1)
+	{
+		if (p < f)
+		{
 			void *e = deque->buffer[c];
 
-			if (f != c) {
+			if (f != c)
+			{
 				memmove(&(deque->buffer[f + 1]),
 						&(deque->buffer[f]),
 						(c - f) * sizeof (void*));
 			}
-			if (p != 0) {
+			if (p != 0)
+			{
 				memmove(&(deque->buffer[1]),
 						&(deque->buffer[0]),
 						p * sizeof (void*));
 			}
 			deque->buffer[0] = e;
-		} else {
+		} else
+		{
 			memmove(&(deque->buffer[f + 1]),
 					&(deque->buffer[f]),
 					index * sizeof (void*));
 		}
 		deque->first = (deque->first + 1) & c;
-	} else {
-		if (p > l) {
+	} else
+	{
+		if (p > l)
+		{
 			void *e = deque->buffer[0];
 
-			if (p != c) {
+			if (p != c)
+			{
 				memmove(&(deque->buffer[p]),
 						&(deque->buffer[p + 1]),
 						(c - p) * sizeof (void*));
 			}
-			if (p != 0) {
+			if (p != 0)
+			{
 				memmove(&(deque->buffer[1]),
 						&(deque->buffer[0]),
 						l * sizeof (void*));
 			}
 			deque->buffer[c] = e;
-		} else {
+		} else
+		{
 			memmove(&(deque->buffer[p]),
 					&(deque->buffer[p + 1]),
 					(l - p) * sizeof (void*));
@@ -422,7 +456,8 @@ enum cc_stat deque_remove_at(Deque *deque, size_t index, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_OUT_OF_RANGE
  * if the Deque is already empty.
  */
-enum cc_stat deque_remove_first(Deque *deque, void **out) {
+enum cc_stat deque_remove_first(Deque *deque, void **out)
+{
 	if (deque->size == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -445,7 +480,8 @@ enum cc_stat deque_remove_first(Deque *deque, void **out) {
  * @return CC_OK if the element was successfully removed, or CC_ERR_OUT_OF_RANGE
  * if the Deque is already empty.
  */
-enum cc_stat deque_remove_last(Deque *deque, void **out) {
+enum cc_stat deque_remove_last(Deque *deque, void **out)
+{
 	if (deque->size == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -467,7 +503,8 @@ enum cc_stat deque_remove_last(Deque *deque, void **out) {
 
  * @param[in] deque Deque from which all element are being removed
  */
-void deque_remove_all(Deque *deque) {
+void deque_remove_all(Deque *deque)
+{
 	deque->first = 0;
 	deque->last = 0;
 	deque->size = 0;
@@ -482,7 +519,8 @@ void deque_remove_all(Deque *deque) {
  *
  * @param[in] deque Deque from which all elements are being removed
  */
-void deque_remove_all_free(Deque *deque) {
+void deque_remove_all_free(Deque *deque)
+{
 	deque_foreach(deque, deque->mem_free);
 	deque_remove_all(deque);
 }
@@ -498,7 +536,8 @@ void deque_remove_all_free(Deque *deque) {
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the index
  * was out of range.
  */
-enum cc_stat deque_get_at(Deque const * const deque, size_t index, void **out) {
+enum cc_stat deque_get_at(Deque const * const deque, size_t index, void **out)
+{
 	if (index > deque->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -516,7 +555,8 @@ enum cc_stat deque_get_at(Deque const * const deque, size_t index, void **out) {
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the
  * Deque is empty.
  */
-enum cc_stat deque_get_first(Deque const * const deque, void **out) {
+enum cc_stat deque_get_first(Deque const * const deque, void **out)
+{
 	if (deque->size == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -533,7 +573,8 @@ enum cc_stat deque_get_first(Deque const * const deque, void **out) {
  * @return CC_OK if the element was found, or CC_ERR_OUT_OF_RANGE if the
  * Deque is empty.
  */
-enum cc_stat deque_get_last(Deque const * const deque, void **out) {
+enum cc_stat deque_get_last(Deque const * const deque, void **out)
+{
 	if (deque->size == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -555,13 +596,15 @@ enum cc_stat deque_get_last(Deque const * const deque, void **out) {
  * @return CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat deque_copy_shallow(Deque const * const deque, Deque **out) {
+enum cc_stat deque_copy_shallow(Deque const * const deque, Deque **out)
+{
 	Deque *copy = deque->mem_alloc(sizeof (Deque));
 
 	if (!copy)
 		return CC_ERR_ALLOC;
 
-	if (!(copy->buffer = deque->mem_alloc(deque->capacity * sizeof (void*)))) {
+	if (!(copy->buffer = deque->mem_alloc(deque->capacity * sizeof (void*))))
+	{
 		deque->mem_free(copy);
 		return CC_ERR_ALLOC;
 	}
@@ -595,13 +638,15 @@ enum cc_stat deque_copy_shallow(Deque const * const deque, Deque **out) {
  * @return CC_OK if the copy was successfully created, or CC_ERR_ALLOC if the
  * memory allocation for the copy failed.
  */
-enum cc_stat deque_copy_deep(Deque const * const deque, void *(*cp) (void*), Deque **out) {
+enum cc_stat deque_copy_deep(Deque const * const deque, void *(*cp) (void*), Deque **out)
+{
 	Deque *copy = deque->mem_alloc(sizeof (Deque));
 
 	if (!copy)
 		return CC_ERR_ALLOC;
 
-	if (!(copy->buffer = deque->mem_alloc(deque->capacity * sizeof (void*)))) {
+	if (!(copy->buffer = deque->mem_alloc(deque->capacity * sizeof (void*))))
+	{
 		deque->mem_free(copy);
 		return CC_ERR_ALLOC;
 	}
@@ -631,7 +676,8 @@ enum cc_stat deque_copy_deep(Deque const * const deque, void *(*cp) (void*), Deq
  * @return CC_OK if the capacity was trimmed successfully, or CC_ERR_ALLOC if
  * the reallocation failed.
  */
-enum cc_stat deque_trim_capacity(Deque *deque) {
+enum cc_stat deque_trim_capacity(Deque *deque)
+{
 	if (deque->capacity == deque->size)
 		return CC_OK;
 
@@ -660,7 +706,8 @@ enum cc_stat deque_trim_capacity(Deque *deque) {
  *
  * @param[in] deque the deque that is being reversed
  */
-void deque_reverse(Deque *deque) {
+void deque_reverse(Deque *deque)
+{
 	size_t i;
 	size_t j;
 	size_t s = deque->size;
@@ -668,7 +715,8 @@ void deque_reverse(Deque *deque) {
 
 	size_t first = deque->first;
 
-	for (i = 0, j = s - 1; i < (s - 1) / 2; i++, j--) {
+	for (i = 0, j = s - 1; i < (s - 1) / 2; i++, j--)
+	{
 		size_t f = (first + i) & c;
 		size_t l = (first + j) & c;
 
@@ -686,7 +734,8 @@ void deque_reverse(Deque *deque) {
  *
  * @return the number of occurrences of the element
  */
-size_t deque_contains(Deque const * const deque, const void *element) {
+size_t deque_contains(Deque const * const deque, const void *element)
+{
 	return deque_contains_value(deque, element, cc_common_cmp_ptr);
 }
 
@@ -700,11 +749,13 @@ size_t deque_contains(Deque const * const deque, const void *element) {
  *
  * @return the number of occurrences of the element
  */
-size_t deque_contains_value(Deque const * const deque, const void *element, int (*cmp) (const void*, const void*)) {
+size_t deque_contains_value(Deque const * const deque, const void *element, int (*cmp) (const void*, const void*))
+{
 	size_t i;
 	size_t o = 0;
 
-	for (i = 0; i < deque->size; i++) {
+	for (i = 0; i < deque->size; i++)
+	{
 		size_t p = (deque->first + i) & (deque->capacity - 1);
 		if (cmp(deque->buffer[p], element) == 0)
 			o++;
@@ -723,12 +774,15 @@ size_t deque_contains_value(Deque const * const deque, const void *element, int 
  *
  * @return CC_OK if the index was found, or CC_OUT_OF_RANGE if not.
  */
-enum cc_stat deque_index_of(Deque const * const deque, const void *element, size_t *index) {
+enum cc_stat deque_index_of(Deque const * const deque, const void *element, size_t *index)
+{
 	size_t i;
 
-	for (i = 0; i < deque->size; i++) {
+	for (i = 0; i < deque->size; i++)
+	{
 		size_t p = (deque->first + i) & (deque->capacity - 1);
-		if (deque->buffer[p] == element) {
+		if (deque->buffer[p] == element)
+		{
 			*index = i;
 			return CC_OK;
 		}
@@ -744,7 +798,8 @@ enum cc_stat deque_index_of(Deque const * const deque, const void *element, size
  *
  * @return the number of elements within the specified Deque
  */
-size_t deque_size(Deque const * const deque) {
+size_t deque_size(Deque const * const deque)
+{
 	return deque->size;
 }
 
@@ -757,7 +812,8 @@ size_t deque_size(Deque const * const deque) {
  *
  * @return the capacity of the specified Deque
  */
-size_t deque_capacity(Deque const * const deque) {
+size_t deque_capacity(Deque const * const deque)
+{
 	return deque->capacity;
 }
 
@@ -770,7 +826,8 @@ size_t deque_capacity(Deque const * const deque) {
  *
  * @return Deques internal buffer
  */
-const void* const *deque_get_buffer(Deque const * const deque) {
+const void* const *deque_get_buffer(Deque const * const deque)
+{
 	return (const void* const*) deque->buffer;
 }
 
@@ -781,10 +838,12 @@ const void* const *deque_get_buffer(Deque const * const deque) {
  * @param[in] fn    the operation function that is to be invoked on each Deque
  *                  element
  */
-void deque_foreach(Deque *deque, void (*fn) (void *)) {
+void deque_foreach(Deque *deque, void (*fn) (void *))
+{
 	size_t i;
 
-	for (i = 0; i < deque->size; i++) {
+	for (i = 0; i < deque->size; i++)
+	{
 		size_t p = (deque->first + i) & (deque->capacity - 1);
 		fn(deque->buffer[p]);
 	}
@@ -801,18 +860,22 @@ void deque_foreach(Deque *deque, void (*fn) (void *)) {
  * @return CC_OK if the deque was filtered successfully, or CC_ERR_OUT_OF_RANGE
  * if the Deque is empty.
  */
-enum cc_stat deque_filter_mut(Deque *deque, bool(*pred) (const void*)) {
+enum cc_stat deque_filter_mut(Deque *deque, bool(*pred) (const void*))
+{
 	if (deque_size(deque) == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
 	size_t i = 0, c = deque->capacity - 1;
 
-	while (i < deque_size(deque)) {
+	while (i < deque_size(deque))
+	{
 		size_t d_index = (deque->first + i) & c;
 
-		if (!pred(deque->buffer[d_index])) {
+		if (!pred(deque->buffer[d_index]))
+		{
 			deque_remove_at(deque, i, NULL);
-		} else {
+		} else
+		{
 			i++;
 		}
 	}
@@ -834,7 +897,8 @@ enum cc_stat deque_filter_mut(Deque *deque, bool(*pred) (const void*)) {
  * if the deque is empty, or CC_ERR_ALLOC if the memory allocation for the
  * new deque failed.
  */
-enum cc_stat deque_filter(Deque *deque, bool(*pred) (const void*), Deque **out) {
+enum cc_stat deque_filter(Deque *deque, bool(*pred) (const void*), Deque **out)
+{
 	if (deque_size(deque) == 0)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -845,10 +909,12 @@ enum cc_stat deque_filter(Deque *deque, bool(*pred) (const void*), Deque **out) 
 	if (!filtered)
 		return CC_ERR_ALLOC;
 
-	for (i = 0; i < deque->size; i++) {
+	for (i = 0; i < deque->size; i++)
+	{
 		size_t d_index = (deque->first + i) & (deque->capacity - 1);
 
-		if (pred(deque->buffer[d_index])) {
+		if (pred(deque->buffer[d_index]))
+		{
 			deque_add(filtered, deque->buffer[d_index]);
 		}
 	}
@@ -868,13 +934,17 @@ enum cc_stat deque_filter(Deque *deque, bool(*pred) (const void*), Deque **out) 
  * @param[in] cp An optional copy function that returns a copy of the element passed to it.
  *            If NULL is passed, then only a shallow copy will be performed.
  */
-static void copy_buffer(Deque const * const deque, void **buff, void *(*cp) (void *)) {
-	if (cp == NULL) {
-		if (deque->last > deque->first) {
+static void copy_buffer(Deque const * const deque, void **buff, void *(*cp) (void *))
+{
+	if (cp == NULL)
+	{
+		if (deque->last > deque->first)
+		{
 			memcpy(buff,
 					&(deque->buffer[deque->first]),
 					deque->size * sizeof (void*));
-		} else {
+		} else
+		{
 			size_t l = deque->last;
 			size_t e = deque->capacity - deque->first;
 
@@ -886,9 +956,11 @@ static void copy_buffer(Deque const * const deque, void **buff, void *(*cp) (voi
 					deque->buffer,
 					l * sizeof (void*));
 		}
-	} else {
+	} else
+	{
 		size_t i;
-		for (i = 0; i < deque->size; i++) {
+		for (i = 0; i < deque->size; i++)
+		{
 			size_t p = (deque->first + i) & (deque->capacity - 1);
 			buff[i] = cp(deque->buffer[p]);
 		}
@@ -906,7 +978,8 @@ static void copy_buffer(Deque const * const deque, void **buff, void *(*cp) (voi
  * the memory allocation for the new buffer failed, or CC_ERR_MAX_CAPACITY
  * if the Deque is already at maximum capacity.
  */
-static enum cc_stat expand_capacity(Deque *deque) {
+static enum cc_stat expand_capacity(Deque *deque)
+{
 	if (deque->capacity == MAX_POW_TWO)
 		return CC_ERR_MAX_CAPACITY;
 
@@ -934,7 +1007,8 @@ static enum cc_stat expand_capacity(Deque *deque) {
  *
  * @return the nearest upper power of two
  */
-static INLINE size_t upper_pow_two(size_t n) {
+static INLINE size_t upper_pow_two(size_t n)
+{
 	if (n >= MAX_POW_TWO)
 		return MAX_POW_TWO;
 
@@ -963,7 +1037,8 @@ static INLINE size_t upper_pow_two(size_t n) {
  * @param[in] iter the iterator that is being initialized
  * @param[in] deque the vector to iterate over
  */
-void deque_iter_init(DequeIter *iter, Deque *deque) {
+void deque_iter_init(DequeIter *iter, Deque *deque)
+{
 	iter->deque = deque;
 	iter->index = 0;
 	iter->last_removed = false;
@@ -979,7 +1054,8 @@ void deque_iter_init(DequeIter *iter, Deque *deque) {
  * @return CC_OK if the iterator was advanced, or CC_ITER_END if the
  * end of the Deque has been reached.
  */
-enum cc_stat deque_iter_next(DequeIter *iter, void **out) {
+enum cc_stat deque_iter_next(DequeIter *iter, void **out)
+{
 	const size_t c = (iter->deque->capacity - 1);
 	const size_t last = (iter->deque->last) & c;
 	const size_t first = (iter->deque->first) & c;
@@ -1012,13 +1088,15 @@ enum cc_stat deque_iter_next(DequeIter *iter, void **out) {
  * if the iterator state is invalid, or CC_ERR_VALUE_NOT_FOUND if the value
  * was already removed.
  */
-enum cc_stat deque_iter_remove(DequeIter *iter, void **out) {
+enum cc_stat deque_iter_remove(DequeIter *iter, void **out)
+{
 	if (iter->last_removed)
 		return CC_ERR_VALUE_NOT_FOUND;
 
 	void *rm;
 	enum cc_stat status = deque_remove_at(iter->deque, iter->index, &rm);
-	if (status == CC_OK) {
+	if (status == CC_OK)
+	{
 		iter->index--;
 		iter->last_removed = true;
 		if (out)
@@ -1041,7 +1119,8 @@ enum cc_stat deque_iter_remove(DequeIter *iter, void **out) {
  * @return CC_OK if the element was successfully added, or CC_ERR_ALLOC
  * if the memory allocation for the new element failed.
  */
-enum cc_stat deque_iter_add(DequeIter *iter, void *element) {
+enum cc_stat deque_iter_add(DequeIter *iter, void *element)
+{
 	enum cc_stat status = deque_add_at(iter->deque, element, iter->index);
 	if (status == CC_OK)
 		iter->index++;
@@ -1065,7 +1144,8 @@ enum cc_stat deque_iter_add(DequeIter *iter, void *element) {
  * @return  CC_OK if the element was replaced successfully, or
  * CC_ERR_VALUE_NOT_FOUND.
  */
-enum cc_stat deque_iter_replace(DequeIter *iter, void *replacement, void **out) {
+enum cc_stat deque_iter_replace(DequeIter *iter, void *replacement, void **out)
+{
 	return deque_replace_at(iter->deque, replacement, iter->index, out);
 }
 
@@ -1081,7 +1161,8 @@ enum cc_stat deque_iter_replace(DequeIter *iter, void *replacement, void **out) 
  *
  * @return the index
  */
-size_t deque_iter_index(DequeIter *iter) {
+size_t deque_iter_index(DequeIter *iter)
+{
 	return iter->index - 1;
 }
 
@@ -1092,7 +1173,8 @@ size_t deque_iter_index(DequeIter *iter) {
  * @param[in] ar1  First deque
  * @param[in] ar2  Second deque
  */
-void deque_zip_iter_init(DequeZipIter *iter, Deque *d1, Deque *d2) {
+void deque_zip_iter_init(DequeZipIter *iter, Deque *d1, Deque *d2)
+{
 	iter->d1 = d1;
 	iter->d2 = d2;
 	iter->index = 0;
@@ -1109,7 +1191,8 @@ void deque_zip_iter_init(DequeZipIter *iter, Deque *d1, Deque *d2) {
  * @return CC_OK if a next element pair is returned, or CC_ITER_END if the end of one
  * of the deques has been reached.
  */
-enum cc_stat deque_zip_iter_next(DequeZipIter *iter, void **out1, void **out2) {
+enum cc_stat deque_zip_iter_next(DequeZipIter *iter, void **out1, void **out2)
+{
 	const size_t d1_capacity = (iter->d1->capacity - 1);
 	const size_t d1_last = (iter->d1->last) & d1_capacity;
 	const size_t d1_first = (iter->d1->first) & d1_capacity;
@@ -1149,7 +1232,8 @@ enum cc_stat deque_zip_iter_next(DequeZipIter *iter, void **out1, void **out2) {
  * @return CC_OK if the element pair was successfully added to the deques, or
  * CC_ERR_ALLOC if the memory allocation for the new elements failed.
  */
-enum cc_stat deque_zip_iter_add(DequeZipIter *iter, void *e1, void *e2) {
+enum cc_stat deque_zip_iter_add(DequeZipIter *iter, void *e1, void *e2)
+{
 	if (iter->index >= iter->d1->size || iter->index >= iter->d2->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -1157,7 +1241,8 @@ enum cc_stat deque_zip_iter_add(DequeZipIter *iter, void *e1, void *e2) {
 		 in advance whether both deque buffers have enough room before inserting new elements
 		 because this operation must insert either both elements, or none.*/
 	if ((iter->d1->capacity == iter->d1->size && expand_capacity(iter->d1) != CC_OK) &&
-			(iter->d2->capacity == iter->d2->size && expand_capacity(iter->d2) != CC_OK)) {
+			(iter->d2->capacity == iter->d2->size && expand_capacity(iter->d2) != CC_OK))
+	{
 		return CC_ERR_ALLOC;
 	}
 
@@ -1181,7 +1266,8 @@ enum cc_stat deque_zip_iter_add(DequeZipIter *iter, void *e1, void *e2) {
  * iterator is in an invalid state, or CC_ERR_VALUE_NOT_FOUND if the value was already
  * removed.
  */
-enum cc_stat deque_zip_iter_remove(DequeZipIter *iter, void **out1, void **out2) {
+enum cc_stat deque_zip_iter_remove(DequeZipIter *iter, void **out1, void **out2)
+{
 	if (iter->last_removed)
 		return CC_ERR_VALUE_NOT_FOUND;
 
@@ -1209,7 +1295,8 @@ enum cc_stat deque_zip_iter_remove(DequeZipIter *iter, void **out1, void **out2)
  *
  * @return CC_OK if the element was successfully replaced, or CC_ERR_OUT_OF_RANGE.
  */
-enum cc_stat deque_zip_iter_replace(DequeZipIter *iter, void *e1, void *e2, void **out1, void **out2) {
+enum cc_stat deque_zip_iter_replace(DequeZipIter *iter, void *e1, void *e2, void **out1, void **out2)
+{
 	if ((iter->index - 1) >= iter->d1->size || (iter->index - 1) >= iter->d2->size)
 		return CC_ERR_OUT_OF_RANGE;
 
@@ -1226,6 +1313,7 @@ enum cc_stat deque_zip_iter_replace(DequeZipIter *iter, void *e1, void *e2, void
  *
  * @return current iterator index
  */
-size_t deque_zip_iter_index(DequeZipIter *iter) {
+size_t deque_zip_iter_index(DequeZipIter *iter)
+{
 	return iter->index - 1;
 }

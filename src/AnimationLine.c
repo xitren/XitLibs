@@ -40,15 +40,19 @@ int AnimationLine_RESET(uint8_t MediaType, ParameterList_t *TempParam,
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode) {
+void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	func = _func;
 	animation_mode = _mode;
-	if (FiguresArray != 0) {
+	if (FiguresArray != 0)
+	{
 		ResetAnimationLine();
-	} else {
-		if (array_new(&FiguresArray) != 0) {
+	} else
+	{
+		if (array_new(&FiguresArray) != 0)
+		{
 			return;
 		}
 	}
@@ -57,17 +61,21 @@ void InitCfgAnimLine(DrawFunction_t _func, uint8_t _mode) {
 	return;
 }
 
-void ResetAnimationTime(void) {
+void ResetAnimationTime(void)
+{
 	animation_time = 0;
 }
 
-uint32_t GetAnimationTime(void) {
+uint32_t GetAnimationTime(void)
+{
 	return animation_time;
 }
 
-void ResetAnimationLine(void) {
+void ResetAnimationLine(void)
+{
 	UserFigure_t *commf;
-	while (array_size(FiguresArray) > 0) {
+	while (array_size(FiguresArray) > 0)
+	{
 		array_remove_at(FiguresArray, 0, (void**) &commf);
 		umm_free(commf->name);
 		if (commf->size_type > 1)
@@ -76,15 +84,20 @@ void ResetAnimationLine(void) {
 	}
 }
 
-void IncAnimationTime(void) {
+void IncAnimationTime(void)
+{
 	UserFigure_t *commf;
 	animation_time++;
-	if (array_size(FiguresArray) > 0) {
+	if (array_size(FiguresArray) > 0)
+	{
 		array_get_at(FiguresArray, 0, (void**) &commf);
-		if (func && (commf->show_time < animation_time)) {
-			if (animation_mode) {
+		if (func && (commf->show_time < animation_time))
+		{
+			if (animation_mode)
+			{
 				animation_needed = 1;
-			} else {
+			} else
+			{
 				(func) (commf);
 				if (commf->permanent)
 					AddAnimationFigure(
@@ -102,11 +115,14 @@ void IncAnimationTime(void) {
 	}
 }
 
-void MainAnimationCycle(void) {
+void MainAnimationCycle(void)
+{
 	UserFigure_t *commf;
-	if ((array_size(FiguresArray) > 0) && animation_needed && animation_mode) {
+	if ((array_size(FiguresArray) > 0) && animation_needed && animation_mode)
+	{
 		array_get_at(FiguresArray, 0, (void**) &commf);
-		if (func && (commf->show_time < animation_time)) {
+		if (func && (commf->show_time < animation_time))
+		{
 			(func) (commf);
 			if (commf->permanent)
 				AddAnimationFigure(
@@ -132,7 +148,8 @@ void MainAnimationCycle(void) {
 int SetAnimationFigure(char _size_type, char *_name,
 		uint32_t _show_time, uint8_t *_data,
 		uint8_t _x, uint8_t _y,
-		uint32_t _permanent) {
+		uint32_t _permanent)
+{
 	int ret_val = 0;
 	UserFigure_t comm;
 	comm.size_type = _size_type;
@@ -150,7 +167,8 @@ int SetAnimationFigure(char _size_type, char *_name,
 int AddAnimationFigure(char _size_type, char *_name,
 		uint32_t _show_time, uint8_t *_data,
 		uint8_t _x, uint8_t _y,
-		uint32_t _permanent) {
+		uint32_t _permanent)
+{
 	int ret_val = 0;
 	size_t strl = 0;
 	size_t Index = 0;
@@ -161,11 +179,13 @@ int AddAnimationFigure(char _size_type, char *_name,
 			__LINE__, __FILE__, __func__);
 	/* First, make sure that the parameters passed to us appear to be    */
 	/* semi-valid.                                                       */
-	if ((_show_time) && (FiguresArray)) {
+	if ((_show_time) && (FiguresArray))
+	{
 		/* Simply add the command data to the command table and        */
 		/* increment the number of supported commands.                 */
 		comm = (UserFigure_t *) umm_calloc(1, sizeof (UserFigure_t));
-		if (comm == NULL) {
+		if (comm == NULL)
+		{
 			return 1;
 		}
 		comm->size_type = _size_type;
@@ -175,12 +195,14 @@ int AddAnimationFigure(char _size_type, char *_name,
 		comm->permanent = _permanent;
 		strl = strlen(_name) + 1;
 		comm->name = (char *) umm_malloc(strl);
-		if (comm->name == NULL) {
+		if (comm->name == NULL)
+		{
 			umm_free(comm);
 			return 1;
 		}
 		memcpy(comm->name, _name, strl);
-		switch (_size_type) {
+		switch (_size_type)
+		{
 			case 0:
 				comm->data = _data;
 				break;
@@ -189,7 +211,8 @@ int AddAnimationFigure(char _size_type, char *_name,
 				break;
 			case 2:
 				comm->data = (uint8_t *) umm_malloc(AREA_DATA_SIZE);
-				if (comm->data == NULL) {
+				if (comm->data == NULL)
+				{
 					umm_free(comm->name);
 					umm_free(comm);
 					return 1;
@@ -198,7 +221,8 @@ int AddAnimationFigure(char _size_type, char *_name,
 				break;
 			default:
 				comm->data = (uint8_t *) umm_malloc(SMALLAREA_DATA_SIZE);
-				if (comm->data == NULL) {
+				if (comm->data == NULL)
+				{
 					umm_free(comm->name);
 					umm_free(comm);
 					return 1;
@@ -210,22 +234,27 @@ int AddAnimationFigure(char _size_type, char *_name,
 		strl = array_size(FiguresArray);
 		for (Index = 0;
 				Index < strl; /* && (!ret_val)*/
-				Index++) {
+				Index++)
+		{
 			array_get_at(FiguresArray, Index, (void**) &commf);
 			if (_show_time < commf->show_time)
 				break;
 		}
 		//Insert before the position
-		if (Index < strl) {
-			if (array_add_at(FiguresArray, (void *) comm, Index) != 0) {
+		if (Index < strl)
+		{
+			if (array_add_at(FiguresArray, (void *) comm, Index) != 0)
+			{
 				umm_free(comm->name);
 				if (_size_type > 1)
 					umm_free(comm->data);
 				umm_free(comm);
 				return 1;
 			}
-		} else {
-			if (array_add(FiguresArray, (void *) comm) != 0) {
+		} else
+		{
+			if (array_add(FiguresArray, (void *) comm) != 0)
+			{
 				umm_free(comm->name);
 				if (_size_type > 1)
 					umm_free(comm->data);
@@ -238,7 +267,8 @@ int AddAnimationFigure(char _size_type, char *_name,
 
 		/* Return success to the caller.                               */
 		ret_val = 0;
-	} else {
+	} else
+	{
 		ret_val = 1;
 	}
 
@@ -246,7 +276,8 @@ int AddAnimationFigure(char _size_type, char *_name,
 }
 
 int AnimationLine_RESET(uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	InitCfgAnimLine(func, TIMELINE_INDEPENDENT_CYCLE_DRAW);
@@ -254,7 +285,8 @@ int AnimationLine_RESET(uint8_t MediaType, ParameterList_t *TempParam,
 }
 
 int AnimationLine_GET(uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
@@ -325,7 +357,8 @@ int AnimationLine_GET(uint8_t MediaType, ParameterList_t *TempParam,
 }
 
 int AnimationLine_PUT(uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s).\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val1 = 0;
@@ -396,11 +429,13 @@ int AnimationLine_PUT(uint8_t MediaType, ParameterList_t *TempParam,
 }
 
 int AnimationLine(uint8_t Method, uint8_t MediaType, ParameterList_t *TempParam,
-		uint8_t *data, uint32_t *data_size, uint32_t buffer_size) {
+		uint8_t *data, uint32_t *data_size, uint32_t buffer_size)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s).\n",
 			__LINE__, __FILE__, __func__);
 	int ret_val = 0;
-	switch (Method) {
+	switch (Method)
+	{
 		case Method_RESET:
 			ret_val = AnimationLine_RESET(
 					MediaType, TempParam, data, data_size, buffer_size);

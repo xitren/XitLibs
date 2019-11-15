@@ -52,11 +52,13 @@ const uint16_t CRC16ANSIoTBL[256] = {
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-uint16_t CRC16ANSI(uint8_t *DATA, uint16_t N) {
+uint16_t CRC16ANSI(uint8_t *DATA, uint16_t N)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	uint16_t CRC_MB = 0xFFFF;
-	while (N--) {
+	while (N--)
+	{
 		CRC_MB = (CRC_MB >> 8) ^ CRC16ANSIoTBL[(CRC_MB & 0xFF) ^ (*DATA++)];
 	}
 	return CRC_MB;

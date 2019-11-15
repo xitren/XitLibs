@@ -4,7 +4,8 @@
 #include "circular_functions.h"
 #include "circular_printf.h"
 
-char *my_put_u(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_u(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	long long int d;
 	size_t max;
 
@@ -25,7 +26,8 @@ char *my_put_u(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 	return (put_str_align(buff, &max, fl));
 }
 
-char *my_put_o(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_o(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	unsigned long long int d;
 	size_t max;
 

@@ -27,14 +27,16 @@ ParameterList_t params;
  * Simple C Test Suite
  */
 
-void test1() {
+void test1()
+{
 	printf("streamtest test 1\n");
 	StreamRecorderCommand(Method_GET, Media_XML, &params, buffer_str, &size, 100000);
 	printf((char *) buffer_str);
 	printf("Message size: %ld\n", size);
 }
 
-void test2() {
+void test2()
+{
 	printf("streamtest test 2\n");
 	StreamRecorderCommand(Method_GET, Media_TEXT, &params, buffer_str, &size, 100000);
 	printf((char *) buffer_str);
@@ -42,7 +44,8 @@ void test2() {
 	printf("Message size: %ld\n", size);
 }
 
-void test3() {
+void test3()
+{
 	printf("streamtest test 3\n");
 	StreamRecorderCommand(Method_GET, Media_BYTE, &params, buffer_str, &size, 100000);
 	printf("%d %d %d %d \n",
@@ -52,14 +55,16 @@ void test3() {
 	printf("Message size: %ld\n", size);
 }
 
-void test4() {
+void test4()
+{
 	printf("streamtest test 4\n");
 	StreamRecorderCommand(Method_GET, Media_JSON, &params, buffer_str, &size, 100000);
 	printf((char *) buffer_str);
 	printf("Message size: %ld\n", size);
 }
 
-int main(int argc, char** argv) {
+int main(int argc, char** argv)
+{
 	printf("%%SUITE_STARTING%% streamtest\n");
 	printf("%%SUITE_STARTED%%\n");
 

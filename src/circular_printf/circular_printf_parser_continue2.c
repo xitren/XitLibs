@@ -4,7 +4,8 @@
 #include "circular_printf.h"
 #include "circular_functions.h"
 
-char is_flag(char a) {
+char is_flag(char a)
+{
 	if (((a == '#') || (a == '0') || (a == '-')
 			|| (a == '+') || (a == ' ') || (a == '\'')
 			|| (a == 'I')))
@@ -13,7 +14,8 @@ char is_flag(char a) {
 		return (0);
 }
 
-char is_spec(char a) {
+char is_spec(char a)
+{
 	if (((a == 'l') || (a == 'h') || (a == 'j')
 			|| (a == 'z') || (a == 't') || (a == 'L')))
 		return (1);
@@ -21,14 +23,17 @@ char is_spec(char a) {
 		return (0);
 }
 
-char *circular_strfix(char *ret) {
+char *circular_strfix(char *ret)
+{
 	char *rr;
 
-	if (ret[0] == '0' && ret[1] == '0' && (rr = strrchr(ret, 'x'))) {
+	if (ret[0] == '0' && ret[1] == '0' && (rr = strrchr(ret, 'x')))
+	{
 		*rr = '0';
 		ret[1] = 'x';
 	}
-	if (ret[0] == '0' && ret[1] == '0' && (rr = strrchr(ret, 'X'))) {
+	if (ret[0] == '0' && ret[1] == '0' && (rr = strrchr(ret, 'X')))
+	{
 		*rr = '0';
 		ret[1] = 'X';
 	}

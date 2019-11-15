@@ -30,32 +30,38 @@ static Deque *ScheduleTableDeque;
 /*============================================================================*/
 
 /* Functions declaration -----------------------------------------------------*/
-void InitSchedule(void) {
+void InitSchedule(void)
+{
 	if (deque_new(&ScheduleTableDeque) != 0)
 		return;
 }
 
-void AddToSchedule(ScheduleFunction_t ScheduleFunction) {
+void AddToSchedule(ScheduleFunction_t ScheduleFunction)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
 	ScheduleFunction_t *comm;
 	comm = (ScheduleFunction_t *) umm_calloc(1, sizeof (ScheduleFunction_t));
-	if ((comm == NULL)) {
+	if ((comm == NULL))
+	{
 		DBG_LOG_ERROR("comm argument is NULL\n");
 		return;
 	}
 	*comm = ScheduleFunction;
-	if (deque_add_last(ScheduleTableDeque, (void *) comm) != 0) {
+	if (deque_add_last(ScheduleTableDeque, (void *) comm) != 0)
+	{
 		umm_free((void *) comm);
 		return;
 	}
 	return;
 }
 
-void ClearSchedule(void) {
+void ClearSchedule(void)
+{
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
-	if ((ScheduleTableDeque == NULL)) {
+	if ((ScheduleTableDeque == NULL))
+	{
 		DBG_LOG_ERROR("ScheduleTableDeque argument is NULL\n");
 		return;
 	}
@@ -63,20 +69,25 @@ void ClearSchedule(void) {
 	return;
 }
 
-void ExecuteSchedule(void) {
+void ExecuteSchedule(void)
+{
 	ScheduleFunction_t *Comm;
 
-	if ((ScheduleTableDeque == NULL)) {
+	if ((ScheduleTableDeque == NULL))
+	{
 		DBG_LOG_ERROR("ScheduleTableDeque argument is NULL\n");
 		return;
 	}
-	while (deque_size(ScheduleTableDeque) > 0) {
+	while (deque_size(ScheduleTableDeque) > 0)
+	{
 		deque_remove_first(ScheduleTableDeque, (void**) &Comm);
-		if ((Comm == NULL)) {
+		if ((Comm == NULL))
+		{
 			DBG_LOG_ERROR("Comm argument is NULL\n");
 			continue;
 		}
-		if (deque_size(ScheduleTableDeque) > 2) {
+		if (deque_size(ScheduleTableDeque) > 2)
+		{
 			DBG_LOG_INFO("Schedule executing, %d left. \n",
 					deque_size(ScheduleTableDeque));
 		}

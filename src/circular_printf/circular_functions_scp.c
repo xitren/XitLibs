@@ -4,7 +4,8 @@
 #include "circular_functions.h"
 #include "circular_printf.h"
 
-char *my_put_perc(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_perc(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	size_t max;
 	char *p;
 
@@ -23,7 +24,8 @@ char *my_put_perc(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 	return (p);
 }
 
-char *my_put_s(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_s(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	size_t max;
 	size_t mm;
 	char *p;
@@ -49,7 +51,8 @@ char *my_put_s(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 }
 
 static char *put_char_align_left(char *buffer, size_t alr,
-		size_t *max, size_t min_width) {
+		size_t *max, size_t min_width)
+{
 	alr = 1;
 	while ((min_width-- > 0) && (alr < BUFF_PRINT))
 		buffer[alr++] = ' ';
@@ -59,7 +62,8 @@ static char *put_char_align_left(char *buffer, size_t alr,
 	return (buffer);
 }
 
-char *my_put_c(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_c(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	size_t max;
 	char *p;
 	char d;
@@ -73,7 +77,8 @@ char *my_put_c(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 	if ((fl->min_width_par == 1) && (fl->flags & (F_ZERO))
 			&& !(fl->flags & (F_MINUS)))
 		p = put_str_align_zeros(buff, 0, &max, fl->min_width);
-	if (fl->flags & F_MINUS) {
+	if (fl->flags & F_MINUS)
+	{
 		if (d != 0)
 			p = put_str_align_left(buff, 0, &(max), fl->min_width);
 		else
@@ -85,7 +90,8 @@ char *my_put_c(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 	return (p);
 }
 
-char *my_put_p(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_p(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	unsigned long long int d;
 	size_t max;
 
@@ -98,7 +104,8 @@ char *my_put_p(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 		put_zeros_to_str(buff, 0, &max, fl->precision);
 	if ((fl->min_width_par == 1) && (fl->flags & (F_ZERO))
 			&& (fl->precision_par != 1)
-			&& !(fl->flags & (F_MINUS))) {
+			&& !(fl->flags & (F_MINUS)))
+	{
 		put_str_align_zeros(buff, 0, &max, fl->min_width);
 	}
 	if (fl->precision_par == 1)

@@ -4,15 +4,18 @@
 #include "circular_functions.h"
 #include "circular_printf.h"
 
-static void strprep(char *src, char cs, char cr) {
-	while ((*src) != 0) {
+static void strprep(char *src, char cs, char cr)
+{
+	while ((*src) != 0)
+	{
 		if ((*src) == cs)
 			(*src) = cr;
 		src++;
 	}
 }
 
-char *my_put_d(char *buff, va_list *valist, t_circular_printf_flags *fl) {
+char *my_put_d(char *buff, va_list *valist, t_circular_printf_flags *fl)
+{
 	long long int d;
 	char *p;
 	size_t max;
@@ -38,7 +41,8 @@ char *my_put_d(char *buff, va_list *valist, t_circular_printf_flags *fl) {
 }
 
 void get_last(char *p[3], t_circular_printf_flags *fl,
-		unsigned long cnt[5]) {
+		unsigned long cnt[5])
+{
 	cnt[0]++;
 	if ((fl->min_width_par == 1) && (fl->flags & (F_ZERO))
 			&& !(fl->flags & (F_MINUS)))
