@@ -418,7 +418,8 @@ CommandFunction_t FindCommand(const char *Command)
 			array_get_at(CommandTableArray, Index, (void**) &Comm);
 			DBG_LOG_TRACE("%s: exist command - %s (hash = %04X)\n", __func__, Comm->CommandName, Comm->UniCode);
 			if (crc == Comm->UniCode)
-				if ((strlen(Comm->CommandName) == strnlen(Command, STRING_SIZE)) &&
+				if ((strnlen(Comm->CommandName, STRING_SIZE)
+						== strnlen(Command, STRING_SIZE)) &&
 						(memcmp(
 						Command,
 						Comm->CommandName,
@@ -529,5 +530,6 @@ int delete_parameter(ParameterList_t *params, char *strParam)
 	return INVALID_PARAMETERS_ERROR;
 }
 /*============================================================================*/
+
 
 
