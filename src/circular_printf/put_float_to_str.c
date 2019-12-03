@@ -85,9 +85,9 @@ char *put_zeros_to_str(char *buffer, size_t alr, size_t *max, size_t prec)
 	if (alr == 0)
 	{
 		if ((sign == '-' || sign == '+'))
-			alr = strlen(buffer + (*max) + 1);
+			alr = strnlen(buffer + (*max) + 1, BUFF_PRINT);
 		else
-			alr = strlen(buffer + (*max));
+			alr = strnlen(buffer + (*max), BUFF_PRINT);
 	}
 	if (prec > alr)
 		prec -= alr;
@@ -101,9 +101,3 @@ char *put_zeros_to_str(char *buffer, size_t alr, size_t *max, size_t prec)
 		buffer[(*max)--] = sign;
 	return (buffer + ++(*max));
 }
-
-
-
-
-
-

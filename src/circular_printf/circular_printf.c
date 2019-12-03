@@ -20,7 +20,7 @@ static void ft_putstrnn(circular_buff_t* r_buff, char const *s, size_t n)
 static void ft_putstr(circular_buff_t* r_buff, char const *s)
 {
 	if (s)
-		circular_buff_write(r_buff, s, strlen(s));
+		circular_buff_write(r_buff, s, strnlen(s, BUFF_PRINT));
 }
 
 static void ft_lstprint(circular_buff_t* r_buff, t_circular_printf_list *lst)
@@ -73,25 +73,3 @@ int circular_printf(circular_buff_t* buff, const char *format, ...)
 	va_end(valist);
 	return (0);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

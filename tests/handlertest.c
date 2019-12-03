@@ -106,7 +106,7 @@ DWORD WINAPI ThreadData( LPVOID lpParameter )
     int ptr = 0;
     while (1)
     {
-        Sleep(100); // Sleep three seconds
+        Sleep(1); // Sleep three seconds
         // Request ownership of the critical section.
         EnterCriticalSection(&CriticalSection); 
         
@@ -334,6 +334,7 @@ int main(int argc, char** argv)
     DeleteCriticalSection(&CriticalSection);
     return (EXIT_SUCCESS);
 }
+
 
 
 

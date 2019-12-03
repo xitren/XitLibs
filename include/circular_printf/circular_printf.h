@@ -6,6 +6,7 @@
 
 #include <errno.h>
 #include <stdint.h>
+#include <string.h>
 #include "ringbuff.h"
 
 #define BUFF_PRINT   10000
@@ -19,6 +20,7 @@
 int circular_printf(circular_buff_t* buff, const char *format, ...);
 
 #endif
+
 
 
 

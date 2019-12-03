@@ -73,7 +73,7 @@ char *put_str_align_left(char *buffer, size_t alr,
 		size_t *max, size_t min_width)
 {
 	if (alr == 0)
-		alr = strlen(buffer + (*max));
+		alr = strnlen(buffer + (*max), BUFF_PRINT);
 	if (min_width > alr)
 		min_width -= alr;
 	else
@@ -84,8 +84,3 @@ char *put_str_align_left(char *buffer, size_t alr,
 	buffer[alr] = 0;
 	return (buffer);
 }
-
-
-
-
-

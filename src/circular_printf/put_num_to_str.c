@@ -90,7 +90,7 @@ char *put_unspnum_to_str(char *buffer, size_t *max,
 
 	(*max)--;
 	buffer[(*max)--] = 0;
-	base = strlen(bptr);
+	base = strnlen(bptr, BUFF_PRINT);
 	while ((n >= base) && ((*max) > 0))
 	{
 		buffer[(*max)--] = bptr[n % base];
@@ -99,5 +99,6 @@ char *put_unspnum_to_str(char *buffer, size_t *max,
 	buffer[(*max)] = bptr[n];
 	return (buffer + (*max));
 }
+
 
 

@@ -1194,7 +1194,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
 		memcpy(scratch->p, inpkt->payload.p, inpkt->payload.len);
 		scratch->len = inpkt->payload.len;
 	}
-	for (i = 0; i < strlen(bufhr); i++)
+	for (i = 0; i < strnlen(bufhr, STRING_SIZE); i++)
 	{
 		if ((bufhr[i] >= 'A') && (bufhr[i] <= 'Z'))
 		{
@@ -1233,6 +1233,7 @@ void coap_setup(void)
 		return;
 }
 /*============================================================================*/
+
 
 
 

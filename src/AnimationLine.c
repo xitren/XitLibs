@@ -193,7 +193,7 @@ int AddAnimationFigure(char _size_type, char *_name,
 		comm->x = _x;
 		comm->y = _y;
 		comm->permanent = _permanent;
-		strl = strlen(_name) + 1;
+		strl = strnlen(_name, STRING_SIZE) + 1;
 		comm->name = (char *) umm_malloc(strl);
 		if (comm->name == NULL)
 		{

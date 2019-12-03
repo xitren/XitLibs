@@ -115,7 +115,7 @@ static unsigned char* cJSON_strdup(const unsigned char* string, const internal_h
 		return NULL;
 	}
 
-	length = strlen((const char*) string) + sizeof ("");
+	length = strnlen((const char*) string, 1000) + sizeof ("");
 	if (!(copy = (unsigned char*) hooks->allocate(length)))
 	{
 		return NULL;
@@ -408,7 +408,7 @@ static void update_offset(printbuffer * const buffer)
 	}
 	buffer_pointer = buffer->buffer + buffer->offset;
 
-	buffer->offset += strlen((const char*) buffer_pointer);
+	buffer->offset += strnlen((const char*) buffer_pointer, 1000);
 }
 
 /* Render the number nicely from the given item into a string. */
@@ -926,7 +926,7 @@ CJSON_PUBLIC(cJSON *) cJSON_ParseWithOpts(const char *value, const char **return
 	}
 
 	buffer.content = (const unsigned char*) value;
-	buffer.length = strlen((const char*) value) + sizeof ("");
+	buffer.length = strnlen((const char*) value, 1000) + sizeof ("");
 	buffer.offset = 0;
 	buffer.hooks = global_hooks;
 
@@ -1231,7 +1231,7 @@ static cJSON_bool print_value(const cJSON * const item, printbuffer * const outp
 				return false;
 			}
 
-			raw_length = strlen(item->valuestring) + sizeof ("");
+			raw_length = strnlen(item->valuestring, 1000) + sizeof ("");
 			output = ensure(output_buffer, raw_length);
 			if (output == NULL)
 			{
@@ -2620,3 +2620,4 @@ CJSON_PUBLIC(void) cJSON_free(void *object)
 {
 	global_hooks.deallocate(object);
 }
+

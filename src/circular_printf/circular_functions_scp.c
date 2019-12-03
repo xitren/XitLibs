@@ -37,7 +37,7 @@ char *my_put_s(char *buff, va_list *valist, t_circular_printf_flags *fl)
 	if (fl->precision_par == 1)
 		mm = fl->precision;
 	else
-		mm = strlen(p);
+		mm = strnlen(p, BUFF_PRINT);
 	max -= mm;
 	if (fl->precision_par == 1)
 		strncpy(buff + (max), p, fl->precision);
@@ -114,5 +114,7 @@ char *my_put_p(char *buff, va_list *valist, t_circular_printf_flags *fl)
 		put_prefix_x_mod_to_str(buff, &max);
 	return (put_str_align(buff, &max, fl));
 }
+
+
 
 

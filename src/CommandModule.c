@@ -366,7 +366,8 @@ int AddCommand(uint8_t _Methods, const char *CommandName,
 			{
 				return 1;
 			}
-			comm->UniCode = CRC16ANSI((uint8_t *) CommandName, strlen(CommandName));
+			comm->UniCode = CRC16ANSI((uint8_t *) CommandName,
+					strnlen(CommandName, STRING_SIZE));
 			comm->Methods = _Methods;
 			comm->CommandName = (char *) CommandName;
 			comm->Link = (char *) Link;
@@ -406,7 +407,7 @@ CommandFunction_t FindCommand(const char *Command)
 	/* First, make sure that the command specified is semi-valid.        */
 	if (Command != NULL)
 	{
-		crc = CRC16ANSI((uint8_t *) Command, strlen(Command));
+		crc = CRC16ANSI((uint8_t *) Command, strnlen(Command, STRING_SIZE));
 		DBG_LOG_TRACE("%s: input command - %s (hash = %04X)\n", __func__, Command, crc);
 		/* Now loop through each element in the table to see if there is  */
 		/* a match.                                                       */
@@ -417,11 +418,11 @@ CommandFunction_t FindCommand(const char *Command)
 			array_get_at(CommandTableArray, Index, (void**) &Comm);
 			DBG_LOG_TRACE("%s: exist command - %s (hash = %04X)\n", __func__, Comm->CommandName, Comm->UniCode);
 			if (crc == Comm->UniCode)
-				if ((strlen(Comm->CommandName) == strlen(Command)) &&
+				if ((strlen(Comm->CommandName) == strnlen(Command, STRING_SIZE)) &&
 						(memcmp(
 						Command,
 						Comm->CommandName,
-						strlen(Comm->CommandName)) == 0))
+						strnlen(Comm->CommandName, STRING_SIZE)) == 0))
 				{
 					DBG_LOG_TRACE("%s: return command.\n", __func__);
 					ret_command = Comm->CommandFunction;
@@ -528,3 +529,5 @@ int delete_parameter(ParameterList_t *params, char *strParam)
 	return INVALID_PARAMETERS_ERROR;
 }
 /*============================================================================*/
+
+
