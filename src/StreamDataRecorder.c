@@ -24,6 +24,24 @@
 #include "coap.h"
 /*============================================================================*/
 
+/* Private types -------------------------------------------------------------*/
+typedef enum {
+	REG_ACCEL_X = 0x00000020,
+	REG_ADC_CH1 = 0x00000035,
+	REG_ADC_CH2 = 0x00000036,
+	REG_ADC_CH3 = 0x00000037,
+	REG_ADC_CH4 = 0x00000038,
+	REG_ADC_CH5 = 0x00000039,
+	REG_ADC_CH6 = 0x0000003A,
+	REG_ADC_CH7 = 0x0000003B,
+	REG_ADC_CH8 = 0x0000003C,
+	REG_ADC_ORDER = 0x0000005B,
+	REG_ADC_CHA = 0x0000009E,
+	REG_ADC_CHB = 0x0000009F,
+	REG_ADC_CHC = 0x000000A0
+} RegDefBase;
+/*============================================================================*/
+
 /* Private variables ---------------------------------------------------------*/
 const char* global_link_streamer[][2] = {
 	{"/streamdatarecorder", "</streamdatarecorder>"},
@@ -855,6 +873,7 @@ int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType,
 	return (ret_val);
 }
 /*============================================================================*/
+
 
 
 

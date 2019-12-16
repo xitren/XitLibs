@@ -1,5 +1,11 @@
 #include "Handler.h"
 
+/* Public types --------------------------------------------------------------*/
+typedef enum {
+	REG_EEG_PocketSize = 0x00000016
+} RegDefBase;
+/*============================================================================*/
+
 coap_packet_t inpkt;
 coap_packet_t outpkt;
 uint8_t scratch_b[HANDLER_BUFFER_LENGTH];
@@ -111,7 +117,7 @@ coap_rw_buffer_t *MessageHandlerIntIP(const uint8_t *buf, size_t buflen,
 {
 	DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 			__LINE__, __FILE__, __func__);
-	int rc, i;
+	int rc;
 	char ip[16];
 	conv_uint32_bytes_t ip_d;
 	ip_d.ui32 = ipi;
@@ -408,25 +414,4 @@ coap_observer_buffer_t *StreamObserverHandler()
 	}
 	return 0;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 

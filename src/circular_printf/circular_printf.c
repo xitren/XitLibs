@@ -6,6 +6,17 @@
 #include "circular_printf_parser.h"
 #include <unistd.h>
 
+void	bzero(void *s, size_t n)
+{
+	char	*ptr;
+	size_t	i;
+
+	ptr = s;
+	i = 0;
+	while (i < n)
+		*(ptr + i++) = 0;
+}
+
 static void ft_putstrnn(circular_buff_t* r_buff, char const *s, size_t n)
 {
 	if (s)
@@ -38,7 +49,7 @@ static void run_lst(circular_buff_t* r_buff,
 
 	while (lst != 0)
 	{
-		bzero(&flags, sizeof (t_circular_printf_flags));
+		bzero(&flags, sizeof(t_circular_printf_flags));
 		parse_key(lst, &flags);
 		if (flags.parameter != 0)
 		{
@@ -73,3 +84,6 @@ int circular_printf(circular_buff_t* buff, const char *format, ...)
 	va_end(valist);
 	return (0);
 }
+
+
+

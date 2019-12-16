@@ -46,9 +46,10 @@ void get_last(char *p[3], t_circular_printf_flags *fl,
 	cnt[0]++;
 	if ((fl->min_width_par == 1) && (fl->flags & (F_ZERO))
 			&& !(fl->flags & (F_MINUS)))
-		p[0] = put_str_align_zeros(p[2], 0, cnt, fl->min_width);
-	p[0] = put_str_align(p[2], cnt, fl);
+		p[0] = put_str_align_zeros(p[2], 0, (size_t *)cnt, fl->min_width);
+	p[0] = put_str_align(p[2], (size_t *)cnt, fl);
 }
+
 
 
 

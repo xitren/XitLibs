@@ -13,6 +13,27 @@
 #include "ConfigMem.h"
 /*============================================================================*/
 
+/* Private types -------------------------------------------------------------*/
+typedef enum {
+	REG_Led_Ch_T1 = 0x00000000,
+	REG_Led_Ch_T2 = 0x00000001,
+	REG_Led_Ch_T3 = 0x00000002,
+	REG_Led_Q_T1_Red = 0x00000003,
+	REG_Led_Q_T1_Green = 0x00000004,
+	REG_Led_Q_T1_Blue = 0x00000005,
+	REG_Led_Q_T2_Red = 0x00000006,
+	REG_Led_Q_T2_Green = 0x00000007,
+	REG_Led_Q_T2_Blue = 0x00000008,
+	REG_Led_Q_T3_Red = 0x00000009,
+	REG_Led_Q_T3_Green = 0x0000000A,
+	REG_Led_Q_T3_Blue = 0x0000000B,
+	REG_Led_Stop = 0x0000000C,
+	REG_Led_Start = 0x0000000D,
+	REG_Servo_1 = 0x0000000E,
+	REG_Servo_2 = 0x0000000F
+} RegDefBase;
+/*============================================================================*/
+
 /* Private variables ---------------------------------------------------------*/
 uint8_t pwm_led_c_red = 0;
 uint8_t pwm_led_c_green = 0;
@@ -93,3 +114,4 @@ void SetLedsUnderPWM(void)
 	return;
 }
 /*============================================================================*/
+

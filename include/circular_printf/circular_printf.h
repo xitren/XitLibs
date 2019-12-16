@@ -18,8 +18,11 @@
 #define MIN(a, b)   ((a & ((a - b) >> 31)) | (b & (~(a - b) >> 31)))
 
 int circular_printf(circular_buff_t* buff, const char *format, ...);
+void	bzero(void *s, size_t n);
 
 #endif
+
+
 
 
 

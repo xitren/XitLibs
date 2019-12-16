@@ -118,7 +118,7 @@ char *my_put_f(char *buff, va_list *valist, t_circular_printf_flags *fl)
 	if (fl->precision_par != 1)
 		fl->precision = 6;
 	buff[(cnt[0])--] = 0;
-	if (!(p[0] = get_not(buff, cnt, d[0])))
+	if (!(p[0] = get_not(buff, (size_t *)cnt, d[0])))
 	{
 		get_sign(d, p, fl, cnt);
 		get_rev(d, fl, cnt);
@@ -128,5 +128,6 @@ char *my_put_f(char *buff, va_list *valist, t_circular_printf_flags *fl)
 	get_last(p, fl, cnt);
 	return (p[0]);
 }
+
 
 
