@@ -209,7 +209,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 	uint32_t data_size_st = 0;
 	uint32_t l = 0, i, k;
 	uint32_t Data_sample[MAX_SAMPLE_SIZE];
-	DBG_LOG_DEBUG("buffer_size %u.\n", buffer_size)
+	DBG_LOG_DEBUG("buffer_size %lu.\n", buffer_size)
 	if ((TempParam))
 	{
 		if (MediaType == Media_FREE)
@@ -233,7 +233,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 		ret_val_t = get_parameter(TempParam, "to", (uint32_t*) & To);
 		if ((ret_val_f >= 0) && (ret_val_t >= 0))
 		{
-			DBG_LOG_DEBUG("buffer_size2 %s %u.\n", data_st, *data_size);
+			DBG_LOG_DEBUG("buffer_size2 %s %lu.\n", data_st, *data_size);
 			last = circularbuffer_get_last_index(&buffer_test);
 			first = circularbuffer_get_first_index(&buffer_test);
 			DBG_LOG_TRACE("(last %d <=> first %d) \n", last, first);
@@ -249,7 +249,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 						data += data_size_st;
 						buffer_size -= data_size_st;
 						l = circularbuffer_unreaded_items_size(&buffer_test);
-						DBG_LOG_TRACE("(circularbuffer_unreaded_items_size %d) \n", l);
+						DBG_LOG_TRACE("(circularbuffer_unreaded_items_size %lu) \n", l);
 						if (l > 0)
 						{
 							last = From;
@@ -268,7 +268,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 									data += data_size_st;
 									buffer_size -= data_size_st;
 								}
-								DBG_LOG_TRACE("sample %d \n", i);
+								DBG_LOG_TRACE("sample %lu \n", i);
 								data_size_st = snprintf(
 										(char*) data, buffer_size,
 										"  {\"sample\": %lu, \"data\": [",
@@ -278,7 +278,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 								buffer_size -= data_size_st;
 								for (k = 0; k < (sample_size - 1); k++)
 								{
-									DBG_LOG_TRACE("%d \n", Data_sample[k]);
+									DBG_LOG_TRACE("%lu \n", Data_sample[k]);
 									data_size_st = snprintf(
 											(char*) data, buffer_size,
 											"%lu, ",
@@ -456,7 +456,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 					data += data_size_st;
 					buffer_size -= data_size_st;
 					l = circularbuffer_unreaded_items_size(&buffer_test);
-					DBG_LOG_TRACE("circularbuffer_unreaded_items_size %d \n", l);
+					DBG_LOG_TRACE("circularbuffer_unreaded_items_size %lu \n", l);
 					if (l > 0)
 					{
 						last = circularbuffer_get_last_index(&buffer_test);
@@ -605,7 +605,7 @@ inline int StreamRecorderCommand_GET(uint8_t MediaType, ParameterList_t *TempPar
 					circularbuffer_unreaded_items_nullify(&buffer_test);
 					break;
 				case Media_BYTE:
-					DBG_LOG_DEBUG("buffer_size3 %s %u.\n", data_st, *data_size);
+					DBG_LOG_DEBUG("buffer_size3 %s %lu.\n", data_st, *data_size);
 					current_coap_mediatype = Media_BYTE;
 					l = circularbuffer_unreaded_items_size(&buffer_test);
 					if (l > 0)
@@ -873,6 +873,7 @@ int StreamRecorderLastCommand(uint8_t Method, uint8_t MediaType,
 	return (ret_val);
 }
 /*============================================================================*/
+
 
 
 

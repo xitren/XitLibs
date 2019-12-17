@@ -234,6 +234,7 @@ int csma_receiver(CSMACDController_t *controller, uint8_t byte)
 {
 	//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
 	//            __LINE__, __FILE__, __func__);
+//	DBG_LOG_TRACE("%04X ", byte);
 	controller->no_bytes_cnt = 0;
 	switch (controller->recv_state)
 	{
@@ -410,3 +411,4 @@ int delete_msg_in_controller(CSMACDController_t *controller, uint8_t i)
 		controller->bus_id = -1;
 	return 0;
 }
+

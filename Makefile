@@ -15,7 +15,7 @@ CFLAGS := -std=c99 -Werror -Wall -Wextra -Os \
 	-Wno-int-conversion \
 	-fdata-sections -ffunction-sections \
 	-DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
-CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra -Os \
+CFLAGS_SOFT := -std=c99 -Os \
 	-Wno-unused-parameter -Wno-pointer-to-int-cast -Wno-int-to-pointer-cast \
 	-Wno-implicit-fallthrough \
 	-mthumb -mcpu=cortex-m3 -mfloat-abi=soft --specs=nosys.specs \
@@ -23,6 +23,7 @@ CFLAGS_SOFT := -std=c99 -Werror -Wall -Wextra -Os \
 	-fdata-sections -ffunction-sections \
 	-DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
 #CFLAGS += -DDEBUG -g
+#CFLAGS_SOFT += -DDEBUG -g
 
 TFLAGS := -DVERSION=\"$(VERSION).$(shell date +"%Y%02m%02d")\"
 #TFLAGS += -DDEBUG -g
@@ -85,13 +86,3 @@ fclean:
 	rm -rf $(OBJS) $(TOBJS) $(AR_N)
 clean:
 	rm -rf $(OBJS) $(TOBJS)
-	
-
-
-
-
-
-
-
-
-

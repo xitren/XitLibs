@@ -71,7 +71,7 @@ int AddToReceive(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port)
 		comm = (ReceiveDeque_t *) umm_calloc(1, sizeof (ReceiveDeque_t));
 		DBG_LOG_TRACE("ReceiveDeque_t allocated.\n");
 		comm->Msg = (uint8_t *) umm_calloc(size, sizeof (uint8_t));
-		DBG_LOG_TRACE("Msg allocated %d.\n", size);
+		DBG_LOG_TRACE("Msg allocated %lu.\n", size);
 		memcpy((void *) comm->Msg, (void *) msg, size);
 		DBG_LOG_TRACE("Memcpy completed.\n");
 		comm->Size = size;
@@ -141,7 +141,7 @@ int AddToTransmite(const uint8_t *msg, uint32_t size, uint32_t ip, uint32_t port
 		comm = (TransmiteDeque_t *) umm_calloc(1, sizeof (TransmiteDeque_t));
 		DBG_LOG_TRACE("ReceiveDeque_t allocated.\n");
 		comm->Msg = (uint8_t *) umm_calloc(size, sizeof (uint8_t));
-		DBG_LOG_TRACE("Msg allocated %d.\n", size);
+		DBG_LOG_TRACE("Msg allocated %lu.\n", size);
 		memcpy((void *) comm->Msg, (void *) msg, size);
 		DBG_LOG_TRACE("Memcpy completed.\n");
 		comm->Size = size;
@@ -212,3 +212,4 @@ int ClearBuffer()
 	return (ret_val);
 }
 /*============================================================================*/
+
