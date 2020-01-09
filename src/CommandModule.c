@@ -13,6 +13,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include "strnlen.h"
 #include "LibConfig.h"
 #include "CommandModule.h"
 #include "LogModule.h"

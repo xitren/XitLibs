@@ -3,6 +3,7 @@
  */
 #include "circular_functions.h"
 #include "circular_printf.h"
+#include "strnlen.h"
 
 char *my_put_perc(char *buff, va_list *valist, t_circular_printf_flags *fl)
 {

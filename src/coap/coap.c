@@ -21,6 +21,7 @@
 #include "LogModule.h"
 #include "CommandModule.h"
 #include "CRC16ANSI.h"
+#include "strnlen.h"
 /*============================================================================*/
 
 /* Private variables ---------------------------------------------------------*/
