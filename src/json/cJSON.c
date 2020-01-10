@@ -42,6 +42,7 @@
 
 #include "cJSON.h"
 #include "umm_malloc.h"
+#include "strnlen.h"
 
 /* define our own boolean type */
 #define true ((cJSON_bool)1)

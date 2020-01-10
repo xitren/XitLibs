@@ -3,6 +3,7 @@
  */
 #include "circular_printf.h"
 #include "circular_functions.h"
+#include "strnlen.h"
 
 char *put_str_align(char *buff, size_t *max, t_circular_printf_flags *fl)
 {

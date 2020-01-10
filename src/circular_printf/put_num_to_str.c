@@ -2,6 +2,7 @@
  * Author:          Arsenty GUSEV <xitren@ya.ru>
  */
 #include "circular_printf.h"
+#include "strnlen.h"
 
 char *put_unsnum_to_str(char *buffer, size_t *max,
 		char *bptr, unsigned long long n)

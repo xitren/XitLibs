@@ -4,6 +4,7 @@
 #include "circular_printf.h"
 #include "circular_functions.h"
 #include "circular_printf_parser.h"
+#include "strnlen.h"
 #include <unistd.h>
 
 void	bzero(void *s, size_t n)
