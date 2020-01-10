@@ -96,6 +96,8 @@ extern "C" {
 	uint16_t csma_main_cycle(CSMACDController_t *controller,
 					uint8_t *id, uint8_t *data);
 	int csma_receiver(CSMACDController_t *controller, uint8_t byte);
+	int csma_receiver_bulk(CSMACDController_t *controller, uint8_t *bulk,
+											uint16_t size);
 	int csma_sender(CSMACDController_t *controller);
 	uint16_t PacketizeToSend(CSMACDController_t *controller,
 					uint8_t *bytes, const uint8_t id, const uint16_t size);

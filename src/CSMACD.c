@@ -34,6 +34,7 @@ uint16_t ParseFromRecv(CSMACDController_t *controller,
 		uint8_t *id, uint8_t *data);
 int csma_check_send_msgs(CSMACDController_t *controller);
 int delete_msg_in_controller(CSMACDController_t *controller, uint8_t i);
+inline int csma_parser(CSMACDController_t *controller, uint8_t byte);
 
 uint16_t ParseFromRecv(CSMACDController_t *controller,
 		const uint16_t ptr, const uint16_t size,
@@ -230,11 +231,8 @@ uint16_t csma_get_msg_to_transmitte(CSMACDController_t *controller,
 	return 0;
 }
 
-int csma_receiver(CSMACDController_t *controller, uint8_t byte)
+int csma_parser(CSMACDController_t *controller, uint8_t byte)
 {
-	//    DBG_LOG_TRACE("This is line %d of file %s (function %s)\n",
-	//            __LINE__, __FILE__, __func__);
-//	DBG_LOG_TRACE("%04X ", byte);
 	controller->no_bytes_cnt = 0;
 	switch (controller->recv_state)
 	{
@@ -304,6 +302,20 @@ int csma_receiver(CSMACDController_t *controller, uint8_t byte)
 
 	controller->recv_buffer[(controller->recv_buffer_head++) % CIRCULAR_BUFFER_SIZE]
 			= byte;
+	return 0;
+}
+
+int csma_receiver(CSMACDController_t *controller, uint8_t byte)
+{
+	return csma_parser(controller, byte);
+}
+
+int csma_receiver_bulk(CSMACDController_t *controller, uint8_t *bulk,
+											uint16_t size)
+{
+	uint8_t i;
+	for (i = 0;i < size;i++)
+		csma_parser(controller, bulk[i]);
 	return 0;
 }
 
