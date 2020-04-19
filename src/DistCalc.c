@@ -76,7 +76,7 @@ uint32_t GetMaxCycle(void)
 
 uint32_t GetPercent(void)
 {
-	return (last_free_cycles * 100) / (abs(max_free_cycles) + 1);
+	return (last_free_cycles * 100) / (abs((int)max_free_cycles) + 1);
 }
 
 uint32_t GetClock(void)

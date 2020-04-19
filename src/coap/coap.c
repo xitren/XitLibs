@@ -1073,7 +1073,7 @@ int coap_handle_req(coap_rw_buffer_t *scratch, const coap_packet_t *inpkt,
 		{
 			for (i = 0; i < count; i++)
 			{
-				strncat(bufhr, "/", 1);
+				strcat(bufhr, "/");
 				strncat(bufhr, (char const *) opt[i].buf.p, opt[i].buf.len);
 			}
 		}
